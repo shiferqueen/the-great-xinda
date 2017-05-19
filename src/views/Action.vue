@@ -1,6 +1,6 @@
 <template>
   <div>
-    <a-head></a-head>
+    <aHead></aHead>
     <router-view></router-view>
     <afoot></afoot>
   </div>
