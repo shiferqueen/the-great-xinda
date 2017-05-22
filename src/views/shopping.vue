@@ -1,29 +1,27 @@
 <template>
   <div class="width1200">
-      <p>首页/购物车</p>
-      <ul>
-          <li>公司</li>
-          <li>服务商品</li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-      </ul>
+     <goods></goods>
   </div>
 </template>
 
 <script>
+
+import goods from '@/widgets/shopping/goods'
+
 export default {
-  name: 'register',
-  data() {
-  
+  name: 'shopping',
+  components:{
+    goods
   }
 }
+
 
 </script>
 
 
 <style scoped>
-
+.width1200{
+    width:1200px;
+    margin:0 auto;
+}
 </style>

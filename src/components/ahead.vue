@@ -12,10 +12,10 @@ export default {
 }
 </script>
 
-<style lang="less" scoped>
+<style lang="less" >
 .ahead-welcome{
   width: 100%;
   height: 35px;
   background-color: #f2f2f2;
 }
-</style>
+</style scoped>
