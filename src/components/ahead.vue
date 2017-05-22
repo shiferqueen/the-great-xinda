@@ -23,6 +23,11 @@ export default {
     width: 1200px;
     height: 35px;
     margin:0 auto;
+    p{
+      color:#2b2b2b;
+      font-size: 14px;
+      line-height: 35px;
+    }
   }
 }
 </style>
