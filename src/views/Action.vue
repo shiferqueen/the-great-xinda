@@ -1,6 +1,6 @@
 <template>
   <div>
-    <a-head></a-head>
+    <ahead></ahead>
     <router-view></router-view>
     <afoot></afoot>
   </div>
@@ -8,7 +8,7 @@
 
 <script>
 import afoot from '../components/afoot'
-import aHead from '../components/ahead'
+import ahead from '../components/ahead'
 export default {
   name: 'hello',
   data() {
@@ -17,7 +17,7 @@ export default {
     }
   },
   components:{
-    aHead,
+    ahead,
     afoot
   }
 }
@@ -25,6 +25,6 @@ export default {
 </script>
 
 
-<style scoped>
+<style>
 
 </style>
