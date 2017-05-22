@@ -1,17 +1,21 @@
 <template>
   <div>
+    
     <h3>这是首页全部产品</h3> 
+    
+   
   </div>
 
 </template>
 
 <script>
+import myhead from '../components/header'
+import myfoot from '../components/footer'
 export default {
-  name: 'hello',
-  data() {
-    return {
-      msg: 'Welcome to Your Vue.js App'
-    }
+  name: 'home',
+  components:{
+    myhead,
+    myfoot
   }
 }
 </script>

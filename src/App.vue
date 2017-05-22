@@ -31,5 +31,11 @@ a:visited,a:link{
 	color: #000;
 	text-decoration:none;
 }
+.clear{
+	content:'';
+	display:block;
+	width:0;
+	clear:both;
+}
 </style>
                                                                              
