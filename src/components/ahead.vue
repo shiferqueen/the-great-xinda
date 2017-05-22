@@ -1,6 +1,8 @@
 <template>
   <div>
-    <p>这是action头</p>
+    <div class="ahead-welcome">
+
+    </div>
   </div>
 </template>
 
@@ -10,6 +12,10 @@ export default {
 }
 </script>
 
-<style>
-
+<style lang="less" scoped>
+.ahead-welcome{
+  width: 100%;
+  height: 35px;
+  background-color: #f2f2f2;
+}
 </style>
