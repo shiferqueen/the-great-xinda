@@ -1,6 +1,10 @@
 <template>
   <div>
-    <p>这是action头</p>
+    <div class="ahead-welcome">
+      <div class="aw-containter">
+        <p>欢迎来到信达</p>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -10,6 +14,20 @@ export default {
 }
 </script>
 
-<style>
-
+<style lang="less" scoped>
+.ahead-welcome{
+  width: 100%;
+  height: 35px;
+  background-color: #f2f2f2;
+  .aw-containter{
+    width: 1200px;
+    height: 35px;
+    margin:0 auto;
+    p{
+      color:#2b2b2b;
+      font-size: 14px;
+      line-height: 35px;
+    }
+  }
+}
 </style>

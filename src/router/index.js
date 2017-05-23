@@ -5,6 +5,9 @@ import Common from '@/views/Common'
 import Home from '@/views/Home'
 import Action from '@/views/Action'
 import Register from '@/views/Register'
+import Listpage from '@/views/Listpage'
+import Products from '@/views/Products'
+
 Vue.use(Router)
 
 export default new Router({
@@ -21,6 +24,18 @@ export default new Router({
         }
       ]
     },
+
+    {
+      path: '/listpage',
+      name: 'Listpage',
+      component: Listpage,  
+    },
+    {
+      path: '/products',
+      name: 'Products',
+      component: Products,  
+    },
+   
     {
       path: '/action',
       name: 'Action',
@@ -33,5 +48,6 @@ export default new Router({
         }
       ]
     },
+   
   ]
 })
