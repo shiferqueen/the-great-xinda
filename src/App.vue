@@ -18,7 +18,23 @@
     }
 </script>
 
-<style>
-
+<style lang="less">
+*{
+  padding: 0;
+  margin: 0;
+  border: 0;
+}
+li{
+  list-style: none;
+}
+a:visited,a:link{
+	color: #000;
+	text-decoration:none;
+}
+.clear{
+	content:'';
+	display:block;
+	clear:both;
+}
 </style>
                                                                               

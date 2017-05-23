@@ -23,6 +23,10 @@ export default {
 
 
 <style scoped>
+div{
+  margin-top:25px;
+  font-family: '微软雅黑';
+}
 .width1200{
     width:1200px;
     margin:0 auto;

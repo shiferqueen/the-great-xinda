@@ -11,13 +11,9 @@
 <script>
 import myhead from '../components/header'
 import myfoot from '../components/footer'
+
 export default {
-  name: 'hello',
-  data() {
-    return {
-      msg: 'Welcome to Your Vue.js App'
-    }
-  },
+  name: 'common',
   components:{
     myhead,
     myfoot

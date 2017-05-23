@@ -41,7 +41,7 @@
                 <span>工作日内5个小时提交申报，次日拿到</span></br>
                 <span>销量：</span></br>
                 <strong>￥ 1400.00</strong><br>
-                <s>原价：￥2000.00</s><a>查看详情>>></a>
+                <s>原价：￥2000.00</s><a href="##">查看详情>>></a>
             </dd>
 
         </dl>
@@ -110,7 +110,7 @@
                     background-image: -webkit-linear-gradient(to right, #2793d3, #fff);
                     background-image: linear-gradient(to right, #2793d3, #fff);
                     vertical-align: middle;
-                    margin-top: .4px;
+                    margin-top: 1px;
                 }
             }
             s,
