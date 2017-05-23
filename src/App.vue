@@ -7,18 +7,27 @@
 </template>
 
 <script>
-import top from './components/top'
-import bottom from './components/bottom'
-export default {
-  name: 'app',
-  components:{
-    top,
-    bottom
-  }
-}
+    import top from './components/top'
+    import bottom from './components/bottom'
+    export default {
+    name: 'app',
+    components:{
+        top,
+        bottom
+    }
+    }
 </script>
 
+
 <style lang="less">
+#app {
+  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  /*text-align: center;*/
+  color: #2c3e50;
+  /*margin-top: 60px;*/
+}
 *{
   padding: 0;
   margin: 0;
@@ -34,8 +43,7 @@ a:visited,a:link{
 .clear{
 	content:'';
 	display:block;
-	width:0;
 	clear:both;
 }
 </style>
-                                                                             
+                                                                              

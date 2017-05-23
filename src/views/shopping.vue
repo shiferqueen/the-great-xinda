@@ -1,29 +1,34 @@
 <template>
   <div class="width1200">
-      <p>首页/购物车</p>
-      <ul>
-          <li>公司</li>
-          <li>服务商品</li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-      </ul>
+     <goods></goods>
+     <hotService></hotService>
   </div>
 </template>
 
 <script>
+
+import goods from '@/widgets/shopping/goods'
+import hotService from '@/widgets/shopping/hotService'
+
 export default {
-  name: 'register',
-  data() {
-  
+  name: 'shopping',
+  components:{
+    goods,
+    hotService
   }
 }
+
 
 </script>
 
 
 <style scoped>
-
+div{
+  margin-top:25px;
+  font-family: '微软雅黑';
+}
+.width1200{
+    width:1200px;
+    margin:0 auto;
+}
 </style>
