@@ -7,15 +7,15 @@
 </template>
 
 <script>
-import top from './components/top'
-import bottom from './components/bottom'
-export default {
-  name: 'app',
-  components:{
-    top,
-    bottom
-  }
-}
+    import top from './components/top'
+    import bottom from './components/bottom'
+    export default {
+    name: 'app',
+    components:{
+        top,
+        bottom
+    }
+    }
 </script>
 
 
@@ -40,5 +40,10 @@ a:visited,a:link{
 	color: #000;
 	text-decoration:none;
 }
+.clear{
+	content:'';
+	display:block;
+	clear:both;
+}
 </style>
-                                                                             
+                                                                              

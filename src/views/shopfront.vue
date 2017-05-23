@@ -196,6 +196,7 @@
         width: 100%;
         height: 179px;
         border: 1px solid gray;
+        margin-top: 7px;
     }
     
     .shopfront-top-logo {

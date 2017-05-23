@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="wid">
-        <p>首页/公司工商</p>
+        <p class="shoplist">首页/公司工商</p>
         <div class="service-area-list clear">
             <div class="service-area">服务区域</div>
             <div class="service-area-right clear">
@@ -135,6 +135,9 @@
 
 
 <style lang="less" scoped>
+    .shoplist {
+        margin-top: 26px;
+    }
     .clear:after {
         content: "";
         display: block;
