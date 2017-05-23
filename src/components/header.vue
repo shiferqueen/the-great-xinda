@@ -40,14 +40,14 @@
                               <span>代理记账  ></span>
                               <a href="">小规模记账</a>
                               <a href="">一般纳税人记录</a>
-                            </p><br>
+                            </p><br><br>
                             <p>
                               <span>税务代办  ></span>
                               <a href="">国税地税报道</a>
                               <a href="">代开增值税专用发票</a>
                               <a href="">所得税汇算清缴</a>
                               <a href="">一般纳税人资质申办</a>
-                            </p><br>
+                            </p><br><br>
                             <p>
                               <span>审计报告  ></span>
                               <a href="">验资报告</a>
@@ -74,7 +74,7 @@
                               <a href="">股份公司注册</a>
                               <a href="">有限责任公司注册</a>
                               <a href="">一般纳税人注册地址</a>
-                            </p><br>
+                            </p><br><br>
                             <p>
                               <span>公司变更  ></span>
                               <a href="">公司股权变更</a>
@@ -117,7 +117,7 @@
                               <a href="">商标驳回复审</a>
                               <a href="">商标快速注册</a>
                               <a href="">著名商标认定</a>
-                            </p><br>
+                            </p><br><br>
                             <p>
                               <span>版权保护  ></span>
                               <a href="">电视剧作品登记</a>
@@ -141,7 +141,7 @@
                               <a href="">社保开户</a>
                               <a href="">社会公积金代缴</a>
                               <a href="">公积金开户</a>
-                            </p><br>
+                            </p><br><br>
                             <p>
                               <span>个人社保  ></span>
                               <a href="">个人社保代理</a>
@@ -366,14 +366,14 @@ export default {
                   opacity: 0.7;
                   color: #fff;
                   p{
-                    width:100%;
+                    width:98%;
                    
                     line-height: 19px;
-                    padding:0.5% 0 0 1%;
+                    padding:0% 0 0 1%;
                       span{
                          float:left;
                           font-size: 15px;
-                          margin: 3px 0;
+                          margin: 3px 2px;
                           padding: 0px 10px 0 5px;
                           border-left: 2px solid #2494d4;
                         }
