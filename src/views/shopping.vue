@@ -1,17 +1,20 @@
 <template>
   <div class="width1200">
      <goods></goods>
+     <hotService></hotService>
   </div>
 </template>
 
 <script>
 
 import goods from '@/widgets/shopping/goods'
+import hotService from '@/widgets/shopping/hotService'
 
 export default {
   name: 'shopping',
   components:{
-    goods
+    goods,
+    hotService
   }
 }
 
