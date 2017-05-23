@@ -18,7 +18,8 @@ export default {
 }
 </script>
 
-<style>
+
+<style lang="less">
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -26,6 +27,18 @@ export default {
   /*text-align: center;*/
   color: #2c3e50;
   /*margin-top: 60px;*/
+}
+*{
+  padding: 0;
+  margin: 0;
+  border: 0;
+}
+li{
+  list-style: none;
+}
+a:visited,a:link{
+	color: #000;
+	text-decoration:none;
 }
 </style>
                                                                              

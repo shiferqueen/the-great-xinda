@@ -6,6 +6,7 @@ import Home from '@/views/Home'
 import Action from '@/views/Action'
 import Register from '@/views/Register'
 import shoplist from '@/views/shoplist'
+import shopfront from '@/views/shopfront'
 Vue.use(Router)
 
 export default new Router({
@@ -22,6 +23,11 @@ export default new Router({
                     path: "shoplist",
                     name: "shoplist",
                     component: shoplist
+                },
+                {
+                    path: "shopfront",
+                    name: "shopfront",
+                    component: shopfront
                 }
             ]
         },
