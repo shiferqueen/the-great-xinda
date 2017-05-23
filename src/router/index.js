@@ -5,6 +5,8 @@ import Common from '@/views/Common'
 import Home from '@/views/Home'
 import Action from '@/views/Action'
 import Register from '@/views/Register'
+import member from '@/views/member'
+
 Vue.use(Router)
 
 export default new Router({
@@ -33,5 +35,10 @@ export default new Router({
         }
       ]
     },
+    {
+      path: '/member',
+      name: 'member',
+      component: member,
+    }
   ]
 })
