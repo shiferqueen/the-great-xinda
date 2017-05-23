@@ -24,8 +24,8 @@
                     </dd>
                     <dd class="commodity">注册分公司</dd>
                     <dd class="price">￥800</dd>
-                    <dd class="quantity">
-                        <input type="button" value="-"><input type="text"><input type="button" value="+">
+                    <dd class="quantity" id ="ddval">
+                        <input type="button" @click="min" value="-"><input type="text" :value="goodsval" ><input type="button" @click="add" value="+">
                     </dd>
                     <dd class="sum">￥800</dd>
                     <dd class="empty"></dd>
@@ -44,7 +44,21 @@
 </template>
 <script>
     export default {
-        name: 'goods'
+        name: 'goods',
+        data() {
+            return {
+                goodsval: 0,
+            }
+        },
+        methods: {
+            add: function() {
+                this.goodsval++;
+            },
+            min:function(){
+                this.goodsval--;
+            }
+
+        }
     }
 </script>
 
@@ -138,8 +152,8 @@
         }
         .operation {
             cursor: pointer;
-            &:hover{
-                color:red;
+            &:hover {
+                color: red;
             }
         }
         .quantity {
@@ -157,7 +171,7 @@
     }
     
     .goods-end {
-        width:1200px;
+        width: 1200px;
         float: right;
         margin-top: 25px;
         margin-right: 20px;

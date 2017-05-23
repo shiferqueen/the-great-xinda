@@ -6,7 +6,8 @@ import Home from '@/views/Home'
 import Action from '@/views/Action'
 import Register from '@/views/Register'
 import shopping from '@/views/shopping'
-import goods from '@/widgets/shopping/goods'
+import form from '@/views/form'
+
 Vue.use(Router)
 
 export default new Router({
@@ -34,6 +35,12 @@ export default new Router({
             path: '/shopping',
             name: 'shopping',
             component: shopping,
-        }
+        },
+        {
+            path: '/form',
+            name: 'form',
+            component: form,
+        },
+
     ]
 })
