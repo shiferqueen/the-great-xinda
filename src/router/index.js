@@ -11,6 +11,9 @@ import shoplist from '@/views/shoplist'
 import shopfront from '@/views/shopfront'
 import shopping from '@/views/shopping'
 import form from '@/views/form'
+import payerror from '@/views/payerror'
+import paysuccess from '@/views/paysuccess'
+
 
 Vue.use(Router)
 
@@ -29,7 +32,6 @@ export default new Router({
                     path: "shoplist",
                     name: "shoplist",
                     component: shoplist
-
                 },
                 {
                     path: "shopfront",
@@ -47,14 +49,24 @@ export default new Router({
                     component: Products,
                 },
                 {
-                    path: 'shopping',
+                    path: 'shopping', //购物车
                     name: 'shopping',
                     component: shopping,
                 },
                 {
-                    path: 'form',
+                    path: 'form', //支付
                     name: 'form',
                     component: form,
+                },
+                {
+                    path: "paysuccess",
+                    name: "paysuccess",
+                    component: paysuccess
+                },
+                {
+                    path: "payerror",
+                    name: "payerror",
+                    component: payerror
                 }
             ]
         },

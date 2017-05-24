@@ -25,7 +25,7 @@
                 </p>
                 <p>地区：北京-北京市-朝阳区</p>
                 <p>购买数量：
-                    <button>-</button><input type="text" placeholder="1"><button>+</button>
+                    <button @click="reduct()">-</button><input type="text" v-model="goodsval" class="numbers"><button  @click="add()">+</button>
                 </p>
                 <div class="summbit">
                     <span>立即购买</span>
@@ -37,11 +37,26 @@
                 <div class="goods-r-top">
                     <h2>顶级服务商</h2>
                     <p>北京信达服务中心</p>
-                    <span>马上咨询</span>
+                    <span v-on:click="">马上咨询</span>
                 </div>
                 <div class="goods-r-bottom">
-                    <span>查看服务商</span>
+                    <span><a href="#/shopfront">查看服务商</a></span>
                 </div>
+            </div>
+            <div class="consult-box">
+                <div class="consult-box-title">&nbsp &nbsp 免费电话咨询<span>X</span></div>
+                <div></div>
+                <div class="entry-num">
+                    <input type="input" placeholder="请输入手机号">
+                </div>
+                <div class="entry-logo">
+                    <input type="input" placeholder="请输入图形验证码">
+                </div>
+                <div class="entry-code">
+                    <input type="input" placeholder="请输入验证码">
+                </div>
+                <div class="begin-infor">开始免费咨询</div>
+                <p class="promease">本次电话咨询完全免费，我们将对你的号码严格保密，请放心使用!</p>
             </div>
         </div>
         <!--------------------导航栏图部分------------------>
@@ -102,7 +117,17 @@
                     <div class="main-t-m">满意度</div>
                     <div class="main-t-r">用户</div>
                 </div>
-                <div class="main-con2-m">
+                <div class="main-con2-m1">
+                    <div class="main-m-l"></div>
+                    <div class="main-m-m"></div>
+                    <div class="main-m-r"></div>
+                </div>
+                 <div class="main-con2-m1">
+                    <div class="main-m-l"></div>
+                    <div class="main-m-m"></div>
+                    <div class="main-m-r"></div>
+                </div>
+                 <div class="main-con2-m1">
                     <div class="main-m-l"></div>
                     <div class="main-m-m"></div>
                     <div class="main-m-r"></div>
@@ -127,6 +152,7 @@ export default {
             msg: '数据',
             con1: true,
             con2: false,
+            goodsval:1
         }
 
     },
@@ -151,9 +177,18 @@ export default {
             con1.style.color = '#686868';
             con1.style.backgroundColor = '#f7f7f7';
         },
+        add: function() {
+            this.goodsval++;
+        },
+        reduct:function(){
+            if(this.goodsval > 0){
+                 this.goodsval--;
+            }   
+        },   
         addProducts:function(){
             this.sum++;
-        }
+        },
+        
     }
 }
 </script>
@@ -177,6 +212,7 @@ export default {
     width: 1200px;
     height: 393px;
     margin: 0 auto;
+    position: relative;
     &:after {
         .clear;
     }
@@ -296,6 +332,70 @@ export default {
         }
     }
 }
+.consult-box {
+    width: 645px;
+    height: 420px;
+    border: 1px solid gray;
+    position: absolute;
+    top: 60px;
+    left: 320px;
+    z-index: 9;
+    background-color: #fff;
+    input {
+        border: 1px solid gray;
+    }
+    .consult-box-title {
+        height: 44px;
+        background-color: #f8f8f8;
+        line-height: 44px;
+        font-size: 14px;
+        span {
+            margin-left: 508px;
+            font-size: 12px;
+            cursor: pointer;
+        }
+    }
+    .entry-num {
+        margin-top: 28px;
+        margin-left: 170px;
+        input {
+            width: 303px;
+            height: 33px;
+        }
+    }
+    .entry-logo {
+        margin-top: 20px;
+        margin-left: 170px;
+        input {
+            width: 190px;
+            height: 33px;
+        }
+    }
+    .entry-code {
+        margin-top: 28px;
+        margin-left: 170px;
+        input {
+            width: 190px;
+            height: 33px;
+        }
+    }
+    .begin-infor {
+        width: 303px;
+        height: 33px;
+        border-radius: 5px;
+        background-color: #4eb5ba;
+        margin-top: 20px;
+        margin-left: 170px; 
+        line-height: 33px;
+        text-align: center;
+        color: #fff;
+    }
+    .promease {
+        margin-top: 22px;
+        margin-left: 140px;
+        font-size: 12px;
+    }
+}
 
 .banner {
     width: 1200px;
@@ -307,7 +407,6 @@ export default {
 
 .main-bottom {
     width: 1200px;
-    height: 520px;
     margin: 25px auto;
     border: 1px solid #cdcdcd;
     .main-nav {
