@@ -105,8 +105,26 @@ export default {
    components:{
     myhead,
     myfoot
+  },
+  data(){
+    return {
+      listpage_ajax:[]
+    }
+  },
+  created(){
+    this.getdata();
+  },
+  methods:{
+    getdata(){
+      let _this = this;
+      this.$http.post("http://115.182.107.203:8088/xinda/xinda-api/product/package/grid").then(function(kno){
+           console.log(kno);
+      })
+
+    }
   }
 }
+
 </script>
 
 <style lang="less" scoped>
@@ -234,7 +252,7 @@ export default {
            width: 100px;
            height:100px;
            border: 1px solid #cdcdcd;
-           margin: 11px 0
+           margin: 11px 0;
          }
        }
        .con-main-middle{
