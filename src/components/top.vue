@@ -17,8 +17,7 @@
         <span v-show=false class="fr top-myorder">
           <a href="">我的订单</a>
         </span>
-        <a href="##" class="fr top-shoppingcar">购物车
-          <span class="marg0">{{sum}}</span>件</a>
+        <a href="##" class="fr top-shoppingcar">购物车<span class="marg0">{{sum}}</span>件</a>
       </div>
     </div>
     <!--<p>这是顶部<a href="#/action/register">请注册</a></p>-->
