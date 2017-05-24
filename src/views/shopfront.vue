@@ -1,8 +1,6 @@
 <template>
   <div>
-    <!--<top></top>
-    <router-view></router-view>
-    <bottom></bottom>-->
+    <myhead></myhead>
     <div class="wid">
         <div class="shopfront-top clear">
             <img src="../images/logos/logo2.png" class="shopfront-top-logo">
@@ -135,11 +133,11 @@
             <div>尾页</div>
         </div>
     </div>
+    <myfoot></myfoot>
   </div>
 </template>
 
 <script>
-    // import afoot from '../components/afoot'
     export default {
         name: 'shopfront',
         data() {
@@ -147,10 +145,6 @@
 
             }
         },
-        //   components:{
-        //     ahead,
-        //     afoot
-        //   }
     }
 </script>
 
