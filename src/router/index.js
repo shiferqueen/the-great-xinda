@@ -24,6 +24,7 @@ export default new Router({
                     name: 'Home',
                     alias: '',
                     component: Home
+<<<<<<< HEAD
                 },
                 {
                     path: '/listpage',
@@ -36,6 +37,9 @@ export default new Router({
                     component: Products,
                 },
                 {
+=======
+                }, {
+>>>>>>> 5a93b5e0ad21019855fc259d01fd77057ee62f3c
                     path: '/shopping',
                     name: 'shopping',
                     component: shopping,
@@ -45,6 +49,7 @@ export default new Router({
                     name: 'form',
                     component: form,
                 },
+<<<<<<< HEAD
                 {
                     path: "/shoplist",
                     name: "shoplist",
@@ -54,6 +59,17 @@ export default new Router({
                         name: "shopfront",
                         component: shopfront
                     }]
+=======
+                 {
+                    path: '/listpage',
+                    name: 'Listpage',
+                    component: Listpage,
+                },
+                {
+                    path: '/products',
+                    name: 'Products',
+                    component: Products,
+>>>>>>> 5a93b5e0ad21019855fc259d01fd77057ee62f3c
                 },
             ]
         },
@@ -67,5 +83,20 @@ export default new Router({
                 component: Register //enroll
             }]
         },
+<<<<<<< HEAD
+=======
+       
+        {
+            path: "/shoplist",
+            name: "shoplist",
+            component: shoplist,
+            children: [{
+                path: "/shopfront",
+                name: "shopfront",
+                component: shopfront
+            }]
+        },
+
+>>>>>>> 5a93b5e0ad21019855fc259d01fd77057ee62f3c
     ],
 });

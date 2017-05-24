@@ -50,7 +50,7 @@
 </template>
 <script>
     export default {
-        name: 'hotService'
+        name: 'forms'
     }
 </script>
 

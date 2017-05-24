@@ -1,6 +1,6 @@
 <template>
     <div>
-        <myhead></myhead>
+    
         <div>
             <p class="head_top">首页/财税服务</p>
         </div>
@@ -25,9 +25,7 @@
                 </p>
                 <p>地区：北京-北京市-朝阳区</p>
                 <p>购买数量：
-                    <button>-</button>
-                    <input type="text" placeholder="1">
-                    <button>+</button>
+                    <button>-</button><input type="text" placeholder="1"><button>+</button>
                 </p>
                 <div class="summbit">
                     <span>立即购买</span>
@@ -111,7 +109,6 @@
                 </div>
             </div>
         </div>
-        <myfoot></myfoot>
     </div>
 </template>
 

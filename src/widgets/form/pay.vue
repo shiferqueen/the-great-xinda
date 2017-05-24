@@ -30,7 +30,7 @@
 </template>
 <script>
     export default {
-        name: 'hotService'
+        name: 'pay'
     }
 </script>
 

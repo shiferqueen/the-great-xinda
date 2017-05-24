@@ -1,5 +1,5 @@
 <template>
-  <div class="width1200">
+  <div class="width1200" style="margin-top:25px;">
      <forms></forms>
      <pay></pay>
   </div>
@@ -10,11 +10,12 @@
 import forms from '@/widgets/form/forms'
 import pay from '@/widgets/form/pay'
 
+
 export default {
   name: 'form',
   components:{
     forms,
-    pay
+    pay,
   }
 }
 
@@ -24,7 +25,6 @@ export default {
 
 <style scoped>
 div{
-  margin-top:25px;
   font-family: '微软雅黑';
   font-size: 14px;
 }
