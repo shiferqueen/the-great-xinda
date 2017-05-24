@@ -317,7 +317,7 @@ require('../../static/swiper-3.3.1.min.css')
       display:block;
       color:#2494d4;
       position: absolute;
-      top:63px;
+      top:66px;
       left: 35px;
     }
   }
