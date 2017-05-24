@@ -31,7 +31,7 @@ export default new Router({
             name: 'Action',
             component: Action,
             children: [{
-                path: 'register',
+                path: '/register',
                 name: 'register',
                 component: Register //enroll
             }]
