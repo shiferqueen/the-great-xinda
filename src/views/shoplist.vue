@@ -75,7 +75,7 @@
                                     <li class="all-items-tax-sec">公司变更</li>
                                 </ul>
                             </li>
-                            <li class="go-to-shop">进入店铺</li>
+                            <li class="go-to-shop"><a href="#/shopfront">进入店铺</a></li>
                         </ul>
                     </div>
                 </div>

@@ -59,12 +59,12 @@ export default new Router({
         {
             path: "/shoplist",
             name: "shoplist",
-            component: shoplist
+            component: shoplist[{
+                path: "/shopfront",
+                name: "shopfront",
+                component: shopfront
+            }]
         },
-        {
-            path: "/shopfront",
-            name: "shopfront",
-            component: shopfront
-        }
+
     ],
 });

@@ -158,7 +158,7 @@
             <li><a href="" class="loader">财税服务</a></li>
             <li><a href="" class="loader">公司工商</a></li>
             <li><a href="" class="loader">加盟我们</a></li>
-            <li><a href="" class="loader">店铺</a></li>
+            <li><a href="#/shoplist" class="loader">店铺</a></li>
           </ul>
           
         </div>
