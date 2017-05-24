@@ -1,6 +1,5 @@
 <template>
   <div>
-    <myhead></myhead>
    <div><p class="head_top">首页/公司工商</p></div>
    <div class="main">
       <div class="main_left">
@@ -94,7 +93,6 @@
       </div>
 
    </div>
-    <myfoot></myfoot>
   </div>
 
 </template>

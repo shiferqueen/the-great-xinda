@@ -34,7 +34,16 @@ export default new Router({
                     name: 'form',
                     component: form,
                 },
-
+                 {
+                    path: '/listpage',
+                    name: 'Listpage',
+                    component: Listpage,
+                },
+                {
+                    path: '/products',
+                    name: 'Products',
+                    component: Products,
+                },
             ]
         },
         {
@@ -47,18 +56,7 @@ export default new Router({
                 component: Register //enroll
             }]
         },
-        {
-            path: '/listpage',
-            name: 'Listpage',
-            component: Listpage,
-        },
-        {
-            path: '/products',
-            name: 'Products',
-            component: Products,
-        },
-
-
+       
         {
             path: "/shoplist",
             name: "shoplist",
