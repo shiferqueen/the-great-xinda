@@ -22,7 +22,6 @@ export default new Router({
                 name: 'Home',
                 alias:'',
                 component: Home
-<<<<<<< HEAD
             }]
         },
         {
@@ -45,39 +44,15 @@ export default new Router({
             name: 'form',
             component: form,
         },
-
-    ]
-})
-=======
-            },
-            {
-                path: "shoplist",
-                name: "shoplist",
-                component: shoplist
-            },
-            {
-                path: "shopfront",
-                name: "shopfront",
-                component: shopfront
-            }
-        ]
-
-    }]
-},
- {
-    path: '/action',
-    name: 'Action',
-    component: Action,
-    children: [{
-        path: 'register',
-        name: 'register',
-        component: Register //enroll
-    }]
-}, {
-    path: '/shopping',
-    name: 'shopping',
-    component: shopping,
-
+        {
+          path: "shoplist",
+          name: "shoplist",
+          component: shoplist
+      },
+      {
+          path: "shopfront",
+          name: "shopfront",
+          component: shopfront
+      }]
 })
 
->>>>>>> 4ef92ebbcdbbdc9b001e9e6f70e09d25adc8699d

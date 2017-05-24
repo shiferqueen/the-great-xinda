@@ -302,10 +302,9 @@ export default {
          .loader{
            font-size: 18px;
            text-align: center;
-           padding-top: 6px;
+           padding: 5px 0;
            width:80px;
            display: block;
-           padding-bottom:4px;
            color: #333;
            margin: 0 60px; 
            &:hover{
