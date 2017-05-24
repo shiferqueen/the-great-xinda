@@ -16,13 +16,13 @@ Vue.use(Router)
 
 export default new Router({
     routes: [{
-        path: '/',
-        name: 'Common',
-        component: Common,
-        children: [{
+            path: '/',
+            name: 'Common',
+            component: Common,
+            children: [{
                 path: 'Home',
                 name: 'Home',
-                alias:'',
+                alias: '',
                 component: Home
             }]
         },
@@ -36,17 +36,18 @@ export default new Router({
                 component: Register //enroll
             }]
         },
-    {
-      path: '/listpage',
-      name: 'Listpage',
-      component: Listpage,  
-    },
-    {
-      path: '/products',
-      name: 'Products',
-      component: Products,  
-    },
-     {       path: '/shopping',
+        {
+            path: '/listpage',
+            name: 'Listpage',
+            component: Listpage,
+        },
+        {
+            path: '/products',
+            name: 'Products',
+            component: Products,
+        },
+        {
+            path: '/shopping',
             name: 'shopping',
             component: shopping,
         },
@@ -55,15 +56,15 @@ export default new Router({
             name: 'form',
             component: form,
         },
-            {
-                path: "shoplist",
-                name: "shoplist",
-                component: shoplist
-            },
-            {
-                path: "shopfront",
-                name: "shopfront",
-                component: shopfront
-            }],
+        {
+            path: "/shoplist",
+            name: "shoplist",
+            component: shoplist
+        },
+        {
+            path: "/shopfront",
+            name: "shopfront",
+            component: shopfront
+        }
+    ],
 });
-
