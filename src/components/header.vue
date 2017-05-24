@@ -362,7 +362,7 @@ export default {
                   height: 100px;
                   top:0px;
                   left:160px;
-                  opacity: 0.7;
+                  opacity: 0.9;
                   color: #fff;
                   p{
                     width:98%;

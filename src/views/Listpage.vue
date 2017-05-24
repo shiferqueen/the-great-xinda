@@ -1,6 +1,5 @@
 <template>
   <div>
-    <myhead></myhead>
    <div><p class="head_top">首页/公司工商</p></div>
    <div class="main">
       <div class="main_left">
@@ -54,10 +53,10 @@
           </div>
           <div class="con-main">
             <div class="con-main-left">
-              <img src="" alt="">
+              <a href="#/products"><img src="" alt=""></a>
             </div>
             <div class="con-main-middle">
-              <h4>注册分公司</h4>
+              <h4><a href="#/products">注册分公司</a></h4>
               <p>营业执照+5个章</p>
               <p><span>信达北京服务中心</span><span>北京-北京市-朝阳区</span></p>
             </div>
@@ -94,7 +93,6 @@
       </div>
 
    </div>
-    <myfoot></myfoot>
   </div>
 
 </template>
@@ -125,7 +123,7 @@ export default {
     color:#696969;
 }
 .main{
-  width:1200px;
+  width:1250px;
   margin:0 auto;
   &:after{.clear;}
   .main_left{
@@ -235,7 +233,7 @@ export default {
          img{
            width: 100px;
            height:100px;
-           border-bottom: 1px solid #cdcdcd;
+           border: 1px solid #cdcdcd;
            margin: 11px 0
          }
        }
@@ -272,7 +270,7 @@ export default {
      }
     }
     .bottom_page{
-      width:188px;
+      width:195px;
       margin:25px auto;
       span{
         padding: 10px;
@@ -290,11 +288,15 @@ export default {
   .main_right{
     width:237px;
     float:right;
+    border: 1px solid #cdcdcd;
     .border{
       width:220px;
       height: 165px;
       margin:0 auto;
       border-bottom: 1px solid #cdcdcd;
+      &:nth-child(4){
+        border-bottom:0;
+      }
       img{
         margin:10px 60px;
       }

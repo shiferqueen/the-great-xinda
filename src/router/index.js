@@ -12,6 +12,9 @@ import shopfront from '@/views/shopfront'
 import shopping from '@/views/shopping'
 import form from '@/views/form'
 import us from '@/views/us'
+import payerror from '@/views/payerror'
+import paysuccess from '@/views/paysuccess'
+
 
 Vue.use(Router)
 
@@ -21,28 +24,56 @@ export default new Router({
             name: 'Common',
             component: Common,
             children: [{
-                    path: 'Home',
+                    path: 'home',
                     name: 'Home',
                     alias: '',
                     component: Home
-                }, {
-                    path: 'shopping',
+                },
+                {
+                    path: "shoplist",
+                    name: "shoplist",
+                    component: shoplist,
+                },
+                {
+                    path: "shopfront",
+                    name: "shopfront",
+                    component: shopfront
+                },
+                {
+                    path: 'listpage',
+                    name: 'Listpage',
+                    component: Listpage,
+                },
+                {
+                    path: 'products',
+                    name: 'Products',
+                    component: Products,
+                },
+                {
+                    path: 'shopping', //购物车
                     name: 'shopping',
                     component: shopping,
                 },
                 {
-                    path: 'form',
+                    path: 'form', //支付
                     name: 'form',
                     component: form,
                 },
-
+                {
+                    path: "paysuccess",
+                    name: "paysuccess",
+                    component: paysuccess
+                },
+                {
+                    path: "payerror",
+                    name: "payerror",
+                    component: payerror
+                },
                 {
                     path: 'us',
                     name: 'us',
                     component: us,
                 },
-
-
             ]
         },
         {
@@ -50,33 +81,10 @@ export default new Router({
             name: 'Action',
             component: Action,
             children: [{
-                path: '/register',
+                path: 'register',
                 name: 'register',
                 component: Register //enroll
             }]
         },
-        {
-            path: '/listpage',
-            name: 'Listpage',
-            component: Listpage,
-        },
-        {
-            path: '/products',
-            name: 'Products',
-            component: Products,
-        },
-
-
-        {
-            path: "/shoplist",
-            name: "shoplist",
-            component: shoplist,
-            children: [{
-                path: "/shopfront",
-                name: "shopfront",
-                component: shopfront
-            }]
-        },
-
-    ],
+    ]
 });

@@ -1,11 +1,10 @@
 <template>
   <div>
-      <myhead></myhead>
     <div class="wid">
         <p class="shoplist">首页/公司工商</p>
         <div class="service-area-list clear">
             <div class="service-area">服务区域</div>
-            <div class="service-area-right clear">
+            <div class="service-area-right">
                 <select>
                     <option value="">省</option>
                     <option value="">北京</option>
@@ -103,7 +102,7 @@
                                     <li class="all-items-tax-sec">公司变更</li>
                                 </ul>
                             </li>
-                            <li class="go-to-shop">进入店铺</li>
+                            <li class="go-to-shop"><a href="#/shopfront">进入店铺</a></li>
                         </ul>
                     </div>
                 </div>
@@ -115,7 +114,6 @@
             <div class="item-change-next">下一页</div>
         </div>
     </div>
-    <myfoot></myfoot>
   </div>
 </template>
 
@@ -141,11 +139,7 @@ import myfoot from '../components/footer'
     .shoplist {
         margin-top: 26px;
     }
-    .clear:after {
-        content: "";
-        display: block;
-        clear: both;
-    }
+
     
     .wid {
         width: 1200px;
