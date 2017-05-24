@@ -25,9 +25,9 @@
                     <dd class="commodity">注册分公司</dd>
                     <dd class="price">￥800</dd>
                     <dd class="quantity" id ="ddval">
-                        <input type="button" @click="min" value="-"><input type="text" :value="goodsval" ><input type="button" @click="add" value="+">
+                        <input type="button" @click="min" value="-"><input type="text" v-model="goodsval" ><input type="button" @click="add" value="+">
                     </dd>
-                    <dd class="sum">￥800</dd>
+                    <dd class="sum">￥{{goodsval*800}}</dd>
                     <dd class="empty"></dd>
                     <dd class="operation">删除</dd>
                 </dl>
