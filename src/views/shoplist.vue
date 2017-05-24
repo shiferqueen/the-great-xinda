@@ -120,8 +120,14 @@
 </template>
 
 <script>
+import myhead from '../components/header'
+import myfoot from '../components/footer'
     export default {
         name: 'shoplist',
+        components:{
+                myhead,
+                myfoot
+            },
         data() {
             return {
 
