@@ -15,55 +15,57 @@ import form from '@/views/form'
 Vue.use(Router)
 
 export default new Router({
-            routes: [{
-                    path: '/',
-                    name: 'Common',
-                    component: Common,
-                    children: [{
-                            path: 'Home',
-                            name: 'Home',
-                            alias: '',
-                            component: Home
-                        },
-                        {
-                            path: 'listpage',
-                            name: 'Listpage',
-                            component: Listpage,
-                        },
-                        {
-                            path: 'products',
-                            name: 'Products',
-                            component: Products,
-                        },
-                        {
-                            path: 'shopping',
-                            name: 'shopping',
-                            component: shopping,
-                        },
-                        {
-                            path: 'form',
-                            name: 'form',
-                            component: form,
-                        },
-                        {
-                            path: "shoplist",
-                            name: "shoplist",
-                            component: shoplist,
-                            children: [{
-                                path: "shopfront",
-                                name: "shopfront",
-                                component: shopfront
-                            }]
-                        }
-                    ]
+    routes: [{
+            path: '/',
+            name: 'Common',
+            component: Common,
+            children: [{
+                    path: 'home',
+                    name: 'Home',
+                    alias: '',
+                    component: Home
                 },
                 {
-                    path: '/action',
-                    name: 'Action',
-                    component: Action,
+                    path: "shoplist",
+                    name: "shoplist",
+                    component: shoplist,
                     children: [{
-                        path: 'register',
-                        name: 'register',
-                        component: Register //enroll
+                        path: "shopfront",
+                        name: "shopfront",
+                        component: shopfront
                     }]
-                });
+                },
+                {
+                    path: 'listpage',
+                    name: 'Listpage',
+                    component: Listpage,
+                },
+                {
+                    path: 'products',
+                    name: 'Products',
+                    component: Products,
+                },
+                {
+                    path: 'shopping',
+                    name: 'shopping',
+                    component: shopping,
+                },
+                {
+                    path: 'form',
+                    name: 'form',
+                    component: form,
+                }
+            ]
+        },
+        {
+            path: '/action',
+            name: 'Action',
+            component: Action,
+            children: [{
+                path: 'register',
+                name: 'register',
+                component: Register //enroll
+            }]
+        }
+    ]
+});
