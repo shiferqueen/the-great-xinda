@@ -1,5 +1,6 @@
 <template>
   <div>
+      <myhead></myhead>
     <div class="wid">
         <p class="shoplist">首页/公司工商</p>
         <div class="service-area-list clear">
@@ -114,22 +115,24 @@
             <div class="item-change-next">下一页</div>
         </div>
     </div>
+    <myfoot></myfoot>
   </div>
 </template>
 
 <script>
-    // import afoot from '../components/afoot'
+import myhead from '../components/header'
+import myfoot from '../components/footer'
     export default {
         name: 'shoplist',
+        components:{
+                myhead,
+                myfoot
+            },
         data() {
             return {
 
             }
         },
-        //   components:{
-        //     ahead,
-        //     afoot
-        //   }
     }
 </script>
 
