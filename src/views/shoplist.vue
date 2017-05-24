@@ -74,7 +74,7 @@
                                     <li class="all-items-tax-sec">公司变更</li>
                                 </ul>
                             </li>
-                            <li class="go-to-shop"><a href="#/shoplist/shopfront">进入店铺</a></li>
+                            <li class="go-to-shop"><a href="#/shopfront">进入店铺</a></li>
                         </ul>
                     </div>
                 </div>
@@ -102,7 +102,7 @@
                                     <li class="all-items-tax-sec">公司变更</li>
                                 </ul>
                             </li>
-                            <li class="go-to-shop"><a href="#/shoplist/shopfront">进入店铺</a></li>
+                            <li class="go-to-shop"><a href="#/shopfront">进入店铺</a></li>
                         </ul>
                     </div>
                 </div>
