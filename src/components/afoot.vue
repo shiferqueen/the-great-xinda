@@ -1,6 +1,6 @@
 <template>
   <div>
-    <p>这是其中几个页面的底部</p>
+    <p class="plant"></p>
   </div>
 </template>
 
@@ -10,6 +10,10 @@ export default {
 }
 </script>
 
-<style>
-
+<style lang="less" scoped>
+  .plant{
+    height: 140px;
+    width: 100%;
+    background: #fff;
+  }
 </style>

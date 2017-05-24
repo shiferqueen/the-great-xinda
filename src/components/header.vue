@@ -155,10 +155,10 @@
                 </div>
             </div>
             </li>
-            <li><a href="" class="loader">财税服务</a></li>
-            <li><a href="" class="loader">公司工商</a></li>
+            <li><a href="#/listpage" class="loader">财税服务</a></li>
+            <li><a href="#/listpage" class="loader">公司工商</a></li>
             <li><a href="" class="loader">加盟我们</a></li>
-            <li><a href="" class="loader">店铺</a></li>
+            <li><a href="#/shoplist" class="loader">店铺</a></li>
           </ul>
           
         </div>
@@ -302,10 +302,9 @@ export default {
          .loader{
            font-size: 18px;
            text-align: center;
-           padding-top: 6px;
+           padding: 5px 0;
            width:80px;
            display: block;
-           padding-bottom:4px;
            color: #333;
            margin: 0 60px; 
            &:hover{

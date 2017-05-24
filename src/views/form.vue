@@ -1,28 +1,21 @@
 <template>
-<div>
-  <headd></headd>
   <div class="width1200" style="margin-top:25px;">
      <forms></forms>
      <pay></pay>
   </div>
-  <foot></foot>
-</div>
 </template>
 
 <script>
 
 import forms from '@/widgets/form/forms'
 import pay from '@/widgets/form/pay'
-import headd from '@/components/header'
-import foot from '@/components/footer'
+
 
 export default {
   name: 'form',
   components:{
     forms,
     pay,
-    headd,
-    foot
   }
 }
 

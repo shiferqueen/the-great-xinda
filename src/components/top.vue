@@ -10,6 +10,20 @@
         <span class="fr"><a href="" class="blue">服务商入口</a></span>
         <span v-show=false class="fr top-myorder"><a href="#/form">我的订单</a></span> 
         <a href="#/shopping" class="fr top-shoppingcar">购物车<span class="marg0">0</span>件</a>       
+        <span class="fl">
+          <a href="" class="blue">登录</a>
+        </span>
+        <span class="fl">
+          <a href="" class="blue">快速注册</a>
+        </span>
+        <span class="fr">
+          <a href="" class="blue">服务商入口</a>
+        </span>
+        <span v-show=false class="fr top-myorder">
+          <a href="">我的订单</a>
+        </span>
+        <a href="##" class="fr top-shoppingcar">购物车
+          <span class="marg0">{{sum}}</span>件</a>
       </div>
     </div>
     <!--<p>这是顶部<a href="#/action/register">请注册</a></p>-->
@@ -18,51 +32,60 @@
 
 <script>
 export default {
-  name: 'top'
+  name: 'top',
+  data() {
+    return{
+      sum:0,
+    }
+  }
 }
 </script>
 
 <style lang="less" scoped>
-.fl{
+.fl {
   float: left;
 }
-.fr{
+
+.fr {
   float: right;
 }
-.marg0{
+
+.marg0 {
   margin: 0!important;
-  padding:0!important;
+  padding: 0!important;
 }
-.blue{
-  color:#2494d4!important;
+
+.blue {
+  color: #2494d4!important;
 }
-.top-welcome{
+
+.top-welcome {
   width: 100%;
   height: 35px;
   background-color: #f2f2f2;
-  .top-containter{
+  .top-containter {
     width: 1200px;
     height: 35px;
-    margin:0 auto;
+    margin: 0 auto;
     font-size: 14px;
     line-height: 35px;
-    p{
-      color:#2b2b2b;
+    p {
+      color: #2b2b2b;
     }
-    span{
+    span {
       .blue;
-      padding-left:19px;
+      padding-left: 19px;
       cursor: pointer;
     }
-    #user-phonenum{
+    #user-phonenum {
       margin-right: 15px;
     }
-    .top-myorder{
+    .top-myorder {
       background: url(../images/index/u619.png) no-repeat left 4px;
       margin-left: 15px;
     }
-    .top-shoppingcar{
-      padding-left:26px;
+    .top-shoppingcar {
+      padding-left: 26px;
       background: url(../images/index/u607.png) no-repeat left 6px;
     }
   }
