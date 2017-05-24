@@ -59,6 +59,7 @@ export default new Router({
                                 name: "shopfront",
                                 component: shopfront
                             }]
+                        },
 
                             {
                                 path: '/listpage',
@@ -83,9 +84,6 @@ export default new Router({
                             component: Register //enroll
                         }]
                     },
-
-
-
                     {
                         path: "/shoplist",
                         name: "shoplist",
