@@ -57,9 +57,10 @@ export default new Router({
             component: form,
         },
         {
-           path: "/shoplist",
+            path: "/shoplist",
             name: "shoplist",
-            component: shoplist[{
+            component: shoplist,
+            children: [{
                 path: "/shopfront",
                 name: "shopfront",
                 component: shopfront
@@ -68,4 +69,3 @@ export default new Router({
 
     ],
 });
-
