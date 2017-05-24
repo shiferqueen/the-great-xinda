@@ -25,7 +25,7 @@
                 </p>
                 <p>地区：北京-北京市-朝阳区</p>
                 <p>购买数量：
-                    <button>-</button><input type="text" placeholder="1"><button>+</button>
+                    <button @click="reduct()">-</button><input type="text" v-model="goodsval" class="numbers"><button  @click="add()">+</button>
                 </p>
                 <div class="summbit">
                     <span>立即购买</span>
@@ -40,7 +40,7 @@
                     <span>马上咨询</span>
                 </div>
                 <div class="goods-r-bottom">
-                    <span>查看服务商</span>
+                    <span><a href="#/shopfront">查看服务商</a></span>
                 </div>
             </div>
         </div>
@@ -102,7 +102,17 @@
                     <div class="main-t-m">满意度</div>
                     <div class="main-t-r">用户</div>
                 </div>
-                <div class="main-con2-m">
+                <div class="main-con2-m1">
+                    <div class="main-m-l"></div>
+                    <div class="main-m-m"></div>
+                    <div class="main-m-r"></div>
+                </div>
+                 <div class="main-con2-m1">
+                    <div class="main-m-l"></div>
+                    <div class="main-m-m"></div>
+                    <div class="main-m-r"></div>
+                </div>
+                 <div class="main-con2-m1">
                     <div class="main-m-l"></div>
                     <div class="main-m-m"></div>
                     <div class="main-m-r"></div>
@@ -127,6 +137,7 @@ export default {
             msg: '数据',
             con1: true,
             con2: false,
+            goodsval:1
         }
 
     },
@@ -151,9 +162,18 @@ export default {
             con1.style.color = '#686868';
             con1.style.backgroundColor = '#f7f7f7';
         },
+        add: function() {
+            this.goodsval++;
+        },
+        reduct:function(){
+            if(this.goodsval > 0){
+                 this.goodsval--;
+            }   
+        },   
         addProducts:function(){
             this.sum++;
-        }
+        },
+        
     }
 }
 </script>
@@ -307,7 +327,6 @@ export default {
 
 .main-bottom {
     width: 1200px;
-    height: 520px;
     margin: 25px auto;
     border: 1px solid #cdcdcd;
     .main-nav {
