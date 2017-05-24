@@ -27,12 +27,12 @@ export default new Router({
 
                 },
                 {
-                    path: '/listpage',
+                    path: 'listpage',
                     name: 'Listpage',
                     component: Listpage,
                 },
                 {
-                    path: '/products',
+                    path: 'products',
                     name: 'Products',
                     component: Products,
                 },
@@ -40,22 +40,22 @@ export default new Router({
 
                 }, {
 
-                    path: '/shopping',
+                    path: 'shopping',
                     name: 'shopping',
                     component: shopping,
                 },
                 {
-                    path: '/form',
+                    path: 'form',
                     name: 'form',
                     component: form,
                 },
 
                 {
-                    path: "/shoplist",
+                    path: "shoplist",
                     name: "shoplist",
                     component: shoplist,
                     children: [{
-                        path: "/shopfront",
+                        path: "shopfront",
                         name: "shopfront",
                         component: shopfront
                     }]
@@ -68,7 +68,7 @@ export default new Router({
             name: 'Action',
             component: Action,
             children: [{
-                path: '/register',
+                path: 'register',
                 name: 'register',
                 component: Register //enroll
             }]
