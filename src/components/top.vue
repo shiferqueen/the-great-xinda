@@ -5,11 +5,6 @@
         <span id="user-phonenum"></span>
         <p class="fl">欢迎来到信达!</p>
         <p class="fl" v-show=false>【退出】</p>
-        <span class="fl"><a href="" class="blue">登录</a></span>
-        <span class="fl"><a href="" class="blue">快速注册</a></span>
-        <span class="fr"><a href="" class="blue">服务商入口</a></span>
-        <span v-show=false class="fr top-myorder"><a href="#/form">我的订单</a></span> 
-        <a href="#/shopping" class="fr top-shoppingcar">购物车<span class="marg0">0</span>件</a>       
         <span class="fl">
           <a href="" class="blue">登录</a>
         </span>
@@ -22,7 +17,7 @@
         <span v-show=false class="fr top-myorder">
           <a href="">我的订单</a>
         </span>
-        <a href="##" class="fr top-shoppingcar">购物车
+        <a href="#/shopping" class="fr top-shoppingcar">购物车
           <span class="marg0">{{sum}}</span>件</a>
       </div>
     </div>
