@@ -37,7 +37,7 @@
    </div>
    <!--------------------导航栏图部分------------------>
    <div class="banner">
-       <img src="../images/products/background.png" alt="">
+       <img src="../images/products/background.png">
    </div>
 
    <!-----------内容切换-------------------->

@@ -7,24 +7,35 @@ import Action from '@/views/Action'
 import Register from '@/views/Register'
 import Listpage from '@/views/Listpage'
 import Products from '@/views/Products'
+import shoplist from '@/views/shoplist'
+import shopfront from '@/views/shopfront'
+import shopping from '@/views/shopping'
+import form from '@/views/form'
 
 Vue.use(Router)
 
 export default new Router({
-  routes: [
-    {
-      path: '/',
-      name: 'Common',
-      component: Common,
-      children:[
+    routes: [{
+        path: '/',
+        name: 'Common',
+        component: Common,
+        children: [{
+                path: 'Home',
+                name: 'Home',
+                alias:'',
+                component: Home
+            }]
+        },
         {
-          path:'Home',
-          name:'Home',
-          component:Home
-        }
-      ]
-    },
-
+            path: '/action',
+            name: 'Action',
+            component: Action,
+            children: [{
+                path: 'register',
+                name: 'register',
+                component: Register //enroll
+            }]
+        },
     {
       path: '/listpage',
       name: 'Listpage',
@@ -35,19 +46,24 @@ export default new Router({
       name: 'Products',
       component: Products,  
     },
-   
-    {
-      path: '/action',
-      name: 'Action',
-      component: Action,
-      children:[
+     {       path: '/shopping',
+            name: 'shopping',
+            component: shopping,
+        },
         {
-          path:'register',
-          name:'register',
-          component:Register//enroll
-        }
-      ]
-    },
-   
-  ]
-})
+            path: '/form',
+            name: 'form',
+            component: form,
+        },
+            {
+                path: "shoplist",
+                name: "shoplist",
+                component: shoplist
+            },
+            {
+                path: "shopfront",
+                name: "shopfront",
+                component: shopfront
+            }],
+});
+

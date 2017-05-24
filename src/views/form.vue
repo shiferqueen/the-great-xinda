@@ -1,20 +1,20 @@
 <template>
   <div class="width1200">
-     <goods></goods>
-     <hotService></hotService>
+     <forms></forms>
+     <pay></pay>
   </div>
 </template>
 
 <script>
 
-import goods from '@/widgets/shopping/goods'
-import hotService from '@/widgets/shopping/hotService'
+import forms from '@/widgets/form/forms'
+import pay from '@/widgets/form/pay'
 
 export default {
-  name: 'shopping',
+  name: 'form',
   components:{
-    goods,
-    hotService
+    forms,
+    pay
   }
 }
 
@@ -26,9 +26,11 @@ export default {
 div{
   margin-top:25px;
   font-family: '微软雅黑';
+  font-size: 14px;
 }
 .width1200{
     width:1200px;
     margin:0 auto;
 }
+
 </style>
