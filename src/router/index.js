@@ -20,11 +20,42 @@ export default new Router({
             name: 'Common',
             component: Common,
             children: [{
-                path: 'Home',
-                name: 'Home',
-                alias: '',
-                component: Home
-            }]
+                    path: 'Home',
+                    name: 'Home',
+                    alias: '',
+                    component: Home
+                },
+                {
+                    path: '/listpage',
+                    name: 'Listpage',
+                    component: Listpage,
+                },
+                {
+                    path: '/products',
+                    name: 'Products',
+                    component: Products,
+                },
+                {
+                    path: '/shopping',
+                    name: 'shopping',
+                    component: shopping,
+                },
+                {
+                    path: '/form',
+                    name: 'form',
+                    component: form,
+                },
+                {
+                    path: "/shoplist",
+                    name: "shoplist",
+                    component: shoplist,
+                    children: [{
+                        path: "/shopfront",
+                        name: "shopfront",
+                        component: shopfront
+                    }]
+                },
+            ]
         },
         {
             path: '/action',
@@ -36,36 +67,5 @@ export default new Router({
                 component: Register //enroll
             }]
         },
-        {
-            path: '/listpage',
-            name: 'Listpage',
-            component: Listpage,
-        },
-        {
-            path: '/products',
-            name: 'Products',
-            component: Products,
-        },
-        {
-            path: '/shopping',
-            name: 'shopping',
-            component: shopping,
-        },
-        {
-            path: '/form',
-            name: 'form',
-            component: form,
-        },
-        {
-            path: "/shoplist",
-            name: "shoplist",
-            component: shoplist,
-            children: [{
-                path: "/shopfront",
-                name: "shopfront",
-                component: shopfront
-            }]
-        },
-
     ],
 });

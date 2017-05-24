@@ -1,6 +1,5 @@
 <template>
   <div>
-    <myhead></myhead>
     <div class="wid">
         <div class="shopfront-top clear">
             <img src="../images/logos/logo2.png" class="shopfront-top-logo">
@@ -133,7 +132,6 @@
             <div>尾页</div>
         </div>
     </div>
-    <myfoot></myfoot>
   </div>
 </template>
 
@@ -155,42 +153,18 @@ import myfoot from '../components/footer'
 </script>
 
 
-<style lang="less">
-    #app {
-        font-family: 'Avenir', Helvetica, Arial, sans-serif;
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-        /*text-align: center;*/
-        color: #2c3e50;
-        /*margin-top: 60px;*/
-    }
-    
-    * {
-        padding: 0;
-        margin: 0;
-        border: 0;
-    }
-    
-    li {
-        list-style: none;
-    }
-    
-    a:visited,
-    a:link {
-        color: #000;
-        text-decoration: none;
-    }
+<style lang="less" scoped>
+
+
+
+
     
     .wid {
         width: 1200px;
         margin: 0 auto;
     }
     
-    .clear:after {
-        content: "";
-        display: block;
-        clear: both;
-    }
+
     
     .shopfront-top {
         width: 100%;

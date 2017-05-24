@@ -40,7 +40,7 @@ a:visited,a:link{
 	color: #000;
 	text-decoration:none;
 }
-.clear{
+.clear:after{
 	content:'';
 	display:block;
 	clear:both;
