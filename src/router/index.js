@@ -20,100 +20,50 @@ export default new Router({
             name: 'Common',
             component: Common,
             children: [{
-                    path: 'Home',
+                    path: 'home',
                     name: 'Home',
                     alias: '',
                     component: Home
-
-<<<<<<< HEAD
-                        {
-                            path: "/shoplist",
-                            name: "shoplist",
-                            component: shoplist,
-                            children: [{
-                                path: "/shopfront",
-                                name: "shopfront",
-                                component: shopfront
-                            }]
-                        },
-=======
                 },
                 {
-                    path: '/listpage',
+                   path: "shoplist",
+                   name: "shoplist",
+                   component: shoplist,
+                   children: [{
+                          path: "shopfront",
+                          name: "shopfront",
+                          component: shopfront
+                   }]
+                },
+                {
+                    path: 'listpage',
                     name: 'Listpage',
                     component: Listpage,
                 },
                 {
-                    path: '/products',
+                    path: 'products',
                     name: 'Products',
                     component: Products,
                 },
                 {
->>>>>>> 15c5c2c8db7a1b3838952aa91b8b9906c3dec86d
-
-                }, {
-
-<<<<<<< HEAD
-                            },
-                        ]
-                    },
-                    {
-                        path: '/action',
-                        name: 'Action',
-                        component: Action,
-                        children: [{
-                            path: '/register',
-                            name: 'register',
-                            component: Register //enroll
-                        }]
-                    },
-                    {
-                        path: "/shoplist",
-                        name: "shoplist",
-                        component: shoplist,
-                        children: [{
-                            path: "/shopfront",
-                            name: "shopfront",
-                            component: shopfront
-                        }]
-                    },
-
-                ],
-            });
-=======
-                    path: '/shopping',
+                    path: 'shopping',
                     name: 'shopping',
                     component: shopping,
                 },
                 {
-                    path: '/form',
+                    path: 'form',
                     name: 'form',
                     component: form,
-                },
-
-                {
-                    path: "/shoplist",
-                    name: "shoplist",
-                    component: shoplist,
-                    children: [{
-                        path: "/shopfront",
-                        name: "shopfront",
-                        component: shopfront
-                    }]
-
-                }
-            ]
-        },
-        {
-            path: '/action',
-            name: 'Action',
-            component: Action,
-            children: [{
-                path: '/register',
-                name: 'register',
-                component: Register //enroll
-            }]
-        },
-    ],
+                }]
+            },
+            {
+                path: '/action',
+                name: 'Action',
+                component: Action,
+                children: [{
+                    path: 'register',
+                    name: 'register',
+                    component: Register //enroll
+                }]
+            }]          
 });
->>>>>>> 15c5c2c8db7a1b3838952aa91b8b9906c3dec86d
