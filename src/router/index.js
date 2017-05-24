@@ -11,6 +11,7 @@ import shoplist from '@/views/shoplist'
 import shopfront from '@/views/shopfront'
 import shopping from '@/views/shopping'
 import form from '@/views/form'
+import us from '@/views/us'
 
 Vue.use(Router)
 
@@ -25,15 +26,22 @@ export default new Router({
                     alias: '',
                     component: Home
                 }, {
-                    path: '/shopping',
+                    path: 'shopping',
                     name: 'shopping',
                     component: shopping,
                 },
                 {
-                    path: '/form',
+                    path: 'form',
                     name: 'form',
                     component: form,
                 },
+
+                {
+                    path: 'us',
+                    name: 'us',
+                    component: us,
+                },
+
 
             ]
         },
