@@ -11,6 +11,7 @@ import shoplist from '@/views/shoplist'
 import shopfront from '@/views/shopfront'
 import shopping from '@/views/shopping'
 import form from '@/views/form'
+import us from '@/views/us'
 import payerror from '@/views/payerror'
 import paysuccess from '@/views/paysuccess'
 
@@ -31,7 +32,7 @@ export default new Router({
                 {
                     path: "shoplist",
                     name: "shoplist",
-                    component: shoplist
+                    component: shoplist,
                 },
                 {
                     path: "shopfront",
@@ -67,7 +68,12 @@ export default new Router({
                     path: "payerror",
                     name: "payerror",
                     component: payerror
-                }
+                },
+                {
+                    path: 'us',
+                    name: 'us',
+                    component: us,
+                },
             ]
         },
         {
