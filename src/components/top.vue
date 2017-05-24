@@ -8,8 +8,8 @@
         <span class="fl"><a href="" class="blue">登录</a></span>
         <span class="fl"><a href="" class="blue">快速注册</a></span>
         <span class="fr"><a href="" class="blue">服务商入口</a></span>
-        <span v-show=false class="fr top-myorder"><a href="">我的订单</a></span> 
-        <a href="##" class="fr top-shoppingcar">购物车<span class="marg0">0</span>件</a>       
+        <span v-show=false class="fr top-myorder"><a href="#/form">我的订单</a></span> 
+        <a href="#/shopping" class="fr top-shoppingcar">购物车<span class="marg0">0</span>件</a>       
       </div>
     </div>
     <!--<p>这是顶部<a href="#/action/register">请注册</a></p>-->

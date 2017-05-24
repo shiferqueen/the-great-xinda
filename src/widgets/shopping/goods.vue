@@ -55,7 +55,10 @@
                 this.goodsval++;
             },
             min:function(){
-                this.goodsval--;
+                if(this.goodsval > 0){
+                    this.goodsval--;
+                }
+                
             }
 
         }

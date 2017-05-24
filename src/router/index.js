@@ -14,15 +14,14 @@ Vue.use(Router)
 
 export default new Router({
     routes: [{
-        path: '/',
-        name: 'Common',
-        component: Common,
-        children: [{
+            path: '/',
+            name: 'Common',
+            component: Common,
+            children: [{
                 path: 'Home',
                 name: 'Home',
-                alias:'',
+                alias: '',
                 component: Home
-<<<<<<< HEAD
             }]
         },
         {
@@ -45,39 +44,16 @@ export default new Router({
             name: 'form',
             component: form,
         },
+        {
+            path: "shoplist",
+            name: "shoplist",
+            component: shoplist
+        },
+        {
+            path: "shopfront",
+            name: "shopfront",
+            component: shopfront
+        }
 
     ]
 })
-=======
-            },
-            {
-                path: "shoplist",
-                name: "shoplist",
-                component: shoplist
-            },
-            {
-                path: "shopfront",
-                name: "shopfront",
-                component: shopfront
-            }
-        ]
-
-    }]
-},
- {
-    path: '/action',
-    name: 'Action',
-    component: Action,
-    children: [{
-        path: 'register',
-        name: 'register',
-        component: Register //enroll
-    }]
-}, {
-    path: '/shopping',
-    name: 'shopping',
-    component: shopping,
-
-})
-
->>>>>>> 4ef92ebbcdbbdc9b001e9e6f70e09d25adc8699d
