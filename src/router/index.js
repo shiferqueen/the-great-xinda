@@ -15,41 +15,17 @@ import form from '@/views/form'
 Vue.use(Router)
 
 export default new Router({
-            routes: [{
-                    path: '/',
-                    name: 'Common',
-                    component: Common,
-                    children: [{
-                            path: 'Home',
-                            name: 'Home',
-                            alias: '',
-                            component: Home
+    routes: [{
+            path: '/',
+            name: 'Common',
+            component: Common,
+            children: [{
+                    path: 'Home',
+                    name: 'Home',
+                    alias: '',
+                    component: Home
 
-                        },
-                        {
-                            path: '/listpage',
-                            name: 'Listpage',
-                            component: Listpage,
-                        },
-                        {
-                            path: '/products',
-                            name: 'Products',
-                            component: Products,
-                        },
-                        {
-
-                        }, {
-
-                            path: '/shopping',
-                            name: 'shopping',
-                            component: shopping,
-                        },
-                        {
-                            path: '/form',
-                            name: 'form',
-                            component: form,
-                        },
-
+<<<<<<< HEAD
                         {
                             path: "/shoplist",
                             name: "shoplist",
@@ -60,17 +36,24 @@ export default new Router({
                                 component: shopfront
                             }]
                         },
+=======
+                },
+                {
+                    path: '/listpage',
+                    name: 'Listpage',
+                    component: Listpage,
+                },
+                {
+                    path: '/products',
+                    name: 'Products',
+                    component: Products,
+                },
+                {
+>>>>>>> 15c5c2c8db7a1b3838952aa91b8b9906c3dec86d
 
-                            {
-                                path: '/listpage',
-                                name: 'Listpage',
-                                component: Listpage,
-                            },
-                            {
-                                path: '/products',
-                                name: 'Products',
-                                component: Products,
+                }, {
 
+<<<<<<< HEAD
                             },
                         ]
                     },
@@ -97,3 +80,40 @@ export default new Router({
 
                 ],
             });
+=======
+                    path: '/shopping',
+                    name: 'shopping',
+                    component: shopping,
+                },
+                {
+                    path: '/form',
+                    name: 'form',
+                    component: form,
+                },
+
+                {
+                    path: "/shoplist",
+                    name: "shoplist",
+                    component: shoplist,
+                    children: [{
+                        path: "/shopfront",
+                        name: "shopfront",
+                        component: shopfront
+                    }]
+
+                }
+            ]
+        },
+        {
+            path: '/action',
+            name: 'Action',
+            component: Action,
+            children: [{
+                path: '/register',
+                name: 'register',
+                component: Register //enroll
+            }]
+        },
+    ],
+});
+>>>>>>> 15c5c2c8db7a1b3838952aa91b8b9906c3dec86d
