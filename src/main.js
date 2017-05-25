@@ -3,9 +3,11 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-// import axios from 'axios'
-
-
+import store from './store'
+import axios from 'axios'
+import qs from 'qs'
+Vue.prototype.ajax = axios;
+axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 
 // axios.defaults.baseURL = 'https://api.example.com';
 // axios.defaults.headers.common['Authorization'] = AUTH_TOKEN;
@@ -28,5 +30,4 @@ new Vue({
     router,
     template: '<App/>',
     components: { App },
-
 })

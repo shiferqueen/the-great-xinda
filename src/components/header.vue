@@ -24,7 +24,7 @@
         <div class="hdcon-bot">
           <ul class="clear">
             <li>
-              <a href="#/home" class="blue-border loader" id="all-produce">全部产品</a>
+              <a href="#/home" class="loader blue-border" id="all-produce">全部产品</a>
               <!----多级列表------>
               <div class="allproduces" id="allproduces">
                 <div class="addpro-left">
@@ -169,7 +169,23 @@
 
 <script>
 export default {
-  name: 'myhead'
+  name: 'myhead',
+
+  created(){
+     this.ajax.post('http://115.182.107.203:8088/xinda/xinda-api/product/style/list',{}).then(function(data) {
+       var da = (data.data).data;
+       for(var key in da){
+        // console.log(key,'==',da[key]);
+        // console.log(da[key].itemList)
+        var itemList = da[key].itemList;
+        for(var key in itemList){
+         console.log( (itemList[key].itemList).object)
+         
+        }
+       }
+      // console.log(da);
+     })
+   }
 }
 </script>
 

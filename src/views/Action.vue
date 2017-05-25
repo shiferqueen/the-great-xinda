@@ -1,12 +1,11 @@
 <template>
   <div>
     <router-view></router-view>
-    <afoot></afoot>
   </div>
 </template>
 
 <script>
-import afoot from '../components/afoot'
+
 export default {
   name: 'hello',
   data() {
@@ -15,7 +14,7 @@ export default {
     }
   },
   components:{
-    afoot
+  
   }
 }
 

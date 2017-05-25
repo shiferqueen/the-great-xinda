@@ -6,13 +6,13 @@
         <p class="fl">欢迎来到信达!</p>
         <p class="fl" v-show=false>【退出】</p>
         <span class="fl">
-          <a href="" class="blue">登录</a>
+          <a href="#/action/login" class="blue">登录</a>
         </span>
         <span class="fl">
-          <a href="" class="blue">快速注册</a>
+          <a href="#/action/register" class="blue">快速注册</a>
         </span>
         <span class="fr">
-          <a href="" class="blue">服务商入口</a>
+          <a href="#/shopfront" class="blue">服务商入口</a>
         </span>
         <span v-show=false class="fr top-myorder">
           <a href="">我的订单</a>
@@ -21,7 +21,6 @@
           <span class="marg0">{{sum}} </span>件</a>
       </div>
     </div>
-    <!--<p>这是顶部<a href="#/action/register">请注册</a></p>-->
   </div>
 </template>
 

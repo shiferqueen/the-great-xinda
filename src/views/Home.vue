@@ -222,6 +222,7 @@
 </template>
 
 <script>
+
 import Swiper from '../../static/swiper-3.3.1.min.js'
 require('../../static/swiper-3.3.1.min.css')
  export default {
@@ -239,6 +240,11 @@ require('../../static/swiper-3.3.1.min.css')
       //  prevButton: '.swiper-button-prev'
      })
     //  console.log(mySwiper)
+   },
+   created(){
+     this.ajax.post('http://115.182.107.203:8088/xinda/xinda-api/recommend/list',{}).then(function(data) {
+       //console.log(data);
+     })
    }
  }
 </script>
