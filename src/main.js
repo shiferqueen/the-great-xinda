@@ -3,13 +3,14 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-// import axios from 'axios'
+import axios from 'axios'
+import qs from 'qs'
+import store from './store'
 
-
-
-// axios.defaults.baseURL = 'https://api.example.com';
-// axios.defaults.headers.common['Authorization'] = AUTH_TOKEN;
-// axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+Vue.use(qs)
+    // axios.defaults.baseURL = 'https://api.example.com';
+    // axios.defaults.headers.common['Authorization'] = AUTH_TOKEN;
+axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 
 // axios.post('http://115.182.107.203:8088/xinda/xinda-api/cart/list', {})
 //     .then(function(res) {
@@ -20,7 +21,7 @@ import router from './router'
 //     })
 
 Vue.config.productionTip = false
-    // Vue.prototype.$ajax = axios
+Vue.prototype.$ajax = axios
 
 /* eslint-disable no-new */
 new Vue({
