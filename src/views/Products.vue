@@ -141,6 +141,7 @@ export default {
         }
 
     },
+    
     methods: {
         server: function () {
             this.con1 = true,

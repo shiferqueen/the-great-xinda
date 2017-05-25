@@ -43,23 +43,56 @@
     </div>
 </template>
 <script>
+    // import VueResource from 'vue-resource';
+    // Vue.use(VueResource);
+    // var List = Vue.extend({
+    //     route: {　　　
+    //         data: function(transition) {　　　 //运行这段代码需要在服务器环境中，即localhost下，直接访问文件运行这段代码会抛出异常
+    //             　　　
+    //             this.$http({
+    //                 url: 'http://115.182.107.203:8088/xinda/xinda-api/cart/set',
+    //                 method: 'post',
+    //                 body: {},
+    //             });
+    //             // this.$http.get('http://115.182.107.203:8088/xinda/xinda-api/cart/set').then(function(req) {
+    //             //     console.log(req)
+    //             // })　　　　　
+    //         }　
+    //     },
+    // })
     export default {
         name: 'goods',
         data() {
             return {
-                goodsval: 0,
+                data: '',
+                goodsval: 1,
+
             }
         },
         methods: {
             add: function() {
                 this.goodsval++;
             },
-            min:function(){
-                if(this.goodsval > 0){
+            min: function() {
+                if (this.goodsval > 0) {
                     this.goodsval--;
                 }
-                
-            }
+            },
+            // submitForm() {
+            //     this.$ajax({
+            //             method: 'post',
+            //             url: 'http://115.182.107.203:8088/xinda/xinda-api/cart/list',
+            //             data: {
+            //                 firstName: 'Fred',
+            //                 lastName: 'Flintstone'
+            //             }
+            //         })
+            //         .then(function(response) {
+            //             console.log(response)
+            //         })
+
+            // },
+
 
         }
     }
@@ -102,7 +135,7 @@
     .headdl {
         margin-top: 20px;
         dt {
-            color: #72b1dc;
+            color: #72b1 dc;
             padding-bottom: 5px;
             border-bottom: 1px solid #bdbdbd;
         }

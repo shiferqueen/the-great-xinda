@@ -111,6 +111,7 @@ export default {
   data(){
     return {
      listpage_ajax:[]
+     city_ajax:[]
     }
     console.log(listpage_ajax)
   },
@@ -122,7 +123,20 @@ export default {
     
     console.log(res.data.data);
      _this.listpage_ajax = res.data.data;
-   })
+   }),
+   this.ajax.post("/xinda-api/common/change-region",qs.stringify({"status": 1,"msg": "",
+    "data": {
+        "id": "110100",
+        "level": 2,
+        "name": "北京市",
+        "parentId": "110000",
+        "regionCode": "110100"
+})).then(function(res){
+    
+    console.log(res);
+     _this.listpage_ajax = res.data.data;
+   
+
   },
   computed:{
     ...mapGetters(['getCartNum'])

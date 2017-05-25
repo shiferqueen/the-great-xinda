@@ -11,11 +11,10 @@ import shoplist from '@/views/shoplist'
 import shopfront from '@/views/shopfront'
 import shopping from '@/views/shopping'
 import form from '@/views/form'
+import us from '@/views/us'
 import payerror from '@/views/payerror'
 import paysuccess from '@/views/paysuccess'
 
-
-Vue.use(Vueresource)
 Vue.use(Router)
 
 export default new Router({
@@ -30,14 +29,14 @@ export default new Router({
                     component: Home
                 },
                 {
-                   path: "shoplist",
-                   name: "shoplist",
-                   component: shoplist,
+                    path: "shoplist",
+                    name: "shoplist",
+                    component: shoplist,
                 },
                 {
                     path: "shopfront",
                     name: "shopfront",
-                    component: shopfront 
+                    component: shopfront
                 },
                 {
                     path: 'listpage',
@@ -50,12 +49,12 @@ export default new Router({
                     component: Products,
                 },
                 {
-                    path: 'shopping',//购物车
+                    path: 'shopping', //购物车
                     name: 'shopping',
                     component: shopping,
                 },
                 {
-                    path: 'form',//支付
+                    path: 'form', //支付
                     name: 'form',
                     component: form,
                 },
@@ -67,18 +66,24 @@ export default new Router({
                 {
                     path: "payerror",
                     name: "payerror",
-                    component: payerror 
-                }]
-            },
-            {
-                path: '/action',
-                name: 'Action',
-                component: Action,
-                children: [{
-                    path: 'register',
-                    name: 'register',
-                    component: Register //enroll
-                }]
-            }]          
+                    component: payerror
+                },
+                {
+                    path: 'us',
+                    name: 'us',
+                    component: us,
+                },
+            ]
+        },
+        {
+            path: '/action',
+            name: 'Action',
+            component: Action,
+            children: [{
+                path: 'register',
+                name: 'register',
+                component: Register //enroll
+            }]
+        },
+    ]
 });
-
