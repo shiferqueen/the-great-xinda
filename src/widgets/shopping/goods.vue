@@ -23,11 +23,11 @@
                         <img src="../../images/logos/logo1.png">
                     </dd>
                     <dd class="commodity">注册分公司</dd>
-                    <dd class="price">￥800</dd>
+                    <dd class="price">￥{{univalence}}</dd>
                     <dd class="quantity" id ="ddval">
                         <input type="button" @click="min" value="-"><input type="text" v-model="goodsval" ><input type="button" @click="add" value="+">
                     </dd>
-                    <dd class="sum">￥{{goodsval*800}}</dd>
+                    <dd class="sum">￥{{subtotal()}}</dd>
                     <dd class="empty"></dd>
                     <dd class="operation">删除</dd>
                 </dl>
@@ -43,30 +43,18 @@
     </div>
 </template>
 <script>
-    // import VueResource from 'vue-resource';
-    // Vue.use(VueResource);
-    // var List = Vue.extend({
-    //     route: {　　　
-    //         data: function(transition) {　　　 //运行这段代码需要在服务器环境中，即localhost下，直接访问文件运行这段代码会抛出异常
-    //             　　　
-    //             this.$http({
-    //                 url: 'http://115.182.107.203:8088/xinda/xinda-api/cart/set',
-    //                 method: 'post',
-    //                 body: {},
-    //             });
-    //             // this.$http.get('http://115.182.107.203:8088/xinda/xinda-api/cart/set').then(function(req) {
-    //             //     console.log(req)
-    //             // })　　　　　
-    //         }　
-    //     },
-    // })
+    import qs from 'qs'
+
     export default {
         name: 'goods',
         data() {
             return {
                 data: '',
                 goodsval: 1,
-
+                univalence: 800,
+                subtotal: function() {
+                    return this.goodsval * this.univalence
+                }
             }
         },
         methods: {
@@ -78,22 +66,11 @@
                     this.goodsval--;
                 }
             },
-            // submitForm() {
-            //     this.$ajax({
-            //             method: 'post',
-            //             url: 'http://115.182.107.203:8088/xinda/xinda-api/cart/list',
-            //             data: {
-            //                 firstName: 'Fred',
-            //                 lastName: 'Flintstone'
-            //             }
-            //         })
-            //         .then(function(response) {
-            //             console.log(response)
-            //         })
-
-            // },
-
-
+        },
+        created() {
+            this.$ajax.post('/xinda-api/cart/list', qs.stringify({})).then(function(data) {
+                console.log(data)
+            })
         }
     }
 </script>

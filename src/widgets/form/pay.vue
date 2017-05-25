@@ -3,20 +3,20 @@
         <div class="forms-div1">支付方式</div>
         <p>非网银支付</p>
         <div class="inputdiv">
-            <input type="radio"><img src="../../images/form/yinlian.jpg">
+            <input type="radio" v-model="picked"><img src="../../images/form/yinlian.jpg">
         </div>
         <p>平台支付</p>
         <div class="clear">
             <div class="inputdiv zf">
-                <input type="radio"><img src="../../images/form/weixin.jpg">
+                <input type="radio" v-model="picked"><img src="../../images/form/weixin.jpg">
             </div>
             <div class="inputdiv zf margin10">
-                <input type="radio"><img src="../../images/form/zhifubao.jpg">
+                <input type="radio" v-model="picked"><img src="../../images/form/zhifubao.jpg">
             </div>
         </div>
         <p>自助转账 <span class="pay-p-span">因限额不能支付时，建议使用自助转账</span></p>
         <div class="inputdiv2">
-            <input type="radio"><img src="../../images/form/zhanshang.jpg">
+            <input type="radio" v-model="picked"><img src="../../images/form/zhanshang.jpg">
         </div>
         <br>
         <span style="color:#ffa4a3">注：转账时请将订单编号备注在付款信息里：转账完成后，请通知客服。</span>
