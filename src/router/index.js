@@ -14,7 +14,7 @@ import form from '@/views/form'
 import us from '@/views/us'
 import payerror from '@/views/payerror'
 import paysuccess from '@/views/paysuccess'
-
+import login from '@/views/Login'
 
 Vue.use(Router)
 
@@ -84,6 +84,11 @@ export default new Router({
                 path: 'register',
                 name: 'register',
                 component: Register //enroll
+            },
+            {
+                path: 'login',
+                name: 'login',
+                component: login 
             }]
         },
     ]

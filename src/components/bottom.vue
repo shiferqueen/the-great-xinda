@@ -5,7 +5,6 @@
         ©Copyright 2016 北京信达科技有限公司 京ICP备 16011621号
       </div>
     </div>
-    <!--<p>这是底部</p>-->
   </div>
 </template>
 
