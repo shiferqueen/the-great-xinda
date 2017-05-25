@@ -23,10 +23,10 @@
         </div>
         <div class="hdcon-bot">
           <ul class="clear">
-            <li>
-              <a href="#/home" class="loader blue-border" id="all-produce">全部产品</a>
+            <li v-for="(massage,index) in massages">
+              <a :href="massage.lin" class="loader" id="loader" v-on:click="choice_active(index)":class="{blueBorder:active===index}">{{massage.text}}</a>
               <!----多级列表------>
-              <div class="allproduces" id="allproduces">
+              <div class="allproduces" id="allproduces" v-if="index==0">
                 <div class="addpro-left">
                     <div class="addpro-list" id="add-l1">
                       <img src="../images/index/u283.png" class="fl">
@@ -38,22 +38,22 @@
                         <div id="add-r1" class="addpro-right">
                             <p>
                               <span>代理记账  ></span>
-                              <a href="">小规模记账</a>
-                              <a href="">一般纳税人记录</a>
+                              <a href="javascript:void(0)">小规模记账</a>
+                              <a href="javascript:void(0)">一般纳税人记录</a>
                             </p><br><br>
                             <p>
                               <span>税务代办  ></span>
-                              <a href="">国税地税报道</a>
-                              <a href="">代开增值税专用发票</a>
-                              <a href="">所得税汇算清缴</a>
-                              <a href="">一般纳税人资质申办</a>
+                              <a href="javascript:void(0)">国税地税报道</a>
+                              <a href="javascript:void(0)">代开增值税专用发票</a>
+                              <a href="javascript:void(0)">所得税汇算清缴</a>
+                              <a href="javascript:void(0)">一般纳税人资质申办</a>
                             </p><br><br>
                             <p>
                               <span>审计报告  ></span>
-                              <a href="">验资报告</a>
-                              <a href="">财务审计报告</a>
-                              <a href="">税审报告</a>
-                              <a href="">企业注销清算报告</a>
+                              <a href="javascript:void(0)">验资报告</a>
+                              <a href="javascript:void(0)">财务审计报告</a>
+                              <a href="javascript:void(0)">税审报告</a>
+                              <a href="javascript:void(0)">企业注销清算报告</a>
                             </p>
                         </div>
                       </div>
@@ -67,22 +67,22 @@
                         <div id="add-r2" class="addpro-right">
                             <p>
                               <span>公司注册  ></span>
-                              <a href="">分公司注册</a>
-                              <a href="">合伙企业注册</a>
-                              <a href="">外商独资公司</a>
-                              <a href="">VIE架构</a>
-                              <a href="">股份公司注册</a>
-                              <a href="">有限责任公司注册</a>
-                              <a href="">一般纳税人注册地址</a>
+                              <a href="javascript:void(0)">分公司注册</a>
+                              <a href="javascript:void(0)">合伙企业注册</a>
+                              <a href="javascript:void(0)">外商独资公司</a>
+                              <a href="javascript:void(0)">VIE架构</a>
+                              <a href="javascript:void(0)">股份公司注册</a>
+                              <a href="javascript:void(0)">有限责任公司注册</a>
+                              <a href="javascript:void(0)">一般纳税人注册地址</a>
                             </p><br><br>
                             <p>
                               <span>公司变更  ></span>
-                              <a href="">公司股权变更</a>
-                              <a href="">公司名称变更</a>
-                              <a href="">公司注册地址变更</a>
-                              <a href="">内资公司注销</a>
-                              <a href="">法人、高管或注册资本变更</a>
-                              <a href="">公司经营范围变更</a>
+                              <a href="javascript:void(0)">公司股权变更</a>
+                              <a href="javascript:void(0)">公司名称变更</a>
+                              <a href="javascript:void(0)">公司注册地址变更</a>
+                              <a href="javascript:void(0)">内资公司注销</a>
+                              <a href="javascript:void(0)">法人、高管或注册资本变更</a>
+                              <a href="javascript:void(0)">公司经营范围变更</a>
                             </p>
                         </div>
                       </div>
@@ -97,33 +97,33 @@
                         <div id="add-r3" class="addpro-right">
                             <p>
                               <span>专利申请  ></span>
-                              <a href="">审查意见答复</a>
-                              <a href="">外观专利减缓（共同申请）</a>
-                              <a href="">发明不减缓</a>
-                              <a href="">发明减缓（个人）</a>
-                              <a href="">实用新型专利减缓</a>
-                              <a href="">专利申请复审</a>
-                              <a href="">外观设计专利（不减缓）</a>
-                              <a href="">办理实用新型检索报告</a>
-                              <a href="">实用新型专利</a>
-                              <a href="">外观专利减缓</a>
-                              <a href="">实用新型专科减缓（共同申请）</a>
+                              <a href="javascript:void(0)">审查意见答复</a>
+                              <a href="javascript:void(0)">外观专利减缓（共同申请）</a>
+                              <a href="javascript:void(0)">发明不减缓</a>
+                              <a href="javascript:void(0)">发明减缓（个人）</a>
+                              <a href="javascript:void(0)">实用新型专利减缓</a>
+                              <a href="javascript:void(0)">专利申请复审</a>
+                              <a href="javascript:void(0)">外观设计专利（不减缓）</a>
+                              <a href="javascript:void(0)">办理实用新型检索报告</a>
+                              <a href="javascript:void(0)">实用新型专利</a>
+                              <a href="javascript:void(0)">外观专利减缓</a>
+                              <a href="javascript:void(0)">实用新型专科减缓（共同申请）</a>
                             </p><br><br>
                             <p>
                               <span>商标注册  ></span>
-                              <a href="">LOGO设计+商标注册</a>
-                              <a href="">商标变更</a>
-                              <a href="">商标续展</a>
-                              <a href="">商标驳回复审</a>
-                              <a href="">商标快速注册</a>
-                              <a href="">著名商标认定</a>
+                              <a href="javascript:void(0)">LOGO设计+商标注册</a>
+                              <a href="javascript:void(0)">商标变更</a>
+                              <a href="javascript:void(0)">商标续展</a>
+                              <a href="javascript:void(0)">商标驳回复审</a>
+                              <a href="javascript:void(0)">商标快速注册</a>
+                              <a href="javascript:void(0)">著名商标认定</a>
                             </p><br><br>
                             <p>
                               <span>版权保护  ></span>
-                              <a href="">电视剧作品登记</a>
-                              <a href="">美术著作权</a>
-                              <a href="">软件著作权</a>
-                              <a href="">音乐作品</a>
+                              <a href="javascript:void(0)">电视剧作品登记</a>
+                              <a href="javascript:void(0)">美术著作权</a>
+                              <a href="javascript:void(0)">软件著作权</a>
+                              <a href="javascript:void(0)">音乐作品</a>
                             </p>
                         </div>
                       </div>
@@ -137,17 +137,17 @@
                         <div id="add-r4" class="addpro-right">
                             <p>
                               <span>企业社保  ></span>
-                              <a href="">社保/公积金账户注销</a>
-                              <a href="">社保开户</a>
-                              <a href="">社会公积金代缴</a>
-                              <a href="">公积金开户</a>
+                              <a href="javascript:void(0)">社保/公积金账户注销</a>
+                              <a href="javascript:void(0)">社保开户</a>
+                              <a href="javascript:void(0)">社会公积金代缴</a>
+                              <a href="javascript:void(0)">公积金开户</a>
                             </p><br><br>
                             <p>
                               <span>个人社保  ></span>
-                              <a href="">个人社保代理</a>
-                              <a href="">个人代理社保和公积金</a>
-                              <a href="">新参保（个人）</a>
-                              <a href="">个人代理公积金</a>
+                              <a href="javascript:void(0)">个人社保代理</a>
+                              <a href="javascript:void(0)">个人代理社保和公积金</a>
+                              <a href="javascript:void(0)">新参保（个人）</a>
+                              <a href="javascript:void(0)">个人代理公积金</a>
                             </p>
                       </div>
                     </div>
@@ -155,10 +155,6 @@
                 </div>
             </div>
             </li>
-            <li><a href="#/listpage" class="loader">财税服务</a></li>
-            <li><a href="#/listpage" class="loader">公司工商</a></li>
-            <li><a href="#/us" class="loader">加盟我们</a></li>
-            <li><a href="#/shoplist" class="loader">店铺</a></li>
           </ul>
           
         </div>
@@ -170,22 +166,37 @@
 <script>
 export default {
   name: 'myhead',
-
-  created(){
-     this.ajax.post('http://115.182.107.203:8088/xinda/xinda-api/product/style/list',{}).then(function(data) {
-       var da = (data.data).data;
-       for(var key in da){
-        // console.log(key,'==',da[key]);
-        // console.log(da[key].itemList)
-        var itemList = da[key].itemList;
-        for(var key in itemList){
-         console.log( (itemList[key].itemList).object)
-         
-        }
-       }
-      // console.log(da);
-     })
-   }
+  data(){
+    return {
+      massages:[
+        {text:'全部产品',lin:'#/home'},
+        {text:'财税服务',lin:'#/listpage'},
+        {text:'公司工商',lin:'#/listpage'},
+        {text:'加盟我们',lin:'#/us'},
+        {text:'店铺',lin:'#/shoplist'}
+      ],
+      active:0
+    }
+  },
+  methods:{
+    choice_active:function(index){
+      this.active = index;
+    }
+  },
+  // created(){
+  //    this.ajax.post('http://115.182.107.203:8088/xinda/xinda-api/product/style/list',{}).then(function(data) {
+  //      var da = (data.data).data;
+  //      for(var key in da){
+  //       // console.log(key,'==',da[key]);
+  //       // console.log(da[key].itemList)
+  //       var itemList = da[key].itemList;
+  //       for(var key in itemList){
+  //       //console.log((itemList[key].itemList))
+  //       }
+  //      }
+  //     // console.log(da);
+  //    })
+  //  }
 }
 </script>
 
@@ -199,7 +210,7 @@ export default {
 .blue{
   color:#2494d4!important;
 }
-.blue-border{
+.blueBorder{
   color:#2494d4!important;
   border-bottom:2px solid #2494d4; 
 }
@@ -227,7 +238,7 @@ export default {
            font-size:30px;
            line-height: 65px;
            padding-left:70px;
-           background:  url(../images/logos/xinda-logo.png) no-repeat left 4px;
+           background:  url(../images/logos/xinda-logo.png) no-repeat left 3px;
          }
          p{
            margin-top: 18px;
