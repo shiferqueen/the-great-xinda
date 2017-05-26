@@ -132,7 +132,7 @@ export default new Router({
                 name: 'forget',
                 component: forget 
             }]
-        },
+        }
     ]
 });
 
