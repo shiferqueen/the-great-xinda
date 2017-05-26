@@ -93,7 +93,12 @@
             width: 348px;
             padding: 40px 0 60px;
             &:hover {
-                color: aqua;
+                color: #2494d4;
+                 p {
+                span {
+                    color: #2494d4;
+                }
+            }
             }
             img {
                 width: 132px;
@@ -111,13 +116,16 @@
     .end-div {
         width: 100%;
         text-align: center;
+        height: 106px;
         margin-bottom: 100px;
         strong {
             display: block;
             margin-bottom: 25px;
         }
+       
         p {
             line-height: 30px;
+
         }
     }
 </style>

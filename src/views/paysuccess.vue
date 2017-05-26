@@ -9,7 +9,7 @@
                     <img src="" class="fl">
                     <div class="pre-right fr">
                         <h2>支付成功 !</h2>
-                        <h4 class="fl">我们将尽快确认您的订单号：(<a href="">s7163623728398</a>) 付款信息。</h4>
+                        <h4 class="fl">我们将尽快确认您的(订单号：<a href="">s7163623728398</a>) 付款信息。</h4>
                         <br>
                         <span>如有问题，请联系客服:</span><h3>010-83421842</h3>
                     </div>
@@ -103,7 +103,7 @@ import afoot from '../components/afoot'
                      span{
                          font-size: 15px;
                          margin: 20px 0;
-                         line-height: 25px;
+                         line-height: 26px;
                      }
                      h3{
                          float:right;
