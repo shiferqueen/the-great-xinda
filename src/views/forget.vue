@@ -3,38 +3,23 @@
     <div>
         <div class="top">
             <img src="../images/logos/logo.png" alt="">
-            <a href="">欢迎注册</a>
+            <a href="">忘记密码</a>
         </div>
         <div class="buttom">
             <div class="next">
                 <div class="left">
                     <input type="text" v-model="cellphone" class="phone" placeholder="请输入手机号"><br>
                     <input type="text" v-model="validcode" class="code1" placeholder="请输入短信验证码"> <input type="button" value="获取短信" @click='huoqu' class="text"> <br>
-                    <select class="first">
-                        <option value="0">省</option>
-                        <option value="1">北京</option>
-                        <option value="2">天津</option>
-                        <option value="3">河北省</option>
-                    </select>
-                    <select>
-                        <option value="0">市</option>
-                        <option value="1">北京</option>
-                        <option value="2">石家庄</option> 
-                    </select>
-                    <select>
-                        <option value="0">区</option>
-                        <option value="1">海淀区</option>
-                        <option value="2">朝阳区</option>
-                    </select><br>
-                    <input type="text" v-model="password" class="password" placeholder="请设置密码"> <br>
-                    <input type="text" v-model="imgcode" class="code" placeholder="请输入图片验证码"> <img @click ='getsrc' :src='imgsrc'><br>
-                    <button @click="register">立即注册</button>
-                    <p>注册即同意遵守<span>《服务协议》</span></p>
+                    <input type="text" class="code" v-model="imgcode" placeholder="请输入图片验证码"> <img @click ='getsrc' src='/xinda-api/ajaxAuthcode'><br>
+                    <input type="text" v-model="password" class="password" placeholder="请输入新密码"> <br>
+                    <input type="text" v-model="password" class="password" placeholder="请确认密码"> <br>
+                    
+                    <button @click="login">确认修改</button>
                 </div>
                 <div class="right">
                     <div class="right1">
-                        <p>已有账号？</p>
-                        <a href="#/action/login">立即登录>></a>
+                        <p>想起密码？</p>
+                        <a href="#/action/login">返回登录>></a>
                         <img src="../images/logos/xiaoren.png" alt="">
                     </div>
                 </div>
@@ -46,58 +31,43 @@
 
 <script>
 
-    import qs from 'qs'
+    // import qs from 'qs'
     export default {
-        name: 'register',
-        data() {
-            return {
-                imgsrc: "/xinda-api/ajaxAuthcode",
-                cellphone: '',
-                password: '',
-                validcode: '',
-                imgcode: '',
-            }
-        },
-        methods: {
-            getsrc() {
-                this.imgsrc = "/xinda-api/ajaxAuthcode/##";
-            },
-            register() {
-                this.ajax.post('/xinda-api/register/register', qs.stringify({
-                    cellphone: '' + this.cllphone,
-                    smsType: 1,
-                    validCode: '' + this.validcode,
-                    password: '' + this.password,
-                    regionId: 110010,
-                })).then(function(data) {
-                    // console.log(data)
-                })
-                this.ajax.post('/xinda-api/register/valid-sms', qs.stringify({
-                    // cellphone: '' + this.cllphone,
-                    // smsType: 1,
-                    // validCode: '' + this.validcode,
-                    // password: '' + this.password,
-                    // regionId: 110010,
-                     
-                    cellphone:'' + this.cllphone,					
-                    smsType:1,							
-                     validCode:'' + this.validcode,						
-                            
-
-                })).then(function(data) {
-                    console.log(data)
-                })
-            },
-            huoqu() {
-                this.ajax.post('/xinda-api/register/sendsms', qs.stringify({
-                    cellphone: '' + this.cllphone,
-                    smsType: 1,
-                    imgCode: '' + this.imgcode,
-                })).then(function(data) {
-                    console.log(data)
-                })
-            }
-        }
+        name: 'forget',
+        // data() {
+        //     return {
+        //         imgsrc: "/xinda-api/ajaxAuthcode",
+        //         cellphone: '',
+        //         password: '',
+        //         validcode: '',
+        //         imgcode: '',
+        //     }
+        // },
+        // methods: {
+        //     getsrc() {
+        //         this.imgsrc = "/xinda-api/ajaxAuthcode/##";
+        //     },
+        //     register() {
+        //         this.ajax.post('/xinda-api/register/register', qs.stringify({
+        //             cellphone: '' + this.cllphone,
+        //             smsType: 1,
+        //             validCode: '' + this.validcode,
+        //             password: '' + this.password,
+        //             regionId: 110010,
+        //         })).then(function(data) {
+        //             console.log(data)
+        //         })
+        //     },
+        //     huoqu() {
+        //         this.ajax.post('/xinda-api/register/sendsms', qs.stringify({
+        //             cellphone: '' + this.cllphone,
+        //             smsType: 1,
+        //             imgCode: '' + this.imgcode,
+        //         })).then(function(data) {
+        //             console.log(data)
+        //         })
+        //     }
+        // }
     }
 
 </script>
@@ -137,7 +107,7 @@
         width: 100%;
         height:680px; 
         background-color: #f5f5f5;
-        padding-top: 25px;
+       padding-top: 25px;
         .next{
             width:1200px;
             height: 433px;
@@ -158,16 +128,7 @@
                     padding-left:10px;
                     border:1px solid #cecece;
                 }
-                select{
-                    width:80px;
-                    height: 35px;
-                    border: 1px solid #cecece;
-                    border-radius: 5px;
-                    margin-bottom: 21px;
-                }
-                .first{
-                     margin-left: 145px;
-                }
+               
                 .text{
                     width:95px;
                     height:35px;
@@ -206,12 +167,7 @@
                     margin: -13px 0;
                     cursor: pointer;
                 }
-                p{
-                    text-align: center;
-                    span{
-                        color: #2b91ce;
-                    }
-                }
+                
             }
             .right{
                 width:494px;
