@@ -16,8 +16,8 @@
         <span class="fr">
           <a href="#/shopfront" class="blue">服务商入口</a>
         </span>
-        <span v-show=false class="fr top-myorder">
-          <a href="">我的订单</a>
+        <span v-show=true class="fr top-myorder">
+          <a href="#/member">我的订单</a>
         </span>
         <a href="#/shopping" class="fr top-shoppingcar">购物车
           <span class="marg0">{{getCartNum}} </span>件</a>

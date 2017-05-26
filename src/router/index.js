@@ -5,6 +5,12 @@ import Common from '@/views/Common'
 import Home from '@/views/Home'
 import Action from '@/views/Action'
 import Register from '@/views/Register'
+import member from '@/views/member'
+import goods from '@/widgets/shopping/goods'
+import myorder from '@/widgets/member/myOrder'
+import evaluation from '@/widgets/member/evaluation'
+import uevaluation from '@/widgets/member/uevaluation'
+import setaccount from '@/widgets/member/setaccount'
 import Listpage from '@/views/Listpage'
 import Products from '@/views/Products'
 import shoplist from '@/views/shoplist'
@@ -16,6 +22,7 @@ import payerror from '@/views/payerror'
 import paysuccess from '@/views/paysuccess'
 import login from '@/views/Login'
 import forget from '@/views/forget'
+
 Vue.use(Router)
 
 export default new Router({
@@ -75,6 +82,35 @@ export default new Router({
                     name: 'us',
                     component: us,
                 },
+                {
+                    path: 'member',
+                    name: 'member',
+                    component: member,
+                    children: [
+                    {
+                        path: 'myorder',
+                        alias:'',
+                        name: 'myorder',
+                        component: myorder
+                    },
+                    {
+                        path: 'evaluation',
+                        name: 'evaluation',
+                        component: evaluation
+                    },
+                    {
+                        path: 'uevaluation',
+                        name: 'uevaluation',
+                        component: uevaluation
+                    },
+                    {
+                        path: 'setaccount',
+                        name: 'setaccount',
+                        component: setaccount
+                    },
+                ]
+
+            }
             ]
         },
         {

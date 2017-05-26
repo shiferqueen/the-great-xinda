@@ -141,7 +141,7 @@
 import myhead from '../components/header'
 import myfoot from '../components/footer'
 import qs from 'qs'
-import { mapActions, mapGetters } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'//好几个页面传输数据
 export default {
     name: 'Products',
 
