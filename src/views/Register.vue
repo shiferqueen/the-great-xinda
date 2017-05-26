@@ -26,7 +26,7 @@
                         <option value="1">海淀区</option>
                         <option value="2">朝阳区</option>
                     </select><br>
-                    <input type="text" v-model="password" class="password" placeholder="请设置密码"> <br>
+                    <input type="password" v-model="password" class="password" placeholder="请设置密码"> <br>
                     <input type="text" v-model="imgcode" class="code" placeholder="请输入图片验证码"> <img @click ='getsrc' :src='imgsrc'><br>
                     <button @click="register">立即注册</button>
                     <p>注册即同意遵守<span>《服务协议》</span></p>
@@ -70,7 +70,7 @@
                     password: '' + this.password,
                     regionId: 110010,
                 })).then(function(data) {
-                    // console.log(data)
+                    console.log(data.data);
                 })
                 this.ajax.post('/xinda-api/register/valid-sms', qs.stringify({
                     // cellphone: '' + this.cllphone,
@@ -81,11 +81,11 @@
                      
                     cellphone:'' + this.cllphone,					
                     smsType:1,							
-                     validCode:'' + this.validcode,						
+                    validCode:'' + this.validcode,						
                             
 
                 })).then(function(data) {
-                    console.log(data)
+                    //console.log(data)
                 })
             },
             huoqu() {
