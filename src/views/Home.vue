@@ -116,49 +116,13 @@
             <img :src="'http://115.182.107.203:8088/xinda/pic'+mas.providerImg">
             <h4>{{mas.providerName}}</h4>
             <p class="fz15">服务指数：五星</p>
-            <p class="fz18">提供的服务：{{mas.serviceName}}提供的服务</p>
+            <p class="fz18">提供的服务：{{mas.serviceName}}</p>
             <button class="fl padbot">发明驳回复审</button>
             <button class="fl padbot">高新企业担保认定</button>
             <button class="fl">软件著作权登记</button>
             <button class="fl">商标快速注册</button>                                    
           </a>
-        </li>
-        <!--<li class="fl mar18">
-          <a href="javascript:void(0)">
-            <img src="">
-            <h4>标准五险一金</h4>
-            <p class="fz15">服务指数</p>
-            <p class="fz18">提供的服务</p>
-            <button class="fl padbot">发明驳回复审</button>
-            <button class="fl padbot">高新企业担保认定</button>
-            <button class="fl">软件著作权登记</button>
-            <button class="fl">商标快速注册</button>        
-          </a>
-        </li>
-        <li class="fl mar18">
-          <a href="javascript:void(0)">
-            <img src="">
-            <h4>标准五险一金</h4>
-            <p class="fz15">服务指数</p>
-            <p class="fz18">提供的服务</p>
-            <button class="fl padbot">发明驳回复审</button>
-            <button class="fl padbot">高新企业担保认定</button>
-            <button class="fl">软件著作权登记</button>
-            <button class="fl">商标快速注册</button>        
-          </a>
-        </li>
-        <li class="fl">
-          <a href="javascript:void(0)">
-            <img src="">
-            <h4>标准五险一金</h4>
-            <p class="fz15">服务指数</p>
-            <p class="fz18">提供的服务</p>
-            <button class="fl padbot">发明驳回复审</button>
-            <button class="fl padbot">高新企业担保认定</button>
-            <button class="fl">软件著作权登记</button>
-            <button class="fl">商标快速注册</button>        
-          </a>
-        </li>-->
+        </li>     
       </ul>
     </div>
   </div>
@@ -207,14 +171,12 @@ import{
     let _this = this;
     //-------------相关推荐的数据获取
      this.ajax.post('/xinda-api/recommend/list',{}).then(function(data) {
-
        _this.da = data.data.data.hq;
-  
      });
      this.ajax.post('/xinda-api/recommend/list',{}).then(function(data) {
 
        _this.dat = data.data.data.product;
-       console.log(_this.dat);
+      //console.log(_this.dat);
      });
    },
    
@@ -251,7 +213,6 @@ import{
       //   background: #333;
       // }
     }
-    
   }
 }
 // 小标题的公共样式
@@ -317,6 +278,11 @@ import{
           margin-right: 0;
           margin-left: 18px;
         }
+        &:hover{
+						box-shadow:5px 5px 10px #83a3de;
+						transform:translate3d(0px,-2px,0px);
+						transition-duration:1s;
+				 }
         a{
           width: 254px;
           height: 382px;
@@ -377,6 +343,11 @@ import{
           margin-right: 0;
           margin-left: 18px;
         }
+        &:hover{
+						box-shadow:5px 5px 10px #83a3de;
+						transform:translate3d(0px,-2px,0px);
+						transition-duration:1s;
+				 }
         a{
           width: 254px;
           height: 450px;
@@ -386,7 +357,6 @@ import{
           img{
             width: 124px;
             height: 125px;
-            border-radius:50%;
             margin: 30px 65px 10px;
           }
           h4{
@@ -487,6 +457,11 @@ import{
           margin-right: 0;
           margin-left: 18px;
         }
+        &:hover{
+						box-shadow:5px 5px 10px #83a3de;
+						transform:translate3d(0px,-2px,0px);
+						transition-duration:1s;
+				 }
         a{
           width: 254px;
           height: 430px;
@@ -496,7 +471,6 @@ import{
           img{
             width: 124px;
             height: 125px;
-            border-radius:50%;
             margin: 50px 65px 10px;
           }
           h4{

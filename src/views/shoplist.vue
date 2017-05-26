@@ -49,8 +49,36 @@
                     <li class="all-items-top-num">接单数</li>
                 </ul>
             </div>
-            <div class="all-items-content clear">
-                <div class="all-items-content-left clear">
+            <div class="all-items-content">
+                <div class="all-items-content-left clear" v-for="(liscon,index) in lispage_ajax">
+                    <div>
+                        <p class="all-items-content-left-logo"><img src="../images/logos/logo.png"></p>
+                        <p class="all-items-content-left-gold"><img src="../images/logos/little01.png"><span>金牌服务商</span></p>
+                    </div>
+                    <div class="all-items-content-left-infor">
+                        <ul class="clear">
+                            <li>{{liscon.providerName}}</li>
+                            <li>信誉&nbsp &nbsp<img src="../images/logos/little07.png">
+                                <img src="../images/logos/little07.png">
+                                <img src="../images/logos/little07.png">
+                                <img src="../images/logos/little07.png">
+                                <img src="../images/logos/little04.png">
+                            </li>
+                            <li>{{liscon.regionName}}</li>
+                            <li>累计服务客户次数：{{liscon.orderNum}} &nbsp|&nbsp &nbsp 好评率：100%</li>
+                            <li>
+                                <ul class="all-items-tax clear">
+                                    <li class="all-items-tax-fir">{{liscon.productTypes.substr(0,4)}}</li>
+                                    <li class="all-items-tax-sec">{{liscon.productTypes.substr(5,4)}}</li>
+                                    <li class="all-items-tax-sec">{{liscon.productTypes.substr(10,4)}}</li>
+                                    <li class="all-items-tax-sec">{{liscon.productTypes.substr(15,4)}}</li>
+                                </ul>
+                            </li>
+                            <li class="go-to-shop"><a href="#/shopfront">进入店铺</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <!--<div class="all-items-content-right">
                     <div>
                         <p class="all-items-content-left-logo"><img src="../images/logos/logo.png"></p>
                         <p class="all-items-content-left-gold"><img src="../images/logos/little01.png"><span>金牌服务商</span></p>
@@ -77,35 +105,7 @@
                             <li class="go-to-shop"><a href="#/shopfront">进入店铺</a></li>
                         </ul>
                     </div>
-                </div>
-                <div class="all-items-content-right">
-                    <div>
-                        <p class="all-items-content-left-logo"><img src="../images/logos/logo.png"></p>
-                        <p class="all-items-content-left-gold"><img src="../images/logos/little01.png"><span>金牌服务商</span></p>
-                    </div>
-                    <div class="all-items-content-left-infor">
-                        <ul class="clear">
-                            <li>信达北京服务中心</li>
-                            <li>信誉&nbsp &nbsp<img src="../images/logos/little07.png">
-                                <img src="../images/logos/little07.png">
-                                <img src="../images/logos/little07.png">
-                                <img src="../images/logos/little07.png">
-                                <img src="../images/logos/little04.png">
-                            </li>
-                            <li>北京-北京市-朝阳区</li>
-                            <li>累计服务客户次数：8272 &nbsp|&nbsp &nbsp 好评率：100%</li>
-                            <li>
-                                <ul class="all-items-tax clear">
-                                    <li class="all-items-tax-fir">税务代办</li>
-                                    <li class="all-items-tax-sec">代理记账</li>
-                                    <li class="all-items-tax-sec">个人社保</li>
-                                    <li class="all-items-tax-sec">公司变更</li>
-                                </ul>
-                            </li>
-                            <li class="go-to-shop"><a href="#/shopfront">进入店铺</a></li>
-                        </ul>
-                    </div>
-                </div>
+                </div>-->
             </div>
         </div>
         <div class="item-change clear">
@@ -122,15 +122,30 @@ import myhead from '../components/header'
 import myfoot from '../components/footer'
     export default {
         name: 'shoplist',
+        data() {
+            return {
+                lispage_ajax:[]
+            }
+            
+        },
+        created(){
+            let _this = this;
+            this.ajax.post('http://115.182.107.203:8088/xinda/xinda-api/provider/grid',{start:0,limit:6,productTypeCode:10}).then(function(data){
+                //  var fir = (data.data.data);
+                // var sec = (data.data.data)[1];
+                //  console.log(fir)
+                // console.log(sec)
+                _this.lispage_ajax = data.data.data
+                console.log(_this.lispage_ajax)
+            })
+        },
+
         components:{
                 myhead,
                 myfoot
             },
-        data() {
-            return {
-
-            }
-        },
+        
+        
     }
 </script>
 
@@ -248,14 +263,19 @@ import myfoot from '../components/footer'
     }
     
     .all-items-content {
-        padding: 12px 14px;
+        // padding: 12px 14px;
+        display: flex;
+        width: 100%;
+        &>div{
+            margin: 12px auto;
+        }
     }
     
     .all-items-content-left {
         width: 568px;
         height: 250px;
         border: 1px solid gray;
-        float: left;
+        // float: left;
         div {
             float: left;
         }
@@ -320,7 +340,8 @@ import myfoot from '../components/footer'
         width: 568px;
         height: 250px;
         border: 1px solid gray;
-        float: right;
+        // float: right;
+        margin: 12px auto;
         div {
             float: left;
         }

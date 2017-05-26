@@ -1,5 +1,6 @@
 <template>
   <div>
+
     <div class="top-welcome">
       <div class="top-containter">
         <span id="user-phonenum"></span>
@@ -30,6 +31,7 @@
 
 export default {
   name: 'top',
+
   data() {
     return{
       sum:0,
@@ -37,6 +39,7 @@ export default {
   },
    computed:{
          ...mapGetters(['getCartNum'])
+
   }
 }
 

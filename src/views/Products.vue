@@ -39,13 +39,28 @@
                 <div class="goods-r-top">
                     <h2>顶级服务商</h2>
                     <p>北京信达服务中心</p>
-                    <span>马上咨询</span>
+                    <span @click="goon">马上咨询</span>
                 </div>
                 <div class="goods-r-bottom">
                     <span>
                         <a href="#/shopfront">查看服务商</a>
                     </span>
                 </div>
+            </div>
+            <div class="consult-box" v-show="bSign">
+                <div class="consult-box-title">&nbsp &nbsp 免费电话咨询<span @click="closeDiv">X</span></div>
+                <div></div>
+                <div class="entry-num">
+                    <input type="input" placeholder="请输入手机号">
+                </div>
+                <div class="entry-logo">
+                    <input type="input" placeholder="请输入图形验证码">
+                </div>
+                <div class="entry-code">
+                    <input type="input" placeholder="请输入验证码">
+                </div>
+                <div class="begin-infor">开始免费咨询</div>
+                <p class="promease">本次电话咨询完全免费，我们将对你的号码严格保密，请放心使用!</p>
             </div>
         </div>
         <!--------------------导航栏图部分------------------>
@@ -134,11 +149,12 @@ export default {
         myhead,
         myfoot
     },
-    data() {
+    data() {   
         return {
             msg: '数据',
             con1: true,
             con2: false,
+            bSign:false,
             goodsval: 1,
             product:{
                 img:''
@@ -220,9 +236,21 @@ export default {
                 this.goodsval--;
             }
         },
+<<<<<<< HEAD
 
 
         // 加入购物车方法
+=======
+        // addProducts: function () {
+        //     this.sum++;
+        // },
+         goon(){
+            this.bSign = true
+        },
+        closeDiv(){
+            this.bSign = false
+            },
+>>>>>>> 743a5c361da786aba49d2d88df1c79b4b31709e8
         addProducts() {
             let that = this
             var id = that.$route.params.productId;
@@ -269,6 +297,7 @@ export default {
     width: 1200px;
     height: 393px;
     margin: 0 auto;
+    position: relative;
     &:after {
         .clear;
     }
@@ -386,6 +415,71 @@ export default {
                 cursor: pointer;
             }
         }
+    }
+}
+.consult-box {
+    width: 645px;
+    height: 420px;
+    border: 1px solid gray;
+    position: absolute;
+    top: 60px;
+    left: 320px;
+    z-index: 9;
+    background-color: #fff;
+    input {
+        border: 1px solid gray;
+    }
+    .consult-box-title {
+        height: 44px;
+        background-color: #f8f8f8;
+        line-height: 44px;
+        font-size: 14px;
+        span {
+            margin-left: 508px;
+            font-size: 12px;
+            cursor: pointer;
+        }
+    }
+    .entry-num {
+        margin-top: 28px;
+        margin-left: 170px;
+        input {
+            width: 303px;
+            height: 33px;
+        }
+    }
+    .entry-logo {
+        margin-top: 20px;
+        margin-left: 170px;
+        input {
+            width: 190px;
+            height: 33px;
+        }
+    }
+    .entry-code {
+        margin-top: 28px;
+        margin-left: 170px;
+        input {
+            width: 190px;
+            height: 33px;
+        }
+    }
+    .begin-infor {
+        width: 303px;
+        height: 33px;
+        border-radius: 5px;
+        background-color: #4eb5ba;
+        margin-top: 20px;
+        margin-left: 170px; 
+        line-height: 33px;
+        text-align: center;
+        color: #fff;
+        cursor: pointer;
+    }
+    .promease {
+        margin-top: 22px;
+        margin-left: 140px;
+        font-size: 12px;
     }
 }
 

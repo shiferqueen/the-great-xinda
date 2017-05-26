@@ -112,7 +112,7 @@
     .headdl {
         margin-top: 20px;
         dt {
-            color: #72b1 dc;
+            color: #72b1dc;
             padding-bottom: 5px;
             border-bottom: 1px solid #bdbdbd;
         }
