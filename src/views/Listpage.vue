@@ -58,7 +58,7 @@
                          <a><img :src="'http://115.182.107.203:8088/xinda/pic'+listeach.productImg"></a>
                         </div>
                         <div class="con-main-middle">
-                            <h4><a href="#/products" @click="storeid(index)">{{listeach.serviceName}}</a></h4>
+                            <h4><a :href="'#/products/'+listeach.id" @click="storeid(listeach.id)">{{listeach.serviceName}}</a></h4>
                             <p>{{listeach.serviceInfo}}</p>
                             <p><span>{{listeach.providerName}}</span><span>{{listeach.regionName}}</span></p>
                         </div>
@@ -137,27 +137,23 @@
             ...mapActions(['setCartNum']),
             ...mapActions(['setstoreid']),
             addCartNum(id) {
+                let that = this;
                 this.ajax.post("/xinda-api/cart/add", qs.stringify({
                     id: id,
                     num: 1
 
                 })).then(function (res) {
+                    that.ajax.post("/xinda-api/cart/cart-num", qs.stringify({})).then(function (res) {
+                        var num = res.data.data.cartNum;
+                        console.log(num)
+                        that.setCartNum(num);
+                    })
                     console.log(res)
-                })
-
-
-                let that = this;
-                this.ajax.post("/xinda-api/cart/cart-num", qs.stringify({})).then(function (res) {
-                    var num = res.data.data.cartNum;
-                    console.log(num)
-                    that.setCartNum(num);
                 })
 
             },
             storeid(index){
-                console.log(index)
                 this.setstoreid(index);
-                console.log(index)
             }
         }
     }

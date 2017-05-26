@@ -44,7 +44,7 @@ export default new Router({
                     component: Listpage,
                 },
                 {
-                    path: 'products',
+                    path: 'products/:productId',
                     name: 'Products',
                     component: Products,
                 },
