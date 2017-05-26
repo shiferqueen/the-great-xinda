@@ -15,9 +15,11 @@ import us from '@/views/us'
 import payerror from '@/views/payerror'
 import paysuccess from '@/views/paysuccess'
 import login from '@/views/Login'
+import forget from '@/views/forget'
 Vue.use(Router)
 
 export default new Router({
+
     routes: [{
             path: '/',
             name: 'Common',
@@ -88,7 +90,13 @@ export default new Router({
                 path: 'login',
                 name: 'login',
                 component: login 
+            },
+            {
+                path: 'forget',
+                name: 'forget',
+                component: forget 
             }]
         },
     ]
 });
+
