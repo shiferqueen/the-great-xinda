@@ -68,7 +68,7 @@
             },
         },
         created() {
-            this.$ajax.post('/xinda-api/cart/list', qs.stringify({})).then(function(data) {
+            this.ajax.post('/xinda-api/cart/list', qs.stringify({})).then(function(data) {
                 console.log(data)
             })
         }

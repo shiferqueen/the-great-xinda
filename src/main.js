@@ -12,7 +12,6 @@ axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded
 
 // axios.post('http://115.182.107.203:8088/xinda/xinda-api/cart/list', {})
 //     .then(function(res) {
-//         console.log('res==', res);
 //     })
 //     .catch(function(err) {
 //         console.log(err);
@@ -25,6 +24,7 @@ Vue.prototype.ajax = axios
 new Vue({
     el: '#app',
     router,
+    store,
     template: '<App/>',
     components: { App },
 

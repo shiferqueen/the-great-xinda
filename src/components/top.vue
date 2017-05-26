@@ -19,38 +19,27 @@
           <a href="">我的订单</a>
         </span>
         <a href="#/shopping" class="fr top-shoppingcar">购物车
-          <span class="marg0">{{sum}} </span>件</a>
+          <span class="marg0">{{getCartNum}} </span>件</a>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-    // import qs from 'qs'
-    export default {
+ import {mapGetters} from 'vuex'
 
-        name: 'top',
-        data() {
-            return {
-                sum: 0,
-                // imgsrc: '11'
-            }
-        },
-        // methods: {
-        //     login() {
-        //         this.$ajax.post('/xinda-api/sso/login', qs.stringify({
-        //             loginId: '12345678901',
-        //             password: '46f94c8de14fb36680850768ff1b7f2a',
-        //             imgCode: this.imgsrc,
-        //             // congsole.log()
-
-        //         })).then(function(data) {
-        //             console.log(data);
-        //         })
-        //     }
-        // }
-
+export default {
+  name: 'top',
+  data() {
+    return{
+      sum:0,
     }
+  },
+   computed:{
+         ...mapGetters(['getCartNum'])
+  }
+}
+
 </script>
 
 <style lang="less" scoped>

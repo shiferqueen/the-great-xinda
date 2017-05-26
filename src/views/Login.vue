@@ -24,7 +24,7 @@
                 this.imgsrc = "/xinda-api/ajaxAuthcode/##";
             },
             login() {
-                this.$ajax.post('/xinda-api/sso/login', qs.stringify({
+                this.ajax.post('/xinda-api/sso/login', qs.stringify({
                     loginId: '' + this.cllphone,
                     password: '' + this.password,
                     imgCode: '' + this.imgcode,

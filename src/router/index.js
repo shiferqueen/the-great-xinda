@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-
+import Vueresource from "vue-resource"
 import Common from '@/views/Common'
 import Home from '@/views/Home'
 import Action from '@/views/Action'
@@ -15,7 +15,6 @@ import us from '@/views/us'
 import payerror from '@/views/payerror'
 import paysuccess from '@/views/paysuccess'
 import login from '@/views/Login'
-
 Vue.use(Router)
 
 export default new Router({

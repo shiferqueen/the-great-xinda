@@ -171,14 +171,12 @@ import{
     let _this = this;
     //-------------相关推荐的数据获取
      this.ajax.post('/xinda-api/recommend/list',{}).then(function(data) {
-
        _this.da = data.data.data.hq;
-  
      });
      this.ajax.post('/xinda-api/recommend/list',{}).then(function(data) {
 
        _this.dat = data.data.data.product;
-       console.log(_this.dat);
+      //console.log(_this.dat);
      });
    },
    
@@ -215,7 +213,6 @@ import{
       //   background: #333;
       // }
     }
-    
   }
 }
 // 小标题的公共样式
@@ -281,6 +278,11 @@ import{
           margin-right: 0;
           margin-left: 18px;
         }
+        &:hover{
+						box-shadow:5px 5px 10px #83a3de;
+						transform:translate3d(0px,-2px,0px);
+						transition-duration:1s;
+				 }
         a{
           width: 254px;
           height: 382px;
@@ -341,6 +343,11 @@ import{
           margin-right: 0;
           margin-left: 18px;
         }
+        &:hover{
+						box-shadow:5px 5px 10px #83a3de;
+						transform:translate3d(0px,-2px,0px);
+						transition-duration:1s;
+				 }
         a{
           width: 254px;
           height: 450px;
@@ -450,6 +457,11 @@ import{
           margin-right: 0;
           margin-left: 18px;
         }
+        &:hover{
+						box-shadow:5px 5px 10px #83a3de;
+						transform:translate3d(0px,-2px,0px);
+						transition-duration:1s;
+				 }
         a{
           width: 254px;
           height: 430px;

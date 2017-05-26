@@ -26,7 +26,7 @@
                 this.imgsrc = "/xinda-api/ajaxAuthcode/##";
             },
             register() {
-                this.$ajax.post('/xinda-api/register/register', qs.stringify({
+                this.ajax.post('/xinda-api/register/register', qs.stringify({
                     cellphone: '' + this.cllphone,
                     smsType: 1,
                     validCode: '' + this.validcode,
@@ -37,7 +37,7 @@
                 })
             },
             huoqu() {
-                this.$ajax.post('/xinda-api/register/sendsms', qs.stringify({
+                this.ajax.post('/xinda-api/register/sendsms', qs.stringify({
                     cellphone: '' + this.cllphone,
                     smsType: 1,
                     imgCode: '' + this.imgcode,
