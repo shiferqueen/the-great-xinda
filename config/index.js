@@ -28,6 +28,7 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
+
         '/xinda-api/':{
             target:"http://115.182.107.203:8088/xinda",//http://115.182.107.203:8088/xinda/xinda-api/sso/login-info
             changeOrigin: true,
@@ -42,3 +43,4 @@ module.exports = {
     // just be aware of this issue when enabling this option.
     cssSourceMap: false
   }
+
