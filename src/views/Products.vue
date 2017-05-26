@@ -37,14 +37,14 @@
                 <div class="goods-r-top">
                     <h2>顶级服务商</h2>
                     <p>北京信达服务中心</p>
-                    <span v-on:click="">马上咨询</span>
+                    <span @click="goon">马上咨询</span>
                 </div>
                 <div class="goods-r-bottom">
                     <span><a href="#/shopfront">查看服务商</a></span>
                 </div>
             </div>
-            <div class="consult-box">
-                <div class="consult-box-title">&nbsp &nbsp 免费电话咨询<span>X</span></div>
+            <div class="consult-box" v-show="bSign">
+                <div class="consult-box-title">&nbsp &nbsp 免费电话咨询<span @click="closeDiv">X</span></div>
                 <div></div>
                 <div class="entry-num">
                     <input type="input" placeholder="请输入手机号">
@@ -147,16 +147,23 @@ export default {
         myhead,
         myfoot
     },
-    data() {
+    data() {   
         return {
             msg: '数据',
             con1: true,
             con2: false,
-            goodsval:1
+            goodsval:1,
+            bSign:false,
         }
 
     },
     methods: {
+        goon(){
+            this.bSign = true
+        },
+        closeDiv(){
+            this.bSign = false
+        },
         server: function () {
             this.con1 = true,
                 this.con2 = false
@@ -389,6 +396,7 @@ export default {
         line-height: 33px;
         text-align: center;
         color: #fff;
+        cursor: pointer;
     }
     .promease {
         margin-top: 22px;
