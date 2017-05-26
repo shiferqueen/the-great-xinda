@@ -52,6 +52,7 @@
                 data: '',
                 goodsval: 1,
                 univalence: 800,
+
                 subtotal: function() {
                     return this.goodsval * this.univalence
                 }
@@ -68,7 +69,7 @@
             },
         },
         created() {
-            this.$ajax.post('/xinda-api/cart/list', qs.stringify({})).then(function(data) {
+            this.ajax.post('/xinda-api/cart/list', qs.stringify({})).then(function(data) {
                 console.log(data)
             })
         }
