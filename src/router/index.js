@@ -1,10 +1,16 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-
+import Vueresource from "vue-resource"
 import Common from '@/views/Common'
 import Home from '@/views/Home'
 import Action from '@/views/Action'
 import Register from '@/views/Register'
+import member from '@/views/member'
+import goods from '@/widgets/shopping/goods'
+import myorder from '@/widgets/member/myOrder'
+import evaluation from '@/widgets/member/evaluation'
+import uevaluation from '@/widgets/member/uevaluation'
+import setaccount from '@/widgets/member/setaccount'
 import Listpage from '@/views/Listpage'
 import Products from '@/views/Products'
 import shoplist from '@/views/shoplist'
@@ -15,10 +21,12 @@ import us from '@/views/us'
 import payerror from '@/views/payerror'
 import paysuccess from '@/views/paysuccess'
 import login from '@/views/Login'
+import forget from '@/views/forget'
 
 Vue.use(Router)
 
 export default new Router({
+
     routes: [{
             path: '/',
             name: 'Common',
@@ -45,7 +53,7 @@ export default new Router({
                     component: Listpage,
                 },
                 {
-                    path: 'products',
+                    path: 'products/:productId',
                     name: 'Products',
                     component: Products,
                 },
@@ -74,6 +82,35 @@ export default new Router({
                     name: 'us',
                     component: us,
                 },
+                {
+                    path: 'member',
+                    name: 'member',
+                    component: member,
+                    children: [
+                    {
+                        path: 'myorder',
+                        alias:'',
+                        name: 'myorder',
+                        component: myorder
+                    },
+                    {
+                        path: 'evaluation',
+                        name: 'evaluation',
+                        component: evaluation
+                    },
+                    {
+                        path: 'uevaluation',
+                        name: 'uevaluation',
+                        component: uevaluation
+                    },
+                    {
+                        path: 'setaccount',
+                        name: 'setaccount',
+                        component: setaccount
+                    },
+                ]
+
+            }
             ]
         },
         {
@@ -89,7 +126,13 @@ export default new Router({
                 path: 'login',
                 name: 'login',
                 component: login 
+            },
+            {
+                path: 'forget',
+                name: 'forget',
+                component: forget 
             }]
-        },
+        }
     ]
 });
+

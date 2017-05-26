@@ -1,5 +1,6 @@
 <template>
   <div>
+
     <div class="top-welcome">
       <div class="top-containter">
         <span id="user-phonenum"></span>
@@ -15,42 +16,33 @@
         <span class="fr">
           <a href="#/shopfront" class="blue">服务商入口</a>
         </span>
-        <span v-show=false class="fr top-myorder">
-          <a href="">我的订单</a>
+        <span v-show=true class="fr top-myorder">
+          <a href="#/member">我的订单</a>
         </span>
         <a href="#/shopping" class="fr top-shoppingcar">购物车
-          <span class="marg0">{{sum}} </span>件</a>
+          <span class="marg0">{{getCartNum}} </span>件</a>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-    // import qs from 'qs'
-    export default {
+ import {mapGetters} from 'vuex'
 
-        name: 'top',
-        data() {
-            return {
-                sum: 0,
-                // imgsrc: '11'
-            }
-        },
-        // methods: {
-        //     login() {
-        //         this.$ajax.post('/xinda-api/sso/login', qs.stringify({
-        //             loginId: '12345678901',
-        //             password: '46f94c8de14fb36680850768ff1b7f2a',
-        //             imgCode: this.imgsrc,
-        //             // congsole.log()
+export default {
+  name: 'top',
 
-        //         })).then(function(data) {
-        //             console.log(data);
-        //         })
-        //     }
-        // }
-
+  data() {
+    return{
+      sum:0,
     }
+  },
+   computed:{
+         ...mapGetters(['getCartNum'])
+
+  }
+}
+
 </script>
 
 <style lang="less" scoped>
