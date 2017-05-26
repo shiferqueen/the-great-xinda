@@ -7,7 +7,7 @@
         <!--------------------商品部分------------------------------>
         <div class="goods-main">
             <div class="goods-left">
-                <img :src="tp+product.img">
+                <img :src="product.img">
             </div>
             <!------------------商品价格部分------------------>
             <div class="goods-middle">
@@ -157,7 +157,7 @@ export default {
             bSign:false,
             goodsval: 1,
             product:{
-                img:''
+                img:'/static/e3a93cf9c3094fa6afb5b643c4f8d30f.png'
             },
             providerProduct:{},
             providerRegionText:{},
@@ -165,7 +165,6 @@ export default {
             assess: [],
             tp:"http://115.182.107.203:8088/xinda/pic"
         }
-
     },
     //获取接口
  created() {
@@ -176,6 +175,7 @@ export default {
                 sId: this.$route.params.productId
             })).then(function (res) {
                 let data = res.data.data;
+                data.product.img =_this.tp+data.product.img;
                 _this.product = data.product;
                 _this.providerProduct = data.providerProduct;
                 _this.providerRegionText = data.providerRegionText;
@@ -236,21 +236,14 @@ export default {
                 this.goodsval--;
             }
         },
-<<<<<<< HEAD
 
-
-        // 加入购物车方法
-=======
-        // addProducts: function () {
-        //     this.sum++;
-        // },
          goon(){
             this.bSign = true
         },
         closeDiv(){
             this.bSign = false
             },
->>>>>>> 743a5c361da786aba49d2d88df1c79b4b31709e8
+
         addProducts() {
             let that = this
             var id = that.$route.params.productId;

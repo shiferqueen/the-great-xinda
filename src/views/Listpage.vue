@@ -55,7 +55,7 @@
                     </div>
                     <div class="con-main" v-for="(listeach,index) in listpage_ajax">
                         <div class="con-main-left">
-                         <a><img :src="'http://115.182.107.203:8088/xinda/pic'+listeach.productImg"></a>
+                         <a :href="'#/products/'+listeach.id" @click="storeid(listeach.id)"><img :src="'http://115.182.107.203:8088/xinda/pic'+listeach.productImg"></a>
                         </div>
                         <div class="con-main-middle">
                             <h4><a :href="'#/products/'+listeach.id" @click="storeid(listeach.id)">{{listeach.serviceName}}</a></h4>
@@ -123,10 +123,7 @@
                 start: 0, limit: 8, productTypeCode: "1",
                 productId: "8a82f52b674543e298d2e5f685946e6e", sort: 2
             })).then(function (res) {
-                
-                console.log(res.data.data);
                 _this.listpage_ajax = res.data.data;
-                console.log(_this.listpage_ajax)
             });
 
         },
@@ -176,7 +173,7 @@
     }
 
     .main {
-        width: 1250px;
+        width: 1200px;
         margin: 0 auto;
         &:after {
             .clear;
