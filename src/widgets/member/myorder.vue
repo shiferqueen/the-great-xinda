@@ -1,44 +1,110 @@
 <template>
-  <div class="main">
-
-    <p>首页/公司工商</p>
-    <div class="person_main">
+    <div class="my_order">
         <div>
-            <div>
-                <img src="../images/logos/huiyuan.png"/>
-                <span>12345678901</span>
-            </div>
-            <div>
-                <li>
-                    <img src="../images/logos/110-2.jpg"/>
-                    <span><a href="#/member">我的订单</a></span>
-                </li>
-                <li>
-                   <img src="../images/logos/111-1.jpg"/>
-                   <span><a href="#/member/evaluation">用户评价</a></span> 
-                </li>
-                <li>
-                   <img src="../images/logos/1231.jpg"/>
-                   <span><a href="#/member/setaccount">账户设置</a></span> 
-                </li>
-            </div>
+            <a>我的订单</a>
         </div>
-        <router-view></router-view>
-    </div>
-        <!--<div class="page_next">
+        <div>
+            <li>
+                <span>订单号：</span>
+                <input placeholder="请输入订单号搜索" />
+                <a href="#">搜索</a>
+            </li>
+            <li>
+                <span>创建时间：</span>
+                <input type="date" class="rili_one" />
+                <input type="date" class="rili_two" />
+            </li>
+        </div>
+        <ul class="info_list">
+            <li>
+                <strong>商品名称</strong>
+                <strong>单价</strong>
+                <strong>数量</strong>
+                <strong>总金额</strong>
+                <strong>订单状态</strong>
+                <strong>订单操作</strong>
+            </li>
+        </ul>
+        <ul class="order_num">
+            <li>
+                <span>订单号:S347484929274490</span>
+                <span>下单时间:2017-04-21 01:23:32</span>
+            </li>
+        </ul>
+        <ul class="pay_del">
+            <li>
+                <p>
+                    <img src="../../images/logos/bg_01.jpg" />
+                    <span>信达北京服务中心</span>
+                    <span>注册分公司</span>
+                    <span>￥800.00</span>
+                    <span>￥800.00</span>
+                    <span>等待买家付款</span>
+                    <span>付款</span>
+                </p>
+            </li>
+            <li>
+                <p>
+                    <img src="../../images/logos/bg_01.jpg" />
+                    <span>信达北京服务中心</span>
+                    <span>注册分公司</span>
+                    <span>￥800.00</span>
+                    <span>￥800.00</span>
+                    <span>等待买家付款</span>
+                    <span>删除订单</span>
+                    <span class="number_1">1</span>
+                </p>
+            </li>
+        </ul>
+        <ul class="order_num">
+            <li>
+                <span>订单号:S347484929274490</span>
+                <span>下单时间:2017-04-21 01:23:32</span>
+            </li>
+        </ul>
+        <ul class="pay_del">
+            <li>
+                <p>
+                    <img src="../../images/logos/bg_01.jpg" />
+                    <span>信达北京服务中心</span>
+                    <span>注册分公司</span>
+                    <span>￥800.00</span>
+                    <span>￥800.00</span>
+                    <span>等待买家付款</span>
+                    <span>付款</span>
+                </p>
+            </li>
+            <li>
+                <p>
+                    <img src="../../images/logos/bg_01.jpg" />
+                    <span>信达北京服务中心</span>
+                    <span>注册分公司</span>
+                    <span>￥800.00</span>
+                    <span>￥800.00</span>
+                    <span>等待买家付款</span>
+                    <span>删除订单</span>
+                    <span class="number_1">1</span>
+                </p>
+            </li>
+        </ul>
+        <div class="page_next">
             <span>上一页</span>
             <span>1</span>
             <span>下一页</span>
-        </div>-->
-  </div>
+        </div>
+    </div>
+
 </template>
 
 <script>
+    export default {
+        name: 'myorder',
 
-export default{
-    name :'member'
-}
+    }
+
 </script>
+
+
 <style scoped lang="less">
 .page_next{
     margin-left: 285px;  
@@ -336,6 +402,8 @@ export default{
             margin-left: 275px;
        }strong:nth-child(3){
             margin-left: 89px;
+       }strong:nth-child(1){
+            margin-left: 25px;
        }strong:nth-child(4){
             margin-left: 89px;
        }strong:nth-child(5){

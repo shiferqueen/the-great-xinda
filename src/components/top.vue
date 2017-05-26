@@ -8,7 +8,7 @@
         <span class="fl"><a href="" class="blue">登录</a></span>
         <span class="fl"><a href="" class="blue">快速注册</a></span>
         <span class="fr"><a href="" class="blue">服务商入口</a></span>
-        <span v-show=false class="fr top-myorder"><a href="">我的订单</a></span> 
+        <span v-show=true class="fr top-myorder"><a href="#/member">我的订单</a></span> 
         <a href="##" class="fr top-shoppingcar">购物车<span class="marg0">0</span>件</a>       
       </div>
     </div>
