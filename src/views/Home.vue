@@ -2,30 +2,39 @@
   <div>
     <!---------------轮播---------------------------->
     <div class="advertisment">
-      <div id="lunbo">
+      
         <div class="swiper-container">
-            <div class="swiper-wrapper">
-                <div class="swiper-slide">
-                  <img class="imgload" src="">
-                </div>
-                <div class="swiper-slide">
-                  <img class="imgload" src="">
-                </div>
-                <div class="swiper-slide">
-                  <img class="imgload" src="">
-                </div>
-                <div class="swiper-slide">
-                  <img class="imgload" src="">
-                </div>
-            </div>
+            <swiper :options="swiperOption">
+                    <swiper-slide>
+                        <a href="javascript:void(0)">
+                            <img src="../images/index/lunbo-2.jpg" width="100%" height="400" />
+                        </a>
+                    </swiper-slide>
+                    <swiper-slide>
+                        <a href="javascript:void(0)">
+                            <img src="../images/index/lunbo-2.jpg" width="100%" height="400" />
+                        </a>
+                    </swiper-slide>
+                    <swiper-slide>
+                        <a href="javascript:void(0)">
+                            <img src="../images/index/lunbo-2.jpg" width="100%" height="400" />
+                        </a>
+                    </swiper-slide>
+                    <swiper-slide>
+                        <a href="javascript:void(0)">
+                            <img src="../images/index/lunbo-2.jpg" width="100%" height="400" />
+                        </a>
+                    </swiper-slide>
+                    <div class="swiper-pagination" slot="pagination">
+                    </div>
+                </swiper>
             <!-- 如果需要分页器 -->
-            <div class="swiper-pagination"></div>
 
           <!-- 如果需要导航按钮 -->
           <!--<div class="swiper-button-prev"></div>
           <div class="swiper-button-next"></div>-->
         </div> 
-      </div>
+  
   </div>
   <!------------ 明星产品推荐---------------------->
   <div class="label">
@@ -38,36 +47,12 @@
   <div class="recommend">
     <div class="recom-containt">
       <ul class="clear">
-        <li class="fl">
-          <a href="">
-            <img src="">
-            <h4>标准五险一金</h4>
-            <p>定制化社保代理，定制化代缴服务</p>
-            <div><span>20</span>元/人</div>
-          </a>
-        </li>
-        <li class="fl mar18">
-          <a href="">
-            <img src="">
-            <h4></h4>
-            <p></p>
-            <div><span>20</span>元/人</div>
-          </a>
-        </li>
-        <li class="fl mar18">
-          <a href="">
-            <img src="">
-            <h4></h4>
-            <p></p>
-            <div><span>20</span>元/人</div>
-          </a>
-        </li>
-        <li class="fl">
-          <a href="">
-            <img src="">
-            <h4></h4>
-            <p></p>
-            <div><span>20</span>元/人</div>
+        <li class="fl" v-for="(massage,index) in da">
+          <a href="javascript:void(0)">
+            <img :src="'http://115.182.107.203:8088/xinda/pic'+massage.providerImg">
+            <h4>{{massage.providerName}}</h4>
+            <p>{{massage.serviceName}}</p>
+            <div><span>{{massage.price}}</span>{{massage.unit}}</div>
           </a>
         </li>
       </ul>
@@ -84,42 +69,16 @@
   <div class="startbusiness">
     <div class="stabus-containt">
       <ul class="clear">
-        <li class="fl">
-          <a href="">
-            <img src="">
-            <h4>标准五险一金</h4>
-            <p>定制化社保代理，定制化代缴服务</p>
-            <div><span>￥1400</span>元</div>
+        <li class="fl" v-for="(mas,index) in dat">
+          <a href="javascript:void(0)">
+            <img :src="'http://115.182.107.203:8088/xinda/pic'+mas.providerImg">
+            <h4>{{mas.providerName}}</h4>
+            <p>{{mas.serviceInfo}}</p>
+            <div><span>{{mas.price}}</span>{{mas.unit}}</div>
             <button>查看详情</button>
           </a>
         </li>
-        <li class="fl mar18">
-          <a href="">
-            <img src="">
-            <h4></h4>
-            <p></p>
-            <div><span>￥1400</span>元</div>
-            <button>查看详情</button>
-          </a>
-        </li>
-        <li class="fl mar18">
-          <a href="">
-            <img src="">
-            <h4></h4>
-            <p></p>
-            <div><span>￥1400</span>元</div>
-            <button>查看详情</button>
-          </a>
-        </li>
-        <li class="fl">
-          <a href="">
-            <img src="">
-            <h4></h4>
-            <p></p>
-            <div><span>￥1400</span>元</div>
-            <button>查看详情</button>
-          </a>
-        </li>
+        
       </ul>
     </div>
   </div>
@@ -152,54 +111,18 @@
   <div class="providers">
     <div class="prov-containt">
       <ul class="clear">
-        <li class="fl">
-          <a href="">
-            <img src="">
-            <h4>标准五险一金</h4>
-            <p class="fz15">服务指数</p>
-            <p class="fz18">提供的服务</p>
+        <li class="fl" v-for="(mas,index) in dat">
+          <a href="javascript:void(0)">
+            <img :src="'http://115.182.107.203:8088/xinda/pic'+mas.providerImg">
+            <h4>{{mas.providerName}}</h4>
+            <p class="fz15">服务指数：五星</p>
+            <p class="fz18">提供的服务：{{mas.serviceName}}</p>
             <button class="fl padbot">发明驳回复审</button>
             <button class="fl padbot">高新企业担保认定</button>
             <button class="fl">软件著作权登记</button>
             <button class="fl">商标快速注册</button>                                    
           </a>
-        </li>
-        <li class="fl mar18">
-          <a href="">
-            <img src="">
-            <h4>标准五险一金</h4>
-            <p class="fz15">服务指数</p>
-            <p class="fz18">提供的服务</p>
-            <button class="fl padbot">发明驳回复审</button>
-            <button class="fl padbot">高新企业担保认定</button>
-            <button class="fl">软件著作权登记</button>
-            <button class="fl">商标快速注册</button>        
-          </a>
-        </li>
-        <li class="fl mar18">
-          <a href="">
-            <img src="">
-            <h4>标准五险一金</h4>
-            <p class="fz15">服务指数</p>
-            <p class="fz18">提供的服务</p>
-            <button class="fl padbot">发明驳回复审</button>
-            <button class="fl padbot">高新企业担保认定</button>
-            <button class="fl">软件著作权登记</button>
-            <button class="fl">商标快速注册</button>        
-          </a>
-        </li>
-        <li class="fl">
-          <a href="">
-            <img src="">
-            <h4>标准五险一金</h4>
-            <p class="fz15">服务指数</p>
-            <p class="fz18">提供的服务</p>
-            <button class="fl padbot">发明驳回复审</button>
-            <button class="fl padbot">高新企业担保认定</button>
-            <button class="fl">软件著作权登记</button>
-            <button class="fl">商标快速注册</button>        
-          </a>
-        </li>
+        </li>     
       </ul>
     </div>
   </div>
@@ -216,31 +139,49 @@
       <img src="../images/index/u246.png">
     </div>
   </div>
-
 </div>
 
 </template>
 
 <script>
-import Swiper from '../../static/swiper-3.3.1.min.js'
-require('../../static/swiper-3.3.1.min.css')
+import{
+  swiper,
+  swiperSlide
+}from 'vue-awesome-swiper'
+
  export default {
    name: 'home',
    components: {
-     Swiper
+     swiper,
+     swiperSlide
    },
-   mounted () {
-    //  console.log('挂载好了')
-     var mySwiper = new Swiper('.swiper-container', {
-       direction: 'horizontal',
-       loop: true,
-       pagination: '.swiper-pagination',
-      //  nextButton: '.swiper-button-next',
-      //  prevButton: '.swiper-button-prev'
-     })
-    //  console.log(mySwiper)
-   }
+   data(){
+     return{
+       swiperOption: {
+        autoplay: 3000,
+        autoplayDisableOnInteraction: false,
+        pagination: '.swiper-pagination',
+        paginationClickable: true
+      },
+      da:[],
+      dat:[]
+    }
+  },
+  created(){
+    let _this = this;
+    //-------------相关推荐的数据获取
+     this.ajax.post('/xinda-api/recommend/list',{}).then(function(data) {
+       _this.da = data.data.data.hq;
+     });
+     this.ajax.post('/xinda-api/recommend/list',{}).then(function(data) {
+
+       _this.dat = data.data.data.product;
+      //console.log(_this.dat);
+     });
+   },
+   
  }
+
 </script>
 
 <style scoped lang="less">
@@ -252,37 +193,25 @@ require('../../static/swiper-3.3.1.min.css')
 }
 // 广告轮播
 .advertisment {
-  display: flex;
-  align-items: center;
-  justify-content: center;
   height: 400px;
-  width:1200px;
-  margin: 0 auto;
-  .logo {
-    width: 100%;
-    height:  400px;
-  }
+  width:100%;
   .swiper-container{
-    width: 100%;
-    height:  400px;
-  }
-  .swiper-pagination-bullet-active{
-    background: #333;
-  }
-  .swiper-pagination-bullet{
-    width:12px;
-    height: 12px;
-  }
-  #lunbo {
+    width:1200px;
     height: 400px;
-    width:100%;
-    color: #2c3e50;
-    max-width: 100%;
-    font-family: Source Sans Pro, Helvetica, sans-serif;
-    text-align: center;
-    a{
-      color: #42b983;
-      text-decoration: none;
+    margin: 0 auto;
+    .swiper-pagination{
+      width:100%;
+      height: 20px;
+      // .swiper-pagination-bullet{
+      //   width:12px;
+      //   height: 12px;
+      //   background: #ccc;
+      // }
+      // .swiper-pagination-bullet-active{
+      //   width:12px;
+      //   height: 12px;
+      //   background: #333;
+      // }
     }
   }
 }
@@ -331,19 +260,29 @@ require('../../static/swiper-3.3.1.min.css')
   }
   .recom-containt{
     width: 1200px;
+    height: 420px;
     margin:0 auto;
     ul{
       width: 100%;
+      height: 420px;
       li{
         width: 270px;
         height: 400px;
         border: 1px solid #e8e8e8;
+        margin: 0 19px;
         &:first-child{
+          margin-left: 0;
           margin-right: 18px;
         }
         &:last-child{
+          margin-right: 0;
           margin-left: 18px;
         }
+        &:hover{
+						box-shadow:5px 5px 10px #83a3de;
+						transform:translate3d(0px,-2px,0px);
+						transition-duration:1s;
+				 }
         a{
           width: 254px;
           height: 382px;
@@ -353,8 +292,8 @@ require('../../static/swiper-3.3.1.min.css')
           text-align: center;
           position: relative;
           img{
-            width: 124px;
-            height: 125px;
+            width: 110px;
+            height: 110px;
             border-radius:50%;
             margin: 50px 65px 10px;
           }
@@ -370,7 +309,7 @@ require('../../static/swiper-3.3.1.min.css')
           div{
             position: absolute;
             top:305px;
-            left:90px;
+            left:25%;
             span{
               font-size: 30px;
               color:#2494d4;
@@ -385,9 +324,6 @@ require('../../static/swiper-3.3.1.min.css')
 .startbusiness{
   width:100%;
   height: 460px;
-  .mar18{
-    margin: 0 19px;
-  }
   .stabus-containt{
     width: 1200px;
     margin:0 auto;
@@ -398,12 +334,20 @@ require('../../static/swiper-3.3.1.min.css')
         height: 450px;
         border: 1px solid #e8e8e8;
         position: relative;
+        margin: 0 19px;
         &:first-child{
+          margin-left: 0;
           margin-right: 18px;
         }
         &:last-child{
+          margin-right: 0;
           margin-left: 18px;
         }
+        &:hover{
+						box-shadow:5px 5px 10px #83a3de;
+						transform:translate3d(0px,-2px,0px);
+						transition-duration:1s;
+				 }
         a{
           width: 254px;
           height: 450px;
@@ -413,8 +357,7 @@ require('../../static/swiper-3.3.1.min.css')
           img{
             width: 124px;
             height: 125px;
-            border-radius:50%;
-            margin: 50px 65px 10px;
+            margin: 30px 65px 10px;
           }
           h4{
             line-height: 40px;
@@ -422,9 +365,12 @@ require('../../static/swiper-3.3.1.min.css')
           p{
             line-height: 30px;
             font-size: 14px;
-            margin-bottom: 20px;
+            margin-bottom: 10px;
           }
           div{
+            position: absolute;
+            left:25%;
+            bottom:100px;
             span{
               font-size: 30px;
               color:#2494d4;
@@ -484,9 +430,6 @@ require('../../static/swiper-3.3.1.min.css')
 .providers{
   width:100%;
   height: 440px;
-  .mar18{
-    margin: 0 19px;
-  }
   .prov-containt{
     width: 1200px;
     margin:0 auto;
@@ -505,12 +448,20 @@ require('../../static/swiper-3.3.1.min.css')
         width: 270px;
         height: 435px;
         border: 1px solid #e8e8e8;
+        margin: 0 19px;
         &:first-child{
+          margin-left: 0;
           margin-right: 18px;
         }
         &:last-child{
+          margin-right: 0;
           margin-left: 18px;
         }
+        &:hover{
+						box-shadow:5px 5px 10px #83a3de;
+						transform:translate3d(0px,-2px,0px);
+						transition-duration:1s;
+				 }
         a{
           width: 254px;
           height: 430px;
@@ -520,7 +471,6 @@ require('../../static/swiper-3.3.1.min.css')
           img{
             width: 124px;
             height: 125px;
-            border-radius:50%;
             margin: 50px 65px 10px;
           }
           h4{

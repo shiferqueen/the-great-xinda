@@ -1,14 +1,11 @@
 <template>
   <div>
-    <ahead></ahead>
     <router-view></router-view>
-    <afoot></afoot>
   </div>
 </template>
 
 <script>
-import afoot from '../components/afoot'
-import ahead from '../components/ahead'
+
 export default {
   name: 'hello',
   data() {
@@ -17,8 +14,7 @@ export default {
     }
   },
   components:{
-    ahead,
-    afoot
+  
   }
 }
 

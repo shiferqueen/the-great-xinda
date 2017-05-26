@@ -25,11 +25,13 @@
                 </p>
                 <p>地区：北京-北京市-朝阳区</p>
                 <p>购买数量：
-                    <button @click="reduct()">-</button><input type="text" v-model="goodsval" class="numbers"><button  @click="add()">+</button>
+                    <button @click="reduct()">-</button>
+                    <input type="text" v-model="goodsval" class="numbers">
+                    <button @click="add()">+</button>
                 </p>
                 <div class="summbit">
                     <span>立即购买</span>
-                    <span @：click="addProducts">加入购物车</span>
+                    <span @click="addProducts">加入购物车</span>
                 </div>
             </div>
             <!----------------服务商咨询部分-------------->
@@ -40,7 +42,9 @@
                     <span @click="goon">马上咨询</span>
                 </div>
                 <div class="goods-r-bottom">
-                    <span><a href="#/shopfront">查看服务商</a></span>
+                    <span>
+                        <a href="#/shopfront">查看服务商</a>
+                    </span>
                 </div>
             </div>
             <div class="consult-box" v-show="bSign">
@@ -67,11 +71,12 @@
         <!-----------内容切换-------------------->
         <div class="main-bottom">
             <div class="main-nav">
-                <span class="con1" @click="server()">服务内容</span><span class="con2" @click="evaluate()">商品评价</span>
+                <span class="con1" @click="server()">服务内容</span>
+                <span class="con2" @click="evaluate()">商品评价</span>
             </div>
     
             <div class="main-con1" v-show="con1">
-                <p>服务内容：</p>
+                <p @click="getid">服务内容：</p>
                 <p>1.整理原始票据</p>
                 <p>2.记账</p>
                 <p>3.装订凭证</p>
@@ -122,12 +127,12 @@
                     <div class="main-m-m"></div>
                     <div class="main-m-r"></div>
                 </div>
-                 <div class="main-con2-m1">
+                <div class="main-con2-m1">
                     <div class="main-m-l"></div>
                     <div class="main-m-m"></div>
                     <div class="main-m-r"></div>
                 </div>
-                 <div class="main-con2-m1">
+                <div class="main-con2-m1">
                     <div class="main-m-l"></div>
                     <div class="main-m-m"></div>
                     <div class="main-m-r"></div>
@@ -140,6 +145,8 @@
 <script>
 import myhead from '../components/header'
 import myfoot from '../components/footer'
+import qs from 'qs'
+import { mapActions, mapGetters } from 'vuex'
 export default {
     name: 'Products',
 
@@ -152,17 +159,28 @@ export default {
             msg: '数据',
             con1: true,
             con2: false,
-            goodsval:1,
             bSign:false,
+            goodsval: 1,
+            listproducts:[]
         }
 
     },
-    methods: {
-        goon(){
-            this.bSign = true
+    created() {
+            let _this = this
+            this.ajax.post("/xinda-api/product/package/detail", qs.stringify({
+                 sId:"0cb85ec6b63b41fc8aa07133b6144ea3"})).then(function (res) {
+                
+                console.log(res.data.data.serviceList);
+                _this.listproducts = res.data.data.serviceName;
+                
+            });
+
         },
-        closeDiv(){
-            this.bSign = false
+    methods: {
+        ...mapGetters(['getstoreid']),
+        ...mapActions(['setCartNum']),
+        getid(){
+            console.log(this.getstoreid())
         },
         server: function () {
             this.con1 = true,
@@ -184,18 +202,47 @@ export default {
             con1.style.color = '#686868';
             con1.style.backgroundColor = '#f7f7f7';
         },
-        add: function() {
+        add: function () {
             this.goodsval++;
         },
-        reduct:function(){
-            if(this.goodsval > 0){
-                 this.goodsval--;
-            }   
-        },   
-        addProducts:function(){
-            this.sum++;
+        reduct: function () {
+            if (this.goodsval > 0) {
+                this.goodsval--;
+            }
         },
-        
+        // addProducts: function () {
+        //     this.sum++;
+        // },
+         goon(){
+            this.bSign = true
+        },
+        closeDiv(){
+            this.bSign = false
+            },
+        addProducts() {
+            var that = this
+            var id = that.getstoreid();
+            console.log(id)
+            this.ajax.post("/xinda-api/cart/add", qs.stringify({
+                id: id,
+                num: 1
+
+            })).then(function (res) {
+                console.log(res)
+            })
+
+
+
+            this.ajax.post("/xinda-api/cart/cart-num", qs.stringify({})).then(function (res) {
+
+                var num = res.data.data.cartNum;
+                console.log(num)
+                that.setCartNum(num);
+            })
+
+        },
+
+
     }
 }
 </script>

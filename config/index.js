@@ -27,7 +27,15 @@ module.exports = {
     autoOpenBrowser: true,
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
-    proxyTable: {},
+    proxyTable: {
+
+        '/xinda-api/':{
+            target:"http://115.182.107.203:8088/xinda",//http://115.182.107.203:8088/xinda/xinda-api/sso/login-info
+            changeOrigin: true,
+        }
+    }
+
+  },
     // CSS Sourcemaps off by default because relative paths are "buggy"
     // with this option, according to the CSS-Loader README
     // (https://github.com/webpack/css-loader#sourcemaps)
@@ -35,4 +43,6 @@ module.exports = {
     // just be aware of this issue when enabling this option.
     cssSourceMap: false
   }
-}
+
+
+
