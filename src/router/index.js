@@ -15,7 +15,8 @@ export default new Router({
       component: Common,
       children:[
         {
-          path:'Home',
+          path:'home',
+          alias:'',
           name:'Home',
           component:Home
         }
@@ -27,7 +28,7 @@ export default new Router({
       component: Action,
       children:[
         {
-          path:'register',
+          path:'register/:test',
           name:'register',
           component:Register//enroll
         }
