@@ -52,6 +52,7 @@
                 data: '',
                 goodsval: 1,
                 univalence: 800,
+
                 subtotal: function() {
                     return this.goodsval * this.univalence
                 }
