@@ -25,12 +25,12 @@
                     <dd class="commodity">{{listdata.serviceName}}</dd>
                     <dd class="price">{{listdata.unitPrice+' '+listdata.unit}}</dd>
                     <dd class="quantity" id ="ddval">
-                        <input type="button" @click="min" value="-"><input type="text" v-model="listdata.buyNum" ><input type="button" @click="add" value="+">
+                        <input type="button" @click="min(listdata.buyNum,listdata.serviceId,index)" value="-"><input type="text" v-model="listdata.buyNum" ><input type="button" @click="add(listdata.buyNum,listdata.serviceId,index)" value="+">
                     </dd>
                     <dd class="sum">{{listdata.totalPrice+' '+listdata.unit}}</dd>
                     <dd class="empty"></dd>
                     <!--deleteone 删除当前-->
-                    <dd class="operation" @click="deleteone(index,listdata.providerId)">删除</dd>
+                    <dd class="operation" @click="deleteone(index,listdata.serviceId)">删除</dd>
                 </dl>
             </li>
         </ul>
@@ -45,7 +45,9 @@
 </template>
 <script>
     import qs from 'qs'
-
+    import {
+        mapActions
+    } from 'vuex'
     export default {
         name: 'goods',
         data() {
@@ -62,32 +64,45 @@
             }
         },
         methods: {
-            add: function() {
-                this.goodsval++;
+            ...mapActions(['refCartNum']),
+            add: function(nums, id, index) {
+                let that = this;
+                that.ajax.post('/xinda-api/cart/add', qs.stringify({
+                    id: id,
+                    num: 1,
+                })).then(function() {
+                    that.listdatas[index].buyNum++;
+                })
             },
-            min: function() {
-                if (this.goodsval > 0) {
-                    this.goodsval--;
+            min: function(num, id, index) {
+                let that = this;
+                if (num > 0) {
+                    this.ajax.post('/xinda-api/cart/add', qs.stringify({
+                        id: id,
+                        num: -1,
+                    })).then(function() {
+                        that.listdatas[index].buyNum--;
+                    })
                 }
             },
             deleteone: function(index, id) {
+                var that = this;
                 this.listdatas.splice(index, 1);
                 this.ajax.post('/xinda-api/cart/del', qs.stringify({
                     id: id
                 })).then(function(data) {
                     console.log(data)
+                    that.refCartNum();
                 })
             }
         },
 
         created() {
             let that = this;
-            this.ajax.post('/xinda-api/cart/list').then(function(data) {
-                console.log(data.data.data)
+            that.ajax.post('/xinda-api/cart/list', qs.stringify({})).then(function(data) {
                 var data = data.data.data;
                 for (var i = 0, length = data.length; i < length; i++) {
                     that.listdatas.push(data[i])
-                    console.log(that.listdatas)
                 }
             })
         }
@@ -143,6 +158,7 @@
     
     .company {
         width: 13%;
+        line-height: 0;
     }
     
     .commodity {
@@ -179,6 +195,9 @@
             height: 76px;
             background: #f7f7f7;
             line-height: 76px;
+            .commodity {
+                line-height: 0;
+            }
         }
         .sum {
             color: #72b1dc;
