@@ -60,7 +60,7 @@
                     if(_this.status==1){
                         //登录成功
                         _this.user();
-                        _this.refcartNum();
+                        _this.refCartNum();
                         setTimeout(function() {
                             _this.$router.push({path:'/home'});
                         }, 1000);
