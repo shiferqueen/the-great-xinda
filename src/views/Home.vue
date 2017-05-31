@@ -148,7 +148,8 @@ import{
   swiper,
   swiperSlide
 }from 'vue-awesome-swiper'
-
+import {mapActions} from "vuex" 
+import {mapGetters} from "vuex"
  export default {
    name: 'home',
    components: {
@@ -178,8 +179,13 @@ import{
        _this.dat = data.data.data.product;
       console.log(_this.dat);
      });
+     _this.user();
+     console.log(this.getuser())
    },
-   
+   methods:{
+      ...mapActions(["user"]),
+       ...mapGetters(["getuser"])
+   }
  }
 
 </script>

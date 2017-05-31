@@ -3,23 +3,22 @@
 
     <div class="top-welcome">
       <div class="top-containter">
-        <span id="user-phonenum"></span>
+        <span class="fl pdr" v-show="getuser==''?false:true">{{getuser}}</span>
         <p class="fl">欢迎来到信达!</p>
-
-        <p class="fl" v-show=false>【退出】</p>
+        <p class="fl cr" v-show="getuser==''?false:true"  @click="logout()">【退出】</p>
         <span class="fl">
-          <a href="#/action/login" class="blue">登录</a>
+          <a href="#/action/login" class="blue" v-show="getuser==''?true:false">登录</a>
         </span>
         <span class="fl">
-          <a href="#/action/register" class="blue">快速注册</a>
+          <a href="#/action/register" class="blue" v-show="getuser==''?true:false">快速注册</a>
         </span>
         <span class="fr">
           <a href="#/shopfront" class="blue">服务商入口</a>
         </span>
         <span v-show=true class="fr top-myorder">
-          <a href="#/member">我的订单</a>
+          <a href="#/member" v-show="getuser?true:false">我的订单</a>
         </span>
-        <a href="#/shopping" class="fr top-shoppingcar">购物车
+        <a href="#/shopping" class="fr top-shoppingcar" @click.prevent="goshopping(getuser)">购物车
           <span class="marg0">{{getCartNum}} </span>件</a>
       </div>
     </div>
@@ -27,20 +26,55 @@
 </template>
 
 <script>
- import {mapGetters} from 'vuex'
+ import {mapGetters,mapActions} from 'vuex'
 
 export default {
   name: 'top',
-
   data() {
     return{
       sum:0,
+      status:'',//登录状态
     }
   },
    computed:{
-         ...mapGetters(['getCartNum'])
+         ...mapGetters(['getCartNum','getuser'])
 
-  }
+  },
+  mounted(){
+      let _this = this;
+      this.ajax.post("/xinda-api/sso/login-info").then(function(res){//获取登录信息
+          console.log(typeof res.data.data);
+           _this.status=res.data.status;
+      });
+      console.log(this.user)
+      this.user();
+      this.refCartNum();
+  },
+  methods: {
+      ...mapGetters(['getCartNum','getuser']),
+
+    logout(){
+        let _this = this;
+        this.ajax.post("/xinda-api/sso/logout").then(function(res){//退出登录信息
+        console.log(res.data);
+        if(res.data.status==1){
+              _this.user('');
+              setTimeout(function() {
+                  console.log(_this.getuser)
+              }, 500);
+          }
+       })
+    },
+    ...mapActions(['refCartNum','user']),
+    //  ...mapActions([])
+    goshopping(uname){
+        if(uname!=''){
+            this.$router.push({name:'shopping'});
+        }else{
+            this.$router.push({name:'login'});
+        }
+    }
+  },
 }
 
 </script>
@@ -49,11 +83,18 @@ export default {
     .fl {
         float: left;
     }
-    
+    .pdr{
+        padding-right: 20px;
+    }
     .fr {
         float: right;
     }
-    
+    .cr{
+        cursor:pointer;
+        &:hover{
+             color: #2494d4!important;
+        } 
+    }
     .marg0 {
         margin: 0!important;
         padding: 0!important;

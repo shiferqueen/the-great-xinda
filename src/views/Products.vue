@@ -200,9 +200,12 @@ export default {
 
 
         },
+    computed: {
+        ...mapGetters(['getCartNum'])
+    },
     methods: {
         ...mapGetters(['getstoreid']),
-        ...mapActions(['setCartNum']),
+        ...mapActions(['refCartNum']),
 
 
         //服务，评价切换方法
@@ -218,7 +221,7 @@ export default {
         },
         evaluate: function () {
             this.con1 = false,
-                this.con2 = true
+            this.con2 = true
             var con2 = document.getElementsByClassName('con2')[0];
             var con1 = document.getElementsByClassName('con1')[0];
             con2.style.color = '#fff';
@@ -253,16 +256,8 @@ export default {
                 num: 1
 
             })).then(function (res) {
-                 that.ajax.post("/xinda-api/cart/cart-num", qs.stringify({})).then(function (res) {
-
-                var num = res.data.data.cartNum;
-                console.log(num)
-                that.setCartNum(num);
+                that.refCartNum();
             })
-                console.log(res)
-            })
-
-           
 
         },
 
