@@ -256,7 +256,15 @@ export default {
                 num: 1
 
             })).then(function (res) {
-                that.refCartNum();
+                    that.refCartNum();
+                    that.ajax.post("/xinda-api/cart/set", qs.stringify({
+                    id:1212121,
+                    num:that.goodsval
+                   
+
+                })).then(function (res) {
+                     console.log(that.goodsval);
+                })
             })
 
         },
