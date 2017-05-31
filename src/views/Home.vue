@@ -177,7 +177,7 @@ import {mapGetters} from "vuex"
      this.ajax.post('/xinda-api/recommend/list',{}).then(function(data) {
 
        _this.dat = data.data.data.product;
-      //console.log(_this.dat);
+      console.log(_this.dat);
      });
      _this.user();
      console.log(this.getuser())
