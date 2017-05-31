@@ -7,7 +7,7 @@
       <div class="buttom">
           <div class="next">
             <div class="left">
-                <p class="tishi"></p>
+                <p :class="[status==1 ? 'activeclass' : 'errorclass']">{{msg}}</p>
                 <input type="text" class="phone" v-model="cellphone" placeholder="请输入手机号码"><br>
                 <input type="password" class="password" v-model="password" placeholder="请输入密码"> <br>
                 <input type="text" class="code" v-model="imgcode" placeholder="请输入验证码"> <img @click ='getsrc' src='/xinda-api/ajaxAuthcode'><br>
@@ -28,6 +28,7 @@
 
 <script>
     import qs from 'qs'
+    import {mapActions} from "vuex" 
     export default {
         name: 'login',
         data() {
@@ -36,32 +37,33 @@
                 cellphone: '',
                 password: '',
                 imgcode: '',
+                status:'',//状态
+                msg:'',//提示消息
             }
         },
         methods: {
+            ...mapActions(["user"]),
             getsrc() {
                 this.imgsrc = "/xinda-api/ajaxAuthcode/##";
             },
             login() {
-                this.ajax.post('/xinda-api/sso/login', qs.stringify({
-                    loginId: '' + this.cllphone,
-                    password: '' + this.password,
-                    imgCode: '' + this.imgcode,
+                let _this = this;
+                this.ajax.post('/xinda-api/sso/login', qs.stringify({//登录提交
+                    loginId: '' + this.cellphone,//手机号
+                    password: '' + this.password,//密码
+                    imgCode: '' + this.imgcode,//图片验证码
                 })).then(function(data) {
-                    
                    // console.log(data);
-
+                   _this.status=data.data.status;
+                    _this.msg=data.data.msg;
+                    if(_this.status==1){
+                        //登录成功
+                        _this.user();
+                        setTimeout(function() {
+                            _this.$router.push({path:'/home'});
+                        }, 1000);
+                    }
                 })
-                // var phnum = document.getElementsByClassName('phone')[0].value;
-                // var tishi = document.getElementsByClassName('tishi')[0];
-                // var phonenum =/^1[3|4|5|7|8][0-9]{9}$/;
-                // if(phnum==''){
-                //     tishi.innerHtml='请输入手机号';
-                // }else if(phonenum.test(phnum)==false){
-                //     tishi.innerHtml='请重新输入手机号';
-                // }else{
-
-                // }
             },
         }
     }
@@ -69,6 +71,14 @@
 
 
 <style scoped lang="less">
+.activeclass{
+    color: #2494d4;
+    padding: 20px 150px 0;
+}
+.errorclass{
+    color: red;
+   padding: 20px 150px 0;
+}
     input {
         border: 1px solid #ccc;
         
@@ -130,7 +140,7 @@
                     background-color: #fff;
                 }
                 .phone{
-                    margin-top: 54px;
+                    margin-top: 20px;
                 }
                 .code{
                     width:174px;

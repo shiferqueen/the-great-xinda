@@ -11,8 +11,8 @@
             </li>
             <li>
                 <span>创建时间：</span>
-                <input type="date" class="rili_one" />
-                <input type="date" class="rili_two" />
+                <input class="rili_one" />
+                <input class="rili_two" />
             </li>
         </div>
         <ul class="info_list">
@@ -97,11 +97,7 @@
 </template>
 
 <script>
-    export default {
-        name: 'myorder',
-
-    }
-
+ 
 </script>
 
 

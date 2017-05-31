@@ -34,13 +34,31 @@
         <!--<div class="page_next">
             <span>上一页</span>
             <span>1</span>
+
+
+
+
+
+
+
+
+
+            
             <span>下一页</span>
         </div>-->
   </div>
 </template>
 
 <script>
-
+  import qs from 'qs'
+    export default {
+        name: 'goods',
+        created() {
+            this.ajax.post('/xinda-api/business-order/grid', qs.stringify({})).then(function(data) {
+                console.log(data)
+            })
+        }
+    }
 </script>
 <style scoped lang="less">
 .active{
