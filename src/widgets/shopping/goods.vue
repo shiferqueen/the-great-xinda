@@ -30,15 +30,15 @@
                     <dd class="sum">￥ {{listdata.totalPrice}}</dd>
                     <dd class="empty"></dd>
                     <!--deleteone 删除当前-->
-                    <dd class="operation" @click="deleteone(index,listdata.serviceId)">删除</dd>
+                    <dd class="operation" @click="deleteone(index,listdata.serviceId,listdata.totalPrice)">删除</dd>
                 </dl>
             </li>
         </ul>
         <div class="clear goods-end"> 
             <p class="clear">金额总计<strong>￥{{univalence}}</strong></p>
             <div class="clear">
-                <input type="button" value="继续购物">
-                <input type="button" value="去结算">
+                <input type="button" value="继续购物" @click="href(2)">
+                <input type="button" value="去结算" @click="href(1)">
             </div>
         </div>
     </div>
@@ -106,15 +106,28 @@
                     })
                 }
             },
-            deleteone: function(index, id) {
+            deleteone: function(index, id, price) {
                 var that = this;
                 this.listdatas.splice(index, 1);
                 this.ajax.post('/xinda-api/cart/del', qs.stringify({
                     id: id
                 })).then(function(data) {
-                    console.log(data)
                     that.refCartNum();
+                    that.shoppingnum--;
+                    that.univalence -= price;
                 })
+            },
+            href(i) {
+                switch (i) {
+                    case 1:
+                        location.href = '#/from';
+                        break;
+
+                    case 2:
+                        location.href = '#/Listpage';
+                        break;
+
+                }
             }
         },
 
