@@ -11,7 +11,8 @@ export default new Vuex.Store({
     state: {
         //购物车数量,
         cartNum: 0,
-        storeid: ''
+        storeid: '',
+        username:'',
 
     },
     //突变集合---用来操作状态集合
@@ -22,6 +23,9 @@ export default new Vuex.Store({
         },
         SETSTOREID(state, id) {
             state.storeid = id;
+        },
+        SETUSER(state,num){
+            state.username = num;
         }
     },
     //动作集合---用来操作突变集合的
@@ -32,7 +36,17 @@ export default new Vuex.Store({
                  commit('SETCARTNUM', num);
             })
         },
-    
+        user({commit},come_user){
+             axios.post("/xinda-api/sso/login-info").then(function (res) {
+                if(res.data.data != null){
+                    var num = res.data.data.name;
+                    commit('SETUSER', num);
+                }else{
+                    var num = '';
+                    commit('SETUSER', num);
+                }
+            })
+        },
         setstoreid({ commit }, id) {
             commit('SETSTOREID', id);
 
@@ -45,6 +59,9 @@ export default new Vuex.Store({
         },
         getstoreid(state) {
             return state.storeid
+        },
+        getuser(state) {
+            return state.username
         },
     }
 });

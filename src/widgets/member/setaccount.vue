@@ -62,6 +62,8 @@
 </template>
 
 <script>
+//  import qs from 'qs'
+
  export default {
         name: 'setaccount',
         data(){
@@ -79,9 +81,13 @@
                 this.zhang = false,
                 this.password = true
             }
+        },
+        created() {
+            this.ajax.post('/xinda-api/member/info').then(function(data){
+                console.log(data)
+            })
         }
     }
-    
 </script>
 
 <style lang="less">
