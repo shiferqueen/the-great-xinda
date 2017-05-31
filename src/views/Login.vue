@@ -28,7 +28,7 @@
 
 <script>
     import qs from 'qs'
-    import {mapActions} from "vuex" 
+    import {mapGetters,mapActions} from 'vuex'
     export default {
         name: 'login',
         data() {
@@ -42,7 +42,8 @@
             }
         },
         methods: {
-            ...mapActions(["user"]),
+            ...mapActions(["user","refcartNum"]),
+            ...mapGetters(['getCartNum']),
             getsrc() {
                 this.imgsrc = "/xinda-api/ajaxAuthcode/##";
             },
@@ -59,6 +60,7 @@
                     if(_this.status==1){
                         //登录成功
                         _this.user();
+                        _this.refcartNum();
                         setTimeout(function() {
                             _this.$router.push({path:'/home'});
                         }, 1000);
