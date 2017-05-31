@@ -27,15 +27,20 @@
 </template>
 
 <script>
- import {mapGetters} from 'vuex'
+ import {mapGetters,mapActions} from 'vuex'
 
 export default {
   name: 'top',
-
+  created(){
+      this.refCartNum();
+  },
   data() {
     return{
       sum:0,
     }
+  },
+  methods:{
+    ...mapActions(['refCartNum'])
   },
    computed:{
          ...mapGetters(['getCartNum'])
