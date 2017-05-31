@@ -78,7 +78,7 @@
                     _this.msg=data.data.msg;
                     if(_this.status==1){
                         //注册成功
-                        router.push({path: 'login'});
+                        this.$router.push({path: 'login'});
                     }
                 })
                 this.ajax.post('/xinda-api/register/valid-sms', qs.stringify({ //注册验证
