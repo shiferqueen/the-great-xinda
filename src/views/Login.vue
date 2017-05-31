@@ -42,7 +42,7 @@
             }
         },
         methods: {
-            ...mapActions(["user","refcartNum"]),
+            ...mapActions(["user","refCartNum"]),
             ...mapGetters(['getCartNum']),
             getsrc() {
                 this.imgsrc = "/xinda-api/ajaxAuthcode/##";
