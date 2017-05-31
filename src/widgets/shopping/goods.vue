@@ -14,22 +14,23 @@
             <dd class="operation">操作</dd>
         </dl>
         <ul class="clear">
-            <li>
+            <li v-for='(listdata,index) in listdatas'>
                 <dl class="clear ul-dl">
                     <dt>
-                        店铺：信达北京服务中心
+                        店铺：{{listdata.providerName}}
                     </dt>
                     <dd class="company">
-                        <img src="../../images/logos/logo1.png">
+                        <img :src ='srcimg + listdata.providerImg'>
                     </dd>
-                    <dd class="commodity">注册分公司</dd>
-                    <dd class="price">￥{{univalence}}</dd>
+                    <dd class="commodity">{{listdata.serviceName}}</dd>
+                    <dd class="price">{{listdata.unitPrice+' '+listdata.unit}}</dd>
                     <dd class="quantity" id ="ddval">
-                        <input type="button" @click="min" value="-"><input type="text" v-model="goodsval" ><input type="button" @click="add" value="+">
+                        <input type="button" @click="min(listdata.buyNum,listdata.serviceId,index)" value="-"><input type="text" v-model="listdata.buyNum" ><input type="button" @click="add(listdata.buyNum,listdata.serviceId,index)" value="+">
                     </dd>
-                    <dd class="sum">￥{{subtotal()}}</dd>
+                    <dd class="sum">{{listdata.totalPrice+' '+listdata.unit}}</dd>
                     <dd class="empty"></dd>
-                    <dd class="operation">删除</dd>
+                    <!--deleteone 删除当前-->
+                    <dd class="operation" @click="deleteone(index,listdata.serviceId)">删除</dd>
                 </dl>
             </li>
         </ul>
@@ -44,7 +45,9 @@
 </template>
 <script>
     import qs from 'qs'
-
+    import {
+        mapActions
+    } from 'vuex'
     export default {
         name: 'goods',
         data() {
@@ -52,24 +55,55 @@
                 data: '',
                 goodsval: 1,
                 univalence: 800,
+                srcimg: 'http://115.182.107.203:8088/xinda/pic',
+                listdatas: [],
+
                 subtotal: function() {
                     return this.goodsval * this.univalence
                 }
             }
         },
         methods: {
-            add: function() {
-                this.goodsval++;
+            ...mapActions(['refCartNum']),
+            add: function(nums, id, index) {
+                let that = this;
+                that.ajax.post('/xinda-api/cart/add', qs.stringify({
+                    id: id,
+                    num: 1,
+                })).then(function() {
+                    that.listdatas[index].buyNum++;
+                })
             },
-            min: function() {
-                if (this.goodsval > 0) {
-                    this.goodsval--;
+            min: function(num, id, index) {
+                let that = this;
+                if (num > 0) {
+                    this.ajax.post('/xinda-api/cart/add', qs.stringify({
+                        id: id,
+                        num: -1,
+                    })).then(function() {
+                        that.listdatas[index].buyNum--;
+                    })
                 }
             },
+            deleteone: function(index, id) {
+                var that = this;
+                this.listdatas.splice(index, 1);
+                this.ajax.post('/xinda-api/cart/del', qs.stringify({
+                    id: id
+                })).then(function(data) {
+                    console.log(data)
+                    that.refCartNum();
+                })
+            }
         },
+
         created() {
-            this.ajax.post('/xinda-api/cart/list', qs.stringify({})).then(function(data) {
-                console.log(data)
+            let that = this;
+            that.ajax.post('/xinda-api/cart/list', qs.stringify({})).then(function(data) {
+                var data = data.data.data;
+                for (var i = 0, length = data.length; i < length; i++) {
+                    that.listdatas.push(data[i])
+                }
             })
         }
     }
@@ -90,6 +124,7 @@
     
     li {
         list-style: none;
+        margin-bottom: 50px;
     }
     
     dt {
@@ -112,7 +147,7 @@
     .headdl {
         margin-top: 20px;
         dt {
-            color: #72b1 dc;
+            color: #72b1dc;
             padding-bottom: 5px;
             border-bottom: 1px solid #bdbdbd;
         }
@@ -123,6 +158,7 @@
     
     .company {
         width: 13%;
+        line-height: 0;
     }
     
     .commodity {
@@ -159,6 +195,9 @@
             height: 76px;
             background: #f7f7f7;
             line-height: 76px;
+            .commodity {
+                line-height: 0;
+            }
         }
         .sum {
             color: #72b1dc;

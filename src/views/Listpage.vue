@@ -55,10 +55,10 @@
                     </div>
                     <div class="con-main" v-for="(listeach,index) in listpage_ajax">
                         <div class="con-main-left">
-                         <a><img :src="'http://115.182.107.203:8088/xinda/pic'+listeach.productImg"></a>
+                         <a :href="'#/products/'+listeach.id" @click="storeid(listeach.id)"><img :src="'http://115.182.107.203:8088/xinda/pic'+listeach.productImg"></a>
                         </div>
                         <div class="con-main-middle">
-                            <h4><a href="#/products" @click="storeid(index)">{{listeach.serviceName}}</a></h4>
+                            <h4><a :href="'#/products/'+listeach.id" @click="storeid(listeach.id)">{{listeach.serviceName}}</a></h4>
                             <p>{{listeach.serviceInfo}}</p>
                             <p><span>{{listeach.providerName}}</span><span>{{listeach.regionName}}</span></p>
                         </div>
@@ -123,10 +123,7 @@
                 start: 0, limit: 8, productTypeCode: "1",
                 productId: "8a82f52b674543e298d2e5f685946e6e", sort: 2
             })).then(function (res) {
-                
-                console.log(res.data.data);
                 _this.listpage_ajax = res.data.data;
-                console.log(_this.listpage_ajax)
             });
 
         },
@@ -134,30 +131,21 @@
             ...mapGetters(['getCartNum'])
         },
         methods: {
-            ...mapActions(['setCartNum']),
-            ...mapActions(['setstoreid']),
+            ...mapActions(['setstoreid','refCartNum']),
             addCartNum(id) {
+                let that = this;
                 this.ajax.post("/xinda-api/cart/add", qs.stringify({
                     id: id,
                     num: 1
 
                 })).then(function (res) {
-                    console.log(res)
-                })
-
-
-                let that = this;
-                this.ajax.post("/xinda-api/cart/cart-num", qs.stringify({})).then(function (res) {
-                    var num = res.data.data.cartNum;
-                    console.log(num)
-                    that.setCartNum(num);
+                    that.refCartNum();
+                 
                 })
 
             },
             storeid(index){
-                console.log(index)
                 this.setstoreid(index);
-                console.log(index)
             }
         }
     }
@@ -180,7 +168,7 @@
     }
 
     .main {
-        width: 1250px;
+        width: 1200px;
         margin: 0 auto;
         &:after {
             .clear;
@@ -373,7 +361,6 @@
             }
         }
     }
-
     .teshuyangshi {
         line-height: 78px !important;
     }
