@@ -11,10 +11,10 @@
                     <input type="text" v-model="cellphone" class="phone" placeholder="请输入手机号"><br>
                     <input type="text" v-model="validcode" class="code1" placeholder="请输入短信验证码"> <input type="button" value="获取短信" @click='huoqu' class="text"> <br>
                     <input type="text" class="code" v-model="imgcode" placeholder="请输入图片验证码"> <img @click ='getsrc' src='/xinda-api/ajaxAuthcode'><br>
-                    <input type="text" v-model="password" class="password" placeholder="请输入新密码"> <br>
+                    <input type="password" v-model="password" class="password" placeholder="请输入新密码"> <br>
                     <input type="text" v-model="password" class="password" placeholder="请确认密码"> <br>
                     
-                    <button @click="login">确认修改</button>
+                    <button @click="forget">确认修改</button>
                 </div>
                 <div class="right">
                     <div class="right1">
@@ -31,43 +31,43 @@
 
 <script>
 
-    // import qs from 'qs'
+    import qs from 'qs'
     export default {
         name: 'forget',
-        // data() {
-        //     return {
-        //         imgsrc: "/xinda-api/ajaxAuthcode",
-        //         cellphone: '',
-        //         password: '',
-        //         validcode: '',
-        //         imgcode: '',
-        //     }
-        // },
-        // methods: {
-        //     getsrc() {
-        //         this.imgsrc = "/xinda-api/ajaxAuthcode/##";
-        //     },
-        //     register() {
-        //         this.ajax.post('/xinda-api/register/register', qs.stringify({
-        //             cellphone: '' + this.cllphone,
-        //             smsType: 1,
-        //             validCode: '' + this.validcode,
-        //             password: '' + this.password,
-        //             regionId: 110010,
-        //         })).then(function(data) {
-        //             console.log(data)
-        //         })
-        //     },
-        //     huoqu() {
-        //         this.ajax.post('/xinda-api/register/sendsms', qs.stringify({
-        //             cellphone: '' + this.cllphone,
-        //             smsType: 1,
-        //             imgCode: '' + this.imgcode,
-        //         })).then(function(data) {
-        //             console.log(data)
-        //         })
-        //     }
-        // }
+        data() {
+            return {
+                imgsrc: "/xinda-api/ajaxAuthcode",
+                cellphone: '',
+                password: '',
+                validcode: '',
+                imgcode: '',
+            }
+        },
+        methods: {
+            getsrc() {
+                this.imgsrc = "/xinda-api/ajaxAuthcode/##";
+            },
+            forget() {
+                this.ajax.post('/xinda-api/register/findpas', qs.stringify({
+                    cellphone: '' + this.cllphone,
+                    smsType: 2,
+                    validCode: '' + this.validcode,
+                    password: '' + this.password,
+                    regionId: 110010,
+                })).then(function(data) {
+                    console.log(data)
+                })
+            },
+            huoqu() {
+                this.ajax.post('/xinda-api/register/sendsms', qs.stringify({
+                    cellphone: '' + this.cllphone,
+                    smsType: 1,
+                    imgCode: '' + this.imgcode,
+                })).then(function(data) {
+                    console.log(data)
+                })
+            }
+        }
     }
 
 </script>

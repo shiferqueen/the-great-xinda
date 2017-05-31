@@ -63,7 +63,7 @@
                 this.imgsrc = "/xinda-api/ajaxAuthcode/##";
             },
             register() {
-                this.ajax.post('/xinda-api/register/register', qs.stringify({
+                this.ajax.post('/xinda-api/register/register', qs.stringify({ //注册提交
                     cellphone: '' + this.cllphone,
                     smsType: 1,
                     validCode: '' + this.validcode,
@@ -72,7 +72,7 @@
                 })).then(function(data) {
                     // console.log(data)
                 })
-                this.ajax.post('/xinda-api/register/valid-sms', qs.stringify({
+                this.ajax.post('/xinda-api/register/valid-sms', qs.stringify({ //注册验证
                     // cellphone: '' + this.cllphone,
                     // smsType: 1,
                     // validCode: '' + this.validcode,
@@ -81,7 +81,7 @@
                      
                     cellphone:'' + this.cllphone,					
                     smsType:1,							
-                     validCode:'' + this.validcode,						
+                    validCode:'' + this.validcode,						
                             
 
                 })).then(function(data) {
