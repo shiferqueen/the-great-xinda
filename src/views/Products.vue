@@ -248,7 +248,9 @@ export default {
             },
 
         addProducts(uname) {
-           
+            if(uname==""){
+                    this.$router.push({path: '/action/login'});
+            }else{
                 let that = this
                 var id = that.$route.params.productId;
                 this.ajax.post("/xinda-api/cart/add", qs.stringify({
@@ -268,7 +270,7 @@ export default {
 
                     })
                 })
-            
+            }
         },
 
 
