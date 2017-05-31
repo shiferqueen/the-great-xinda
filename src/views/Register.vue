@@ -8,6 +8,7 @@
         <div class="buttom">
             <div class="next">
                 <div class="left">
+                    <p :class="[status==1 ? 'activeclass' : 'errorclass']">{{msg}}</p>
                     <input type="text" v-model="cellphone" class="phone" placeholder="请输入手机号"><br>
                     <input type="text" v-model="validcode" class="code1" placeholder="请输入短信验证码"> <input type="button" value="获取短信" @click='huoqu' class="text"> <br>
                     <select class="first">
@@ -29,7 +30,7 @@
                     <input type="password" v-model="password" class="password" placeholder="请设置密码"> <br>
                     <input type="text" v-model="imgcode" class="code" placeholder="请输入图片验证码"> <img @click ='getsrc' :src='imgsrc'><br>
                     <button @click="register">立即注册</button>
-                    <p>注册即同意遵守<span>《服务协议》</span></p>
+                    <p class="p1">注册即同意遵守<span>《服务协议》</span></p>
                 </div>
                 <div class="right">
                     <div class="right1">
@@ -45,56 +46,61 @@
 </template>
 
 <script>
-
     import qs from 'qs'
     export default {
         name: 'register',
         data() {
             return {
-                imgsrc: "/xinda-api/ajaxAuthcode",
-                cellphone: '',
-                password: '',
-                validcode: '',
-                imgcode: '',
+                imgsrc: "/xinda-api/ajaxAuthcode",//图片验证码链接
+                cellphone: '',//手机号
+                password: '',//密码
+                validcode: '',//短信验证码
+                imgcode: '',//图片验证码
+                status:'',//状态
+                msg:'',//提示消息
             }
         },
         methods: {
             getsrc() {
-                this.imgsrc = "/xinda-api/ajaxAuthcode/##";
+                this.imgsrc = "/xinda-api/ajaxAuthcode/##";//获取图片验证码
             },
             register() {
-                this.ajax.post('/xinda-api/register/register', qs.stringify({
-                    cellphone: '' + this.cllphone,
+                let _this = this;
+                this.ajax.post('/xinda-api/register/register', qs.stringify({//注册提交
+                    cellphone: this.cellphone,
                     smsType: 1,
-                    validCode: '' + this.validcode,
-                    password: '' + this.password,
-                    regionId: 110010,
+                    validCode:this.validcode,
+                    password:this.password,
+                    regionId: 110010,//所属地区编码
+                })).then(function(data) {
+                    //console.log(data.data);
+                    _this.status=data.data.status;
+                    _this.msg=data.data.msg;
+                    if(_this.status==1){
+                        //注册成功
+                        router.push({path: 'login'});
+                    }
+                })
+                this.ajax.post('/xinda-api/register/valid-sms', qs.stringify({ //注册验证
+                    cellphone:this.cellphone,	//手机号				
+                    smsType:1,			//短信类型:1注册				
+                    validCode:this.validcode,	//短信验证码				
                 })).then(function(data) {
                     console.log(data.data);
-                })
-                this.ajax.post('/xinda-api/register/valid-sms', qs.stringify({
-                    // cellphone: '' + this.cllphone,
-                    // smsType: 1,
-                    // validCode: '' + this.validcode,
-                    // password: '' + this.password,
-                    // regionId: 110010,
-                     
-                    cellphone:'' + this.cllphone,					
-                    smsType:1,							
-                    validCode:'' + this.validcode,						
-                            
-
-                })).then(function(data) {
-                    //console.log(data)
+                    _this.status=data.data.status;
+                    _this.msg=data.data.msg;
                 })
             },
             huoqu() {
-                this.ajax.post('/xinda-api/register/sendsms', qs.stringify({
-                    cellphone: '' + this.cllphone,
+                let _this = this;
+                this.ajax.post('/xinda-api/register/sendsms', qs.stringify({//发送短信接口
+                    cellphone:this.cellphone,
                     smsType: 1,
-                    imgCode: '' + this.imgcode,
+                    imgCode:this.imgcode,
                 })).then(function(data) {
-                    console.log(data)
+                    console.log(data.data)
+                     _this.status=data.data.status;
+                     _this.msg=data.data.msg;
                 })
             }
         }
@@ -105,15 +111,17 @@
 
 
 <style scoped lang="less">
+.activeclass{
+    color: #2494d4;
+    padding: 20px 150px 0;
+}
+.errorclass{
+    color: red;
+    padding: 20px 150px 0;
+}
     input {
         border: 1px solid #ccc;
     }
-    
-    // img {
-    //     width: 50px;
-    //     height: 20px;
-    //     border: 1px solid #ccc;
-    // }
     .top{
         width:1200px;
         height:97px;
@@ -193,7 +201,7 @@
                     background-color: #fff;
                 }
                 .phone{
-                    margin-top: 54px;
+                    margin-top: 20px;
                 }
                 .code{
                     width:174px;
@@ -207,7 +215,7 @@
                     margin: -13px 0;
                     cursor: pointer;
                 }
-                p{
+                .p1{
                     text-align: center;
                     span{
                         color: #2b91ce;

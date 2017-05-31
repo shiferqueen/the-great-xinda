@@ -8,12 +8,12 @@
         <div class="buttom">
             <div class="next">
                 <div class="left">
+                    <p :class="[status==1 ? 'activeclass' : 'errorclass']">{{msg}}</p>
                     <input type="text" v-model="cellphone" class="phone" placeholder="请输入手机号"><br>
                     <input type="text" v-model="validcode" class="code1" placeholder="请输入短信验证码"> <input type="button" value="获取短信" @click='huoqu' class="text"> <br>
                     <input type="text" class="code" v-model="imgcode" placeholder="请输入图片验证码"> <img @click ='getsrc' src='/xinda-api/ajaxAuthcode'><br>
                     <input type="password" v-model="password" class="password" placeholder="请输入新密码"> <br>
-                    <input type="password" v-model="password" class="password" placeholder="请确认密码"> <br>
-                    
+                    <input type="password" v-model="password" class="password" placeholder="请确认密码"> <br> 
                     <button @click="forget">确认修改</button>
                 </div>
                 <div class="right">
@@ -30,8 +30,7 @@
 </template>
 
 <script>
-
-    // import qs from 'qs'
+    import qs from 'qs'
     export default {
         name: 'forget',
         data() {
@@ -39,32 +38,43 @@
                 imgsrc: "/xinda-api/ajaxAuthcode",
                 cellphone: '',
                 password: '',
-                validcode: '',
+                validcode: '',//短信验证码
                 imgcode: '',
+                status:'',//状态
+                msg:'',//提示消息
             }
         },
         methods: {
             getsrc() {
-                this.imgsrc = "/xinda-api/ajaxAuthcode/##";
+                this.imgsrc = "/xinda-api/ajaxAuthcode/##";//图片验证码
             },
             forget() {
-                this.ajax.post('/xinda-api/register/register', qs.stringify({
-                    cellphone: '' + this.cllphone,
-                    smsType: 1,
+                let _this = this;
+                this.ajax.post('/xinda-api/register/findpas', qs.stringify({//找回密码
+                    cellphone: '' + this.cellphone,
+                    smsType: 2,
                     validCode: '' + this.validcode,
                     password: '' + this.password,
-                    regionId: 110010,
                 })).then(function(data) {
-                    console.log(data)
+                    console.log(data.data);
+                     _this.status=data.data.status;
+                    _this.msg=data.data.msg;
+                    if(_this.status==1){
+                        //修改密码成功
+                        this.$router.push({path: 'login'});
+                    }
                 })
             },
             huoqu() {
-                this.ajax.post('/xinda-api/register/sendsms', qs.stringify({
-                    cellphone: '' + this.cllphone,
+                let _this = this;
+                this.ajax.post('/xinda-api/register/sendsms', qs.stringify({//短信验证码
+                    cellphone: '' + this.cellphone,
                     smsType: 1,
                     imgCode: '' + this.imgcode,
                 })).then(function(data) {
-                    console.log(data)
+                    console.log(data);
+                     _this.status=data.data.status;
+                    _this.msg=data.data.msg;
                 })
             }
         }
@@ -74,15 +84,17 @@
 
 
 <style scoped lang="less">
+.activeclass{
+    color: #2494d4;
+    padding: 20px 150px 0;
+}
+.errorclass{
+    color: red;
+   padding: 20px 150px 0;
+}
     input {
         border: 1px solid #ccc;
     }
-    
-    // img {
-    //     width: 50px;
-    //     height: 20px;
-    //     border: 1px solid #ccc;
-    // }
     .top{
         width:1200px;
         height:97px;
@@ -153,7 +165,7 @@
                     background-color: #fff;
                 }
                 .phone{
-                    margin-top: 54px;
+                    margin-top: 20px;
                 }
                 .code{
                     width:174px;
