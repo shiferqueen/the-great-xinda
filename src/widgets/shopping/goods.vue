@@ -3,7 +3,7 @@
         <p>首页/购物车</p>
         <dl class="headdl clear">
             <dt>
-                全部商品（<span>1</span>） 
+                全部商品（<span>{{shoppingnum}}</span>） 
             </dt>
             <dd class="company">公司</dd>
             <dd class="commodity">服务商品</dd>
@@ -23,11 +23,11 @@
                         <img :src ='srcimg + listdata.providerImg'>
                     </dd>
                     <dd class="commodity">{{listdata.serviceName}}</dd>
-                    <dd class="price">{{listdata.unitPrice+' '+listdata.unit}}</dd>
+                    <dd class="price">￥ {{listdata.unitPrice}}</dd>
                     <dd class="quantity" id ="ddval">
-                        <input type="button" @click="min(listdata.buyNum,listdata.serviceId,index)" value="-"><input type="text" v-model="listdata.buyNum" ><input type="button" @click="add(listdata.buyNum,listdata.serviceId,index)" value="+">
+                        <input type="button" @click="min(listdata.buyNum,listdata.serviceId)" value="-"><input type="text" v-model="listdata.buyNum" ><input type="button" @click="add(listdata.buyNum,listdata.serviceId)" value="+">
                     </dd>
-                    <dd class="sum">{{listdata.totalPrice+' '+listdata.unit}}</dd>
+                    <dd class="sum">￥ {{listdata.totalPrice}}</dd>
                     <dd class="empty"></dd>
                     <!--deleteone 删除当前-->
                     <dd class="operation" @click="deleteone(index,listdata.serviceId)">删除</dd>
@@ -35,7 +35,7 @@
             </li>
         </ul>
         <div class="clear goods-end"> 
-            <p class="clear">金额总计<strong>￥800.00</strong></p>
+            <p class="clear">金额总计<strong>￥{{univalence}}</strong></p>
             <div class="clear">
                 <input type="button" value="继续购物">
                 <input type="button" value="去结算">
@@ -53,10 +53,10 @@
         data() {
             return {
                 data: '',
-                goodsval: 1,
-                univalence: 800,
+                univalence: 0,
                 srcimg: 'http://115.182.107.203:8088/xinda/pic',
                 listdatas: [],
+                shoppingnum: 0,
 
                 subtotal: function() {
                     return this.goodsval * this.univalence
@@ -65,23 +65,44 @@
         },
         methods: {
             ...mapActions(['refCartNum']),
-            add: function(nums, id, index) {
+            add: function(nums, id) {
                 let that = this;
                 that.ajax.post('/xinda-api/cart/add', qs.stringify({
                     id: id,
                     num: 1,
                 })).then(function() {
-                    that.listdatas[index].buyNum++;
+                    that.ajax.post('/xinda-api/cart/list', qs.stringify({})).then(function(data) {
+                        var data = data.data.data;
+                        that.listdatas = [];
+                        that.univalence = 0;
+                        for (var i = 0, length = data.length; i < length; i++) {
+
+                            that.listdatas.push(data[i]);
+                            that.shoppingnum = length;
+                            that.univalence += data[i].totalPrice;
+                        }
+
+                    })
                 })
             },
-            min: function(num, id, index) {
+            min: function(num, id) {
                 let that = this;
-                if (num > 0) {
+                if (num > 1) {
                     this.ajax.post('/xinda-api/cart/add', qs.stringify({
                         id: id,
                         num: -1,
                     })).then(function() {
-                        that.listdatas[index].buyNum--;
+                        that.ajax.post('/xinda-api/cart/list', qs.stringify({})).then(function(data) {
+                            var data = data.data.data;
+                            that.listdatas = [];
+                            that.univalence = 0;
+                            for (var i = 0, length = data.length; i < length; i++) {
+                                that.listdatas.push(data[i]);
+                                that.shoppingnum = length;
+                                that.univalence += data[i].totalPrice;
+                            }
+
+                        })
                     })
                 }
             },
@@ -102,8 +123,11 @@
             that.ajax.post('/xinda-api/cart/list', qs.stringify({})).then(function(data) {
                 var data = data.data.data;
                 for (var i = 0, length = data.length; i < length; i++) {
-                    that.listdatas.push(data[i])
+                    that.listdatas.push(data[i]);
+                    that.shoppingnum = length;
+                    that.univalence += data[i].totalPrice;
                 }
+
             })
         }
     }
@@ -158,7 +182,6 @@
     
     .company {
         width: 13%;
-        line-height: 0;
     }
     
     .commodity {
@@ -192,12 +215,9 @@
                 width: 41px;
             }
             margin-top:30px;
-            height: 76px;
+            height: 51px;
             background: #f7f7f7;
-            line-height: 76px;
-            .commodity {
-                line-height: 0;
-            }
+            padding-top:25px;
         }
         .sum {
             color: #72b1dc;
