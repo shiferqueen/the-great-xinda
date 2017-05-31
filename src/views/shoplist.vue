@@ -52,7 +52,7 @@
             <div class="all-items-content">
                 <div class="all-items-content-left clear" v-for="(liscon,index) in lispage_ajax">
                     <div>
-                        <p class="all-items-content-left-logo"><img src="../images/logos/logo.png"></p>
+                        <p class="all-items-content-left-logo"><img :src="'http://115.182.107.203:8088/xinda/pic'+liscon.providerImg"></p>
                         <p class="all-items-content-left-gold"><img src="../images/logos/little01.png"><span>金牌服务商</span></p>
                     </div>
                     <div class="all-items-content-left-infor">
@@ -71,7 +71,7 @@
                                     <li class="all-items-tax-fir">{{liscon.productTypes.substr(0,4)}}</li>
                                     <li class="all-items-tax-sec">{{liscon.productTypes.substr(5,4)}}</li>
                                     <li class="all-items-tax-sec">{{liscon.productTypes.substr(10,4)}}</li>
-                                    <li class="all-items-tax-sec">{{liscon.productTypes.substr(15,4)}}</li>
+                                    <!--<li class="all-items-tax-sec">{{liscon.productTypes.substr(15,4)}}</li>-->
                                 </ul>
                             </li>
                             <li class="go-to-shop"><a href="#/shopfront">进入店铺</a></li>
@@ -130,7 +130,7 @@ import myfoot from '../components/footer'
         },
         created(){
             let _this = this;
-            this.ajax.post('http://115.182.107.203:8088/xinda/xinda-api/provider/grid',{start:0,limit:6,productTypeCode:10}).then(function(data){
+            this.ajax.post('/xinda-api/provider/grid',{start:0,limit:6,productTypeCode:10}).then(function(data){
                 //  var fir = (data.data.data);
                 // var sec = (data.data.data)[1];
                 //  console.log(fir)

@@ -22,6 +22,9 @@ import payerror from '@/views/payerror'
 import paysuccess from '@/views/paysuccess'
 import login from '@/views/Login'
 import forget from '@/views/forget'
+import serviceProducts from '@/widgets/shopfront/serviceProducts'
+import customService from '@/widgets/shopfront/customService'
+import certification from '@/widgets/shopfront/certification'
 
 Vue.use(Router)
 
@@ -45,7 +48,23 @@ export default new Router({
                 {
                     path: "shopfront",
                     name: "shopfront",
-                    component: shopfront
+                    component: shopfront,
+                    children: [{
+                            path: "serviceProducts",
+                            alias: '',
+                            name: "serviceProducts",
+                            component: serviceProducts,
+                        }, {
+                            path: "customService",
+                            name: "customService",
+                            component: customService,
+                        }, {
+                            path: "certification",
+                            name: "certification",
+                            component: certification,
+                        }
+
+                    ]
                 },
                 {
                     path: 'listpage',
@@ -86,31 +105,30 @@ export default new Router({
                     path: 'member',
                     name: 'member',
                     component: member,
-                    children: [
-                    {
-                        path: 'myorder',
-                        alias:'',
-                        name: 'myorder',
-                        component: myorder
-                    },
-                    {
-                        path: 'evaluation',
-                        name: 'evaluation',
-                        component: evaluation
-                    },
-                    {
-                        path: 'uevaluation',
-                        name: 'uevaluation',
-                        component: uevaluation
-                    },
-                    {
-                        path: 'setaccount',
-                        name: 'setaccount',
-                        component: setaccount
-                    },
-                ]
+                    children: [{
+                            path: 'myorder',
+                            alias: '',
+                            name: 'myorder',
+                            component: myorder
+                        },
+                        {
+                            path: 'evaluation',
+                            name: 'evaluation',
+                            component: evaluation
+                        },
+                        {
+                            path: 'uevaluation',
+                            name: 'uevaluation',
+                            component: uevaluation
+                        },
+                        {
+                            path: 'setaccount',
+                            name: 'setaccount',
+                            component: setaccount
+                        },
+                    ]
 
-            }
+                }
             ]
         },
         {
@@ -118,21 +136,21 @@ export default new Router({
             name: 'Action',
             component: Action,
             children: [{
-                path: 'register',
-                name: 'register',
-                component: Register //enroll
-            },
-            {
-                path: 'login',
-                name: 'login',
-                component: login 
-            },
-            {
-                path: 'forget',
-                name: 'forget',
-                component: forget 
-            }]
+                    path: 'register',
+                    name: 'register',
+                    component: Register //enroll
+                },
+                {
+                    path: 'login',
+                    name: 'login',
+                    component: login
+                },
+                {
+                    path: 'forget',
+                    name: 'forget',
+                    component: forget
+                }
+            ]
         }
     ]
 });
-
