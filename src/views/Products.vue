@@ -31,7 +31,7 @@
                 </p>
                 <div class="summbit">
                     <span>立即购买</span>
-                    <span @click="addProducts">加入购物车</span>
+                    <span @click="addProducts(getuser)">加入购物车</span>
                 </div>
             </div>
             <!----------------服务商咨询部分-------------->
@@ -201,11 +201,11 @@ export default {
 
         },
     computed: {
-        ...mapGetters(['getCartNum'])
+        ...mapGetters(['getCartNum','getuser'])
     },
     methods: {
         ...mapGetters(['getstoreid']),
-        ...mapActions(['refCartNum']),
+        ...mapActions(['refCartNum','user']),
 
 
         //服务，评价切换方法
@@ -247,26 +247,28 @@ export default {
             this.bSign = false
             },
 
-        addProducts() {
-            let that = this
-            var id = that.$route.params.productId;
-            console.log(id)
-            this.ajax.post("/xinda-api/cart/add", qs.stringify({
-                id: id,
-                num: 1
-
-            })).then(function (res) {
-                    that.refCartNum();
-                    that.ajax.post("/xinda-api/cart/set", qs.stringify({
-                    id:1212121,
-                    num:that.goodsval
-                   
+        addProducts(uname) {
+           
+                let that = this
+                var id = that.$route.params.productId;
+                this.ajax.post("/xinda-api/cart/add", qs.stringify({
+                    id: id,
+                    num: 1
 
                 })).then(function (res) {
-                     console.log(that.goodsval);
-                })
-            })
+                        that.refCartNum();
+                        that.ajax.post("/xinda-api/cart/set", qs.stringify({
+                        id:id,
+                        num:that.goodsval
+                    
 
+                    })).then(function (res) {
+                        console.log(that.goodsval);
+                        console.log(id)
+
+                    })
+                })
+            
         },
 
 
