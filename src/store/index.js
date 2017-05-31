@@ -55,13 +55,13 @@ export default new Vuex.Store({
     //显示集合
     getters: {
         getCartNum(state) {
-            return state.cartNum
+            return state.cartNum//购物车总数量
         },
         getstoreid(state) {
-            return state.storeid
+            return state.storeid//商品ID
         },
         getuser(state) {
-            return state.username
+            return state.username//获取用户名（手机号）
         },
     }
 });
