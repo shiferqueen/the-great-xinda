@@ -9,18 +9,24 @@
                 <span>12345678901</span>
             </div>
             <div>
-                <li>
-                    <img src="../images/logos/110-2.jpg"/>
-                    <span><a href="#/member">我的订单</a></span>
-                </li>
-                <li>
-                   <img src="../images/logos/111-1.jpg"/>
-                   <span><a href="#/member/evaluation">用户评价</a></span> 
-                </li>
-                <li>
-                   <img src="../images/logos/1231.jpg"/>
-                   <span><a href="#/member/setaccount">账户设置</a></span> 
-                </li>
+                <router-link to="/member" active-class="active" exact>
+                    <li>
+                        <img src="../images/logos/110-2.jpg"/>
+                        <span><a>我的订单</a></span>
+                    </li>
+                </router-link>
+                <router-link to="/member/evaluation" active-class="active">
+                    <li>
+                        <img src="../images/logos/111-1.jpg"/>
+                        <span><a>用户评价</a></span> 
+                    </li>
+                </router-link>
+                <router-link to="/member/setaccount" active-class="active">
+                    <li>
+                        <img src="../images/logos/1231.jpg"/>
+                        <span><a>账户设置</a></span> 
+                    </li>
+                </router-link>
             </div>
         </div>
         <router-view></router-view>
@@ -28,18 +34,37 @@
         <!--<div class="page_next">
             <span>上一页</span>
             <span>1</span>
+
+
+
+
+
+
+
+
+
+            
             <span>下一页</span>
         </div>-->
   </div>
 </template>
 
 <script>
-
-export default{
-    name :'member'
-}
+  import qs from 'qs'
+    export default {
+        name: 'goods',
+        created() {
+            this.ajax.post('/xinda-api/business-order/grid', qs.stringify({})).then(function(data) {
+                console.log(data)
+            })
+        }
+    }
 </script>
 <style scoped lang="less">
+.active{
+    background: #e9e9e9;
+    display: block;
+}
 .page_next{
     margin-left: 285px;  
     span:nth-child(1){
@@ -242,7 +267,6 @@ export default{
                        padding-left: 12px;
                    }
                }li:first-child{
-                   background-color: #e9e9e9;
                    text-align: center;
                }li:nth-child(2){
                    text-align: center;

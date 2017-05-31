@@ -16,7 +16,6 @@ axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded
 //         console.log(err);
 //     })
 Vue.config.productionTip = false
-    /* eslint-disable no-new */
 new Vue({
     el: '#app',
     router,

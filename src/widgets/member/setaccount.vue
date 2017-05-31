@@ -1,8 +1,8 @@
 <template>
  <div class="setaccount">
      <div class="my_evalu">
-         <a class="active" v-on:click="set()" >账户设置</a>
-         <a v-on:click="alter()" >修改密码</a>
+         <a :class="{active:zhang}" v-on:click="set()" >账户设置</a>
+         <a :class="{active:password}" v-on:click="alter()" >修改密码</a>
      </div>
      <ul  v-show="zhang">
         <li class="now-img">
@@ -62,6 +62,8 @@
 </template>
 
 <script>
+//  import qs from 'qs'
+
  export default {
         name: 'setaccount',
         data(){
@@ -79,9 +81,13 @@
                 this.zhang = false,
                 this.password = true
             }
+        },
+        created() {
+            this.ajax.post('/xinda-api/member/info').then(function(data){
+                console.log(data)
+            })
         }
     }
-    
 </script>
 
 <style lang="less">

@@ -67,12 +67,12 @@ export default new Router({
                     ]
                 },
                 {
-                    path: 'listpage',
+                    path: 'listpage',  //商品列表
                     name: 'Listpage',
                     component: Listpage,
                 },
                 {
-                    path: 'products/:productId',
+                    path: 'products/:productId',  //商品详情
                     name: 'Products',
                     component: Products,
                 },

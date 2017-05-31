@@ -14,22 +14,23 @@
             <dd class="operation">操作</dd>
         </dl>
         <ul class="clear">
-            <li>
+            <li v-for='(listdata,index) in listdatas'>
                 <dl class="clear ul-dl">
                     <dt>
-                        店铺：信达北京服务中心
+                        店铺：{{listdata.providerName}}
                     </dt>
                     <dd class="company">
-                        <img src="../../images/logos/logo1.png">
+                        <img :src ='srcimg + listdata.providerImg'>
                     </dd>
-                    <dd class="commodity">注册分公司</dd>
-                    <dd class="price">￥{{univalence}}</dd>
+                    <dd class="commodity">{{listdata.serviceName}}</dd>
+                    <dd class="price">{{listdata.unitPrice+' '+listdata.unit}}</dd>
                     <dd class="quantity" id ="ddval">
-                        <input type="button" @click="min" value="-"><input type="text" v-model="goodsval" ><input type="button" @click="add" value="+">
+                        <input type="button" @click="min" value="-"><input type="text" v-model="listdata.buyNum" ><input type="button" @click="add" value="+">
                     </dd>
-                    <dd class="sum">￥{{subtotal()}}</dd>
+                    <dd class="sum">{{listdata.totalPrice+' '+listdata.unit}}</dd>
                     <dd class="empty"></dd>
-                    <dd class="operation">删除</dd>
+                    <!--deleteone 删除当前-->
+                    <dd class="operation" @click="deleteone(index,listdata.providerId)">删除</dd>
                 </dl>
             </li>
         </ul>
@@ -52,6 +53,9 @@
                 data: '',
                 goodsval: 1,
                 univalence: 800,
+                srcimg: 'http://115.182.107.203:8088/xinda/pic',
+                listdatas: [],
+
                 subtotal: function() {
                     return this.goodsval * this.univalence
                 }
@@ -66,10 +70,25 @@
                     this.goodsval--;
                 }
             },
+            deleteone: function(index, id) {
+                this.listdatas.splice(index, 1);
+                this.ajax.post('/xinda-api/cart/del', qs.stringify({
+                    id: id
+                })).then(function(data) {
+                    console.log(data)
+                })
+            }
         },
+
         created() {
-            this.ajax.post('/xinda-api/cart/list', qs.stringify({})).then(function(data) {
-                console.log(data)
+            let that = this;
+            this.ajax.post('/xinda-api/cart/list').then(function(data) {
+                console.log(data.data.data)
+                var data = data.data.data;
+                for (var i = 0, length = data.length; i < length; i++) {
+                    that.listdatas.push(data[i])
+                    console.log(that.listdatas)
+                }
             })
         }
     }
@@ -90,6 +109,7 @@
     
     li {
         list-style: none;
+        margin-bottom: 50px;
     }
     
     dt {

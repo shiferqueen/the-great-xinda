@@ -131,8 +131,7 @@
             ...mapGetters(['getCartNum'])
         },
         methods: {
-            ...mapActions(['setCartNum']),
-            ...mapActions(['setstoreid']),
+            ...mapActions(['setstoreid','refCartNum']),
             addCartNum(id) {
                 let that = this;
                 this.ajax.post("/xinda-api/cart/add", qs.stringify({
@@ -140,12 +139,8 @@
                     num: 1
 
                 })).then(function (res) {
-                    that.ajax.post("/xinda-api/cart/cart-num", qs.stringify({})).then(function (res) {
-                        var num = res.data.data.cartNum;
-                        console.log(num)
-                        that.setCartNum(num);
-                    })
-                    console.log(res)
+                    that.refCartNum();
+                 
                 })
 
             },
