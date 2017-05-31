@@ -59,6 +59,7 @@ export default {
         console.log(res.data);
         if(res.data.status==1){
               _this.user('');
+              _this.refCartNum('');
               setTimeout(function() {
                   console.log(_this.getuser)
               }, 500);
