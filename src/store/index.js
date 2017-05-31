@@ -1,10 +1,12 @@
 import Vuex from 'vuex'
 import Vue from 'vue'
 Vue.use(Vuex)
-
+import axios from 'axios'
+axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 
 
 export default new Vuex.Store({
+   
     //状态集合
     state: {
         //购物车数量,
@@ -24,9 +26,13 @@ export default new Vuex.Store({
     },
     //动作集合---用来操作突变集合的
     actions: {
-        setCartNum({ commit }, num) {
-            commit('SETCARTNUM', num);
+        refCartNum({ commit }) {
+            axios.post("/xinda-api/cart/cart-num").then(function (res) {
+                var num = res.data.data.cartNum;
+                 commit('SETCARTNUM', num);
+            })
         },
+    
         setstoreid({ commit }, id) {
             commit('SETSTOREID', id);
 
