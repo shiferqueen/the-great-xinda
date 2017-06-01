@@ -3,26 +3,26 @@
         <div class="forms-div1">支付方式</div>
         <p>非网银支付</p>
         <div class="inputdiv">
-            <input type="radio" v-model="picked"><img src="../../images/form/yinlian.jpg">
+            <input type="radio" name="only" id="one" v-model="picked"><img src="../../images/form/yinlian.jpg">
         </div>
         <p>平台支付</p>
         <div class="clear">
             <div class="inputdiv zf">
-                <input type="radio" v-model="picked"><img src="../../images/form/weixin.jpg">
+                <input type="radio" name="only"  id="two" v-model="picked"><img src="../../images/form/weixin.jpg">
             </div>
             <div class="inputdiv zf margin10">
-                <input type="radio" v-model="picked"><img src="../../images/form/zhifubao.jpg">
+                <input type="radio" name="only"  id="san" v-model="picked"><img src="../../images/form/zhifubao.jpg">
             </div>
         </div>
         <p>自助转账 <span class="pay-p-span">因限额不能支付时，建议使用自助转账</span></p>
         <div class="inputdiv2">
-            <input type="radio" v-model="picked"><img src="../../images/form/zhanshang.jpg">
+            <input type="radio"  name="only" id="si" v-model="picked"><img src="../../images/form/zhanshang.jpg">
         </div>
         <br>
         <span style="color:#ffa4a3">注：转账时请将订单编号备注在付款信息里：转账完成后，请通知客服。</span>
 
         <div class="clear end-div yf">
-            <p class="yf">金额总计 <strong>￥800.00</strong></p> 
+            <p class="yf">金额总计 <strong>￥800.00</strong></p>
             <input class="yf " type="button" value="去结算">
         </div>
 
@@ -30,7 +30,12 @@
 </template>
 <script>
     export default {
-        name: 'pay'
+        name: 'pay',
+        data() {
+            return {
+                picked: ''
+            }
+        }
     }
 </script>
 
