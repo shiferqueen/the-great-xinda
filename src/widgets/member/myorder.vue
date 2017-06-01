@@ -25,6 +25,7 @@
                 <strong>订单操作</strong>
             </li>
         </ul>
+        <div>
         <ul class="order_num">
             <li>
                 <span>订单号:S347484929274490</span>
@@ -51,11 +52,12 @@
                     <span>￥800.00</span>
                     <span>￥800.00</span>
                     <span>等待买家付款</span>
-                    <span>删除订单</span>
+                    <span v-on:click="del()">删除订单</span>
                     <span class="number_1">1</span>
                 </p>
             </li>
         </ul>
+        </div>
         <ul class="order_num">
             <li>
                 <span>订单号:S347484929274490</span>
@@ -106,14 +108,23 @@ export default {
             endTime: '2017-03-28',
             start: '0',
         })).then(function (data) {
-            console.log('订单接口数据',data)
+            // console.log('订单接口数据',data)
         })
+    },
+    methods: {
+        del: function(){
+            event.target.parentNode.parentNode.removeChild(event.target.parentNode);
+            // console.log(event.target.parentNod)
+        }
     }
 }
 </script>
 
 
 <style scoped lang="less">
+span{
+    cursor: pointer;
+}
 .page_next {
     margin-left: 285px;
     span:nth-child(1) {
