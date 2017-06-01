@@ -122,6 +122,7 @@
 
 <script>
 import provinces from '../provinces.js'
+import Vue from 'vue'
 import myhead from '../components/header'
 import myfoot from '../components/footer'
     export default {

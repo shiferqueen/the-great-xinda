@@ -53,6 +53,7 @@
 <script>
     import qs from 'qs'
     import provinces from '../provinces.js'
+    import Vue from 'vue'
     export default {
         name: 'register',
         data() {
