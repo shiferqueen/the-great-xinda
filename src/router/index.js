@@ -102,7 +102,7 @@ export default new Router({
                     component: us,
                 },
                 {
-                    path: 'member',
+                    path: 'member',//会员
                     name: 'member',
                     component: member,
                     children: [{

@@ -50,15 +50,7 @@
 </template>
 
 <script>
-  import qs from 'qs'
-    export default {
-        name: 'goods',
-        created() {
-            this.ajax.post('/xinda-api/business-order/grid', qs.stringify({})).then(function(data) {
-                console.log(data)
-            })
-        }
-    }
+ 
 </script>
 <style scoped lang="less">
 .active{

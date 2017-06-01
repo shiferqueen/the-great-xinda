@@ -2,7 +2,6 @@
   <div>
     <!---------------轮播---------------------------->
     <div class="advertisment">
-      
         <div class="swiper-container">
             <swiper :options="swiperOption">
                     <swiper-slide>
@@ -27,14 +26,13 @@
                     </swiper-slide>
                     <div class="swiper-pagination" slot="pagination">
                     </div>
-                </swiper>
+              </swiper>
             <!-- 如果需要分页器 -->
 
           <!-- 如果需要导航按钮 -->
           <!--<div class="swiper-button-prev"></div>
           <div class="swiper-button-next"></div>-->
         </div> 
-  
   </div>
   <!------------ 明星产品推荐---------------------->
   <div class="label">
@@ -49,7 +47,7 @@
       <ul class="clear">
         <li class="fl" v-for="(massage,index) in da">
           <a href="javascript:void(0)">
-            <img :src="'http://115.182.107.203:8088/xinda/pic'+massage.providerImg">
+            <img :src="imgsrcfront+massage.providerImg">
             <h4>{{massage.providerName}}</h4>
             <p>{{massage.serviceName}}</p>
             <div><span>{{massage.price}}</span>{{massage.unit}}</div>
@@ -71,7 +69,7 @@
       <ul class="clear">
         <li class="fl" v-for="(mas,index) in dat">
           <a href="javascript:void(0)">
-            <img :src="'http://115.182.107.203:8088/xinda/pic'+mas.providerImg">
+            <img :src="imgsrcfront+mas.providerImg">
             <h4>{{mas.providerName}}</h4>
             <p>{{mas.serviceInfo}}</p>
             <div><span>{{mas.price}}</span>{{mas.unit}}</div>
@@ -113,7 +111,7 @@
       <ul class="clear">
         <li class="fl" v-for="(mas,index) in dat">
           <a href="javascript:void(0)">
-            <img :src="'http://115.182.107.203:8088/xinda/pic'+mas.providerImg">
+            <img :src="imgsrcfront+mas.providerImg">
             <h4>{{mas.providerName}}</h4>
             <p class="fz15">服务指数：五星</p>
             <p class="fz18">提供的服务：{{mas.serviceName}}</p>
@@ -165,7 +163,8 @@ import {mapGetters} from "vuex"
         paginationClickable: true
       },
       da:[],
-      dat:[]
+      dat:[],
+      imgsrcfront:'http://115.182.107.203:8088/xinda/pic',//图片地址前缀
     }
   },
   created(){
@@ -177,10 +176,10 @@ import {mapGetters} from "vuex"
      this.ajax.post('/xinda-api/recommend/list',{}).then(function(data) {
 
        _this.dat = data.data.data.product;
-      console.log(_this.dat);
+      // console.log(_this.dat);
      });
      _this.user();
-     console.log(this.getuser())
+    //  console.log(this.getuser())
    },
    methods:{
       ...mapActions(["user"]),

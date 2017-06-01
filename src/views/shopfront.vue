@@ -78,7 +78,6 @@ import customService from '../widgets/shopfront/customService'
 import certification from '../widgets/shopfront/certification'
 import myhead from '../components/header'
 import myfoot from '../components/footer'
-import qs from 'qs'
     export default {
         name: 'shopfront',
         components:{

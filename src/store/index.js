@@ -13,6 +13,8 @@ export default new Vuex.Store({
         cartNum: 0,
         storeid: '',
         username: '',
+        //订单号
+        ordernum: ''
 
 
     },
@@ -27,7 +29,11 @@ export default new Vuex.Store({
         },
         SETUSER(state, num) {
             state.username = num;
+        },
+        SETORDER(state, number) {
+            state.ordernum = number;
         }
+
     },
     //动作集合---用来操作突变集合的
     actions: {
@@ -50,6 +56,9 @@ export default new Vuex.Store({
         },
         setstoreid({ commit }, id) {
             commit('SETSTOREID', id);
+        },
+        setorder({ commit }, number) {
+            commit('SETORDER', number)
         }
     },
     //显示集合
@@ -63,5 +72,8 @@ export default new Vuex.Store({
         getuser(state) {
             return state.username //获取用户名（手机号）
         },
+        getorder(state) {
+            return state.ordernum //订单号
+        }
     }
 });

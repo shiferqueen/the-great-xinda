@@ -4,13 +4,13 @@
         <div class="forms-div1">订单详情</div>
         <div class="forms-table">
             <ul class="clear">
-                <li>订单编号：<span>S62728272727211</span></li>
+                <li>订单编号：<span>{{businessNo}}</span></li>
                 <li class="teshuli">
                     创建时间：2017-07-01 01:12:21
                 </li>
                 <li style="padding-bottom:0px;">
                     订单金额：<span>￥2000.00</span>元
-                    <p>
+                    <p class="details">
                         订单明细<span></span>
                     </p>
                 </li>
@@ -49,8 +49,29 @@
     </div>
 </template>
 <script>
+    import qs from 'qs'
+    import {
+        mapGetters
+    } from 'vuex';
+
     export default {
-        name: 'forms'
+
+        name: 'forms',
+        data() {
+            return {
+                businessNo: '',
+            }
+        },
+        computed: {
+            ...mapGetters(['getorder']),
+        },
+        created() {
+            this.ajax.post("/xinda-api/business-order/detail", qs.stringify({
+                businessNo: this.getorder,
+            })).then(function(data) {
+                console.log(data)
+            })
+        }
     }
 </script>
 
@@ -85,6 +106,9 @@
                 float: left;
                 width: 20%;
                 padding: 2.5%;
+                .details {
+                    width: 80px;
+                }
                 p {
                     margin-left: 40px;
                     margin-top: 5px;
