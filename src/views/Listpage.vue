@@ -137,12 +137,9 @@
                 this.ajax.post("/xinda-api/cart/add", qs.stringify({
                     id: id,
                     num: 1
-
                 })).then(function (res) {
                     that.refCartNum();
-                 
                 })
-
             },
             storeid(index){
                 this.setstoreid(index);
