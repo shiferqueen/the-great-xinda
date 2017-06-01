@@ -154,8 +154,6 @@ import myfoot from '../components/footer'
     .shoplist {
         margin-top: 26px;
     }
-
-    
     .wid {
         width: 1200px;
         margin: 0 auto;

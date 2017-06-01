@@ -6,7 +6,7 @@
             <p class="pre-subtitle">支付失败</p>
             <div class="pre-cont">
                 <div class="pre-co clear">
-                    <img src="" class="fl">
+                    <img src="../images/logos/zhifu1.png" class="fl">
                     <div class="pre-right fr">
                         <h2>支付失败 !</h2>
                         <h4 class="fl">支付未成功：让我们再试一次吧</h4>
