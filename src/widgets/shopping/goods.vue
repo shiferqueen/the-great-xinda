@@ -64,7 +64,8 @@
             }
         },
         methods: {
-            ...mapActions(['refCartNum']),
+            ...mapActions(['refCartNum', 'setorder']),
+            //增加数量
             add: function(nums, id) {
                 let that = this;
                 that.ajax.post('/xinda-api/cart/add', qs.stringify({
@@ -85,6 +86,7 @@
                     })
                 })
             },
+            //减少数量
             min: function(num, id) {
                 let that = this;
                 if (num > 1) {
@@ -106,6 +108,7 @@
                     })
                 }
             },
+            //删除当前
             deleteone: function(index, id, price) {
                 var that = this;
                 this.listdatas.splice(index, 1);
@@ -117,10 +120,31 @@
                     that.univalence -= price;
                 })
             },
+            //购物车总数
+            zong() {
+                this.ajax.post('/xinda-api/cart/cart-num').then(function(data) {
+                    return data.data.cartNum;
+                })
+            },
             href(i) {
+                var that = this
                 switch (i) {
                     case 1:
-                        location.href = '#/form';
+                        // if (that.zong() > 0) {
+                        this.ajax.post('/xinda-api/cart/submit').then(function(data) {
+                                // console.log(data)
+                                if (data.data.status === 1) {
+                                    that.setorder(data.data.data)
+                                        // console.log(that.setorder)
+                                    location.href = '#/form';
+                                } else {
+                                    alert(data.data.msg);
+                                }
+
+                            })
+                            // } else {
+                            //     alert('您的购物车没有商品');
+                            // }
                         break;
 
                     case 2:
