@@ -6,7 +6,7 @@
           <div class="hdcon-top-l fl">
               <h1 class="fl">信达</h1>
               <p class="fr">北京市</p>
-              <a href="" class="fr">[切换城市]</a>
+              <a href="javascript:void(0)" class="fr">[切换城市]</a>
           </div>
           <div class="hdcon-top-m fl">
             <a href="" class="blue goods fl">产品</a>
@@ -156,7 +156,6 @@
             </div>
             </li>
           </ul>
-          
         </div>
       </div>
     </div>

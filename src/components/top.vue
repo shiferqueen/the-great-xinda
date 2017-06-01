@@ -3,7 +3,7 @@
 
     <div class="top-welcome">
       <div class="top-containter">
-        <span class="fl pdr" v-show="getuser==''?false:true">{{getuser}}</span>
+        <span class="fl pdr" v-show="getuser==''?false:true" @click="member">{{getuser}}</span>
         <p class="fl">欢迎来到信达!</p>
         <p class="fl cr" v-show="getuser==''?false:true"  @click="logout()">【退出】</p>
         <span class="fl">
@@ -52,7 +52,6 @@ export default {
   },
   methods: {
       ...mapGetters(['getCartNum','getuser']),
-
     logout(){
         let _this = this;
         this.ajax.post("/xinda-api/sso/logout").then(function(res){//退出登录信息
@@ -74,6 +73,9 @@ export default {
         }else{
             this.$router.push({name:'login'});
         }
+    },
+    member(){
+         this.$router.push({name:'setaccount'});
     }
   },
 }
