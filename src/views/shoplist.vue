@@ -74,7 +74,7 @@
                                     <!--<li class="all-items-tax-sec">{{liscon.productTypes.substr(15,4)}}</li>-->
                                 </ul>
                             </li>
-                            <li class="go-to-shop"><a href="#/shopfront">进入店铺</a></li>
+                            <li class="go-to-shop"><a @click="goshop">进入店铺</a></li>
                         </ul>
                     </div>
                 </div>
@@ -138,6 +138,11 @@ import myfoot from '../components/footer'
                 _this.lispage_ajax = data.data.data
                 console.log(_this.lispage_ajax)
             })
+        },
+        methods: {
+            goshop(){
+                alert(1)
+            }
         },
 
         components:{
