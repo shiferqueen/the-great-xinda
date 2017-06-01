@@ -6,13 +6,13 @@ axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded
 
 
 export default new Vuex.Store({
-   
+
     //状态集合
     state: {
         //购物车数量,
         cartNum: 0,
         storeid: '',
-        username:'',
+        username: '',
 
     },
     //突变集合---用来操作状态集合
@@ -24,24 +24,24 @@ export default new Vuex.Store({
         SETSTOREID(state, id) {
             state.storeid = id;
         },
-        SETUSER(state,num){
+        SETUSER(state, num) {
             state.username = num;
         }
     },
     //动作集合---用来操作突变集合的
     actions: {
         refCartNum({ commit }) {
-            axios.post("/xinda-api/cart/cart-num").then(function (res) {
+            axios.post("/xinda-api/cart/cart-num").then(function(res) {
                 var num = res.data.data.cartNum;
-                 commit('SETCARTNUM', num);
+                commit('SETCARTNUM', num);
             })
         },
-        user({commit},come_user){
-             axios.post("/xinda-api/sso/login-info").then(function (res) {
-                if(res.data.data != null){
+        user({ commit }, come_user) {
+            axios.post("/xinda-api/sso/login-info").then(function(res) {
+                if (res.data.data != null) {
                     var num = res.data.data.name;
                     commit('SETUSER', num);
-                }else{
+                } else {
                     var num = '';
                     commit('SETUSER', num);
                 }
@@ -55,13 +55,13 @@ export default new Vuex.Store({
     //显示集合
     getters: {
         getCartNum(state) {
-            return state.cartNum
+            return state.cartNum//购物车总数量
         },
         getstoreid(state) {
-            return state.storeid
+            return state.storeid//商品ID
         },
         getuser(state) {
-            return state.username
+            return state.username//获取用户名（手机号）
         },
     }
 });

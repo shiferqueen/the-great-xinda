@@ -3,7 +3,7 @@
         <p>首页/购物车</p>
         <dl class="headdl clear">
             <dt>
-                全部商品（<span>1</span>） 
+                全部商品（<span>{{shoppingnum}}</span>） 
             </dt>
             <dd class="company">公司</dd>
             <dd class="commodity">服务商品</dd>
@@ -23,38 +23,40 @@
                         <img :src ='srcimg + listdata.providerImg'>
                     </dd>
                     <dd class="commodity">{{listdata.serviceName}}</dd>
-                    <dd class="price">{{listdata.unitPrice+' '+listdata.unit}}</dd>
+                    <dd class="price">￥ {{listdata.unitPrice}}</dd>
                     <dd class="quantity" id ="ddval">
-                        <input type="button" @click="min" value="-"><input type="text" v-model="listdata.buyNum" ><input type="button" @click="add" value="+">
+                        <input type="button" @click="min(listdata.buyNum,listdata.serviceId)" value="-"><input type="text" v-model="listdata.buyNum" ><input type="button" @click="add(listdata.buyNum,listdata.serviceId)" value="+">
                     </dd>
-                    <dd class="sum">{{listdata.totalPrice+' '+listdata.unit}}</dd>
+                    <dd class="sum">￥ {{listdata.totalPrice}}</dd>
                     <dd class="empty"></dd>
                     <!--deleteone 删除当前-->
-                    <dd class="operation" @click="deleteone(index,listdata.providerId)">删除</dd>
+                    <dd class="operation" @click="deleteone(index,listdata.serviceId,listdata.totalPrice)">删除</dd>
                 </dl>
             </li>
         </ul>
         <div class="clear goods-end"> 
-            <p class="clear">金额总计<strong>￥800.00</strong></p>
+            <p class="clear">金额总计<strong>￥{{univalence}}</strong></p>
             <div class="clear">
-                <input type="button" value="继续购物">
-                <input type="button" value="去结算">
+                <input type="button" value="继续购物" @click="href(2)">
+                <input type="button" value="去结算" @click="href(1)">
             </div>
         </div>
     </div>
 </template>
 <script>
     import qs from 'qs'
-
+    import {
+        mapActions
+    } from 'vuex'
     export default {
         name: 'goods',
         data() {
             return {
                 data: '',
-                goodsval: 1,
-                univalence: 800,
+                univalence: 0,
                 srcimg: 'http://115.182.107.203:8088/xinda/pic',
                 listdatas: [],
+                shoppingnum: 0,
 
                 subtotal: function() {
                     return this.goodsval * this.univalence
@@ -62,33 +64,83 @@
             }
         },
         methods: {
-            add: function() {
-                this.goodsval++;
+            ...mapActions(['refCartNum']),
+            add: function(nums, id) {
+                let that = this;
+                that.ajax.post('/xinda-api/cart/add', qs.stringify({
+                    id: id,
+                    num: 1,
+                })).then(function() {
+                    that.ajax.post('/xinda-api/cart/list', qs.stringify({})).then(function(data) {
+                        var data = data.data.data;
+                        that.listdatas = [];
+                        that.univalence = 0;
+                        for (var i = 0, length = data.length; i < length; i++) {
+
+                            that.listdatas.push(data[i]);
+                            that.shoppingnum = length;
+                            that.univalence += data[i].totalPrice;
+                        }
+
+                    })
+                })
             },
-            min: function() {
-                if (this.goodsval > 0) {
-                    this.goodsval--;
+            min: function(num, id) {
+                let that = this;
+                if (num > 1) {
+                    this.ajax.post('/xinda-api/cart/add', qs.stringify({
+                        id: id,
+                        num: -1,
+                    })).then(function() {
+                        that.ajax.post('/xinda-api/cart/list', qs.stringify({})).then(function(data) {
+                            var data = data.data.data;
+                            that.listdatas = [];
+                            that.univalence = 0;
+                            for (var i = 0, length = data.length; i < length; i++) {
+                                that.listdatas.push(data[i]);
+                                that.shoppingnum = length;
+                                that.univalence += data[i].totalPrice;
+                            }
+
+                        })
+                    })
                 }
             },
-            deleteone: function(index, id) {
+            deleteone: function(index, id, price) {
+                var that = this;
                 this.listdatas.splice(index, 1);
                 this.ajax.post('/xinda-api/cart/del', qs.stringify({
                     id: id
                 })).then(function(data) {
-                    console.log(data)
+                    that.refCartNum();
+                    that.shoppingnum--;
+                    that.univalence -= price;
                 })
+            },
+            href(i) {
+                switch (i) {
+                    case 1:
+                        location.href = '#/from';
+                        break;
+
+                    case 2:
+                        location.href = '#/Listpage';
+                        break;
+
+                }
             }
         },
 
         created() {
             let that = this;
-            this.ajax.post('/xinda-api/cart/list').then(function(data) {
-                console.log(data.data.data)
+            that.ajax.post('/xinda-api/cart/list', qs.stringify({})).then(function(data) {
                 var data = data.data.data;
                 for (var i = 0, length = data.length; i < length; i++) {
-                    that.listdatas.push(data[i])
-                    console.log(that.listdatas)
+                    that.listdatas.push(data[i]);
+                    that.shoppingnum = length;
+                    that.univalence += data[i].totalPrice;
                 }
+
             })
         }
     }
@@ -176,9 +228,9 @@
                 width: 41px;
             }
             margin-top:30px;
-            height: 76px;
+            height: 51px;
             background: #f7f7f7;
-            line-height: 76px;
+            padding-top:25px;
         }
         .sum {
             color: #72b1dc;
