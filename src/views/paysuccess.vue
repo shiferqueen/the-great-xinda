@@ -6,7 +6,7 @@
             <p class="pre-subtitle">支付成功</p>
             <div class="pre-cont">
                 <div class="pre-co clear">
-                    <img src="" class="fl">
+                    <img src="../images/logos/xiaolian.png" class="fl">
                     <div class="pre-right fr">
                         <h2>支付成功 !</h2>
                         <h4 class="fl">我们将尽快确认您的(订单号：<a href="">s7163623728398</a>) 付款信息。</h4>

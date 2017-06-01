@@ -13,7 +13,7 @@
                     <input type="text" v-model="validcode" class="code1" placeholder="请输入短信验证码"> <input type="button" value="获取短信" @click='huoqu' class="text"> <br>
                     <select class="first">
                         <option value="0">省</option>
-                        <option value="1">北京</option>
+                        <option value="1">北京</option> 
                         <option value="2">天津</option>
                         <option value="3">河北省</option>
                     </select>
@@ -78,7 +78,9 @@
                     _this.msg=data.data.msg;
                     if(_this.status==1){
                         //注册成功
-                        _this.$router.push({path: 'login'});
+                        setTimeout(function() {
+                            _this.$router.push({path: 'login'});
+                        }, 500);
                     }
                 })
                 this.ajax.post('/xinda-api/register/valid-sms', qs.stringify({ //注册验证

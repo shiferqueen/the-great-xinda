@@ -63,7 +63,7 @@
                         _this.refCartNum();
                         setTimeout(function() {
                             _this.$router.push({path:'/home'});
-                        }, 1000);
+                        }, 500);
                     }
                 })
             },

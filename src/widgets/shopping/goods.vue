@@ -120,7 +120,7 @@
             href(i) {
                 switch (i) {
                     case 1:
-                        location.href = '#/from';
+                        location.href = '#/form';
                         break;
 
                     case 2:
