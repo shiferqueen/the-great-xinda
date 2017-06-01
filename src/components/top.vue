@@ -43,10 +43,10 @@ export default {
   mounted(){
       let _this = this;
       this.ajax.post("/xinda-api/sso/login-info").then(function(res){//获取登录信息
-          console.log(typeof res.data.data);
+        //   console.log(typeof res.data.data);
            _this.status=res.data.status;
       });
-      console.log(this.user)
+    //   console.log(this.user)
       this.user();
       this.refCartNum();
   },
