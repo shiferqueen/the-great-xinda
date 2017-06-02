@@ -40,7 +40,7 @@
                     </select><br>
                     <input type="password" v-model="password" class="password" placeholder="请设置密码"> <br>
                     <input type="text" v-model="imgcode" class="code" placeholder="请输入图片验证码"> <img @click ='getsrc' :src='imgsrc'><br>
-                    <button @click="register">立即注册</button>
+                    <button @click="register" @keyup.enter="register">立即注册</button>
                     <p class="p1">注册即同意遵守<span>《服务协议》</span></p>
                 </div>
                 <div class="right">

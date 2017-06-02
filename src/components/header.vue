@@ -24,7 +24,7 @@
         <div class="hdcon-bot">
           <ul class="clear">
             <li v-for="(massage,index) in massages">
-              <a :href="massage.lin" class="loader" id="loader" v-on:click="choice_active(index)":class="{blueBorder:active===index}">{{massage.text}}</a>
+              <a :href="massage.lin" class="loader" id="loader" v-on:click="choice_active(index)" :class="{blueBorder:active===index}">{{massage.text}}</a>
               <!----多级列表------>
               <div class="allproduces" id="allproduces" v-if="index==0">
                 <div class="addpro-left">
@@ -206,6 +206,12 @@ export default {
 .fr{
   float: right;
 }
+.show{
+  display: block;
+}
+.hide{
+  display: none;
+}
 .blue{
   color:#2494d4!important;
 }
@@ -318,13 +324,12 @@ export default {
          &:hover{
            .allproduces{
               display: block;
-              
             }
          }
-         >div{
-           z-index: 999;
-           display: none;
-         }
+        //  >div{
+        //    z-index: 999;
+        //   //  display: none;
+        //  }
          .loader{
            font-size: 18px;
            text-align: center;
@@ -339,6 +344,8 @@ export default {
          }
         .allproduces{
           position: absolute;
+          display: none;
+          z-index: 999;
           left:0;
           top:37px;
           width:100%;
@@ -346,11 +353,11 @@ export default {
           .addpro-left{
             float: left;
             width:200px;
+            display: block;
             height: 400px;
             .addpro-list{
               width:100%;
               height: 25%;
-              display: block;
               background:rgba(169, 169, 169, 1);
               cursor: pointer;
               color: #fff;
@@ -362,6 +369,7 @@ export default {
               .addpro-li{
                 width:160px;
                 height: 100%;
+                display: block;
                 position: relative;
                 &:hover{
                   .addpro-right{
