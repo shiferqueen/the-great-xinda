@@ -30,7 +30,7 @@
                     <button @click="add()">+</button>
                 </p>
                 <div class="summbit">
-                    <span>立即购买</span>
+                    <span @click="addProductsb(getuser)">立即购买</span>
                     <span @click="addProducts(getuser)">加入购物车</span>
                 </div>
             </div>
@@ -186,8 +186,6 @@ export default {
                 _this.providerProduct = data.providerProduct;
                 _this.providerRegionText = data.providerRegionText;
                 _this.provider = data.provider;
-                 console.log('商品详情数据',res.data.data);
-                 console.log(_this.product.img);
             });
 
 
@@ -324,6 +322,34 @@ export default {
                     })
                 })
             }
+        },
+           addProductsb(uname) {
+            if(uname==""){
+                    this.$router.push({path: '/action/login'});
+            }else{
+                let that = this
+                var id = that.$route.params.productId;
+                this.ajax.post("/xinda-api/cart/add", qs.stringify({
+                    id: id,
+                    num: 1
+
+                })).then(function (res) {
+                        that.refCartNum();
+                        that.ajax.post("/xinda-api/cart/set", qs.stringify({
+                        id:id,
+                        num:that.goodsval
+                    
+
+                    })).then(function (res) {
+                        console.log(that.goodsval);
+                        console.log(id)
+                        that.$router.push({name: 'shopping'});
+                    })
+                })
+
+            }
+             
+
         },
 
 

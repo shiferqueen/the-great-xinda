@@ -64,7 +64,7 @@
                         </div>
                         <div class="con-main-right">
                             <p>￥{{listeach.price}}</p>
-                            <span>立即购买</span>
+                            <span @click="addCartNumb(listeach.id,getuser)">立即购买</span>
                             <span @click="addCartNum(listeach.id,getuser)">加入购物车</span>
                         </div>
                     </div>
@@ -147,10 +147,26 @@
                 })
                 }
             },
+            addCartNumb(id,uname) {
+                if(uname==""){
+                    this.$router.push({path: 'action/login'});
+                }else{
+                let that = this;
+                this.ajax.post("/xinda-api/cart/add", qs.stringify({
+                    id: id,
+                    num: 1
+                })).then(function (res) {
+                    that.refCartNum();
+                    that.$router.push({name: 'shopping'});
+                })
+                
+            }
+           
+            },
         
 
-            storeid(index){
-                this.setstoreid(index);
+            storeid(id){
+                this.setstoreid(id);
             }
         }
     }
