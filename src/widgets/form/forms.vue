@@ -4,18 +4,18 @@
         <div class="forms-div1">订单详情</div>
         <div class="forms-table">
             <ul class="clear">
-                <li>订单编号：<span>{{businessNo}}</span></li>
+                <li>订单编号：<span>{{getorder}}</span></li>
                 <li class="teshuli">
                     创建时间：2017-07-01 01:12:21
                 </li>
                 <li style="padding-bottom:0px;">
                     订单金额：<span>￥2000.00</span>元
-                    <p class="details">
-                        订单明细<span></span>
+                    <p class="details" @click="toggle" >
+                        订单明细<span :class="toggleclass"></span>
                     </p>
                 </li>
             </ul>
-            <ul class="clear">
+            <ul class="clear" v-if="toggles">
                 <li>
                     服务名称：注册分公司
                 </li>
@@ -60,10 +60,22 @@
         data() {
             return {
                 businessNo: '',
+                toggles: true,
+                toggleclass: {
+                    xuanzhuan: true,
+                    xuanzhuan2: false
+                }
             }
         },
         computed: {
             ...mapGetters(['getorder']),
+        },
+        methods: {
+            toggle() {
+                this.toggles = !this.toggles;
+                this.toggleclass.xuanzhuan = !this.toggleclass.xuanzhuan;
+                this.toggleclass.xuanzhuan2 = !this.toggleclass.xuanzhuan2;
+            }
         },
         created() {
             this.ajax.post("/xinda-api/business-order/detail", qs.stringify({
@@ -108,12 +120,14 @@
                 padding: 2.5%;
                 .details {
                     width: 80px;
+                    cursor: pointer;
                 }
                 p {
                     margin-left: 40px;
                     margin-top: 5px;
                     color: #fe6263;
                     span {
+                        transform-origin: 50% 70%;
                         display: inline-block;
                         border: 5px solid transparent;
                         border-bottom: 5px solid #fe6263;
@@ -130,5 +144,15 @@
                 color: #52a3da;
             }
         }
+    }
+    
+    .xuanzhuan {
+        transform: rotate(180deg);
+        transition: transform .5s;
+    }
+    
+    .xuanzhuan2 {
+        transform: rotate(360deg);
+        transition: transform .5s;
     }
 </style>
