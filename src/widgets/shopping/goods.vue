@@ -27,7 +27,7 @@
                     <dd class="quantity" id ="ddval">
                         <input type="button" @click="min(listdata.buyNum,listdata.serviceId)" value="-"><input type="text" v-model="listdata.buyNum" ><input type="button" @click="add(listdata.buyNum,listdata.serviceId)" value="+">
                     </dd>
-                    <dd class="sum">￥ {{listdata.totalPrice}}</dd>
+                    <dd class="sum">￥ {{listdata.unitPrice*listdata.buyNum}}</dd>
                     <dd class="empty"></dd>
                     <!--deleteone 删除当前-->
                     <dd class="operation" @click="deleteone(index,listdata.serviceId,listdata.totalPrice)">删除</dd>
@@ -53,14 +53,20 @@
         data() {
             return {
                 data: '',
-                univalence: 0,
                 srcimg: 'http://115.182.107.203:8088/xinda/pic',
                 listdatas: [],
                 shoppingnum: 0,
-
-                subtotal: function() {
-                    return this.goodsval * this.univalence
+            }
+        },
+        computed: {
+            univalence() {
+                var total = 0;
+                for (var i = 0; i < this.listdatas.length; i++) {
+                    var item = this.listdatas[i];
+                    total += item.unitPrice * item.buyNum;
                 }
+                // console.log('total========', total);
+                return total;
             }
         },
         methods: {
@@ -71,19 +77,17 @@
                 that.ajax.post('/xinda-api/cart/add', qs.stringify({
                     id: id,
                     num: 1,
-                })).then(function() {
-                    that.ajax.post('/xinda-api/cart/list', qs.stringify({})).then(function(data) {
-                        var data = data.data.data;
-                        that.listdatas = [];
-                        that.univalence = 0;
-                        for (var i = 0, length = data.length; i < length; i++) {
-
-                            that.listdatas.push(data[i]);
-                            that.shoppingnum = length;
-                            that.univalence += data[i].totalPrice;
+                })).then(function(data) {
+                    if (data.data.status == 1) { //操作成功
+                        for (var i = 0; i < that.listdatas.length; i++) {
+                            var item = that.listdatas[i];
+                            if (item.serviceId == id) {
+                                item.buyNum++;
+                            }
                         }
-
-                    })
+                    } else {
+                        alert("添加购物车失败");
+                    }
                 })
             },
             //减少数量
@@ -93,18 +97,17 @@
                     this.ajax.post('/xinda-api/cart/add', qs.stringify({
                         id: id,
                         num: -1,
-                    })).then(function() {
-                        that.ajax.post('/xinda-api/cart/list', qs.stringify({})).then(function(data) {
-                            var data = data.data.data;
-                            that.listdatas = [];
-                            that.univalence = 0;
-                            for (var i = 0, length = data.length; i < length; i++) {
-                                that.listdatas.push(data[i]);
-                                that.shoppingnum = length;
-                                that.univalence += data[i].totalPrice;
+                    })).then(function(data) {
+                        if (data.data.status == 1) { //操作成功
+                            for (var i = 0; i < that.listdatas.length; i++) {
+                                var item = that.listdatas[i];
+                                if (item.serviceId == id) {
+                                    item.buyNum--;
+                                }
                             }
-
-                        })
+                        } else {
+                            alert("添加购物车失败");
+                        }
                     })
                 }
             },
@@ -117,34 +120,28 @@
                 })).then(function(data) {
                     that.refCartNum();
                     that.shoppingnum--;
-                    that.univalence -= price;
                 })
             },
             //购物车总数
-            zong() {
-                this.ajax.post('/xinda-api/cart/cart-num').then(function(data) {
-                    return data.data.cartNum;
-                })
-            },
+
             href(i) {
                 var that = this
                 switch (i) {
                     case 1:
-                        // if (that.zong() > 0) {
-                        this.ajax.post('/xinda-api/cart/submit').then(function(data) {
+                        if (that.shoppingnum > 0) {
+                            this.ajax.post('/xinda-api/cart/submit').then(function(data) {
                                 // console.log(data)
                                 if (data.data.status === 1) {
-                                    that.setorder(data.data.data)
-                                        // console.log(that.setorder)
-                                    location.href = '#/form';
+                                    // console.log(that.setorder)
+                                    location.href = '#/form' + data.data.data;
                                 } else {
                                     alert(data.data.msg);
                                 }
 
                             })
-                            // } else {
-                            //     alert('您的购物车没有商品');
-                            // }
+                        } else {
+                            alert('您的购物车没有商品');
+                        }
                         break;
 
                     case 2:
@@ -159,12 +156,12 @@
             let that = this;
             that.ajax.post('/xinda-api/cart/list').then(function(data) {
                 var data = data.data.data;
-                for (var i = 0, length = data.length; i < length; i++) {
-                    that.listdatas.push(data[i]);
-                    that.shoppingnum = length;
-                    that.univalence += data[i].totalPrice;
-                }
-            })
+
+                that.listdatas = data;
+                console.log(that.listdatas)
+                that.shoppingnum = data.length;
+
+            });
         }
     }
 </script>
