@@ -55,6 +55,7 @@
                 </div>
                 <div class="entry-logo">
                     <input type="input" placeholder="请输入图形验证码">
+                    <img :src="imgsrc">
                 </div>
                 <div class="entry-code">
                     <input type="input" placeholder="请输入验证码">
@@ -151,6 +152,7 @@ export default {
     },
     data() {   
         return {
+            imgsrc:'/xinda-api/ajaxAuthcode',
             msg: '数据',
             con1: true,
             con2: false,
@@ -541,6 +543,10 @@ export default {
         input {
             width: 190px;
             height: 33px;
+        }
+        img {
+            vertical-align: bottom;
+            margin-left: 10px;
         }
     }
     .entry-code {

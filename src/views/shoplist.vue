@@ -71,9 +71,9 @@
                             <li>累计服务客户次数：{{liscon.orderNum}} &nbsp|&nbsp &nbsp 好评率：100%</li>
                             <li>
                                 <ul class="all-items-tax clear">
-                                    <li class="all-items-tax-fir">{{liscon.productTypes.substr(0,4)}}</li>
-                                    <li class="all-items-tax-sec">{{liscon.productTypes.substr(5,4)}}</li>
-                                    <li class="all-items-tax-sec">{{liscon.productTypes.substr(10,4)}}</li>
+                                    <li class="all-items-tax-fir" v-for="lis in lispage[index]">{{lis}}</li>
+                                    <!--<li class="all-items-tax-sec">{{liscon.productTypes.substr(5,4)}}</li>-->
+                                    <!--<li class="all-items-tax-sec">{{liscon.productTypes.substr(10,4)}}</li>-->
                                     <!--<li class="all-items-tax-sec">{{liscon.productTypes.substr(15,4)}}</li>-->
                                 </ul>
                             </li>
@@ -110,20 +110,18 @@ import { mapActions, mapGetters } from 'vuex'
                 cities: 0,
                 provinces,
                 blocks: 0,
+                lispage:[]
             }
             
         },
         created(){
             let _this = this;
             this.ajax.post('/xinda-api/provider/grid',{start:0,limit:6,productTypeCode:10}).then(function(data){
-                //  var fir = (data.data.data);
-                // var sec = (data.data.data)[1];
-                //  console.log(fir)
-                // console.log(sec)
                 _this.lispage_ajax = data.data.data
-                // _this.lispage_ajax.productTypes = _this.lispage_ajax.productTypes.split(' ')
-                console.log(_this.lispage_ajax)
-
+                _this.lispage = _this.lispage_ajax.map(function(value){
+                    return value.productTypes.split(',') 
+                }) 
+                // console.log(_this.lispage)
             })
             // ----------以下为省市区三级联动
             // 数据初始化,默认选中北京市,默认选中第一个;北京市数据为总数据的前18个
@@ -373,6 +371,10 @@ import { mapActions, mapGetters } from 'vuex'
             vertical-align: middle;
         }
     }
+    .all-items-tax {
+            width: 300px;
+            height: 65px;
+    }
     
     .all-items-tax li {
         width: 71px;
@@ -383,6 +385,7 @@ import { mapActions, mapGetters } from 'vuex'
         background-color: #2393d2;
         float: left;
         color: #fff;
+        margin: 2px;
     }
     
     .all-items-tax-sec {
@@ -396,7 +399,6 @@ import { mapActions, mapGetters } from 'vuex'
         background-color: #ff591b;
         text-align: center;
         line-height: 33px;
-        margin-top: 35px;
         color: #fff;
         cursor: pointer;
     }
