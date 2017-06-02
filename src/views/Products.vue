@@ -199,7 +199,15 @@ export default {
                 _this.badNum = data.badNum;
                  console.log("评价条数",res.data.data)
             });
-      
+           this.ajax.post("/xinda-api/product/judge/detail", qs.stringify({
+               serviceId:this.$route.params.productId
+            })).then(function (res) {
+                let data = res.data.data;
+                _this.goodNum = data.goodNum;
+                _this.midNum = data.midNum;
+                _this.badNum = data.badNum;
+                 console.log("评价条数",res.data.data)
+            });
 
             
 

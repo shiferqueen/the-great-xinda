@@ -11,21 +11,26 @@
                     <p :class="[status==1 ? 'activeclass' : 'errorclass']">{{msg}}</p>
                     <input type="text" v-model="cellphone" class="phone" placeholder="请输入手机号"><br>
                     <input type="text" v-model="validcode" class="code1" placeholder="请输入短信验证码"> <input type="button" value="获取短信" @click='huoqu' class="text"> <br>
-                    <select class="first">
-                        <option value="0">省</option>
-                        <option value="1">北京</option> 
-                        <option value="2">天津</option>
-                        <option value="3">河北省</option>
+                    <select class="first" name="province" v-model="selectedProvince">
+                        <option v-for="(item, index) in provinces"
+                            v-if="item.level === 1"
+                            :value="item">
+                            {{ item.name }}
+                        </option>
                     </select>
-                    <select>
-                        <option value="0">市</option>
-                        <option value="1">北京</option>
-                        <option value="2">石家庄</option> 
+                    <select name="city" v-model="selectedCity">
+                        <option
+                            v-for="(item, index) in cities"
+                            :value="item">
+                            {{ item.name }}
+                        </option>
                     </select>
-                    <select>
-                        <option value="0">区</option>
-                        <option value="1">海淀区</option>
-                        <option value="2">朝阳区</option>
+                    <select name="block" v-model="selectedBlock">
+                        <option
+                            v-for="(item, index) in blocks"
+                            :value="item">
+                            {{ item.name }}
+                        </option>
                     </select><br>
                     <input type="password" v-model="password" class="password" placeholder="请设置密码"> <br>
                     <input type="text" v-model="imgcode" class="code" placeholder="请输入图片验证码"> <img @click ='getsrc' :src='imgsrc'><br>
@@ -47,6 +52,8 @@
 
 <script>
     import qs from 'qs'
+    import provinces from '../provinces.js'
+    import Vue from 'vue'
     export default {
         name: 'register',
         data() {
@@ -58,6 +65,12 @@
                 imgcode: '',//图片验证码
                 status:'',//状态
                 msg:'',//提示消息
+                selectedProvince: provinces[0],
+                selectedCity: 0,
+                selectedBlock: 0,
+                cities: 0,
+                provinces,
+                blocks: 0
             }
         },
         methods: {
@@ -105,9 +118,79 @@
                      _this.msg=data.data.msg;
                 })
             }
-        }
+        },
+        created() {
+            // 数据初始化,默认选中北京市,默认选中第一个;北京市数据为总数据的前18个
+            let beijing = this.provinces.slice(0, 19)
+            this.cities = beijing.filter(item => {
+            if (item.level === 2) {
+                return true
+            }
+            })
+            this.selectedCity = this.cities[0]
+            this.blocks = beijing.filter(item => {
+            if (item.level === 3) {
+                return true
+            }
+            })
+            this.selectedBlock = this.blocks[0]
+        },
+        watch: {
+            selectedProvince(newVal, oldVal) {
+            // 港澳台数据只有一级,特殊处理
+            if (newVal.sheng === '71' || newVal.sheng === '81' || newVal.sheng === '82') {
+                this.cities = [newVal]
+                this.blocks = [newVal]
+            } else {
+                this.cities = this.provinces.filter(item => {
+                if (item.level === 2 && item.sheng && newVal.sheng === item.sheng) {
+                    return true
+                }
+                })
+            }
+            var _this = this
+            // 此时在渲染DOM,渲染结束之后再选中第一个
+            Vue.nextTick(() => {
+                _this.selectedCity = _this.cities[0]
+                _this.$emit('input', _this.info)
+            })
+            },
+            selectedBlock() {
+            var _this = this
+            Vue.nextTick(() => {
+                _this.$emit('input', _this.info)
+            })
+            },
+            selectedCity(newVal) {
+            // 选择了一个市,要选择区了 di是城市的代表,sheng
+            if (newVal.sheng === '71' || newVal.sheng === '81' || newVal.sheng === '82') {
+                this.blocks = [newVal]
+                this.cities = [newVal]
+            } else {
+                this.blocks = this.provinces.filter(item => {
+                if (item.level === 3 && item.sheng && item.sheng == newVal.sheng && item.di === newVal.di && item.name !== '市辖区') {
+                    return true
+                }
+                })
+            }
+            var _this = this
+            Vue.nextTick(() => {
+                _this.selectedBlock = _this.blocks[0]
+                // 触发与 v-model相关的 input事件
+                _this.$emit('input', _this.info)
+            })
+            }
+        },
+        computed: {
+            info() {
+                return {
+                    province: this.selectedProvince,
+                    city: this.selectedCity,
+                    block: this.selectedBlock
+                }
+            }
+        },
     }
-
 
 </script>
 

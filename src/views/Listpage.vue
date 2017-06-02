@@ -27,21 +27,27 @@
                     <div class="nav_line">
                         <div class="nav_line_left">服务区域</div>
                         <div class="nav_line_right">
-                            <select>
-                <option value="">省</option>
-                <option value=""></option>
-                <option value=""></option>
-              </select>
-                            <select>
-                <option value="">市</option>
-                <option value=""></option>
-                <option value=""></option>
-              </select>
-                            <select>
-                <option value="">区</option>
-                <option value=""></option>
-                <option value=""></option>
-              </select>
+                            <select name="province" v-model="selectedProvince">
+                                <option v-for="(item, index) in provinces"
+                                    v-if="item.level === 1"
+                                    :value="item">
+                                    {{ item.name }}
+                                </option>
+                            </select>
+                            <select name="city" v-model="selectedCity">
+                                <option
+                                    v-for="(item, index) in cities"
+                                    :value="item">
+                                    {{ item.name }}
+                                </option>
+                            </select>
+                            <select name="block" v-model="selectedBlock">
+                                <option
+                                    v-for="(item, index) in blocks"
+                                    :value="item">
+                                    {{ item.name }}
+                                </option>
+                            </select>
                         </div>
                     </div>
                 </div>
@@ -100,6 +106,8 @@
 </template>
 
 <script>
+    import provinces from '../provinces.js'
+    import Vue from 'vue'
     import myhead from '../components/header'
     import myfoot from '../components/footer'
     import qs from 'qs'
@@ -112,7 +120,13 @@
         },
         data() {
             return {
-                listpage_ajax: []
+                listpage_ajax: [],
+                selectedProvince: provinces[0],
+                selectedCity: 0,
+                selectedBlock: 0,
+                cities: 0,
+                provinces,
+                blocks: 0,
             }
 
         },
@@ -125,15 +139,37 @@
             })).then(function (res) {
                 _this.listpage_ajax = res.data.data;
             });
-
+            // ------------以下为省市区三级联动
+            // 数据初始化,默认选中北京市,默认选中第一个;北京市数据为总数据的前18个
+            let beijing = this.provinces.slice(0, 19)
+            this.cities = beijing.filter(item => {
+                if (item.level === 2) {
+                    return true
+                }
+            })
+            this.selectedCity = this.cities[0]
+            this.blocks = beijing.filter(item => {
+                if (item.level === 3) {
+                    return true
+                }
+            })
+            this.selectedBlock = this.blocks[0]
+            // ----------三级联动结束
         },
         computed: {
             ...mapGetters(['getCartNum','getuser']),
+            info() {
+                return {
+                    province: this.selectedProvince,
+                    city: this.selectedCity,
+                    block: this.selectedBlock
+                }
+            }
         },
         methods: {
             ...mapActions(['setstoreid','refCartNum','user']),
             
-
+            //加入购物车
             addCartNum(id,uname) {
                 if(uname==""){
                     this.$router.push({path: 'action/login'});
@@ -147,6 +183,7 @@
                 })
                 }
             },
+            //立即购买
             addCartNumb(id,uname) {
                 if(uname==""){
                     this.$router.push({path: 'action/login'});
@@ -164,11 +201,57 @@
            
             },
         
-
-            storeid(id){
-                this.setstoreid(id);
+            storeid(index){
+                this.setstoreid(index);
             }
-        }
+        },
+        watch: {
+            selectedProvince(newVal, oldVal) {
+            // 港澳台数据只有一级,特殊处理
+                if (newVal.sheng === '71' || newVal.sheng === '81' || newVal.sheng === '82') {
+                    this.cities = [newVal]
+                    this.blocks = [newVal]
+                } else {
+                    this.cities = this.provinces.filter(item => {
+                        if (item.level === 2 && item.sheng && newVal.sheng === item.sheng) {
+                            return true
+                        }
+                    })
+                }
+                var _this = this
+                // 此时在渲染DOM,渲染结束之后再选中第一个
+                Vue.nextTick(() => {
+                    _this.selectedCity = _this.cities[0]
+                    _this.$emit('input', _this.info)
+                })
+            },
+            selectedBlock() {
+                var _this = this
+                Vue.nextTick(() => {
+                    _this.$emit('input', _this.info)
+                })
+            },
+            selectedCity(newVal) {
+            // 选择了一个市,要选择区了 di是城市的代表,sheng
+                if (newVal.sheng === '71' || newVal.sheng === '81' || newVal.sheng === '82') {
+                    this.blocks = [newVal]
+                    this.cities = [newVal]
+                } else {
+                    this.blocks = this.provinces.filter(item => {
+                    if (item.level === 3 && item.sheng && item.sheng == newVal.sheng && item.di === newVal.di && item.name !== '市辖区') {
+                        return true
+                    }
+                    })
+                }
+                var _this = this
+                Vue.nextTick(() => {
+                    _this.selectedBlock = _this.blocks[0]
+                    // 触发与 v-model相关的 input事件
+                    _this.$emit('input', _this.info)
+                })
+            }
+        },
+
     }
 
 </script>
