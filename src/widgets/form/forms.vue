@@ -4,7 +4,7 @@
         <div class="forms-div1">订单详情</div>
         <div class="forms-table">
             <ul class="clear">
-                <li>订单编号：<span>{{getorder}}</span></li>
+                <li>订单编号：<span>{{businessNo}}</span></li>
                 <li class="teshuli">
                     创建时间：2017-07-01 01:12:21
                 </li>
@@ -15,60 +15,56 @@
                     </p>
                 </li>
             </ul>
-            <ul class="clear" v-if="toggles">
-                <li>
-                    服务名称：注册分公司
-                </li>
-                <li>
-                    单价：<span>￥800.00元</span>
-                </li>
-                <li>
-                    数量：<span>1</span>
-                </li>
-                <li>
-                    服务总额：<span>￥800.00元</span>
-                </li>
-            </ul>
-            <ul class="clear">
-                <li>
-                    服务名称：代理记账
-                </li>
-                <li>
-                    单价：<span>￥1800.00元</span>
-                </li>
-                <li>
-                    数量：<span>1</span>
-                </li>
-                <li>
-                    服务总额：<span>￥1800.00元</span>
-                </li>
-            </ul>
+            <div v-if="toggles">   
+                <ul class="clear" > 
+                    <li>
+                        服务名称：注册分公司
+                    </li>
+                    <li>
+                        单价：<span>￥800.00元</span>
+                    </li>
+                    <li>
+                        数量：<span>1</span>
+                    </li>
+                    <li>
+                        服务总额：<span>￥800.00元</span>
+                    </li>
+                  </ul>
+                <ul class="clear">
+                    <li>
+                        服务名称：代理记账
+                    </li>
+                    <li>
+                        单价：<span>￥1800.00元</span>
+                    </li>
+                    <li>
+                        数量：<span>1</span>
+                    </li>
+                    <li>
+                        服务总额：<span>￥1800.00元</span>
+                    </li>
+                </ul>
 
+            </div>
+            
 
         </div>
     </div>
 </template>
 <script>
     import qs from 'qs'
-    import {
-        mapGetters
-    } from 'vuex';
-
     export default {
 
         name: 'forms',
         data() {
             return {
-                businessNo: '',
+                businessNo: this.$route.params.order,
                 toggles: true,
                 toggleclass: {
                     xuanzhuan: true,
                     xuanzhuan2: false
                 }
             }
-        },
-        computed: {
-            ...mapGetters(['getorder']),
         },
         methods: {
             toggle() {
@@ -78,10 +74,11 @@
             }
         },
         created() {
+            var that = this
             this.ajax.post("/xinda-api/business-order/detail", qs.stringify({
-                businessNo: this.getorder,
+                businessNo: that.businessNo,
             })).then(function(data) {
-                console.log(data)
+                console.log(data, that.businessNo)
             })
         }
     }

@@ -132,9 +132,8 @@
                             this.ajax.post('/xinda-api/cart/submit').then(function(data) {
                                 // console.log(data)
                                 if (data.data.status === 1) {
-                                    that.setorder(data.data.data)
-                                        // console.log(that.setorder)
-                                    location.href = '#/form';
+                                    // console.log(that.setorder)
+                                    location.href = '#/form' + data.data.data;
                                 } else {
                                     alert(data.data.msg);
                                 }
