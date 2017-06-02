@@ -30,7 +30,7 @@
                     <button @click="add()">+</button>
                 </p>
                 <div class="summbit">
-                    <span>立即购买</span>
+                    <span @click="addProductsb(getuser)">立即购买</span>
                     <span @click="addProducts(getuser)">加入购物车</span>
                 </div>
             </div>
@@ -108,29 +108,29 @@
     
                 <div class="main-con2-nav">
                     <span>全部评价（0）</span>
-                    <span>好评</span>
-                    <span>中评</span>
-                    <span>差评</span>
+                    <span class="good" @click="goodn()">好评（{{goodNum}}）</span>
+                    <span class="mid" @click="midn()">中评（{{midNum}}）</span>
+                    <span class="bad" @click="badn()">差评（{{badNum}}）</span>
                 </div>
                 <div class="main-con2-t">
                     <div class="main-t-l">评价</div>
                     <div class="main-t-m">满意度</div>
                     <div class="main-t-r">用户</div>
                 </div>
-                <div class="main-con2-m1">
-                    <div class="main-m-l"></div>
-                    <div class="main-m-m"></div>
-                    <div class="main-m-r"></div>
+                <div class="main-con2-m1" v-show="good">
+                    <div class="main-m-l">111</div>
+                    <div class="main-m-m">111</div>
+                    <div class="main-m-r"><img src=""></div>
                 </div>
-                <div class="main-con2-m1">
-                    <div class="main-m-l"></div>
-                    <div class="main-m-m"></div>
-                    <div class="main-m-r"></div>
+                <div class="main-con2-m2" v-show="mid">
+                    <div class="main-m-l">222</div>
+                    <div class="main-m-m">222</div>
+                     <div class="main-m-r"><img src=""></div>
                 </div>
-                <div class="main-con2-m1">
-                    <div class="main-m-l"></div>
-                    <div class="main-m-m"></div>
-                    <div class="main-m-r"></div>
+                <div class="main-con2-m3" v-show="bad">
+                    <div class="main-m-l">333</div>
+                    <div class="main-m-m">333</div>
+                     <div class="main-m-r"><img src=""></div>
                 </div>
             </div>
         </div>
@@ -154,6 +154,9 @@ export default {
             msg: '数据',
             con1: true,
             con2: false,
+            good: true,
+            mid: false,
+            bad: false,
             bSign:false,
             goodsval: 1,
             product:{
@@ -162,6 +165,9 @@ export default {
             providerProduct:{},
             providerRegionText:{},
             provider:{},
+            goodNum:{},
+            badNum:{},
+            midNum:{},
             assess: [],
             tp:"http://115.182.107.203:8088/xinda/pic"
         }
@@ -180,20 +186,28 @@ export default {
                 _this.providerProduct = data.providerProduct;
                 _this.providerRegionText = data.providerRegionText;
                 _this.provider = data.provider;
-                 console.log('商品详情数据',res.data.data);
-                 console.log(_this.product.img);
             });
 
 
 
-
-            
              this.ajax.post("/xinda-api/product/judge/detail", qs.stringify({
                serviceId:this.$route.params.productId
             })).then(function (res) {
+                let data = res.data.data;
+                _this.goodNum = data.goodNum;
+                _this.midNum = data.midNum;
+                _this.badNum = data.badNum;
                  console.log("评价条数",res.data.data)
             });
-      
+           this.ajax.post("/xinda-api/product/judge/detail", qs.stringify({
+               serviceId:this.$route.params.productId
+            })).then(function (res) {
+                let data = res.data.data;
+                _this.goodNum = data.goodNum;
+                _this.midNum = data.midNum;
+                _this.badNum = data.badNum;
+                 console.log("评价条数",res.data.data)
+            });
 
             
 
@@ -228,6 +242,51 @@ export default {
             con2.style.backgroundColor = '#2693d4';
             con1.style.color = '#686868';
             con1.style.backgroundColor = '#f7f7f7';
+        },
+        //好评，中评，差评切换
+         goodn: function () {
+            this.good = true,
+            this.mid = false,
+            this.bad = false
+            var good = document.getElementsByClassName('good')[0];
+            var mid = document.getElementsByClassName('mid')[0];
+            var bad = document.getElementsByClassName('bad')[0];
+            good.style.color = '#fff';
+            good.style.backgroundColor = '#2693d4';
+            mid.style.color = '#686868';
+            mid.style.backgroundColor = '#f7f7f7';
+            bad.style.color = '#686868';
+            bad.style.backgroundColor = '#f7f7f7';
+        
+         },
+        midn: function () {
+            this.good = false,
+            this.mid = true,
+            this.bad = false
+            var good = document.getElementsByClassName('good')[0];
+            var mid = document.getElementsByClassName('mid')[0];
+            var bad = document.getElementsByClassName('bad')[0];
+            good.style.color = '#686868';
+            good.style.backgroundColor = '#f7f7f7';
+            mid.style.color = '#fff';
+            mid.style.backgroundColor = '#2693d4';
+            bad.style.color = '#686868';
+            bad.style.backgroundColor = '#f7f7f7';
+        
+        },
+         badn: function () {
+            this.good = false,
+            this.mid = false,
+            this.bad = true
+            var good = document.getElementsByClassName('good')[0];
+            var mid = document.getElementsByClassName('mid')[0];
+            var bad = document.getElementsByClassName('bad')[0];
+            good.style.color = '#686868';
+            good.style.backgroundColor = '#f7f7f7';
+            bad.style.color = '#fff';
+            bad.style.backgroundColor = '#2693d4';
+            mid.style.color = '#686868';
+            mid.style.backgroundColor = '#f7f7f7';
         },
 
         // 数量加减方法
@@ -271,6 +330,34 @@ export default {
                     })
                 })
             }
+        },
+           addProductsb(uname) {
+            if(uname==""){
+                    this.$router.push({path: '/action/login'});
+            }else{
+                let that = this
+                var id = that.$route.params.productId;
+                this.ajax.post("/xinda-api/cart/add", qs.stringify({
+                    id: id,
+                    num: 1
+
+                })).then(function (res) {
+                        that.refCartNum();
+                        that.ajax.post("/xinda-api/cart/set", qs.stringify({
+                        id:id,
+                        num:that.goodsval
+                    
+
+                    })).then(function (res) {
+                        console.log(that.goodsval);
+                        console.log(id)
+                        that.$router.push({name: 'shopping'});
+                    })
+                })
+
+            }
+             
+
         },
 
 
@@ -603,11 +690,12 @@ export default {
             }
             .main-t-r {
                 float: right;
-                width: 150px;
+                width: 270px;
+                text-align: center;
                 line-height: 30px;
             }
         }
-        .main-con2-m {
+        .main-con2-m1,.main-con2-m2,.main-con2-m3{
             width: 1195px;
             height: 120px;
             border-bottom: 1px solid #cdcdcd;
@@ -623,12 +711,20 @@ export default {
             .main-m-m {
                 float: left;
                 width: 270px;
-                line-height: 30px;
+                line-height: 100px;
+                text-align: center;
             }
             .main-m-r {
                 float: right;
-                width: 150px;
-                line-height: 30px;
+                width: 270px;
+                text-align: center;
+                img{
+                    border-radius: 50%;
+                    width: 70px;
+                    height: 70px;
+                    text-align: center;
+                    margin-top: 25px
+                }
             }
         }
     }

@@ -5,22 +5,25 @@
         <div class="service-area-list clear">
             <div class="service-area">服务区域</div>
             <div class="service-area-right">
-                <select>
-                    <option value="">省</option>
-                    <option value="">北京</option>
-                    <option value="">天津</option>
-                    <option value="">河北</option>
-                </select>
-                <select>
-                    <option value="">市</option>
-                    <option value="">北京市</option>
-                    <option value="">石家庄市</option>
-                </select>
-                <select>
-                    <option value="">区</option>
-                    <option value="">海淀区</option>
-                    <option value="">朝阳区</option>
-                </select>
+                <select name="province" v-model="selectedProvince">
+                     <option v-for="(item, index) in provinces"
+                          v-if="item.level === 1"
+                           :value="item">
+                           {{ item.name }}
+                      </option>
+                 </select>
+                 <select name="city" v-model="selectedCity">
+                      <option v-for="(item, index) in cities"
+                            :value="item">
+                             {{ item.name }}
+                      </option>
+                 </select>
+                 <select name="block" v-model="selectedBlock">
+                       <option v-for="(item, index) in blocks"
+                             :value="item">
+                             {{ item.name }}
+                       </option>
+                 </select>
             </div>
         </div>
         <div class="product-type-list clear">
@@ -52,7 +55,7 @@
             <div class="all-items-content">
                 <div class="all-items-content-left clear" v-for="(liscon,index) in lispage_ajax">
                     <div>
-                        <p class="all-items-content-left-logo"><img src="../images/logos/logo.png"></p>
+                        <p class="all-items-content-left-logo"><img :src="'http://115.182.107.203:8088/xinda/pic'+liscon.providerImg"></p>
                         <p class="all-items-content-left-gold"><img src="../images/logos/little01.png"><span>金牌服务商</span></p>
                     </div>
                     <div class="all-items-content-left-infor">
@@ -71,41 +74,13 @@
                                     <li class="all-items-tax-fir">{{liscon.productTypes.substr(0,4)}}</li>
                                     <li class="all-items-tax-sec">{{liscon.productTypes.substr(5,4)}}</li>
                                     <li class="all-items-tax-sec">{{liscon.productTypes.substr(10,4)}}</li>
-                                    <li class="all-items-tax-sec">{{liscon.productTypes.substr(15,4)}}</li>
+                                    <!--<li class="all-items-tax-sec">{{liscon.productTypes.substr(15,4)}}</li>-->
                                 </ul>
                             </li>
-                            <li class="go-to-shop"><a href="#/shopfront">进入店铺</a></li>
+                            <li class="go-to-shop"><a :href="'#/shopfront/'+liscon.id">进入店铺</a></li>
                         </ul>
                     </div>
                 </div>
-                <!--<div class="all-items-content-right">
-                    <div>
-                        <p class="all-items-content-left-logo"><img src="../images/logos/logo.png"></p>
-                        <p class="all-items-content-left-gold"><img src="../images/logos/little01.png"><span>金牌服务商</span></p>
-                    </div>
-                    <div class="all-items-content-left-infor">
-                        <ul class="clear">
-                            <li>信达北京服务中心</li>
-                            <li>信誉&nbsp &nbsp<img src="../images/logos/little07.png">
-                                <img src="../images/logos/little07.png">
-                                <img src="../images/logos/little07.png">
-                                <img src="../images/logos/little07.png">
-                                <img src="../images/logos/little04.png">
-                            </li>
-                            <li>北京-北京市-朝阳区</li>
-                            <li>累计服务客户次数：8272 &nbsp|&nbsp &nbsp 好评率：100%</li>
-                            <li>
-                                <ul class="all-items-tax clear">
-                                    <li class="all-items-tax-fir">税务代办</li>
-                                    <li class="all-items-tax-sec">代理记账</li>
-                                    <li class="all-items-tax-sec">个人社保</li>
-                                    <li class="all-items-tax-sec">公司变更</li>
-                                </ul>
-                            </li>
-                            <li class="go-to-shop"><a href="#/shopfront">进入店铺</a></li>
-                        </ul>
-                    </div>
-                </div>-->
             </div>
         </div>
         <div class="item-change clear">
@@ -118,32 +93,124 @@
 </template>
 
 <script>
+import provinces from '../provinces.js'
+import Vue from 'vue'
 import myhead from '../components/header'
 import myfoot from '../components/footer'
+import { mapActions, mapGetters } from 'vuex'
     export default {
         name: 'shoplist',
         data() {
             return {
-                lispage_ajax:[]
+                lispage_ajax:[],
+                // lis_arrs:[]
+                selectedProvince: provinces[0],
+                selectedCity: 0,
+                selectedBlock: 0,
+                cities: 0,
+                provinces,
+                blocks: 0,
             }
             
         },
         created(){
             let _this = this;
-            this.ajax.post('http://115.182.107.203:8088/xinda/xinda-api/provider/grid',{start:0,limit:6,productTypeCode:10}).then(function(data){
+            this.ajax.post('/xinda-api/provider/grid',{start:0,limit:6,productTypeCode:10}).then(function(data){
                 //  var fir = (data.data.data);
                 // var sec = (data.data.data)[1];
                 //  console.log(fir)
                 // console.log(sec)
                 _this.lispage_ajax = data.data.data
+                // _this.lispage_ajax.productTypes = _this.lispage_ajax.productTypes.split(' ')
                 console.log(_this.lispage_ajax)
-            })
-        },
 
+            })
+            // ----------以下为省市区三级联动
+            // 数据初始化,默认选中北京市,默认选中第一个;北京市数据为总数据的前18个
+            let beijing = this.provinces.slice(0, 19)
+            this.cities = beijing.filter(item => {
+                if (item.level === 2) {
+                    return true
+                }
+            })
+            this.selectedCity = this.cities[0]
+            this.blocks = beijing.filter(item => {
+                if (item.level === 3) {
+                    return true
+                }
+            })
+            this.selectedBlock = this.blocks[0]
+            // ----------三级联动结束
+        },
+        computed: {
+            info() {
+                return {
+                    province: this.selectedProvince,
+                    city: this.selectedCity,
+                    block: this.selectedBlock
+                }
+            },
+        },
+        computed: {
+            ...mapGetters(['getshopid']),
+        },
+        methods: {
+            ...mapActions(['setgoshop']),
+            goshop(id){
+                this.setgoshop(id)
+                console.log(id)
+            }
+        },
         components:{
                 myhead,
-                myfoot
+                myfoot,
+        },
+        watch: {
+            selectedProvince(newVal, oldVal) {
+            // 港澳台数据只有一级,特殊处理
+                if (newVal.sheng === '71' || newVal.sheng === '81' || newVal.sheng === '82') {
+                    this.cities = [newVal]
+                    this.blocks = [newVal]
+                } else {
+                    this.cities = this.provinces.filter(item => {
+                        if (item.level === 2 && item.sheng && newVal.sheng === item.sheng) {
+                            return true
+                        }
+                    })
+                }
+                var _this = this
+                // 此时在渲染DOM,渲染结束之后再选中第一个
+                Vue.nextTick(() => {
+                    _this.selectedCity = _this.cities[0]
+                    _this.$emit('input', _this.info)
+                })
             },
+            selectedBlock() {
+                var _this = this
+                Vue.nextTick(() => {
+                    _this.$emit('input', _this.info)
+                })
+            },
+            selectedCity(newVal) {
+            // 选择了一个市,要选择区了 di是城市的代表,sheng
+                if (newVal.sheng === '71' || newVal.sheng === '81' || newVal.sheng === '82') {
+                    this.blocks = [newVal]
+                    this.cities = [newVal]
+                } else {
+                    this.blocks = this.provinces.filter(item => {
+                    if (item.level === 3 && item.sheng && item.sheng == newVal.sheng && item.di === newVal.di && item.name !== '市辖区') {
+                        return true
+                    }
+                    })
+                }
+                var _this = this
+                Vue.nextTick(() => {
+                    _this.selectedBlock = _this.blocks[0]
+                    // 触发与 v-model相关的 input事件
+                    _this.$emit('input', _this.info)
+                })
+            }
+        },
         
         
     }
