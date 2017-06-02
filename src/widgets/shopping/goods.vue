@@ -157,14 +157,13 @@
 
         created() {
             let that = this;
-            that.ajax.post('/xinda-api/cart/list', qs.stringify({})).then(function(data) {
+            that.ajax.post('/xinda-api/cart/list').then(function(data) {
                 var data = data.data.data;
                 for (var i = 0, length = data.length; i < length; i++) {
                     that.listdatas.push(data[i]);
                     that.shoppingnum = length;
                     that.univalence += data[i].totalPrice;
                 }
-
             })
         }
     }
