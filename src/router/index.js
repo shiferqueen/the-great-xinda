@@ -83,7 +83,7 @@ export default new Router({
                     component: shopping,
                 },
                 {
-                    path: 'form', //支付
+                    path: 'form:order', //支付
                     name: 'form',
                     component: form,
                 },

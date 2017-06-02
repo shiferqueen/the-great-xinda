@@ -10,8 +10,13 @@
                 <p :class="[status==1 ? 'activeclass' : 'errorclass']">{{msg}}</p>
                 <input type="text" class="phone" v-model="cellphone" placeholder="请输入手机号码"><br>
                 <input type="password" class="password" v-model="password" placeholder="请输入密码"> <br>
+<<<<<<< HEAD
                 <input type="text" class="code" v-model="imgcode" placeholder="请输入验证码"> <img @click ='getsrc' src='/xinda-api/ajaxAuthcode'><br>
+                <button @click="login" @keyup.enter="login">立即登录</button><br>
+=======
+                <input type="text" class="code" v-model="imgcode" placeholder="请输入验证码"> <img @click ='getsrc' src='/xinda-api/ajaxAuthcode/' ><br>
                 <button @click="login">立即登录</button><br>
+>>>>>>> 07e335d07d775069c6a5ead7f8a3490c66701616
                 <a href="#/action/forget">忘记密码?</a>
             </div>
             <div class="right">
@@ -36,16 +41,20 @@
                 imgsrc: "/xinda-api/ajaxAuthcode",
                 cellphone: '',
                 password: '',
-                imgcode: '',
+                imgcode: '',//
                 status:'',//状态
                 msg:'',//提示消息
+                imgsrc:{
+                    imgsrc1:true,
+
+                },
             }
         },
         methods: {
             ...mapActions(["user","refCartNum"]),
             ...mapGetters(['getCartNum']),
             getsrc() {
-                this.imgsrc = "/xinda-api/ajaxAuthcode/##";
+                this.imgsrc = "";
             },
             login() {
                 let _this = this;

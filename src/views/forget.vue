@@ -13,8 +13,8 @@
                     <input type="text" v-model="validcode" class="code1" placeholder="请输入短信验证码"> <input type="button" value="获取短信" @click='huoqu' class="text"> <br>
                     <input type="text" class="code" v-model="imgcode" placeholder="请输入图片验证码"> <img @click ='getsrc' src='/xinda-api/ajaxAuthcode'><br>
                     <input type="password" v-model="password" class="password" placeholder="请输入新密码"> <br>
-                    <input type="password" v-model="password" class="password" placeholder="请确认密码"> <br> 
-                    <button @click="forget">确认修改</button>
+                    <input type="password" v-model="newpassword" class="password" placeholder="请确认密码"> <br> 
+                    <button @click="forget" @keyup.enter="forget">确认修改</button>
                 </div>
                 <div class="right">
                     <div class="right1">
@@ -36,10 +36,11 @@
         data() {
             return {
                 imgsrc: "/xinda-api/ajaxAuthcode",
-                cellphone: '',
-                password: '',
+                cellphone: '',//手机号
+                newpassword: '',//确认密码
+                password: '',//新密码
                 validcode: '',//短信验证码
-                imgcode: '',
+                imgcode: '',//图片验证码
                 status:'',//状态
                 msg:'',//提示消息
             }
@@ -50,20 +51,29 @@
             },
             forget() {
                 let _this = this;
-                this.ajax.post('/xinda-api/register/findpas', qs.stringify({//找回密码
-                    cellphone: '' + this.cellphone,
-                    smsType: 2,
-                    validCode: '' + this.validcode,
-                    password: '' + this.password,
-                })).then(function(data) {
-                    console.log(data.data);
-                     _this.status=data.data.status;
-                    _this.msg=data.data.msg;
-                    if(_this.status==1){
-                        //修改密码成功
-                        this.$router.push({path: 'login'});
-                    }
-                })
+                // console.log(_this.validcode)
+                if(_this. newpassword==_this.password){
+                    _this.ajax.post('/xinda-api/register/findpas', qs.stringify({//找回密码
+                        cellphone: _this.cellphone,
+                        smsType: 2,
+                        validCode: _this.validcode,
+                        password: _this.password,
+                    })).then(function(data) {
+                        //console.log(data.data);
+                        _this.status=data.data.status;
+                        _this.msg=data.data.msg;
+                        if(_this.status==1){
+                            //修改密码成功
+                            setTimeout(function() {
+                                _this.$router.push({path: 'login'});
+                                _this.msg='修改密码成功,请登录！'
+                            }, 500);
+                        }
+                    })
+                }else{
+                    _this.msg='密码不一致,请重新输入密码';
+                    _this.status=0;
+                } 
             },
             huoqu() {
                 let _this = this;
