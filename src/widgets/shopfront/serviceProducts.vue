@@ -3,7 +3,7 @@
       <div class="shopfront-content-right-service-list">
                     <ul>
                         <li>
-                            <nobr><p>商标快速注册通道（5个小时就不知道了）</p></nobr>
+                            <nobr><p>{{name}}</p></nobr>
                             <div>
                                 <span></span><span></span>
                             </div>
@@ -67,9 +67,28 @@
   </div>
 </template>
 <script>
-export default {
-  name:'serviceProducts'
-}
+import qs from 'qs'
+import { mapActions, mapGetters } from 'vuex'
+    export default {
+        name:'serviceProducts',
+        data() {
+            return {
+                lispage_ajax:[],
+                name:{}
+            }
+        },
+        computed: {
+            ...mapGetters(['getshopid']),
+        },
+        created(){
+            let _this = this;
+            this.ajax.post('/xinda-api/provider/detail',qs.stringify({id: _this.$route.params.shopfrontID})).then(function(res){
+                let data = res.data.data
+                _this.name = data.name
+                // console.log(res.data.data.name)
+            })
+        },
+    }
 </script>
 
 <style lang="less" scoped>

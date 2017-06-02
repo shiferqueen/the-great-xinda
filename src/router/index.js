@@ -46,7 +46,8 @@ export default new Router({
                     component: shoplist,
                 },
                 {
-                    path: "shopfront",
+                    path: "shopfront/:shopfrontID",
+                    alias: '',
                     name: "shopfront",
                     component: shopfront,
                     children: [{
@@ -67,12 +68,12 @@ export default new Router({
                     ]
                 },
                 {
-                    path: 'listpage',  //商品列表
+                    path: 'listpage', //商品列表
                     name: 'Listpage',
                     component: Listpage,
                 },
                 {
-                    path: 'products/:productId',  //商品详情
+                    path: 'products/:productId', //商品详情
                     name: 'Products',
                     component: Products,
                 },
@@ -102,7 +103,7 @@ export default new Router({
                     component: us,
                 },
                 {
-                    path: 'member',//会员
+                    path: 'member', //会员
                     name: 'member',
                     component: member,
                     children: [{

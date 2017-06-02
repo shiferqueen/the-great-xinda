@@ -74,38 +74,10 @@
                                     <!--<li class="all-items-tax-sec">{{liscon.productTypes.substr(15,4)}}</li>-->
                                 </ul>
                             </li>
-                            <li class="go-to-shop"><a @click="goshop">进入店铺</a></li>
+                            <li class="go-to-shop"><a :href="'#/shopfront/'+liscon.id"">进入店铺</a></li>
                         </ul>
                     </div>
                 </div>
-                <!--<div class="all-items-content-right">
-                    <div>
-                        <p class="all-items-content-left-logo"><img src="../images/logos/logo.png"></p>
-                        <p class="all-items-content-left-gold"><img src="../images/logos/little01.png"><span>金牌服务商</span></p>
-                    </div>
-                    <div class="all-items-content-left-infor">
-                        <ul class="clear">
-                            <li>信达北京服务中心</li>
-                            <li>信誉&nbsp &nbsp<img src="../images/logos/little07.png">
-                                <img src="../images/logos/little07.png">
-                                <img src="../images/logos/little07.png">
-                                <img src="../images/logos/little07.png">
-                                <img src="../images/logos/little04.png">
-                            </li>
-                            <li>北京-北京市-朝阳区</li>
-                            <li>累计服务客户次数：8272 &nbsp|&nbsp &nbsp 好评率：100%</li>
-                            <li>
-                                <ul class="all-items-tax clear">
-                                    <li class="all-items-tax-fir">税务代办</li>
-                                    <li class="all-items-tax-sec">代理记账</li>
-                                    <li class="all-items-tax-sec">个人社保</li>
-                                    <li class="all-items-tax-sec">公司变更</li>
-                                </ul>
-                            </li>
-                            <li class="go-to-shop"><a href="#/shopfront">进入店铺</a></li>
-                        </ul>
-                    </div>
-                </div>-->
             </div>
         </div>
         <div class="item-change clear">
@@ -120,11 +92,13 @@
 <script>
 import myhead from '../components/header'
 import myfoot from '../components/footer'
+import { mapActions, mapGetters } from 'vuex'
     export default {
         name: 'shoplist',
         data() {
             return {
-                lispage_ajax:[]
+                lispage_ajax:[],
+                // lis_arrs:[]
             }
             
         },
@@ -136,12 +110,19 @@ import myfoot from '../components/footer'
                 //  console.log(fir)
                 // console.log(sec)
                 _this.lispage_ajax = data.data.data
+                // _this.lispage_ajax.productTypes = _this.lispage_ajax.productTypes.split(' ')
                 console.log(_this.lispage_ajax)
+
             })
         },
+        computed: {
+            ...mapGetters(['getshopid']),
+        },
         methods: {
-            goshop(){
-                alert(1)
+            ...mapActions(['setgoshop']),
+            goshop(id){
+                this.setgoshop(id)
+                console.log(id)
             }
         },
 

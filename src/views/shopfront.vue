@@ -4,8 +4,8 @@
         <div class="shopfront-top clear">
             <img src="../images/logos/logo2.png" class="shopfront-top-logo">
             <div class="shopfront-top-area">
-                <h2>信达北京服务中心</h2>
-                <p>北京-北京市-朝阳区</p>
+                <h2>{{getShop.name}}</h2>
+                <p>{{getShop.regionName}}</p>
             </div>
         </div>
         <div class="shopfront-content clear">
@@ -47,9 +47,9 @@
             </div>
             <div class="shopfront-content-right">
                 <div class="shopfront-content-right-title clear">
-                    <div><router-link to="/shopfront" exact>服务产品</router-link></div>
-                    <div><router-link to="/shopfront/customService" exact>客服</router-link></div>
-                    <div><router-link to="/shopfront/certification" exact>资质证书</router-link></div>
+                    <div><router-link :to="shopfront + links" exact>服务产品</router-link></div>
+                    <div><router-link :to="shopfront+links+'/customService'" exact>客服</router-link></div>
+                    <div><router-link :to="shopfront+links+'/certification'" exact>资质证书</router-link></div>
                 </div>
                 <div class="shopfront-content-right-service-content">服务内容</div>
                 <router-view></router-view>
@@ -78,6 +78,8 @@ import customService from '../widgets/shopfront/customService'
 import certification from '../widgets/shopfront/certification'
 import myhead from '../components/header'
 import myfoot from '../components/footer'
+import qs from 'qs'
+import { mapActions, mapGetters } from 'vuex'
     export default {
         name: 'shopfront',
         components:{
@@ -89,12 +91,22 @@ import myfoot from '../components/footer'
             },
         data() {
             return {
-                lispage_ajax:[]
+                lispage_ajax:[],
+                links:this.$route.params.shopfrontID,
+                shopfront:'/shopfront/'
             }
         },
+        computed: {
+            ...mapGetters(['getshopid','getShop']),
+        },
+        methods:{
+            ...mapActions(['currentShop'])
+        },
         created(){
-            this.ajax.post('/xinda-api/provider/detail',qs.stringify({id: '9080f0c120a64eb3831d50ba93c33e78'})).then(function(res){
-                console.log(res)
+            let that = this
+            this.ajax.post('/xinda-api/provider/detail',qs.stringify({id: that.$route.params.shopfrontID})).then(function(res){
+
+                that.currentShop(res.data.data);
             })
         },
     }

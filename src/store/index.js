@@ -14,9 +14,11 @@ export default new Vuex.Store({
         storeid: '',
         username: '',
         //订单号
-        ordernum: ''
-
-
+        ordernum: '',
+        //店铺id
+        shopid: '',
+        //当前商店详情
+        currentShop: {}
     },
     //突变集合---用来操作状态集合
     mutations: {
@@ -32,6 +34,13 @@ export default new Vuex.Store({
         },
         SETORDER(state, number) {
             state.ordernum = number;
+        },
+        //店铺
+        SETSHOPID(state, id) {
+            state.shopid = id;
+        },
+        CURRENTSHOP(state, shop) {
+            state.currentShop = shop;
         }
 
     },
@@ -59,7 +68,13 @@ export default new Vuex.Store({
         },
         setorder({ commit }, number) {
             commit('SETORDER', number)
-        }
+        },
+        setgoshop({ commit }, id) {
+            commit('SETSHOPID', id)
+        }, //currentShop
+        currentShop({ commit }, shop) {
+            commit('CURRENTSHOP', shop)
+        },
     },
     //显示集合
     getters: {
@@ -74,6 +89,12 @@ export default new Vuex.Store({
         },
         getorder(state) {
             return state.ordernum //订单号
+        },
+        getshopid(state) {
+            return state.shopid //店铺
+        },
+        getShop(state) {
+            return state.currentShop //店铺
         }
     }
 });
