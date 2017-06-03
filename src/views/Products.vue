@@ -54,13 +54,14 @@
                     <input type="input" placeholder="请输入手机号">
                 </div>
                 <div class="entry-logo">
-                    <input type="input" placeholder="请输入图形验证码">
-                    <img :src="imgsrc">
+                    <input type="input" v-model="imgcode" placeholder="请输入图形验证码">
+                    <img @click="getsrc" :src="imgsrc">
                 </div>
                 <div class="entry-code">
                     <input type="input" placeholder="请输入验证码">
+                    <button>获取验证码</button>
                 </div>
-                <div class="begin-infor">开始免费咨询</div>
+                <div class="begin-infor" @click="goinfor">开始免费咨询</div>
                 <p class="promease">本次电话咨询完全免费，我们将对你的号码严格保密，请放心使用!</p>
             </div>
         </div>
@@ -153,6 +154,7 @@ export default {
     data() {   
         return {
             imgsrc:'/xinda-api/ajaxAuthcode',
+            imgcode:'',
             msg: '数据',
             con1: true,
             con2: false,
@@ -222,6 +224,15 @@ export default {
     methods: {
         ...mapGetters(['getstoreid']),
         ...mapActions(['refCartNum','user']),
+
+            //获取动态验证码
+        getsrc() {
+            this.imgsrc = '/xinda-api/ajaxAuthcode?' + Math.random()
+        },
+        //开始免费咨询
+        goinfor(){
+            //
+        },
 
 
         //服务，评价切换方法
@@ -555,6 +566,11 @@ export default {
         input {
             width: 190px;
             height: 33px;
+        }
+        button {
+                width: 80px;
+                height: 35px;
+                margin-left: 10px;
         }
     }
     .begin-infor {

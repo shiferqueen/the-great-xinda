@@ -106,8 +106,12 @@ import { mapActions, mapGetters } from 'vuex'
             let that = this
             this.ajax.post('/xinda-api/provider/detail',qs.stringify({id: that.$route.params.shopfrontID})).then(function(res){
 
-                that.currentShop(res.data.data);
-            })
+                that.currentShop(res.data.data)
+            });
+            this.ajax.post('/xinda-api/recommend/list',qs.stringify({id: that.$route.params.shopfrontID})).then(function(res){
+        console.log(res.data.data)
+                that.currentShop(res.data.data)
+            });
         },
     }
 </script>
