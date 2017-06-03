@@ -9,9 +9,9 @@
             <div class="next">
                 <div class="left">
                     <p :class="[status==1 ? 'activeclass' : 'errorclass']">{{msg}}</p>
-                    <input type="text" v-model="cellphone" class="phone" placeholder="请输入手机号"><br>
+                    <input type="text" v-model="cellphone" class="phone" placeholder="请输入手机号" @click="clear"><br>
                         
-                    <input type="text" v-model="validcode" class="code1" placeholder="请输入短信验证码">
+                    <input type="text" v-model="validcode" class="code1" placeholder="请输入短信验证码" @click="clear">
                         <!--短信发送之前-->  
                     <input type="button" v-if="yanzhen" value="获取短信" @click='huoqu' class="text"> 
                         <!--发送之后-->
@@ -38,8 +38,8 @@
                             {{ item.name }}
                         </option>
                     </select><br>
-                    <input type="password" v-model="password" class="password" placeholder="请设置密码"> <br>
-                    <input type="text" v-model="imgcode" class="code" placeholder="请输入图片验证码"> <img @click ='getsrc' :src='imgsrc'><br>
+                    <input type="password" v-model="password" class="password" placeholder="请设置密码" @click="helpmsg"><br>
+                    <input type="text" v-model="imgcode" class="code" placeholder="请输入图片验证码" @click="clear"> <img @click ='getsrc' :src='imgsrc'><br>
                     <button @click="register" @keyup.enter="register">立即注册</button>
                     <p class="p1">注册即同意遵守<span>《服务协议》</span></p>
                 </div>
@@ -72,6 +72,8 @@
                 imgcode: '', //图片验证码
                 status: '', //状态
                 msg: '', //提示消息
+                testphone:/^1[3|4|5|7|8][0-9]{9}$/,
+                testpassword:/^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{6,16}$/,
                 selectedProvince: provinces[0],
                 selectedCity: 0,
                 selectedBlock: 0,
@@ -87,36 +89,58 @@
             getsrc() {
                 this.imgsrc = "/xinda-api/ajaxAuthcode?" + Math.random()
             },
+            clear(){
+                 let _this = this;
+                 if(_this.status==0){
+                     _this.msg="";
+                 }
+            },
+            helpmsg(){
+                 let _this = this;
+                 _this.status=0;
+                 _this.msg="为了您的账号安全，密码至少6位，最多16位，必须包含大写字母、小写字母、数字";
+            },
             register() {
                 let _this = this;
-                this.ajax.post('/xinda-api/register/register', qs.stringify({ //注册提交
-                    cellphone: _this.cellphone,
-                    smsType: 1,
-                    validCode: _this.validcode,
-                    password: _this.password,
-                    regionId: 110010, //所属地区编码
-                })).then(function(data) {
-                    //console.log(data.data);
-                    _this.status = data.data.status;
-                    _this.msg = data.data.msg;
-                    if (_this.status == 1) {
-                        //注册成功
-                        setTimeout(function() {
-                            _this.$router.push({
-                                path: 'login'
-                            });
-                        }, 500);
-                    }
-                })
-                this.ajax.post('/xinda-api/register/valid-sms', qs.stringify({ //注册验证
-                    cellphone: this.cellphone, //手机号				
-                    smsType: 1, //短信类型:1注册				
-                    validCode: this.validcode, //短信验证码				
-                })).then(function(data) {
-                    console.log(data.data);
-                    _this.status = data.data.status;
-                    _this.msg = data.data.msg;
-                })
+                if(_this.testphone.test(_this.cellphone)==false){
+                    _this.status=0;
+                    _this.msg="手机号码不正确，请重新输入手机号";
+                }else if(_this.testpassword.test(_this.password)==false){
+                     _this.status=0;
+                    _this.msg="密码不正确，请重新输入密码";
+                }else{
+                    _this.ajax.post('/xinda-api/register/valid-sms', qs.stringify({ //注册验证
+                        cellphone: this.cellphone, //手机号				
+                        smsType: 1, //短信类型:1注册				
+                        validCode: this.validcode, //短信验证码				
+                    })).then(function(data) {
+                        //console.log(data.data);
+                        _this.status = data.data.status;
+                        _this.msg = data.data.msg;
+                        if(_this.status==1){
+                            _this.ajax.post('/xinda-api/register/register', qs.stringify({ //注册提交
+                                cellphone: _this.cellphone,
+                                smsType: 1,
+                                validCode: _this.validcode,
+                                password: _this.password,
+                                regionId: 110010, //所属地区编码
+                            })).then(function(data) {
+                                //console.log(data.data);
+                                _this.status = data.data.status;
+                                _this.msg = data.data.msg;
+                                if (_this.status == 1) {
+                                    //注册成功
+                                    setTimeout(function() {
+                                        _this.$router.push({path: 'login'});
+                                    }, 500);
+                                }else{
+                                    _this.getsrc()
+                                }
+                            })
+                        }
+                    })
+                }
+                
             },
             startReciprocal() {
                 let that = this
@@ -230,7 +254,7 @@
     
     .errorclass {
         color: red;
-        padding: 20px 150px 0;
+        padding: 20px 70px 0 120px;
     }
     
     input {
@@ -265,7 +289,7 @@
         padding-top: 25px;
         .next {
             width: 1200px;
-            height: 433px;
+            height: 450px;
             margin: 0 auto;
             background-color: #fff;
             margin-top: 25px;
