@@ -9,11 +9,11 @@
             <div class="next">
                 <div class="left">
                     <p :class="[status==1 ? 'activeclass' : 'errorclass']">{{msg}}</p>
-                    <input type="text" v-model="cellphone" class="phone" placeholder="请输入手机号"><br>
-                    <input type="text" v-model="validcode" class="code1" placeholder="请输入短信验证码"> <input type="button" value="获取短信" @click='huoqu' class="text"> <br>
-                    <input type="text" class="code" v-model="imgcode" placeholder="请输入图片验证码"> <img @click ='getsrc' src='/xinda-api/ajaxAuthcode'><br>
-                    <input type="password" v-model="password" class="password" placeholder="请输入新密码"> <br>
-                    <input type="password" v-model="newpassword" class="password" placeholder="请确认密码"> <br> 
+                    <input type="text" v-model="cellphone" class="phone" placeholder="请输入手机号" @click="clear"><br>
+                    <input type="text" v-model="validcode" class="code1" placeholder="请输入短信验证码" @click="clear"> <input type="button" value="获取短信" @click='huoqu' class="text"> <br>
+                    <input type="text" class="code" v-model="imgcode" placeholder="请输入图片验证码" @click="clear"> <img @click ='getsrc' src='/xinda-api/ajaxAuthcode'><br>
+                    <input type="password" v-model="password" class="password" placeholder="请输入新密码" @click="helpmsg"> <br>
+                    <input type="password" v-model="newpassword" class="password" placeholder="请确认密码" @click="clear"> <br> 
                     <button @click="forget" @keyup.enter="forget">确认修改</button>
                 </div>
                 <div class="right">
@@ -43,22 +43,42 @@
                 imgcode: '',//图片验证码
                 status:'',//状态
                 msg:'',//提示消息
+                testphone:/^1[3|4|5|7|8][0-9]{9}$/,
+                testpassword:/^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{6,16}$/,
             }
         },
         methods: {
             getsrc() {
                 this.imgsrc = "/xinda-api/ajaxAuthcode/##";//图片验证码
             },
+            helpmsg(){
+                 let _this = this;
+                 _this.status=0;
+                 _this.msg="为了您的账号安全，密码至少6位，最多16位，必须包含大写字母、小写字母、数字";
+            },
+            clear(){
+                 let _this = this;
+                 _this.msg="";
+            },
             forget() {
                 let _this = this;
                 // console.log(_this.validcode)
-                if(_this. newpassword==_this.password){
+                if(_this.testphone.test(_this.cellphone)==false){
+                    _this.status=0;
+                    _this.msg="手机号码不正确，请重新输入手机号";
+                }else if(_this.testpassword.test(_this.password)==false){
+                     _this.status=0;
+                     _this.msg="密码不正确，请重新输入密码";
+                }else if(_this. newpassword!=_this.password){
+                    _this.msg='密码不一致,请重新输入密码';
+                    _this.status=0;
+                }else{
                     _this.ajax.post('/xinda-api/register/findpas', qs.stringify({//找回密码
                         cellphone: _this.cellphone,
                         smsType: 2,
                         validCode: _this.validcode,
                         password: _this.password,
-                    })).then(function(data) {
+                     })).then(function(data) {
                         //console.log(data.data);
                         _this.status=data.data.status;
                         _this.msg=data.data.msg;
@@ -68,11 +88,10 @@
                                 _this.$router.push({path: 'login'});
                                 _this.msg='修改密码成功,请登录！'
                             }, 500);
+                        }else{
+                             _this.getsrc()
                         }
                     })
-                }else{
-                    _this.msg='密码不一致,请重新输入密码';
-                    _this.status=0;
                 } 
             },
             huoqu() {
@@ -100,7 +119,7 @@
 }
 .errorclass{
     color: red;
-   padding: 20px 150px 0;
+   padding: 20px 70px 0 120px;
 }
     input {
         border: 1px solid #ccc;
