@@ -22,9 +22,11 @@ import payerror from '@/views/payerror'
 import paysuccess from '@/views/paysuccess'
 import login from '@/views/Login'
 import forget from '@/views/forget'
+import Pagelist from '@/views/Pagelist'
 import serviceProducts from '@/widgets/shopfront/serviceProducts'
 import customService from '@/widgets/shopfront/customService'
 import certification from '@/widgets/shopfront/certification'
+import secondproduct from '@/views/secondproduct'
 
 Vue.use(Router)
 
@@ -73,9 +75,19 @@ export default new Router({
                     component: Listpage,
                 },
                 {
+                    path: 'pagelist',  //商品列表
+                    name: 'Pagelist',
+                    component: Pagelist,
+                },
+                {
                     path: 'products/:productId', //商品详情
                     name: 'Products',
                     component: Products,
+                },
+                 {
+                    path: 'secondproduct/:productId', //商品详情2
+                    name: 'secondproduct',
+                    component: secondproduct,
                 },
                 {
                     path: 'shopping', //购物车

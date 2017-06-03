@@ -15,6 +15,7 @@
                     </p>
                 </li>
             </ul>
+            <transition name="forms">
             <div v-if="toggles">   
                 <ul class="clear" > 
                     <li>
@@ -46,7 +47,7 @@
                 </ul>
 
             </div>
-            
+            </transition>  
 
         </div>
     </div>
@@ -151,5 +152,20 @@
     .xuanzhuan2 {
         transform: rotate(360deg);
         transition: transform .5s;
+    }
+    /*过渡动画*/
+    
+    .forms-enter-active {
+        transition: all .3s ease;
+    }
+    
+    .forms-leave-active {
+        transition: all .5s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+    }
+    
+    .forms-enter,
+    .forms-leave-active {
+        transform: translateY(-50px);
+        opacity: 0;
     }
 </style>
