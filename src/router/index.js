@@ -22,6 +22,7 @@ import payerror from '@/views/payerror'
 import paysuccess from '@/views/paysuccess'
 import login from '@/views/Login'
 import forget from '@/views/forget'
+import Pagelist from '@/views/Pagelist'
 import serviceProducts from '@/widgets/shopfront/serviceProducts'
 import customService from '@/widgets/shopfront/customService'
 import certification from '@/widgets/shopfront/certification'
@@ -71,6 +72,11 @@ export default new Router({
                     path: 'listpage', //商品列表
                     name: 'Listpage',
                     component: Listpage,
+                },
+                {
+                    path: 'pagelist',  //商品列表
+                    name: 'Pagelist',
+                    component: Pagelist,
                 },
                 {
                     path: 'products/:productId', //商品详情

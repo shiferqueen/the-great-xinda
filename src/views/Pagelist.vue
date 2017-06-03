@@ -57,7 +57,7 @@
                     <div class="con-main" v-for="(listeach,index) in listpage_ajax">
                         <div class="con-main-left">
                             <a :href="'#/products/'+listeach.id" @click="storeid(listeach.id)">
-                                <img :src="'http://115.182.107.203:8088/xinda/pic'+listeach.productImg">
+                                <img src="../images/products/loge_loge.png">
                             </a>
                         </div>
                         <div class="con-main-middle">
@@ -117,7 +117,7 @@
     import qs from 'qs'
     import { mapActions, mapGetters } from 'vuex'
     export default {
-        name: 'Listpage',
+        name: 'Pagelist',
         components: {
             myhead,
             myfoot
@@ -139,10 +139,10 @@
         created() {
             let _this = this
             this.ajax.post("/xinda-api/product/package/grid", qs.stringify({
-                start: 0, limit: 8, productTypeCode: "1",
-                productId: "8a82f52b674543e298d2e5f685946e6e", sort: 2
+
             })).then(function (res) {
                 _this.listpage_ajax = res.data.data;
+                console.log(res.data.data)
             });
             // ------------以下为省市区三级联动
             // 数据初始化,默认选中北京市,默认选中第一个;北京市数据为总数据的前18个
@@ -399,7 +399,7 @@
                     }
                 }
                 .con-main {
-                    height: 123px;
+                    height: 140px;
                     width: 930px;
                     margin: 0 auto;
                     border-bottom: 1px solid #cdcdcd;
@@ -425,6 +425,7 @@
                             margin: 15px 0;
                         }
                         p {
+                            width:400px;
                             margin: 15px 0;
                             color: #686868;
                             font-size: 14px;

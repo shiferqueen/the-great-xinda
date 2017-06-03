@@ -25,7 +25,7 @@
                     <dd class="commodity">{{listdata.serviceName}}</dd>
                     <dd class="price">￥ {{listdata.unitPrice}}</dd>
                     <dd class="quantity" id ="ddval">
-                        <input type="button" @click="min(listdata.buyNum,listdata.serviceId)" value="-"><input type="text" v-model="listdata.buyNum" ><input type="button" @click="add(listdata.buyNum,listdata.serviceId)" value="+">
+                        <input type="button" @click="min(listdata.buyNum,listdata.serviceId)" value="-"><input @input='oninput(listdata.buyNum,listdata.serviceId)' type="number" v-model="listdata.buyNum" ><input type="button" @click="add(listdata.buyNum,listdata.serviceId)" value="+">
                     </dd>
                     <dd class="sum">￥ {{listdata.unitPrice*listdata.buyNum}}</dd>
                     <dd class="empty"></dd>
@@ -56,6 +56,7 @@
                 srcimg: 'http://115.182.107.203:8088/xinda/pic',
                 listdatas: [],
                 shoppingnum: 0,
+                inputs: '' //input的setTimeout 
             }
         },
         computed: {
@@ -72,6 +73,18 @@
         methods: {
             ...mapActions(['refCartNum', 'setorder']),
             //增加数量
+            oninput(a, id) {
+                var that = this
+                clearInterval(that.inputs);
+                that.inputs = setTimeout(function() {
+                    that.ajax.post('/xinda-api/cart/set', qs.stringify({
+                        id: id,
+                        num: a,
+                    })).then(function(data) {
+                        console.log(data)
+                    })
+                }, 500)
+            },
             add: function(nums, id) {
                 let that = this;
                 that.ajax.post('/xinda-api/cart/add', qs.stringify({
@@ -297,5 +310,16 @@
             border-radius: 5px;
             margin-bottom: 65px;
         }
+    }
+    /*去除input 上下箭头*/
+    
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+        -webkit-appearance: none !important;
+        margin: 0;
+    }
+    
+    input[type="number"] {
+        -moz-appearance: textfield;
     }
 </style>
