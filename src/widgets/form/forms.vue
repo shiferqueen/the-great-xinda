@@ -10,66 +10,76 @@
                 </li>
                 <li style="padding-bottom:0px;">
                     订单金额：<span>￥2000.00</span>元
-                    <p class="details">
-                        订单明细<span></span>
+                    <p class="details" @click="toggle" >
+                        订单明细<span :class="toggleclass"></span>
                     </p>
                 </li>
             </ul>
-            <ul class="clear">
-                <li>
-                    服务名称：注册分公司
-                </li>
-                <li>
-                    单价：<span>￥800.00元</span>
-                </li>
-                <li>
-                    数量：<span>1</span>
-                </li>
-                <li>
-                    服务总额：<span>￥800.00元</span>
-                </li>
-            </ul>
-            <ul class="clear">
-                <li>
-                    服务名称：代理记账
-                </li>
-                <li>
-                    单价：<span>￥1800.00元</span>
-                </li>
-                <li>
-                    数量：<span>1</span>
-                </li>
-                <li>
-                    服务总额：<span>￥1800.00元</span>
-                </li>
-            </ul>
+            <transition name="forms">
+            <div v-if="toggles">   
+                <ul class="clear" > 
+                    <li>
+                        服务名称：注册分公司
+                    </li>
+                    <li>
+                        单价：<span>￥800.00元</span>
+                    </li>
+                    <li>
+                        数量：<span>1</span>
+                    </li>
+                    <li>
+                        服务总额：<span>￥800.00元</span>
+                    </li>
+                  </ul>
+                <ul class="clear">
+                    <li>
+                        服务名称：代理记账
+                    </li>
+                    <li>
+                        单价：<span>￥1800.00元</span>
+                    </li>
+                    <li>
+                        数量：<span>1</span>
+                    </li>
+                    <li>
+                        服务总额：<span>￥1800.00元</span>
+                    </li>
+                </ul>
 
+            </div>
+            </transition>  
 
         </div>
     </div>
 </template>
 <script>
     import qs from 'qs'
-    import {
-        mapGetters
-    } from 'vuex';
-
     export default {
 
         name: 'forms',
         data() {
             return {
-                businessNo: '',
+                businessNo: this.$route.params.order,
+                toggles: true,
+                toggleclass: {
+                    xuanzhuan: true,
+                    xuanzhuan2: false
+                }
             }
         },
-        computed: {
-            ...mapGetters(['getorder']),
+        methods: {
+            toggle() {
+                this.toggles = !this.toggles;
+                this.toggleclass.xuanzhuan = !this.toggleclass.xuanzhuan;
+                this.toggleclass.xuanzhuan2 = !this.toggleclass.xuanzhuan2;
+            }
         },
         created() {
+            var that = this
             this.ajax.post("/xinda-api/business-order/detail", qs.stringify({
-                businessNo: this.getorder,
+                businessNo: that.businessNo,
             })).then(function(data) {
-                console.log(data)
+                console.log(data, that.businessNo)
             })
         }
     }
@@ -108,12 +118,14 @@
                 padding: 2.5%;
                 .details {
                     width: 80px;
+                    cursor: pointer;
                 }
                 p {
                     margin-left: 40px;
                     margin-top: 5px;
                     color: #fe6263;
                     span {
+                        transform-origin: 50% 70%;
                         display: inline-block;
                         border: 5px solid transparent;
                         border-bottom: 5px solid #fe6263;
@@ -130,5 +142,30 @@
                 color: #52a3da;
             }
         }
+    }
+    
+    .xuanzhuan {
+        transform: rotate(180deg);
+        transition: transform .5s;
+    }
+    
+    .xuanzhuan2 {
+        transform: rotate(360deg);
+        transition: transform .5s;
+    }
+    /*过渡动画*/
+    
+    .forms-enter-active {
+        transition: all .3s ease;
+    }
+    
+    .forms-leave-active {
+        transition: all .5s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+    }
+    
+    .forms-enter,
+    .forms-leave-active {
+        transform: translateY(-50px);
+        opacity: 0;
     }
 </style>

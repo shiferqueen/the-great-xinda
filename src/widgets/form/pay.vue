@@ -3,37 +3,76 @@
         <div class="forms-div1">支付方式</div>
         <p>非网银支付</p>
         <div class="inputdiv">
-            <input type="radio" name="only" id="one" v-model="picked"><img src="../../images/form/yinlian.jpg">
+            <input type="radio" name="only" value="yinlian" v-model="picked"><img src="../../images/form/yinlian.jpg">
         </div>
         <p>平台支付</p>
         <div class="clear">
             <div class="inputdiv zf">
-                <input type="radio" name="only"  id="two" v-model="picked"><img src="../../images/form/weixin.jpg">
+                <input type="radio" name="only"  value="weixin" v-model="picked"><img src="../../images/form/weixin.jpg">
             </div>
             <div class="inputdiv zf margin10">
-                <input type="radio" name="only"  id="san" v-model="picked"><img src="../../images/form/zhifubao.jpg">
+                <input type="radio" name="only"  value="zhifubao" v-model="picked"><img src="../../images/form/zhifubao.jpg">
             </div>
         </div>
         <p>自助转账 <span class="pay-p-span">因限额不能支付时，建议使用自助转账</span></p>
         <div class="inputdiv2">
-            <input type="radio"  name="only" id="si" v-model="picked"><img src="../../images/form/zhanshang.jpg">
+            <input type="radio"  name="only" value="zhaoshang" v-model="picked"><img src="../../images/form/zhanshang.jpg">
         </div>
         <br>
         <span style="color:#ffa4a3">注：转账时请将订单编号备注在付款信息里：转账完成后，请通知客服。</span>
 
         <div class="clear end-div yf">
             <p class="yf">金额总计 <strong>￥800.00</strong></p>
-            <input class="yf " type="button" value="去结算">
+            <input class="yf " type="button" @click="settle" value="去结算">
         </div>
-
     </div>
 </template>
 <script>
+    import qs from 'qs'
+    import {
+        mapGetters
+    } from 'vuex'
     export default {
         name: 'pay',
         data() {
             return {
                 picked: ''
+            }
+        },
+        methods: {
+            ...mapGetters(['getorder']),
+            settle() {
+                let that = this;
+                switch (this.picked) {
+                    case '':
+                        alert('请选择支付方式');
+                        break;
+
+                    case 'yinlian':
+                        this.ajax.post('/xinda-api/pay/china-pay', qs.stringify({
+                            businessNo: that.getorder
+                        }))
+                        break;
+
+                    case 'weixin':
+                        this.ajax.post('/xinda-api/pay/china-pay', qs.stringify({
+                            businessNo: that.getorder
+                        }))
+                        break;
+
+                    case 'zhifubao':
+                        this.ajax.post('/xinda-api/pay/ali-pay', qs.stringify({
+                            businessNo: that.getorder
+                        }))
+                        break;
+
+                    case 'zhaoshang':
+                        alert('去用别的');
+                        break;
+
+
+                }
+
             }
         }
     }
