@@ -118,18 +118,18 @@
                     <div class="main-t-r">用户</div>
                 </div>
                 <div class="main-con2-m1" v-show="good">
-                    <div class="main-m-l">111</div>
-                    <div class="main-m-m">111</div>
+                    <div class="main-m-l">{{content}}</div>
+                    <div class="main-m-m"></div>
                     <div class="main-m-r"><img src=""></div>
                 </div>
                 <div class="main-con2-m2" v-show="mid">
-                    <div class="main-m-l">222</div>
-                    <div class="main-m-m">222</div>
+                    <div class="main-m-l"></div>
+                    <div class="main-m-m"></div>
                      <div class="main-m-r"><img src=""></div>
                 </div>
                 <div class="main-con2-m3" v-show="bad">
-                    <div class="main-m-l">333</div>
-                    <div class="main-m-m">333</div>
+                    <div class="main-m-l"></div>
+                    <div class="main-m-m"></div>
                      <div class="main-m-r"><img src=""></div>
                 </div>
             </div>
@@ -168,6 +168,7 @@ export default {
             goodNum:{},
             badNum:{},
             midNum:{},
+            content:{},
             assess: [],
             tp:"http://115.182.107.203:8088/xinda/pic"
         }
@@ -199,19 +200,14 @@ export default {
                 _this.badNum = data.badNum;
                  console.log("评价条数",res.data.data)
             });
-           this.ajax.post("/xinda-api/product/judge/detail", qs.stringify({
+
+            this.ajax.post("/xinda-api/product/judge/grid", qs.stringify({
                serviceId:this.$route.params.productId
             })).then(function (res) {
                 let data = res.data.data;
-                _this.goodNum = data.goodNum;
-                _this.midNum = data.midNum;
-                _this.badNum = data.badNum;
-                 console.log("评价条数",res.data.data)
+                _this.content = data.content;
+                 console.log("评价详情",res.data.data);
             });
-
-            
-
-
 
         },
     computed: {
