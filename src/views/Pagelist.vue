@@ -84,7 +84,7 @@
                 <div class="bottom_page pagination">
                     <span v-show="current != 0" @click="current-- && goto(current)">上一页</span>
                     <span  v-for="index in pages" @click="goto(index)" :class="{'active':current == index}">{{index}}</span>
-                    <span  v-show="allpage != current && allpage != 0 " @click="current++ && goto(current++)">下一页</span>
+                    <span  v-show="allpage != current" @click="current++ && goto(current++)">下一页</span>
                 </div>
             </div>
             <div class="main_right">
