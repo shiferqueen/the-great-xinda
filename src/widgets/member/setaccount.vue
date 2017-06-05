@@ -294,9 +294,6 @@ import Vue from 'vue'
     .passw{
         li{
             margin-top: 37px;
-            span{
-               
-            }
             input{
                 border: 1px solid #ccc;
                 width: 180px;
