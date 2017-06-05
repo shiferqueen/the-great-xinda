@@ -16,14 +16,11 @@
                         <br>
                         <select class="first">
                             <option value="0">省</option>
-                            <option value="1">北京</option>
-                            <option value="2">天津</option>
-                            <option value="3">河北省</option>
+                            <option value="1">{{parentId.name}}</option>
                         </select>
-                        <select>
+                        <select @change="shi">
                             <option value="0">市</option>
-                            <option value="1">北京</option>
-                            <option value="2">石家庄</option>
+                            <option value="1">{{city.name}}</option>
                         </select>
                         <select>
                             <option value="0">区</option>
@@ -67,6 +64,8 @@ export default {
             imgcode: '',//图片验证码
             status: '',//状态
             msg: '',//提示消息
+            city: '',
+            parentId: '',
         }
     },
     methods: {
@@ -91,6 +90,9 @@ export default {
                     _this.$router.push({ path: 'login' });
                 }
             })
+            
+        },
+
 
             // cellphone: '' + this.cllphone,
             // smsType: 1,
@@ -98,35 +100,34 @@ export default {
             // password: '' + this.password,
             // regionId: 110010,
 
-            cellphone: '' + this.cllphone,
-                smsType: 1,
-                    validCode: '' + this.validcode,
 
-
-
-                        cellphone: this.cellphone,	//手机号				
-                            smsType: 1,			//短信类型:1注册				
-                                validCode: this.validcode,	//短信验证码				
-
-            })).then(function (data) {
-            console.log(data.data);
-            _this.status = data.data.status;
-            _this.msg = data.data.msg;
-        })
-    },
+        
     huoqu() {
+            let _this = this;
+            this.ajax.post('/xinda-api/register/sendsms', qs.stringify({//发送短信接口
+                cellphone: this.cellphone,
+                smsType: 1,
+                imgCode: this.imgcode,
+            })).then(function (data) {
+                console.log(data.data);
+                _this.status = data.data.status;
+                _this.msg = data.data.msg;
+            })
+        },
+    shi() {
         let _this = this;
-        this.ajax.post('/xinda-api/register/sendsms', qs.stringify({//发送短信接口
-            cellphone: this.cellphone,
-            smsType: 1,
-            imgCode: this.imgcode,
-        })).then(function (data) {
-            console.log(data.data)
-            _this.status = data.data.status;
-            _this.msg = data.data.msg;
-        })
+        this.ajax.post('/xinda-api/common/open-region').then(function(data){
+                console.log(data.data.data[110100])
+                _this.status = data.data.data.status;
+                _this.city = data.data.data[110100];
+                _this.parentId = data.data.data[110100].parentId
+                console.log(data.data.data[110100].parentId);
+                _this.msg = data.data.data.msg;
+                // this.regionId = data.data.data.regionCode;
+            })
+        },
+    
     }
-}
 }
 
 
