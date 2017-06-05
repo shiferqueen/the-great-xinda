@@ -8,10 +8,10 @@
           <div class="next">
             <div class="left">
                 <p :class="[status==1 ? 'activeclass' : 'errorclass']">{{msg}}</p>
-                <input type="text" class="phone" v-model="cellphone" placeholder="请输入手机号码" @click="clear"><br>
-                <input type="password" class="password" v-model="password" placeholder="请输入密码" @click="clear"> <br>
-                <input type="text" class="code" v-model="imgcode" placeholder="请输入验证码" @click="clear"> <img @click ='getsrc' :src='imgsrc' ><br>
-                <button @click="login" @keyup.enter="login">立即登录</button><br>
+                <input type="text" class="phone" v-model="cellphone" placeholder="请输入手机号码" @click="clear" @keyup.enter="login"><br>
+                <input type="password" class="password" v-model="password" placeholder="请输入密码" @click="clear" @keyup.enter="login"> <br>
+                <input type="text" class="code" v-model="imgcode" placeholder="请输入验证码" @click="clear" @keyup.enter="login"> <img @click ='getsrc' :src='imgsrc' ><br>
+                <button @click="login">立即登录</button><br>
                 <a href="#/action/forget">忘记密码?</a>
             </div>
             <div class="right">
@@ -27,6 +27,7 @@
 </template>
 
 <script>
+    import Vue from 'vue'
     import qs from 'qs'
     import {mapGetters,mapActions} from 'vuex'
     export default {
@@ -42,9 +43,13 @@
                 testphone:/^1[3|4|5|7|8][0-9]{9}$/,
             }
         },
+        created:{
+            
+        },
         methods: {
             ...mapActions(["user","refCartNum"]),
             ...mapGetters(['getCartNum']),
+       
             getsrc() {
                 this.imgsrc = "/xinda-api/ajaxAuthcode?" + Math.random()
             },
@@ -56,6 +61,7 @@
             },
             login() {
                 let _this = this;
+                
                 if(_this.testphone.test(_this.cellphone)){
                     _this.ajax.post('/xinda-api/sso/login', qs.stringify({//登录提交
                         loginId: '' + this.cellphone,//手机号
@@ -81,7 +87,9 @@
                     _this.msg="手机号码不正确，请重新输入手机号";
                 }
             },
-        }
+
+        },
+        
     }
 </script>
 

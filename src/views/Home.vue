@@ -46,7 +46,7 @@
     <div class="recom-containt">
       <ul class="clear">
         <li class="fl" v-for="(massage,index) in da">
-          <a href="javascript:void(0)">
+          <a href="#/pagelist">
             <img :src="imgsrcfront+massage.providerImg">
             <h4>{{massage.providerName}}</h4>
             <p>{{massage.serviceName}}</p>
@@ -68,7 +68,7 @@
     <div class="stabus-containt">
       <ul class="clear">
         <li class="fl" v-for="(mas,index) in dat">
-          <a href="javascript:void(0)">
+          <a href="#/pagelist">
             <img :src="imgsrcfront+mas.providerImg">
             <h4>{{mas.providerName}}</h4>
             <p>{{mas.serviceInfo}}</p>
@@ -110,7 +110,7 @@
     <div class="prov-containt">
       <ul class="clear">
         <li class="fl" v-for="(mas,index) in dat">
-          <a href="javascript:void(0)">
+          <a href="#/pagelist">
             <img :src="imgsrcfront+mas.providerImg">
             <h4>{{mas.providerName}}</h4>
             <p class="fz15">服务指数：五星</p>

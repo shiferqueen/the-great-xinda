@@ -1,6 +1,6 @@
 <template>
-  <div>
     <div>
+
         <div class="top">
             <img src="../images/logos/logo.png" alt="">
             <a href="">欢迎注册</a>
@@ -9,11 +9,11 @@
             <div class="next">
                 <div class="left">
                     <p :class="[status==1 ? 'activeclass' : 'errorclass']">{{msg}}</p>
-                    <input type="text" v-model="cellphone" class="phone" placeholder="请输入手机号" @click="clear"><br>
+                    <input type="text" v-model="cellphone" class="phone" placeholder="请输入手机号" @click="clear" @keyup.enter="register"><br>
                         
-                    <input type="text" v-model="validcode" class="code1" placeholder="请输入短信验证码" @click="clear">
+                    <input type="text" v-model="validcode" class="code1" placeholder="请输入短信验证码" @click="clear" @keyup.enter="register">
                         <!--短信发送之前-->  
-                    <input type="button" v-if="yanzhen" value="获取短信" @click='huoqu' class="text"> 
+                    <input type="button" v-if="yanzhen" value="获取短信" @click='huoqu' class="text" > 
                         <!--发送之后-->
                     <input type="button" v-else :value="reciprocal + 's后重新发送'" @click='huoqu' class="disabled-text" disabled> 
                     <br>
@@ -38,9 +38,9 @@
                             {{ item.name }}
                         </option>
                     </select><br>
-                    <input type="password" v-model="password" class="password" placeholder="请设置密码" @click="helpmsg"><br>
-                    <input type="text" v-model="imgcode" class="code" placeholder="请输入图片验证码" @click="clear"> <img @click ='getsrc' :src='imgsrc'><br>
-                    <button @click="register" @keyup.enter="register">立即注册</button>
+                    <input type="password" v-model="password" class="password" placeholder="请设置密码" @click="helpmsg" @keyup.enter="register"><br>
+                    <input type="text" v-model="imgcode" class="code" placeholder="请输入图片验证码" @click="clear" @keyup.enter="register"> <img @click ='getsrc' :src='imgsrc'><br>
+                    <button @click="register" >立即注册</button>
                     <p class="p1">注册即同意遵守<span>《服务协议》</span></p>
                 </div>
                 <div class="right">
@@ -48,15 +48,16 @@
                         <p>已有账号？</p>
                         <a href="#/action/login">立即登录>></a>
                         <img src="../images/logos/xiaoren.png" alt="">
+
                     </div>
                 </div>
             </div>
         </div>
     </div>
-  </div>
 </template>
 
 <script>
+
     import qs from 'qs'
     import provinces from '../provinces.js'
     import Vue from 'vue'
@@ -243,10 +244,12 @@
             }
         },
     }
+
 </script>
 
 
 <style scoped lang="less">
+
     .activeclass {
         color: #2494d4;
         padding: 20px 150px 0;
@@ -395,8 +398,10 @@
                     img {
                         padding: 24px 0;
                     }
+
                 }
             }
         }
     }
+
 </style>
