@@ -25,6 +25,8 @@ import forget from '@/views/forget'
 import serviceProducts from '@/widgets/shopfront/serviceProducts'
 import customService from '@/widgets/shopfront/customService'
 import certification from '@/widgets/shopfront/certification'
+// import transUnionPay from '@/views/transUnionPay'
+
 
 Vue.use(Router)
 
@@ -152,6 +154,12 @@ export default new Router({
                     component: forget
                 }
             ]
-        }
+        },
+        // {
+        //     path: '/transUnionPay',
+        //     name: 'transUnionPay',
+        //     component: transUnionPay
+
+        // }
     ]
 });

@@ -25,7 +25,7 @@
                     <dd class="commodity">{{listdata.serviceName}}</dd>
                     <dd class="price">￥ {{listdata.unitPrice}}</dd>
                     <dd class="quantity" id ="ddval">
-                        <input type="button" @click="min(listdata.buyNum,listdata.serviceId)" value="-"><input @input='oninput(listdata.buyNum,listdata.serviceId)' type="number" v-model="listdata.buyNum" ><input type="button" @click="add(listdata.buyNum,listdata.serviceId)" value="+">
+                        <input type="button" @click="min(listdata.buyNum,listdata.serviceId,index)" value="-"><input @input='oninput(listdata.buyNum,listdata.serviceId)' type="number" min=1 v-model="listdata.buyNum" ><input type="button" @click="add(listdata.buyNum,listdata.serviceId,index)" value="+">
                     </dd>
                     <dd class="sum">￥ {{listdata.unitPrice*listdata.buyNum}}</dd>
                     <dd class="empty"></dd>
@@ -56,7 +56,8 @@
                 srcimg: 'http://115.182.107.203:8088/xinda/pic',
                 listdatas: [],
                 shoppingnum: 0,
-                inputs: '' //input的setTimeout 
+                inputs: '', //input的setTimeout 
+                trans: false
             }
         },
         computed: {
@@ -71,7 +72,7 @@
             }
         },
         methods: {
-            ...mapActions(['refCartNum', 'setorder']),
+            ...mapActions(['refCartNum']),
             //增加数量
             oninput(a, id) {
                 var that = this
@@ -85,42 +86,36 @@
                     })
                 }, 500)
             },
-            add: function(nums, id) {
+            add: function(nums, id, index) {
                 let that = this;
                 that.ajax.post('/xinda-api/cart/add', qs.stringify({
                     id: id,
                     num: 1,
                 })).then(function(data) {
                     if (data.data.status == 1) { //操作成功
-                        for (var i = 0; i < that.listdatas.length; i++) {
-                            var item = that.listdatas[i];
-                            if (item.serviceId == id) {
-                                item.buyNum++;
-                            }
-                        }
+                        var item = that.listdatas[index];
+                        item.buyNum++;
                     } else {
                         alert("添加购物车失败");
                     }
                 })
             },
             //减少数量
-            min: function(num, id) {
+            min: function(num, id, index) {
+
                 let that = this;
-                if (num > 1) {
+                if (!this.trans && num > 1) {
+                    this.trans = true;
                     this.ajax.post('/xinda-api/cart/add', qs.stringify({
                         id: id,
                         num: -1,
                     })).then(function(data) {
-                        if (data.data.status == 1) { //操作成功
-                            for (var i = 0; i < that.listdatas.length; i++) {
-                                var item = that.listdatas[i];
-                                if (item.serviceId == id) {
-                                    item.buyNum--;
-                                }
-                            }
+                        if (data.data.status == 1) {
+                            that.listdatas[index].buyNum--;
                         } else {
                             alert("添加购物车失败");
                         }
+                        that.trans = false;
                     })
                 }
             },
@@ -144,8 +139,10 @@
                         if (that.shoppingnum > 0) {
                             this.ajax.post('/xinda-api/cart/submit').then(function(data) {
                                 // console.log(data)
+
                                 if (data.data.status === 1) {
                                     // console.log(that.setorder)
+                                    that.refCartNum();
                                     location.href = '#/form' + data.data.data;
                                 } else {
                                     alert(data.data.msg);

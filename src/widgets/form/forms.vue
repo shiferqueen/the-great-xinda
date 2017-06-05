@@ -6,10 +6,10 @@
             <ul class="clear">
                 <li>订单编号：<span>{{businessNo}}</span></li>
                 <li class="teshuli">
-                    创建时间：2017-07-01 01:12:21
+                    创建时间：{{newdate}}
                 </li>
                 <li style="padding-bottom:0px;">
-                    订单金额：<span>￥2000.00</span>元
+                    订单金额：<span>￥{{totalPrice}}</span> 元
                     <p class="details" @click="toggle" >
                         订单明细<span :class="toggleclass"></span>
                     </p>
@@ -17,34 +17,20 @@
             </ul>
             <transition name="forms">
             <div v-if="toggles">   
-                <ul class="clear" > 
+                <ul class="clear" v-for='(order,index) in dataOrder'>   
                     <li>
-                        服务名称：注册分公司
+                        服务名称：{{order.serviceName}}
                     </li>
                     <li>
-                        单价：<span>￥800.00元</span>
+                        单价：<span>￥{{order.unitPrice}}元</span>
                     </li>
                     <li>
-                        数量：<span>1</span>
+                        数量：<span>{{order.buyNum}}</span>
                     </li>
                     <li>
-                        服务总额：<span>￥800.00元</span>
+                        服务总额：<span>￥{{order.totalPrice}}元</span>
                     </li>
                   </ul>
-                <ul class="clear">
-                    <li>
-                        服务名称：代理记账
-                    </li>
-                    <li>
-                        单价：<span>￥1800.00元</span>
-                    </li>
-                    <li>
-                        数量：<span>1</span>
-                    </li>
-                    <li>
-                        服务总额：<span>￥1800.00元</span>
-                    </li>
-                </ul>
 
             </div>
             </transition>  
@@ -54,6 +40,9 @@
 </template>
 <script>
     import qs from 'qs'
+    import {
+        mapActions
+    } from "vuex"
     export default {
 
         name: 'forms',
@@ -64,22 +53,37 @@
                 toggleclass: {
                     xuanzhuan: true,
                     xuanzhuan2: false
-                }
+                },
+                newdate: '',
+                dataOrder: [],
+                totalPrice: 0
             }
         },
         methods: {
+            ...mapActions(['setorder']),
             toggle() {
                 this.toggles = !this.toggles;
                 this.toggleclass.xuanzhuan = !this.toggleclass.xuanzhuan;
                 this.toggleclass.xuanzhuan2 = !this.toggleclass.xuanzhuan2;
             }
         },
+        computed: {
+
+        },
         created() {
+
             var that = this
             this.ajax.post("/xinda-api/business-order/detail", qs.stringify({
                 businessNo: that.businessNo,
             })).then(function(data) {
-                console.log(data, that.businessNo)
+                var createTime = data.data.data.businessOrder.createTime;
+                that.newdate = new Date(createTime).format("yyyy-MM-dd hh:mm:ss")
+                that.dataOrder = data.data.data.serviceOrderList
+                for (let k in that.dataOrder) {
+                    that.totalPrice += that.dataOrder[k].totalPrice
+                }
+                that.setorder(that.totalPrice)
+                    // console.log(data.data.data.serviceOrderList)
             })
         }
     }

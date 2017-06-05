@@ -18,7 +18,9 @@ export default new Vuex.Store({
         //店铺id
         shopid: '',
         //当前商店详情
-        currentShop: {}
+        currentShop: {},
+        //银联支付中转内容
+        transUnionPay: '123'
     },
     //突变集合---用来操作状态集合
     mutations: {
@@ -41,8 +43,10 @@ export default new Vuex.Store({
         },
         CURRENTSHOP(state, shop) {
             state.currentShop = shop;
+        },
+        SETUNIONPAY(state, content) {
+            state.transUnionPay = content;
         }
-
     },
     //动作集合---用来操作突变集合的
     actions: {
@@ -75,6 +79,9 @@ export default new Vuex.Store({
         currentShop({ commit }, shop) {
             commit('CURRENTSHOP', shop)
         },
+        setUnionPay({ commit }, content) {
+            commit('SETUNIONPAY', content)
+        },
     },
     //显示集合
     getters: {
@@ -95,6 +102,9 @@ export default new Vuex.Store({
         },
         getShop(state) {
             return state.currentShop //店铺
+        },
+        getUnionPay(state) {
+            return state.transUnionPay
         }
     }
 });
