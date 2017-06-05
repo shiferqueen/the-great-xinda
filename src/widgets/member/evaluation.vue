@@ -55,6 +55,7 @@
     <!--未评价结束-->
 </template>
 <script>
+import qs from 'qs'
 export default {
     name: 'evaluation',
     data() {
@@ -71,7 +72,16 @@ export default {
         set: function () {
             this.weiping = false,
             this.yiping = true
-        },
+        }
+    },
+    created() {
+        this.ajax.post('/xinda-api/service/judge/grid', qs.stringify({
+            start:0,
+            limit:6,
+            status:2,
+        })).then(function (data) {
+            console.log(data)
+        })
     }
 }
 </script>

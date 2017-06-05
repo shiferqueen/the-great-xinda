@@ -44,33 +44,45 @@
      <ul class="passw" v-show="password">
          <li>
              <span>旧密码：</span>
-             <input class="ct1"/>
+             <input class="ct1" type="password" v-model="oldword"/>
          </li>
          <li>
              <span>新密码：</span>
-             <input  class="ct1"/>
+             <input  class="ct1" type="password" v-model="newword"/>
          </li>
          <li>
              <span>再次输入新密码：</span>
-             <input/>
+             <input type="password" v-model="newtext"/>
+         </li>
+         <li>
+             <p :style="{color:c,fontSize:f}">{{msg}}</p>
          </li>
          <li class="baocun">
-             <a href="">保存</a>
+             <a @click="con()">保存</a>
          </li>
      </ul>
  </div>
 </template>
 
 <script>
-//  import qs from 'qs'
+import qs from 'qs'
 
  export default {
         name: 'setaccount',
         data(){
             return{
                 zhang:true,
-                password:false
+                password:false,
+                oldword:'',
+                newword:'',
+                newtext:'',
+                msg:'',
+                testpassword:/^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{6,16}$/,
+                c:'#f00',
+                f:'14px'
+                
             } 
+           
         },
         methods:{
             set:function(){
@@ -80,6 +92,28 @@
             alter:function(){
                 this.zhang = false,
                 this.password = true
+            },
+            con:function(){
+                let _this = this;
+                if(_this.oldword==''){
+                    _this.msg="*请输入旧密码"
+                }else if(_this.newword==''){
+                    _this.msg="*请输入新密码"
+                }else if(_this.testpassword.test(_this.newword)==false){
+                    _this.msg="*密码格式不正确"
+                }else if(_this.newtext==''){
+                    _this.msg="*请确认新密码"
+                }else if(_this.newword!=_this.newtext){
+                    _this.msg="*两次输入的密码不一致"
+                }else{
+                    _this.ajax.post('/xinda-api/sso/change-pwd',qs.stringify({
+                        oldPwd:_this.md5(_this.oldword),	 
+                        newPwd:_this.md5(_this.newword)
+                    })).then(function(data){
+                        // console.log(data)
+                        _this.msg=data.data.msg;
+                    })
+                }
             }
         },
         created() {
@@ -184,6 +218,7 @@
         color: #2693d4;
         text-align: center;
         margin-left: 130px;
+        cursor:pointer
     }
     // 修改密结束
 </style>

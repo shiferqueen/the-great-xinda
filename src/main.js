@@ -5,6 +5,8 @@ import App from './App'
 import router from './router'
 import store from './store'
 import axios from 'axios'
+import md5 from 'md5'
+Vue.prototype.md5 = md5
 Vue.prototype.ajax = axios
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 // axios.defaults.baseURL = 'https://api.example.com';

@@ -7,7 +7,7 @@
         <!--------------------商品部分------------------------------>
         <div class="goods-main">
             <div class="goods-left">
-                <img :src="product.img">
+                <img src="../images/products/loge_loge.png">
             </div>
             <!------------------商品价格部分------------------>
             <div class="goods-middle">
@@ -54,14 +54,12 @@
                     <input type="input" placeholder="请输入手机号">
                 </div>
                 <div class="entry-logo">
-                    <input type="input" v-model="imgcode" placeholder="请输入图形验证码">
-                    <img @click="getsrc" :src="imgsrc">
+                    <input type="input" placeholder="请输入图形验证码">
                 </div>
                 <div class="entry-code">
                     <input type="input" placeholder="请输入验证码">
-                    <button>获取验证码</button>
                 </div>
-                <div class="begin-infor" @click="goinfor">开始免费咨询</div>
+                <div class="begin-infor">开始免费咨询</div>
                 <p class="promease">本次电话咨询完全免费，我们将对你的号码严格保密，请放心使用!</p>
             </div>
         </div>
@@ -77,7 +75,9 @@
             </div>
     
             <div class="main-con1" v-show="con1" >
-                <p v-html="providerProduct.serviceContent" ></p>
+                <p v-html="providerProduct.serviceInfo" ></p>
+                <p v-html="provider.providerInfo" ></p>
+              <p v-html="providerProduct.serviceInfo" ></p>
                 <p v-html="provider.providerInfo" ></p>
                 
             </div>
@@ -153,8 +153,6 @@ export default {
     },
     data() {   
         return {
-            imgsrc:'/xinda-api/ajaxAuthcode',
-            imgcode:'',
             msg: '数据',
             con1: true,
             con2: false,
@@ -186,6 +184,7 @@ export default {
                 sId: this.$route.params.productId
             })).then(function (res) {
                 let data = res.data.data;
+                console.log(res.data.data)
                 data.product.img =_this.tp+data.product.img;
                 _this.product = data.product;
                 _this.providerProduct = data.providerProduct;
@@ -220,15 +219,6 @@ export default {
     methods: {
         ...mapGetters(['getstoreid']),
         ...mapActions(['refCartNum','user']),
-
-            //获取动态验证码
-        getsrc() {
-            this.imgsrc = '/xinda-api/ajaxAuthcode?' + Math.random()
-        },
-        //开始免费咨询
-        goinfor(){
-            //
-        },
 
 
         //服务，评价切换方法
@@ -551,10 +541,6 @@ export default {
             width: 190px;
             height: 33px;
         }
-        img {
-            vertical-align: bottom;
-            margin-left: 10px;
-        }
     }
     .entry-code {
         margin-top: 28px;
@@ -562,11 +548,6 @@ export default {
         input {
             width: 190px;
             height: 33px;
-        }
-        button {
-                width: 80px;
-                height: 35px;
-                margin-left: 10px;
         }
     }
     .begin-infor {

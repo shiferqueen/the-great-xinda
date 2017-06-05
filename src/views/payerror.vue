@@ -6,11 +6,12 @@
             <p class="pre-subtitle">支付失败</p>
             <div class="pre-cont">
                 <div class="pre-co clear">
-                    <img src="" class="fl">
+                    <img src="../images/logos/zhifu1.png" class="fl">
                     <div class="pre-right fr">
                         <h2>支付失败 !</h2>
                         <h4 class="fl">支付未成功：让我们再试一次吧</h4>
-                        <button class="fl">返回支付页</button><br>
+                        <a href="#/form" class="fl">返回支付页</a>
+                        <br>
                         <span>如有问题，请联系客服:</span><h3>010-83421842</h3>
                     </div>
                 </div>
@@ -80,10 +81,10 @@ import afoot from '../components/afoot'
                          font-size: 18px;
                           margin: 20px 10px 20px 0px;
                      }
-                     button{
+                    a{
                          font-size: 16px;
                          width:120px;
-                         height: 30px;
+                         height: 24px;
                          border: 1px solid #2494d4;
                          border-radius:5px;
                          text-align:center; 

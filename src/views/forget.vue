@@ -1,35 +1,27 @@
 <template>
     <div>
-        <div>
-            <div class="top">
-                <img src="../images/logos/logo.png" alt="">
-                <a href="">忘记密码</a>
-            </div>
-            <div class="buttom">
-                <div class="next">
-                    <div class="left">
-                        <p :class="[status==1 ? 'activeclass' : 'errorclass']">{{msg}}</p>
-                        <input type="text" v-model="cellphone" class="phone" placeholder="请输入手机号">
-                        <br>
-                        <input type="text" v-model="validcode" class="code1" placeholder="请输入短信验证码">
-                        <input type="button" value="获取短信" @click='huoqu' class="text">
-                        <br>
-                        <input type="text" class="code" v-model="imgcode" placeholder="请输入图片验证码">
-                        <img @click='getsrc' src='/xinda-api/ajaxAuthcode'>
-                        <br>
-                        <input type="password" v-model="password" class="password" placeholder="请输入新密码">
-                        <br>
-    
-                        <input type="password" v-model="password" class="password" placeholder="请确认密码">
-                        <br>
-                        <button @click="forget">确认修改</button>
-                    </div>
-                    <div class="right">
-                        <div class="right1">
-                            <p>想起密码？</p>
-                            <a href="#/action/login">返回登录>></a>
-                            <img src="../images/logos/xiaoren.png" alt="">
-                        </div>
+
+        <div class="top">
+            <img src="../images/logos/logo.png" alt="">
+            <a href="">忘记密码</a>
+        </div>
+        <div class="buttom">
+            <div class="next">
+                <div class="left">
+                    <p :class="[status==1 ? 'activeclass' : 'errorclass']">{{msg}}</p>
+                    <input type="text" v-model="cellphone" class="phone" placeholder="请输入手机号" @click="clear"><br>
+                    <input type="text" v-model="validcode" class="code1" placeholder="请输入短信验证码" @click="clear"> <input type="button" value="获取短信" @click='huoqu' class="text"> <br>
+                    <input type="text" class="code" v-model="imgcode" placeholder="请输入图片验证码" @click="clear"> <img @click ='getsrc' src='/xinda-api/ajaxAuthcode'><br>
+                    <input type="password" v-model="password" class="password" placeholder="请输入新密码" @click="helpmsg"> <br>
+                    <input type="password" v-model="newpassword" class="password" placeholder="请确认密码" @click="clear"> <br> 
+                    <button @click="forget" @keyup.enter="forget">确认修改</button>
+                </div>
+                <div class="right">
+                    <div class="right1">
+                        <p>想起密码？</p>
+                        <a href="#/action/login">返回登录>></a>
+                        <img src="../images/logos/xiaoren.png" alt="">
+
                     </div>
                 </div>
             </div>
@@ -39,70 +31,89 @@
 
 <script>
 
-import qs from 'qs'
-export default {
-    name: 'forget',
-    data() {
-        return {
-            imgsrc: "/xinda-api/ajaxAuthcode",
-            cellphone: '',
-            password: '',
-
-            validcode: '',//短信验证码
-            imgcode: '',
-            status: '',//状态
-            msg: '',//提示消息
-
-        }
-    },
-    methods: {
-        getsrc() {
-
-            this.imgsrc = "/xinda-api/ajaxAuthcode/##";
+    import qs from 'qs'
+    export default {
+        name: 'forget',
+        data() {
+            return {
+                imgsrc: "/xinda-api/ajaxAuthcode",
+                cellphone: '',//手机号
+                newpassword: '',//确认密码
+                password: '',//新密码
+                validcode: '',//短信验证码
+                imgcode: '',//图片验证码
+                status:'',//状态
+                msg:'',//提示消息
+                testphone:/^1[3|4|5|7|8][0-9]{9}$/,
+                testpassword:/^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{6,16}$/,
+            }
         },
-        forget() {
-            this.ajax.post('/xinda-api/register/findpas', qs.stringify({
-                cellphone: '' + this.cllphone,
-                smsType: 2,
-                validCode: '' + this.validcode,
-                password: '' + this.password,
-                regionId: 110010,
-            })).then(function (data) {
-                console.log(data)
-            })
-        },
-        forget() {
-            let _this = this;
-            this.ajax.post('/xinda-api/register/findpas', qs.stringify({//找回密码
-                cellphone: '' + this.cellphone,
-                smsType: 2,
-                validCode: '' + this.validcode,
-                password: '' + this.password,
-            })).then(function (data) {
-                console.log(data.data);
-                _this.status = data.data.status;
-                _this.msg = data.data.msg;
-                if (_this.status == 1) {
-                    //修改密码成功
-                    this.$router.push({ path: 'login' });
-                }
-            })
-        },
-        huoqu() {
-            let _this = this;
-            this.ajax.post('/xinda-api/register/sendsms', qs.stringify({//短信验证码
-                cellphone: '' + this.cellphone,
-                smsType: 1,
-                imgCode: '' + this.imgcode,
-            })).then(function (data) {
-                console.log(data);
-                _this.status = data.data.status;
-                _this.msg = data.data.msg;
+        methods: {
+            getsrc() {
+                this.imgsrc = "/xinda-api/ajaxAuthcode?" + Math.random();//图片验证码
+            },
+            helpmsg(){
+                 let _this = this;
+                 _this.status=0;
+                 _this.msg="为了您的账号安全，密码至少6位，最多16位，必须包含大写字母、小写字母、数字";
+            },
+            clear(){
+                 let _this = this;
+                 if(_this.status==0){
+                     _this.msg="";
+                 }
+            },
+            forget() {
+                let _this = this;
+                // console.log(_this.validcode)
+                if(_this.testphone.test(_this.cellphone)==false){
+                    _this.status=0;
+                    _this.msg="手机号码不正确，请重新输入手机号";
+                }else if(_this.testpassword.test(_this.password)==false){
+                     _this.status=0;
+                     _this.msg="密码不正确，请重新输入密码";
+                }else if(_this. newpassword!=_this.password){
+                    _this.msg='密码不一致,请重新输入密码';
+                    _this.status=0;
+                }else{
+                    _this.ajax.post('/xinda-api/register/findpas', qs.stringify({//找回密码
+                        cellphone: _this.cellphone,
+                        smsType: 1,
+                        validCode: _this.validcode,
+                        password: _this.md5(_this.password),
+                     })).then(function(data) {
+                        //console.log(data.data);
+                        _this.status=data.data.status;
+                        _this.msg=data.data.msg;
+                        if(_this.status==1){
+                            //修改密码成功
+                            setTimeout(function() {
+                                _this.$router.push({path: 'login'});
+                                _this.msg='修改密码成功,请登录！'
+                            }, 500);
+                        }else{
+                             _this.getsrc()
+                        }
+                    })
+                } 
+            },
+            huoqu() {
+                let _this = this;
+                this.ajax.post('/xinda-api/register/sendsms', qs.stringify({//短信验证码
+                    cellphone: '' + this.cellphone,
+                    smsType: 1,
+                    imgCode: '' + this.imgcode,
+                })).then(function(data) {
+                    console.log(data);
+                     _this.status=data.data.status;
+                    _this.msg=data.data.msg;
+                })
+            }
 
-            })
         }
     }
-}
+
+
 
 </script>
 
@@ -115,11 +126,9 @@ export default {
 
 .errorclass {
     color: red;
-    padding: 20px 150px 0;
-}
 
-input {
-    border: 1px solid #ccc;
+   padding: 20px 70px 0 120px;
+
 }
 
 .top {
