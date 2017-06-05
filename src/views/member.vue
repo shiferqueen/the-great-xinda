@@ -6,7 +6,7 @@
         <div>
             <div>
                 <img src="../images/logos/huiyuan.png"/>
-                <span>12345678901</span>
+                <span>{{getuser}}</span>
             </div>
             <div>
                 <router-link to="/member" active-class="active" exact>
@@ -50,7 +50,17 @@
 </template>
 
 <script>
- 
+ import {mapGetters} from 'vuex'
+export default {
+  data() {
+    return{
+      
+    }
+  },
+   computed:{
+         ...mapGetters(['getuser'])
+  },
+}
 </script>
 <style scoped lang="less">
 .active{
