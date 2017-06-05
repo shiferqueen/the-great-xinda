@@ -49,7 +49,7 @@
         },
         methods: {
             getsrc() {
-                this.imgsrc = "/xinda-api/ajaxAuthcode/##";//图片验证码
+                this.imgsrc = "/xinda-api/ajaxAuthcode?" + Math.random();//图片验证码
             },
             helpmsg(){
                  let _this = this;
@@ -58,7 +58,9 @@
             },
             clear(){
                  let _this = this;
-                 _this.msg="";
+                 if(_this.status==0){
+                     _this.msg="";
+                 }
             },
             forget() {
                 let _this = this;
@@ -75,9 +77,9 @@
                 }else{
                     _this.ajax.post('/xinda-api/register/findpas', qs.stringify({//找回密码
                         cellphone: _this.cellphone,
-                        smsType: 2,
+                        smsType: 1,
                         validCode: _this.validcode,
-                        password: _this.password,
+                        password: _this.md5(_this.password),
                      })).then(function(data) {
                         //console.log(data.data);
                         _this.status=data.data.status;

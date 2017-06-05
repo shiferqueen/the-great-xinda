@@ -122,10 +122,10 @@
                                 cellphone: _this.cellphone,
                                 smsType: 1,
                                 validCode: _this.validcode,
-                                password: _this.password,
+                                password: _this.md5(_this.password),
                                 regionId: 110010, //所属地区编码
                             })).then(function(data) {
-                                //console.log(data.data);
+                                console.log(data.data);
                                 _this.status = data.data.status;
                                 _this.msg = data.data.msg;
                                 if (_this.status == 1) {

@@ -50,14 +50,16 @@
             },
             clear(){
                  let _this = this;
-                 _this.msg="";
+                 if(_this.status==0){
+                     _this.msg="";
+                 }
             },
             login() {
                 let _this = this;
                 if(_this.testphone.test(_this.cellphone)){
                     _this.ajax.post('/xinda-api/sso/login', qs.stringify({//登录提交
                         loginId: '' + this.cellphone,//手机号
-                        password: '' + this.password,//密码
+                        password: this.md5(this.password),//密码
                         imgCode: '' + this.imgcode,//图片验证码
                     })).then(function(data) {
                     // console.log(data);
