@@ -1,6 +1,6 @@
 <template>
-  <div>
     <div>
+
         <div class="top">
             <img src="../images/logos/logo.png" alt="">
             <a href="">欢迎注册</a>
@@ -48,15 +48,16 @@
                         <p>已有账号？</p>
                         <a href="#/action/login">立即登录>></a>
                         <img src="../images/logos/xiaoren.png" alt="">
+
                     </div>
                 </div>
             </div>
         </div>
     </div>
-  </div>
 </template>
 
 <script>
+
     import qs from 'qs'
     import provinces from '../provinces.js'
     import Vue from 'vue'
@@ -243,10 +244,12 @@
             }
         },
     }
+
 </script>
 
 
 <style scoped lang="less">
+
     .activeclass {
         color: #2494d4;
         padding: 20px 150px 0;
@@ -395,8 +398,10 @@
                     img {
                         padding: 24px 0;
                     }
+
                 }
             }
         }
     }
+
 </style>

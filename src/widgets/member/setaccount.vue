@@ -51,18 +51,21 @@
      <ul class="passw" v-show="password">
          <li>
              <span>旧密码：</span>
-             <input class="ct1"/>
+             <input class="ct1" type="password" v-model="oldword"/>
          </li>
          <li>
              <span>新密码：</span>
-             <input  class="ct1"/>
+             <input  class="ct1" type="password" v-model="newword"/>
          </li>
          <li>
              <span>再次输入新密码：</span>
-             <input/>
+             <input type="password" v-model="newtext"/>
+         </li>
+         <li class="msgli">
+             <p :style="{color:c,fontSize:f}">{{msg}}</p>
          </li>
          <li class="baocun">
-             <a href="">保存</a>
+             <a @click="con()" v-text="save">{{save}}</a>
          </li>
      </ul>
  </div>
@@ -70,21 +73,35 @@
 
 <script>
 import qs from 'qs'
+
 import provinces from '../../provinces.js'
 import Vue from 'vue'
+
  export default {
         name: 'setaccount',
         data(){
             return{
                 zhang:true,
                 password:false,
+
+                oldword:'',
+                newword:'',
+                newtext:'',
+                msg:'',
+                testpassword:/^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{6,16}$/,
+                c:'#f00',
+                f:'14px',
+                save:'保存',
+
                 selectedProvince: provinces[0],//省
                 selectedCity: 0,//市
                 selectedBlock: 0,//区
                 cities: 0,
                 provinces,
                 blocks: 0,
+
             } 
+           
         },
         methods:{
             set:function(){
@@ -94,6 +111,31 @@ import Vue from 'vue'
             alter:function(){
                 this.zhang = false,
                 this.password = true
+            },
+            con:function(){
+                let _this = this;
+                
+                if(_this.oldword==''){
+                    _this.msg="*请输入旧密码"
+                }else if(_this.newword==''){
+                    _this.msg="*请输入新密码"
+                }else if(_this.testpassword.test(_this.newword)==false){
+                    _this.msg="*密码格式不正确,必须6-16位,包含大写字母、小写字母、数字"
+                }else if(_this.newtext==''){
+                    _this.msg="*请确认新密码"
+                }else if(_this.newword!=_this.newtext){
+                    _this.msg="*两次输入的密码不一致"
+                }else{
+                    _this.ajax.post('/xinda-api/sso/change-pwd',qs.stringify({
+                        oldPwd:_this.md5(_this.oldword),	 
+                        newPwd:_this.md5(_this.newword)
+                    })).then(function(data){
+                        // console.log(data)
+                        _this.msg=data.data.msg;
+                    });
+                    _this.save="修改",
+                    _this.c="#2494d4"
+                }
             }
         },
         created() {
@@ -253,6 +295,9 @@ import Vue from 'vue'
                 height: 23px;
             }
         } 
+        .msgli{
+            margin:20px 0px -10px 124px;
+        }
         .ct1{
             margin-left: 62px;
         }
@@ -267,6 +312,7 @@ import Vue from 'vue'
         color: #2693d4;
         text-align: center;
         margin-left: 130px;
+        cursor:pointer
     }
     // 修改密结束
 </style>
