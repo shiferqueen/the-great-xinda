@@ -11,7 +11,7 @@
         </li>
         <li class="username">
             <span>姓名：</span>
-            <input class="c-t"/>
+            <input class="c-t" v-model="uesrname" placeholder="请输入姓名"/>
         </li>
         <li class="sex">
             <span>性别：</span>
@@ -20,7 +20,7 @@
         </li>
         <li class="username">
             <span>邮箱：</span>
-            <input class="c-t" placeholder="请输入邮箱"/>
+            <input class="c-t" placeholder="请输入邮箱" v-model="com"/>
         </li>
         <li class="bj-hz">
             <span>所在地区：</span>
@@ -45,7 +45,9 @@
             </select>
         </li>
         <li class="save">
-            <a href="">保存</a>
+            <p :style="{color:c}">{{one}}</p>
+            <a href="javascript:void(0)" @click="saveOne()" v-text="save1">{{save1}}</a>
+           
         </li>
      </ul>
      <ul class="passw" v-show="password">
@@ -85,23 +87,27 @@ import Vue from 'vue'
             return{
                 zhang:true,
                 password:false,
-
-                oldword:'',
-                newword:'',
-                newtext:'',
-                msg:'',
+                one:'',
+                uesrname:'',
+                com:'',
+                oldword:'',//旧密码
+                newword:'',//新密码
+                newtext:'',//确认新密码
+                msg:'',//提示
                 testpassword:/^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{6,16}$/,
-                c:'#f00',
-                f:'14px',
-                save:'保存',
-                pro:'',
+                c:'#f00',//提示字体颜色
+                f:'14px',//提示字体大小
+                save:'保存',//按钮
+                save1:'保存',//按钮
+                pro:'',//新密码后的提示
                 selectedProvince: provinces[0],//省
                 selectedCity: 0,//市
                 selectedBlock: 0,//区
                 cities: 0,
                 provinces,
                 blocks: 0,
-
+                textcom:/^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-]\w+)*$/,
+                status:'',
             } 
            
         },
@@ -113,6 +119,41 @@ import Vue from 'vue'
             alter:function(){
                 this.zhang = false,
                 this.password = true
+            },
+            saveOne:function(){
+               let _this = this;
+               if(_this.uesrname==''){
+                   
+                 _this.one = "请填写姓名"  
+                 _this.c="#f00"
+               }else if(_this.com==''){
+                 _this.one = "请填写邮箱"
+                  _this.c="#f00"
+               }else if(_this.textcom.test(_this.com)==false){
+                _this.one = "邮箱格式不正确"
+                 _this.c="#f00"
+               }else{
+                _this.ajax.post('/xinda-api/member/info',qs.stringify({
+                headImg:'/2016/10/28/152843b6d9a04abe83a396d2ba03675f',
+                name:_this.uesrname,
+                gender:1,
+                email:_this.com,
+                regionId:'110106',
+
+                })).then(function(data){
+                    // _this.one = data.data.msg;
+                    _this.status = data.data.data.status;
+                    if(_this.status==1){
+                        _this.one = "*保存成功*",
+                        _this.c="#2494d4"
+                    }else if(_this.status==-1){
+                        _this.one = "保存失败"
+                    }
+                })
+                    _this.save1="修改"
+                
+               }
+                
             },
             prompt:function(){
                 this.pro = "密码必须6-16位,包含大写字母、小写字母、数字"
@@ -144,9 +185,16 @@ import Vue from 'vue'
             }
         },
         created() {
-            this.ajax.post('/xinda-api/member/info').then(function(data){
-                console.log(data)
-            })
+            // this.ajax.post('/xinda-api/member/info',qs.stringify({
+            //     headImg:'',
+            //     name:'',
+            //     gender:2,
+            //     email:'',
+            //     regionId:'',
+
+            // })).then(function(data){
+            //     console.log(data)
+            // })
             // 数据初始化,默认选中北京市,默认选中第一个;北京市数据为总数据的前18个
             let beijing = this.provinces.slice(0, 19)
             this.cities = beijing.filter(item => {
@@ -267,6 +315,9 @@ import Vue from 'vue'
     .c-t{
         border: 1px solid #ccc;
         margin-left: 30px;
+        height: 20px;
+        padding: 5px;
+        border-radius: 5px;
     }
     .bj-hz{
         margin-top: 25px;
@@ -287,7 +338,11 @@ import Vue from 'vue'
             border-radius: 8%;
             line-height: 24px;
             color: #2693d4;
-            text-align: center;
+            text-align: center;   
+        }
+        p{
+            font-size:14px;
+            margin-bottom: 10px;
         }
     }
     // 修改密码
