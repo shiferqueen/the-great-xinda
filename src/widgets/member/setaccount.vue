@@ -51,15 +51,17 @@
      <ul class="passw" v-show="password">
          <li>
              <span>旧密码：</span>
-             <input class="ct1" type="password" v-model="oldword"/>
+             <input class="ct1" type="password"  v-model="oldword" placeholder="请输入旧密码"/>
          </li>
          <li>
              <span>新密码：</span>
-             <input  class="ct1" type="password" v-model="newword"/>
+             <input  class="ct1" type="password" v-model="newword" placeholder="请输入新密码" @click="prompt()"/>
+              <p class="prompt">{{pro}}</p>
          </li>
+         
          <li>
              <span>再次输入新密码：</span>
-             <input type="password" v-model="newtext"/>
+             <input type="password" v-model="newtext" placeholder="请确认新密码"/>
          </li>
          <li class="msgli">
              <p :style="{color:c,fontSize:f}">{{msg}}</p>
@@ -92,7 +94,7 @@ import Vue from 'vue'
                 c:'#f00',
                 f:'14px',
                 save:'保存',
-
+                pro:'',
                 selectedProvince: provinces[0],//省
                 selectedCity: 0,//市
                 selectedBlock: 0,//区
@@ -111,6 +113,9 @@ import Vue from 'vue'
             alter:function(){
                 this.zhang = false,
                 this.password = true
+            },
+            prompt:function(){
+                this.pro = "密码必须6-16位,包含大写字母、小写字母、数字"
             },
             con:function(){
                 let _this = this;
@@ -289,10 +294,22 @@ import Vue from 'vue'
     .passw{
         li{
             margin-top: 37px;
+            span{
+               
+            }
             input{
                 border: 1px solid #ccc;
                 width: 180px;
-                height: 23px;
+                height: 25px;
+                padding: 5px 5px;
+                border-radius: 5px;
+            };
+            .prompt{
+                font-size:14px;
+                color:#f00;
+                float:right;
+                margin-right: 310px;
+                line-height: 36px;
             }
         } 
         .msgli{
