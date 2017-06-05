@@ -9,12 +9,12 @@
             <div class="next">
                 <div class="left">
                     <p :class="[status==1 ? 'activeclass' : 'errorclass']">{{msg}}</p>
-                    <input type="text" v-model="cellphone" class="phone" placeholder="请输入手机号" @click="clear"><br>
-                    <input type="text" v-model="validcode" class="code1" placeholder="请输入短信验证码" @click="clear"> <input type="button" value="获取短信" @click='huoqu' class="text"> <br>
-                    <input type="text" class="code" v-model="imgcode" placeholder="请输入图片验证码" @click="clear"> <img @click ='getsrc' src='/xinda-api/ajaxAuthcode'><br>
-                    <input type="password" v-model="password" class="password" placeholder="请输入新密码" @click="helpmsg"> <br>
-                    <input type="password" v-model="newpassword" class="password" placeholder="请确认密码" @click="clear"> <br> 
-                    <button @click="forget" @keyup.enter="forget">确认修改</button>
+                    <input type="text" v-model="cellphone" class="phone" placeholder="请输入手机号" @click="clear" @keyup.enter="forget"><br>
+                    <input type="text" v-model="validcode" class="code1" placeholder="请输入短信验证码" @click="clear" @keyup.enter="forget"> <input type="button" value="获取短信" @click='huoqu' class="text"> <br>
+                    <input type="text" class="code" v-model="imgcode" placeholder="请输入图片验证码" @click="clear" @keyup.enter="forget"> <img @click ='getsrc' src='/xinda-api/ajaxAuthcode'><br>
+                    <input type="password" v-model="password" class="password" placeholder="请输入新密码" @click="helpmsg" @keyup.enter="forget"> <br>
+                    <input type="password" v-model="newpassword" class="password" placeholder="请确认密码" @click="clear" @keyup.enter="forget"> <br> 
+                    <button @click="forget" >确认修改</button>
                 </div>
                 <div class="right">
                     <div class="right1">
