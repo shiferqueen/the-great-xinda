@@ -7,7 +7,7 @@
         <!--------------------商品部分------------------------------>
         <div class="goods-main">
             <div class="goods-left">
-                <img :src="product.img">
+                <img src="../images/products/loge_loge.png">
             </div>
             <!------------------商品价格部分------------------>
             <div class="goods-middle">
@@ -34,7 +34,7 @@
                     <span @click="addProducts(getuser)">加入购物车</span>
                 </div>
             </div>
-            <!----------------服务商咨询部分-------------->
+             <!----------------服务商咨询部分-------------->
             <div class="goods-right">
                 <div class="goods-r-top">
                     <h2>顶级服务商</h2>
@@ -77,7 +77,9 @@
             </div>
     
             <div class="main-con1" v-show="con1" >
-                <p v-html="providerProduct.serviceContent" ></p>
+                <p v-html="providerProduct.serviceInfo" ></p>
+                <p v-html="provider.providerInfo" ></p>
+              <p v-html="providerProduct.serviceInfo" ></p>
                 <p v-html="provider.providerInfo" ></p>
                 
             </div>

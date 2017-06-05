@@ -8,10 +8,10 @@
           <div class="next">
             <div class="left">
                 <p :class="[status==1 ? 'activeclass' : 'errorclass']">{{msg}}</p>
-                <input type="text" class="phone" v-model="cellphone" placeholder="请输入手机号码"><br>
-                <input type="password" class="password" v-model="password" placeholder="请输入密码"> <br>
-                <input type="text" class="code" v-model="imgcode" placeholder="请输入验证码"> <img @click ='getsrc' :src='imgsrc' ><br>
-                <button @click="login" @keyup.enter="login">立即登录</button><br>
+                <input type="text" class="phone" v-model="cellphone" placeholder="请输入手机号码" @click="clear" @keyup.enter="login"><br>
+                <input type="password" class="password" v-model="password" placeholder="请输入密码" @click="clear" @keyup.enter="login"> <br>
+                <input type="text" class="code" v-model="imgcode" placeholder="请输入验证码" @click="clear" @keyup.enter="login"> <img @click ='getsrc' :src='imgsrc' ><br>
+                <button @click="login">立即登录</button><br>
                 <a href="#/action/forget">忘记密码?</a>
             </div>
             <div class="right">
@@ -27,6 +27,7 @@
 </template>
 
 <script>
+    import Vue from 'vue'
     import qs from 'qs'
     import {mapGetters,mapActions} from 'vuex'
     export default {
@@ -39,35 +40,56 @@
                 status:'',//状态
                 msg:'',//提示消息
                 imgsrc:"/xinda-api/ajaxAuthcode",
+                testphone:/^1[3|4|5|7|8][0-9]{9}$/,
             }
+        },
+        created:{
+            
         },
         methods: {
             ...mapActions(["user","refCartNum"]),
             ...mapGetters(['getCartNum']),
+       
             getsrc() {
                 this.imgsrc = "/xinda-api/ajaxAuthcode?" + Math.random()
             },
+            clear(){
+                 let _this = this;
+                 if(_this.status==0){
+                     _this.msg="";
+                 }
+            },
             login() {
                 let _this = this;
-                this.ajax.post('/xinda-api/sso/login', qs.stringify({//登录提交
-                    loginId: '' + this.cellphone,//手机号
-                    password: '' + this.password,//密码
-                    imgCode: '' + this.imgcode,//图片验证码
-                })).then(function(data) {
-                   // console.log(data);
-                   _this.status=data.data.status;
-                    _this.msg=data.data.msg;
-                    if(_this.status==1){
-                        //登录成功
-                        _this.user();
-                        _this.refCartNum();
-                        setTimeout(function() {
-                            _this.$router.push({path:'/home'});
-                        }, 500);
-                    }
-                })
+                
+                if(_this.testphone.test(_this.cellphone)){
+                    _this.ajax.post('/xinda-api/sso/login', qs.stringify({//登录提交
+                        loginId: '' + this.cellphone,//手机号
+                        password: this.md5(this.password),//密码
+                        imgCode: '' + this.imgcode,//图片验证码
+                    })).then(function(data) {
+                    // console.log(data);
+                        _this.status=data.data.status;
+                        _this.msg=data.data.msg;
+                        if(_this.status==1){
+                            //登录成功
+                            _this.user();
+                            _this.refCartNum();
+                            setTimeout(function() {
+                                _this.$router.push({path:'/home'});
+                            }, 500);
+                        }else{
+                             _this.getsrc()
+                        }
+                    })
+                }else{
+                    _this.status=0;
+                    _this.msg="手机号码不正确，请重新输入手机号";
+                }
             },
-        }
+
+        },
+        
     }
 </script>
 
@@ -79,7 +101,7 @@
 }
 .errorclass{
     color: red;
-   padding: 20px 150px 0;
+   padding: 20px 70px 0 120px;
 }
     input {
         border: 1px solid #ccc;

@@ -54,15 +54,16 @@
                         <div class="content-t-left">商品</div>
                         <div class="content-t-right">价格</div>
                     </div>
+
                     <div class="con-main" v-for="(listeach,index) in listpage_ajax">
                         <div class="con-main-left">
-                            <a :href="'#/products/'+listeach.id" @click="storeid(listeach.id)">
-                                <img :src="'http://115.182.107.203:8088/xinda/pic'+listeach.productImg">
+                            <a :href="'#/secondproduct/'+listeach.id" @click="storeid(listeach.id)">
+                                <img src="../images/products/loge_loge.png">
                             </a>
                         </div>
                         <div class="con-main-middle">
                             <h4>
-                                <a :href="'#/products/'+listeach.id" @click="storeid(listeach.id)">{{listeach.serviceName}}</a>
+                                <a :href="'#/secondproduct/'+listeach.id" @click="storeid(listeach.id)">{{listeach.serviceName}}</a>
                             </h4>
                             <p>{{listeach.serviceInfo}}</p>
                             <p>
@@ -77,13 +78,16 @@
                             <transition name="trans">
                                 <div class="transition-div" v-if="transifs === index"></div>
                             </transition>
+                            
                         </div>
                     </div>
+                 
+                 
                 </div>
-                <div class="bottom_page">
-                    <span>上一页</span>
-                    <span>1</span>
-                    <span>下一页</span>
+                <div class="bottom_page pagination">
+                    <span v-show="current != 0" @click="current-- && goto(current)">上一页</span>
+                    <span  v-for="index in pages" @click="goto(index)" :class="{'active':current == index}">{{index}}</span>
+                    <span  v-show="allpage != current" @click="current++ && goto(current++)">下一页</span>
                 </div>
             </div>
             <div class="main_right">
@@ -117,7 +121,7 @@
     import qs from 'qs'
     import { mapActions, mapGetters } from 'vuex'
     export default {
-        name: 'Listpage',
+        name: 'Pagelist',
         components: {
             myhead,
             myfoot
@@ -125,6 +129,7 @@
         data() {
             return {
                 listpage_ajax: [],
+                listpage_ajax_new: [],
                 selectedProvince: provinces[0],
                 selectedCity: 0,
                 selectedBlock: 0,
@@ -132,18 +137,19 @@
                 provinces,
                 blocks: 0,
                 transifs: 0,
+                current:1,
+                showItem:5,
+                allpage:6,
+                number: 0,
+                start: true,
             }
 
         },
 
         created() {
             let _this = this
-            this.ajax.post("/xinda-api/product/package/grid", qs.stringify({
-                start: 0, limit: 8, productTypeCode: "1",
-                productId: "8a82f52b674543e298d2e5f685946e6e", sort: 2
-            })).then(function (res) {
-                _this.listpage_ajax = res.data.data;
-            });
+            this.list();
+            // this.goto();
             // ------------以下为省市区三级联动
             // 数据初始化,默认选中北京市,默认选中第一个;北京市数据为总数据的前18个
             let beijing = this.provinces.slice(0, 19)
@@ -180,10 +186,35 @@
                 console.log('你点击我');
             },
 
+
+            //  分页器部分
+             pages:function(){
+                 let _this = this;
+                var pag = [];
+
+                //   if( this.current < this.showItem ){ //如果当前的激活的项 小于要显示的条数
+                       //总页数和要显示的条数那个大就显示多少条
+                       var i = _this.showItem;
+                       while(_this.showItem){
+                           pag.unshift(_this.showItem--);
+                       }
+                //    }else{ //当前页数大于显示页数了
+                //        var middle = this.current - Math.floor(this.showItem / 2 ),//从哪里开始
+                //            i = this.showItem;
+                //        if( middle >  (this.allpage - this.showItem)  ){
+                //            middle = (this.allpage - this.showItem) + 1
+                //        }
+                //        while(i--){
+                //            pag.push( middle++ );
+                //        }
+                //    }
+                 return pag
+               }
+
         },
         methods: {
             ...mapActions(['setstoreid', 'refCartNum', 'user']),
-
+            
             //加入购物车
             addCartNum(id, uname) {
                 // this.transif = !this.transif;
@@ -216,6 +247,34 @@
                 }
 
             },
+            list(){
+                let _this = this
+                this.ajax.post("/xinda-api/product/package/grid", qs.stringify({
+                limit: 20,
+                start: _this.number,
+                })).then(function (res) {
+                    _this.listpage_ajax_new= res.data.data;
+                    console.log(res.data.data)
+                    _this.number = 0
+                    _this.isA = false
+                    _this.listpage_ajax = _this.listpage_ajax_new.slice(_this.number,_this.number+4)
+                });
+            },
+            goto:function(index){
+            
+                let _this = this
+                
+                if(index == this.current) return;
+                _this.current = index
+                //这里可以发送ajax请求
+                if(index ==6 ){
+                    index = 5
+                }
+                _this.number = (index-1)*4
+                _this.listpage_ajax = _this.listpage_ajax_new.slice(_this.number,_this.number+4)
+                console.log(index);
+                console.log(_this.number);
+           },
             transif(index) {
                 var index = index;
                 console.log(this.transifs, index)
@@ -399,7 +458,6 @@
                     }
                 }
                 .con-main {
-                    height: 123px;
                     width: 930px;
                     margin: 0 auto;
                     border-bottom: 1px solid #cdcdcd;
@@ -415,7 +473,7 @@
                             width: 100px;
                             height: 100px;
                             border: 1px solid #cdcdcd;
-                            margin: 7px 0;
+                            margin: 15px 0;
                         }
                     }
                     .con-main-middle {
@@ -425,6 +483,7 @@
                             margin: 15px 0;
                         }
                         p {
+                            width:410px;
                             margin: 15px 0;
                             color: #686868;
                             font-size: 14px;
@@ -452,18 +511,13 @@
                 }
             }
             .bottom_page {
-                width: 195px;
+                width: 400px;
                 margin: 25px auto;
                 span {
                     padding: 10px;
                     border: 1px solid #cdcdcd;
                     color: #cdcdcd;
                     cursor: pointer;
-                    &:nth-child(2) {
-                        border: 1px solid #2693d4;
-                        padding: 10px 15px;
-                        color: #2693d4;
-                    }
                 }
             }
         }
@@ -522,4 +576,29 @@
         transform: translate(100px,-100px);
         opacity: 0;
     }
+    //分页器
+    .pagination {
+        position: relative;
+
+      }
+      .pagination span{
+        display: inline-block;
+        margin:0 5px;
+      }
+      .pagination span a{
+        padding:.5rem 1rem;
+        display:inline-block;
+        border:1px solid #ddd;
+        background:#fff;
+
+        color:#0E90D2;
+      }
+      .pagination span a:hover{
+        background:#eee;
+      }
+      .pagination span.active{
+        background:#0E90D2;
+        color:#fff !important;
+      }
+      //分页器结束
 </style>

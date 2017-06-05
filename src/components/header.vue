@@ -170,7 +170,7 @@ export default {
       massages:[
         {text:'全部产品',lin:'#/home'},
         {text:'财税服务',lin:'#/listpage'},
-        {text:'公司工商',lin:'#/listpage'},
+        {text:'公司工商',lin:'#/pagelist'},
         {text:'加盟我们',lin:'#/us'},
         {text:'店铺',lin:'#/shoplist'}
       ],

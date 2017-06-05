@@ -11,7 +11,7 @@
         </li>
         <li class="username">
             <span>姓名：</span>
-            <input class="c-t"/>
+            <input class="c-t" v-model="uesrname" placeholder="请输入姓名"/>
         </li>
         <li class="sex">
             <span>性别：</span>
@@ -20,57 +20,96 @@
         </li>
         <li class="username">
             <span>邮箱：</span>
-            <input class="c-t" placeholder="请输入邮箱"/>
+            <input class="c-t" placeholder="请输入邮箱" v-model="com"/>
         </li>
         <li class="bj-hz">
             <span>所在地区：</span>
-            <select>
-                <option>北京</option>
-                <option>菏泽</option>
+            <select name="province" v-model="selectedProvince">
+                <option v-for="(item, index) in provinces"
+                            v-if="item.level === 1"
+                            :value="item">
+                            {{ item.name }}
+                </option>
             </select>
-            <select>
-                <option>北京市</option>
-                <option>菏泽市</option>
+            <select name="city" v-model="selectedCity">
+                <option v-for="(item, index) in cities"
+                            :value="item">
+                            {{ item.name }}
+                </option>
             </select>
-            <select>
-                <option>海淀区</option>
-                <option>定陶区</option>
+            <select name="block" v-model="selectedBlock">
+                <option v-for="(item, index) in blocks"
+                            :value="item">
+                            {{ item.name }}
+                </option>
             </select>
         </li>
         <li class="save">
-            <a href="">保存</a>
+            <p :style="{color:c}">{{one}}</p>
+            <a href="javascript:void(0)" @click="saveOne()" v-text="save1">{{save1}}</a>
+           
         </li>
      </ul>
      <ul class="passw" v-show="password">
          <li>
              <span>旧密码：</span>
-             <input class="ct1"/>
+             <input class="ct1" type="password"  v-model="oldword" placeholder="请输入旧密码"/>
          </li>
          <li>
              <span>新密码：</span>
-             <input  class="ct1"/>
+             <input  class="ct1" type="password" v-model="newword" placeholder="请输入新密码" @click="prompt()"/>
+              <p class="prompt">{{pro}}</p>
          </li>
+         
          <li>
              <span>再次输入新密码：</span>
-             <input/>
+             <input type="password" v-model="newtext" placeholder="请确认新密码"/>
+         </li>
+         <li class="msgli">
+             <p :style="{color:c,fontSize:f}">{{msg}}</p>
          </li>
          <li class="baocun">
-             <a href="">保存</a>
+             <a @click="con()" v-text="save">{{save}}</a>
          </li>
      </ul>
  </div>
 </template>
 
 <script>
-//  import qs from 'qs'
+import qs from 'qs'
+
+import provinces from '../../provinces.js'
+import Vue from 'vue'
 
  export default {
         name: 'setaccount',
         data(){
             return{
                 zhang:true,
-                password:false
+                password:false,
+                one:'',
+                uesrname:'',
+                com:'',
+                oldword:'',//旧密码
+                newword:'',//新密码
+                newtext:'',//确认新密码
+                msg:'',//提示
+                testpassword:/^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{6,16}$/,
+                c:'#f00',//提示字体颜色
+                f:'14px',//提示字体大小
+                save:'保存',//按钮
+                save1:'保存',//按钮
+                pro:'',//新密码后的提示
+                selectedProvince: provinces[0],//省
+                selectedCity: 0,//市
+                selectedBlock: 0,//区
+                cities: 0,
+                provinces,
+                blocks: 0,
+                textcom:/^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-]\w+)*$/,
+                status:'',
             } 
+           
         },
         methods:{
             set:function(){
@@ -80,13 +119,152 @@
             alter:function(){
                 this.zhang = false,
                 this.password = true
+            },
+            saveOne:function(){
+               let _this = this;
+               if(_this.uesrname==''){
+                   
+                 _this.one = "请填写姓名"  
+                 _this.c="#f00"
+               }else if(_this.com==''){
+                 _this.one = "请填写邮箱"
+                  _this.c="#f00"
+               }else if(_this.textcom.test(_this.com)==false){
+                _this.one = "邮箱格式不正确"
+                 _this.c="#f00"
+               }else{
+                _this.ajax.post('/xinda-api/member/info',qs.stringify({
+                headImg:'/2016/10/28/152843b6d9a04abe83a396d2ba03675f',
+                name:_this.uesrname,
+                gender:1,
+                email:_this.com,
+                regionId:'110106',
+
+                })).then(function(data){
+                    // _this.one = data.data.msg;
+                    _this.status = data.data.data.status;
+                    if(_this.status==1){
+                        _this.one = "*保存成功*",
+                        _this.c="#2494d4"
+                    }else if(_this.status==-1){
+                        _this.one = "保存失败"
+                    }
+                })
+                    _this.save1="修改"
+                
+               }
+                
+            },
+            prompt:function(){
+                this.pro = "密码必须6-16位,包含大写字母、小写字母、数字"
+            },
+            con:function(){
+                let _this = this;
+                
+                if(_this.oldword==''){
+                    _this.msg="*请输入旧密码"
+                }else if(_this.newword==''){
+                    _this.msg="*请输入新密码"
+                }else if(_this.testpassword.test(_this.newword)==false){
+                    _this.msg="*密码格式不正确,必须6-16位,包含大写字母、小写字母、数字"
+                }else if(_this.newtext==''){
+                    _this.msg="*请确认新密码"
+                }else if(_this.newword!=_this.newtext){
+                    _this.msg="*两次输入的密码不一致"
+                }else{
+                    _this.ajax.post('/xinda-api/sso/change-pwd',qs.stringify({
+                        oldPwd:_this.md5(_this.oldword),	 
+                        newPwd:_this.md5(_this.newword)
+                    })).then(function(data){
+                        // console.log(data)
+                        _this.msg=data.data.msg;
+                    });
+                    _this.save="修改",
+                    _this.c="#2494d4"
+                }
             }
         },
         created() {
-            this.ajax.post('/xinda-api/member/info').then(function(data){
-                console.log(data)
+            // this.ajax.post('/xinda-api/member/info',qs.stringify({
+            //     headImg:'',
+            //     name:'',
+            //     gender:2,
+            //     email:'',
+            //     regionId:'',
+
+            // })).then(function(data){
+            //     console.log(data)
+            // })
+            // 数据初始化,默认选中北京市,默认选中第一个;北京市数据为总数据的前18个
+            let beijing = this.provinces.slice(0, 19)
+            this.cities = beijing.filter(item => {
+                if (item.level === 2) {
+                    return true
+                }
             })
-        }
+            this.selectedCity = this.cities[0]
+            this.blocks = beijing.filter(item => {
+                if (item.level === 3) {
+                    return true
+                }
+            })
+            this.selectedBlock = this.blocks[0]
+        },
+        watch: {
+            selectedProvince(newVal, oldVal) {
+                // 港澳台数据只有一级,特殊处理
+                if (newVal.sheng === '71' || newVal.sheng === '81' || newVal.sheng === '82') {
+                    this.cities = [newVal]
+                    this.blocks = [newVal]
+                } else {
+                    this.cities = this.provinces.filter(item => {
+                        if (item.level === 2 && item.sheng && newVal.sheng === item.sheng) {
+                            return true
+                        }
+                    })
+                }
+                var _this = this
+                    // 此时在渲染DOM,渲染结束之后再选中第一个
+                Vue.nextTick(() => {
+                    _this.selectedCity = _this.cities[0]
+                    _this.$emit('input', _this.info)
+                })
+            },
+            selectedBlock() {
+                var _this = this
+                Vue.nextTick(() => {
+                    _this.$emit('input', _this.info)
+                })
+            },
+            selectedCity(newVal) {
+                // 选择了一个市,要选择区了 di是城市的代表,sheng
+                if (newVal.sheng === '71' || newVal.sheng === '81' || newVal.sheng === '82') {
+                    this.blocks = [newVal]
+                    this.cities = [newVal]
+                } else {
+                    this.blocks = this.provinces.filter(item => {
+                        if (item.level === 3 && item.sheng && item.sheng == newVal.sheng && item.di === newVal.di && item.name !== '市辖区') {
+                            return true
+                        }
+                    })
+                }
+                var _this = this
+                Vue.nextTick(() => {
+                    _this.selectedBlock = _this.blocks[0]
+                        // 触发与 v-model相关的 input事件
+                    _this.$emit('input', _this.info)
+                })
+            }
+        },
+        computed: {
+            info() {
+                return {
+                    province: this.selectedProvince,
+                    city: this.selectedCity,
+                    block: this.selectedBlock
+                }
+            }
+        },
     }
 </script>
 
@@ -137,6 +315,9 @@
     .c-t{
         border: 1px solid #ccc;
         margin-left: 30px;
+        height: 20px;
+        padding: 5px;
+        border-radius: 5px;
     }
     .bj-hz{
         margin-top: 25px;
@@ -157,7 +338,11 @@
             border-radius: 8%;
             line-height: 24px;
             color: #2693d4;
-            text-align: center;
+            text-align: center;   
+        }
+        p{
+            font-size:14px;
+            margin-bottom: 10px;
         }
     }
     // 修改密码
@@ -167,9 +352,21 @@
             input{
                 border: 1px solid #ccc;
                 width: 180px;
-                height: 23px;
+                height: 25px;
+                padding: 5px 5px;
+                border-radius: 5px;
+            };
+            .prompt{
+                font-size:14px;
+                color:#f00;
+                float:right;
+                margin-right: 310px;
+                line-height: 36px;
             }
         } 
+        .msgli{
+            margin:20px 0px -10px 124px;
+        }
         .ct1{
             margin-left: 62px;
         }
@@ -184,6 +381,7 @@
         color: #2693d4;
         text-align: center;
         margin-left: 130px;
+        cursor:pointer
     }
     // 修改密结束
 </style>
