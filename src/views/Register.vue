@@ -3,7 +3,7 @@
 
         <div class="top">
             <img src="../images/logos/logo.png" alt="">
-            <a href="">欢迎注册</a>
+            <a href="javascript:void(0)">欢迎注册</a>
         </div>
         <div class="buttom">
             <div class="next">
