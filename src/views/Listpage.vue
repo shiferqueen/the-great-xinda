@@ -201,54 +201,66 @@
 
         },
         methods: {
-            ...mapActions(['setstoreid', 'refCartNum', 'user']),
+            ...mapActions(['setstoreid', 'refCartNum', 'user','popups']),
 
 
             //加入购物车
-            addCartNum(id, uname, index) {
-                // this.transif = !this.transif;
+        addCartNum(id, uname, index) {
+            // this.transif = !this.transif;
+            let that = this;
+            if (uname == "") {
+                that.popups({
+                    headers: "当前尚未登录",
+                    content: "是否跳转到登录页面",
+                    ok() {
+
+                        that.$router.push({
+                            path: 'action/login'
+                        });
+                    }
+                })
+            } else {
                 var index = index + 1;
-                if (this.transifs === index) {
+                if (that.transifs === index) {
                     this.transifs = index - '1' + 'a';
                 } else {
-                    this.transifs = index;
+                    that.transifs = index;
                 }
-                if (uname == "") {
-                    this.$router.push({
-                        path: 'action/login'
-                    });
-                } else {
-                    let that = this;
-                    this.ajax.post("/xinda-api/cart/add", qs.stringify({
-                        id: id,
-                        num: 1
-                    })).then(function(res) {
-                        that.refCartNum();
 
-                    })
-                }
-            },
-            //立即购买
-            addCartNumb(id, uname) {
+                that.ajax.post("/xinda-api/cart/add", qs.stringify({
+                    id: id,
+                    num: 1
+                })).then(function (res) {
+                    that.refCartNum();
+
+                })
+            }
+        },
+        //立即购买
+        addCartNumb(id, uname) {
+            let that = this;
                 if (uname == "") {
-                    this.$router.push({
-                        path: 'action/login'
-                    });
-                } else {
-                    let that = this;
-                    this.ajax.post("/xinda-api/cart/add", qs.stringify({
-                        id: id,
-                        num: 1
-                    })).then(function(res) {
-                        that.refCartNum();
+                that.popups({
+                    headers: "当前尚未登录",
+                    content: "是否跳转到登录页面",
+                    ok() {
                         that.$router.push({
-                            name: 'shopping'
+                            path: 'action/login'
                         });
-                    })
+                    }
+                })
+            } else {
+                that.ajax.post("/xinda-api/cart/add", qs.stringify({
+                    id: id,
+                    num: 1
+                })).then(function (res) {
+                    that.refCartNum();
+                    that.$router.push({ name: 'shopping' });
+                })
 
-                }
+            }
 
-            },
+        },
             storeid(index) {
                 this.setstoreid(index);
             },

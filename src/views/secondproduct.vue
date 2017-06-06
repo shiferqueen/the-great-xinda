@@ -221,7 +221,7 @@ export default {
     },
     methods: {
         ...mapGetters(['getstoreid']),
-        ...mapActions(['refCartNum','user']),
+        ...mapActions(['refCartNum','user','popups']),
 
             //获取动态验证码
         getsrc() {
@@ -318,10 +318,17 @@ export default {
             },
 
         addProducts(uname) {
+            let that = this;
             if(uname==""){
-                    this.$router.push({path: '/action/login'});
+                 that.popups({
+                    headers: "当前尚未登录",
+                    content: "是否跳转到登录页面",
+                    ok() {
+                         that.$router.push({path: '/action/login'});
+                    }
+                })
             }else{
-                let that = this
+                
                 var id = that.$route.params.productId;
                 this.ajax.post("/xinda-api/cart/add", qs.stringify({
                     id: id,
@@ -335,15 +342,21 @@ export default {
                     
 
                     })).then(function (res) {
-                      
-
+                        
                     })
                 })
             }
         },
            addProductsb(uname) {
+            let that = this
             if(uname==""){
-                    this.$router.push({path: '/action/login'});
+                 that.popups({
+                    headers: "当前尚未登录",
+                    content: "是否跳转到登录页面",
+                    ok() {
+                         that.$router.push({path: '/action/login'});
+                    }
+                })
             }else{
                 let that = this
                 var id = that.$route.params.productId;
@@ -359,7 +372,6 @@ export default {
                     
 
                     })).then(function (res) {
-                      
                         that.$router.push({name: 'shopping'});
                     })
                 })
