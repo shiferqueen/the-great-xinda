@@ -269,18 +269,18 @@
                 }
                 _this.number = (index-1)*4
                 _this.listpage_ajax = _this.listpage_ajax_new.slice(_this.number,_this.number+4)
-                console.log(index);
-                console.log(_this.number);
+                // console.log(index);
+                // console.log(_this.number);
            },
             transif(index) {
                 var index = index;
-                console.log(this.transifs, index)
+                // console.log(this.transifs, index)
                 if (this.transifs === index) {
                     this.transifs = false;
                 } else {
                     this.transifs = index;
                 }
-                console.log(this.transifs, index)
+                // console.log(this.transifs, index)
             },
             storeid(index) {
                 this.setstoreid(index);
