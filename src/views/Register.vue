@@ -1,19 +1,19 @@
 <template>
-  <div>
     <div>
+
         <div class="top">
             <img src="../images/logos/logo.png" alt="">
-            <a href="">欢迎注册</a>
+            <a href="javascript:void(0)">欢迎注册</a>
         </div>
         <div class="buttom">
             <div class="next">
                 <div class="left">
                     <p :class="[status==1 ? 'activeclass' : 'errorclass']">{{msg}}</p>
-                    <input type="text" v-model="cellphone" class="phone" placeholder="请输入手机号" @click="clear"><br>
+                    <input type="text" v-model="cellphone" class="phone" placeholder="请输入手机号" @click="clear" @keyup.enter="register"><br>
                         
-                    <input type="text" v-model="validcode" class="code1" placeholder="请输入短信验证码" @click="clear">
+                    <input type="text" v-model="validcode" class="code1" placeholder="请输入短信验证码" @click="clear" @keyup.enter="register">
                         <!--短信发送之前-->  
-                    <input type="button" v-if="yanzhen" value="获取短信" @click='huoqu' class="text"> 
+                    <input type="button" v-if="yanzhen" value="获取短信" @click='huoqu' class="text" > 
                         <!--发送之后-->
                     <input type="button" v-else :value="reciprocal + 's后重新发送'" @click='huoqu' class="disabled-text" disabled> 
                     <br>
@@ -38,9 +38,14 @@
                             {{ item.name }}
                         </option>
                     </select><br>
-                    <input type="password" v-model="password" class="password" placeholder="请设置密码" @click="helpmsg"><br>
-                    <input type="text" v-model="imgcode" class="code" placeholder="请输入图片验证码" @click="clear"> <img @click ='getsrc' :src='imgsrc'><br>
-                    <button @click="register" @keyup.enter="register">立即注册</button>
+                    <input type="password" v-model="password" class="password" placeholder="请设置密码" @click="helpmsg" @keyup.enter="register" @input="p_len"><br>
+                    <div class="lnu_container">
+                        <p v-bind:class="{ lovercase_valid: contains_lovercase }">小写字母</p>
+                        <p v-bind:class="{ number_valid: contains_number }">数字</p>
+                        <p v-bind:class="{ uppercase_valid: contains_uppercase }">大写字母</p>
+                    </div>
+                    <input type="text" v-model="imgcode" class="code" placeholder="请输入图片验证码" @click="clear" @keyup.enter="register"> <img @click ='getsrc' :src='imgsrc'><br>
+                    <button @click="register" >立即注册</button>
                     <p class="p1">注册即同意遵守<span>《服务协议》</span></p>
                 </div>
                 <div class="right">
@@ -48,15 +53,16 @@
                         <p>已有账号？</p>
                         <a href="#/action/login">立即登录>></a>
                         <img src="../images/logos/xiaoren.png" alt="">
+
                     </div>
                 </div>
             </div>
         </div>
     </div>
-  </div>
 </template>
 
 <script>
+
     import qs from 'qs'
     import provinces from '../provinces.js'
     import Vue from 'vue'
@@ -67,7 +73,7 @@
                 imgif: true,
                 imgsrc: "/xinda-api/ajaxAuthcode", //图片验证码链接
                 cellphone: '', //手机号
-                password: '', //密码
+                password: null, //密码
                 validcode: '', //短信验证码
                 imgcode: '', //图片验证码
                 status: '', //状态
@@ -83,6 +89,12 @@
                 reciprocal: 60, //倒数
                 yanzhen: true, //验证码发送
                 stop: '', //动画停止参数
+                password_length:0,
+                typed: false,
+                valid_password_length: false,
+                contains_lovercase: false,
+                contains_number: false,
+                contains_uppercase: false,
             }
         },
         methods: {
@@ -99,6 +111,25 @@
                  let _this = this;
                  _this.status=0;
                  _this.msg="为了您的账号安全，密码至少6位，最多16位，必须包含大写字母、小写字母、数字";
+            },
+            p_len:function(){
+                this.password_length = this.password.length;
+                if (this.password_length >= 6) {
+                    this.valid_password_length = true;
+                } else {
+                    this.valid_password_length = false;
+                }
+
+                if (this.password_length > 0) {
+                    this.typed = true;
+                } else {
+                    this.typed = false;
+                }
+
+                this.contains_lovercase = /[a-z]/.test(this.password);
+                this.contains_number = /\d/.test(this.password);
+                this.contains_uppercase = /[A-Z]/.test(this.password);
+    
             },
             register() {
                 let _this = this;
@@ -122,10 +153,10 @@
                                 cellphone: _this.cellphone,
                                 smsType: 1,
                                 validCode: _this.validcode,
-                                password: _this.password,
+                                password: _this.md5(_this.password),
                                 regionId: 110010, //所属地区编码
                             })).then(function(data) {
-                                //console.log(data.data);
+                                console.log(data.data);
                                 _this.status = data.data.status;
                                 _this.msg = data.data.msg;
                                 if (_this.status == 1) {
@@ -243,10 +274,12 @@
             }
         },
     }
+
 </script>
 
 
 <style scoped lang="less">
+
     .activeclass {
         color: #2494d4;
         padding: 20px 150px 0;
@@ -289,7 +322,7 @@
         padding-top: 25px;
         .next {
             width: 1200px;
-            height: 450px;
+            height: 470px;
             margin: 0 auto;
             background-color: #fff;
             margin-top: 25px;
@@ -307,6 +340,46 @@
                     padding-left: 10px;
                     border: 1px solid #cecece;
                 }
+                .password {
+                    margin-bottom: 0px;
+                }
+                .lnu_container {
+                    display: block;
+                    margin: 10px auto;
+                    width: 320px;
+                    height: auto;
+                    display: -webkit-box;
+                    display: -ms-flexbox;
+                    display: flex;
+                    -webkit-box-pack: justify;
+                        -ms-flex-pack: justify;
+                            justify-content: space-between;
+                p {
+                    width: 100px;
+                    height: auto;
+                    font-size: 12px;
+                    line-height: 1.2;
+                    text-align: center;
+                    border-radius: 2px;
+                    color: rgba(71, 87, 98, 0.8);
+                    background: -webkit-linear-gradient(left, #00AD7C 50%, #eee 50%);
+                    background: linear-gradient(to right, #00AD7C 50%, #eee 50%);
+                    background-size: 201% 100%;
+                    background-position: right;
+                    -webkit-transition: background .3s;
+                    transition: background .3s;
+                }
+            }
+
+
+
+    .lovercase_valid,
+    .number_valid,
+    .uppercase_valid {
+        background-position: left !important;
+        color: rgba(255, 255, 255, 0.9) !important;
+    }
+
                 select {
                     width: 80px;
                     height: 35px;
@@ -395,8 +468,10 @@
                     img {
                         padding: 24px 0;
                     }
+
                 }
             }
         }
     }
+
 </style>

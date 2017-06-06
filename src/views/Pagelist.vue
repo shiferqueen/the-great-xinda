@@ -54,6 +54,7 @@
                         <div class="content-t-left">商品</div>
                         <div class="content-t-right">价格</div>
                     </div>
+
                     <div class="con-main" v-for="(listeach,index) in listpage_ajax">
                         <div class="con-main-left">
                             <a :href="'#/secondproduct/'+listeach.id" @click="storeid(listeach.id)">
@@ -77,14 +78,16 @@
                             <transition name="trans">
                                 <div class="transition-div" v-if="transifs === index"></div>
                             </transition>
+                            
                         </div>
                     </div>
+                 
                  
                 </div>
                 <div class="bottom_page pagination">
                     <span v-show="current != 0" @click="current-- && goto(current)">上一页</span>
                     <span  v-for="index in pages" @click="goto(index)" :class="{'active':current == index}">{{index}}</span>
-                    <span  v-show="allpage != current && allpage != 0 " @click="current++ && goto(current++)">下一页</span>
+                    <span  v-show="allpage != current" @click="current++ && goto(current++)">下一页</span>
                 </div>
             </div>
             <div class="main_right">
@@ -455,7 +458,6 @@
                     }
                 }
                 .con-main {
-                    height: 140px;
                     width: 930px;
                     margin: 0 auto;
                     border-bottom: 1px solid #cdcdcd;
@@ -471,7 +473,7 @@
                             width: 100px;
                             height: 100px;
                             border: 1px solid #cdcdcd;
-                            margin: 7px 0;
+                            margin: 15px 0;
                         }
                     }
                     .con-main-middle {
@@ -481,7 +483,7 @@
                             margin: 15px 0;
                         }
                         p {
-                            width:400px;
+                            width:410px;
                             margin: 15px 0;
                             color: #686868;
                             font-size: 14px;
@@ -596,7 +598,7 @@
       }
       .pagination span.active{
         background:#0E90D2;
-        color:#fff;
+        color:#fff !important;
       }
       //分页器结束
 </style>

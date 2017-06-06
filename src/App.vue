@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <top></top>
+    <popups></popups>
     <router-view></router-view>
     <bottom></bottom>
   </div>
@@ -9,11 +10,13 @@
 <script>
     import top from './components/top'
     import bottom from './components/bottom'
+    import popups from '@/components/popups'
     export default {
     name: 'app',
     components:{
         top,
-        bottom
+        bottom,
+        popups
     }
     }
 </script>

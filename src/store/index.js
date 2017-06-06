@@ -18,7 +18,11 @@ export default new Vuex.Store({
         //店铺id
         shopid: '',
         //当前商店详情
-        currentShop: {}
+        currentShop: {},
+        //银联支付中转内容
+        transUnionPay: '123',
+        //弹出框
+        popups: {}
     },
     //突变集合---用来操作状态集合
     mutations: {
@@ -41,8 +45,17 @@ export default new Vuex.Store({
         },
         CURRENTSHOP(state, shop) {
             state.currentShop = shop;
+        },
+        SETUNIONPAY(state, content) {
+            state.transUnionPay = content;
+        },
+        SETPOPUPS(state, popup) {
+            console.log('popup.ok', popup.ok);
+            state.popups = popup;
+        },
+        CLOSEPOPUPS(state) {
+            state.popups = {};
         }
-
     },
     //动作集合---用来操作突变集合的
     actions: {
@@ -75,6 +88,28 @@ export default new Vuex.Store({
         currentShop({ commit }, shop) {
             commit('CURRENTSHOP', shop)
         },
+        setUnionPay({ commit }, content) {
+            commit('SETUNIONPAY', content)
+        },
+        popups({ commit }, popup) {
+            popup.status = true;
+            if (popup.ok) {
+                popup.confirm = function() {
+                    popup.ok();
+                    commit('CLOSEPOPUPS');
+                }
+            }
+            let defaultSetting = {
+                headers: '提示信息',
+                content: '',
+                conbtn: '确定',
+                cancelbtn: '取消'
+            };
+            commit('SETPOPUPS', Object.assign(defaultSetting, popup))
+        },
+        closePopups({ commit }) {
+            commit('CLOSEPOPUPS')
+        }
     },
     //显示集合
     getters: {
@@ -95,6 +130,15 @@ export default new Vuex.Store({
         },
         getShop(state) {
             return state.currentShop //店铺
+        },
+        getUnionPay(state) {
+            return state.transUnionPay
+        },
+        getpopups(state) {
+            return state.popups
+        },
+        getpopupstatus(state) {
+            return state.popupstatus
         }
     }
 });

@@ -52,12 +52,13 @@
                     <span>￥800.00</span>
                     <span>￥800.00</span>
                     <span>等待买家付款</span>
-                    <span v-on:click="del()">删除订单</span>
+                    <span @click="del()">删除订单</span>
                     <span class="number_1">1</span>
                 </p>
             </li>
         </ul>
         </div>
+        <div>
         <ul class="order_num">
             <li>
                 <span>订单号:S347484929274490</span>
@@ -84,11 +85,14 @@
                     <span>￥800.00</span>
                     <span>￥800.00</span>
                     <span>等待买家付款</span>
-                    <span>删除订单</span>
+                    <span @
+                    
+                    click="del()">删除订单</span>
                     <span class="number_1">1</span>
                 </p>
             </li>
         </ul>
+        </div>
         <div class="page_next">
             <span>上一页</span>
             <span>1</span>
@@ -113,7 +117,7 @@ export default {
     },
     methods: {
         del: function(){
-            event.target.parentNode.parentNode.removeChild(event.target.parentNode);
+            event.target.parentNode.parentNode.parentNode.parentNode.parentNode.removeChild(event.target.parentNode.parentNode.parentNode.parentNode);
             // console.log(event.target.parentNod)
         }
     }
