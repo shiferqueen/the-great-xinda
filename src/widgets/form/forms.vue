@@ -16,23 +16,22 @@
                 </li>
             </ul>
             <transition name="forms">
-            <div v-if="toggles">   
-                <ul class="clear" v-for='(order,index) in dataOrder'>   
-                    <li>
-                        服务名称：{{order.serviceName}}
-                    </li>
-                    <li>
-                        单价：<span>￥{{order.unitPrice}}元</span>
-                    </li>
-                    <li>
-                        数量：<span>{{order.buyNum}}</span>
-                    </li>
-                    <li>
-                        服务总额：<span>￥{{order.totalPrice}}元</span>
-                    </li>
-                  </ul>
-
-            </div>
+                <div v-if="toggles">   
+                    <ul class="clear" v-for='(order,index) in dataOrder'>   
+                        <li>
+                            服务名称：{{order.serviceName}}
+                        </li>
+                        <li>
+                            单价：<span>￥{{order.unitPrice}}元</span>
+                        </li>
+                        <li>
+                            数量：<span>{{order.buyNum}}</span>
+                        </li>
+                        <li>
+                            服务总额：<span>￥{{order.totalPrice}}元</span>
+                        </li>
+                    </ul>
+                </div>
             </transition>  
 
         </div>

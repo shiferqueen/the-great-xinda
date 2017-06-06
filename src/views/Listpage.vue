@@ -71,12 +71,16 @@
                             </p>
                         </div>
                         <div class="con-main-right">
-                            <p @click="transif(index)">￥{{listeach.price}}</p>
+                            <p>￥{{listeach.price}}</p>
                             <span @click="addCartNumb(listeach.id,getuser)">立即购买</span>
-                            <span @click="addCartNum(listeach.id,getuser)">加入购物车</span>
+                            <span @click="addCartNum(listeach.id,getuser,index)">加入购物车</span>
                             <transition name="trans">
-                                <div class="transition-div" v-if="transifs === index"></div>
+                                <div class="transition-div" v-if="transifs == index+1"> + 1</div>
                             </transition>
+                            <transition name="trans">
+                                <div class="transition-div" v-if="transifs == index + 'a'"> + 1</div>
+                            </transition>
+
                         </div>
                     </div>
                 </div>
@@ -115,7 +119,10 @@
     import myhead from '../components/header'
     import myfoot from '../components/footer'
     import qs from 'qs'
-    import { mapActions, mapGetters } from 'vuex'
+    import {
+        mapActions,
+        mapGetters
+    } from 'vuex'
     export default {
         name: 'Listpage',
         components: {
@@ -139,9 +146,12 @@
         created() {
             let _this = this
             this.ajax.post("/xinda-api/product/package/grid", qs.stringify({
-                start: 0, limit: 8, productTypeCode: "1",
-                productId: "8a82f52b674543e298d2e5f685946e6e", sort: 2
-            })).then(function (res) {
+                start: 0,
+                limit: 8,
+                productTypeCode: "1",
+                productId: "8a82f52b674543e298d2e5f685946e6e",
+                sort: 2
+            })).then(function(res) {
                 _this.listpage_ajax = res.data.data;
             });
             // ------------以下为省市区三级联动
@@ -159,7 +169,7 @@
                 }
             })
             this.selectedBlock = this.blocks[0]
-            // ----------三级联动结束
+                // ----------三级联动结束
         },
         computed: {
             ...mapGetters(['getCartNum', 'getuser']),
@@ -170,7 +180,7 @@
                     block: this.selectedBlock
                 }
             },
-            filterlistpage_ajax: function () {
+            filterlistpage_ajax: function() {
                 // `this` points to the vm instance
                 // var key = this.key;
                 // var listpage_ajax = this.listpage_ajax;
@@ -185,46 +195,49 @@
             ...mapActions(['setstoreid', 'refCartNum', 'user']),
 
             //加入购物车
-            addCartNum(id, uname) {
+            addCartNum(id, uname, index) {
                 // this.transif = !this.transif;
+                var index = index + 1;
+                if (this.transifs === index) {
+                    this.transifs = index - '1' + 'a';
+                } else {
+                    this.transifs = index;
+                }
                 if (uname == "") {
-                    this.$router.push({ path: 'action/login' });
+                    this.$router.push({
+                        path: 'action/login'
+                    });
                 } else {
                     let that = this;
                     this.ajax.post("/xinda-api/cart/add", qs.stringify({
                         id: id,
                         num: 1
-                    })).then(function (res) {
+                    })).then(function(res) {
                         that.refCartNum();
+
                     })
                 }
             },
             //立即购买
             addCartNumb(id, uname) {
                 if (uname == "") {
-                    this.$router.push({ path: 'action/login' });
+                    this.$router.push({
+                        path: 'action/login'
+                    });
                 } else {
                     let that = this;
                     this.ajax.post("/xinda-api/cart/add", qs.stringify({
                         id: id,
                         num: 1
-                    })).then(function (res) {
+                    })).then(function(res) {
                         that.refCartNum();
-                        that.$router.push({ name: 'shopping' });
+                        that.$router.push({
+                            name: 'shopping'
+                        });
                     })
 
                 }
 
-            },
-            transif(index) {
-                var index = index;
-                console.log(this.transifs, index)
-                if (this.transifs === index) {
-                    this.transifs = false;
-                } else {
-                    this.transifs = index;
-                }
-                console.log(this.transifs, index)
             },
             storeid(index) {
                 this.setstoreid(index);
@@ -244,7 +257,7 @@
                     })
                 }
                 var _this = this
-                // 此时在渲染DOM,渲染结束之后再选中第一个
+                    // 此时在渲染DOM,渲染结束之后再选中第一个
                 Vue.nextTick(() => {
                     _this.selectedCity = _this.cities[0]
                     _this.$emit('input', _this.info)
@@ -271,14 +284,13 @@
                 var _this = this
                 Vue.nextTick(() => {
                     _this.selectedBlock = _this.blocks[0]
-                    // 触发与 v-model相关的 input事件
+                        // 触发与 v-model相关的 input事件
                     _this.$emit('input', _this.info)
                 })
             }
         },
 
     }
-
 </script>
 
 <style lang="less" scoped>
@@ -288,14 +300,14 @@
         width: 0;
         clear: both;
     }
-
+    
     .head_top {
         width: 1205px;
         margin: 25px auto 10px;
         font-size: 14px;
         color: #696969;
     }
-
+    
     .main {
         width: 1200px;
         margin: 0 auto;
@@ -447,6 +459,7 @@
                             color: #fff;
                             border-radius: 5px;
                             cursor: pointer;
+                            z-index: 999;
                         }
                     }
                 }
@@ -491,35 +504,41 @@
             }
         }
     }
-
+    
     .teshuyangshi {
         line-height: 78px !important;
     }
     /*过渡动画的class*/
-
+    
     .transition-div {
         width: 110px;
         height: 35px;
-        background: #2080b9;
         border-radius: 8px;
-        z-index: -3;
+        z-index: 3;
         position: absolute;
         bottom: -8px;
         right: 5px;
+        color: #2693d4;
+        font-size: 35px;
     }
     /*// 过渡动画*/
-
+    
     .trans-enter-active {
-        transition: all .3s ease;
+        animation: bounce-in 1.2s linear;
     }
-
-    .trans-leave-active {
-        transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
-    }
-
-    .trans-fade-enter,
-    .trans-leave-active {
-        transform: translate(100px,-100px);
-        opacity: 0;
+    
+    @keyframes bounce-in {
+        0% {
+            transform: translate(0px, 0px);
+            font-size: 40px;
+        }
+        50% {
+            transform: translate(100px, -400px);
+            font-size: 20px;
+        }
+        100% {
+            transform: translate(200px, -800px);
+            font-size: 0px;
+        }
     }
 </style>
