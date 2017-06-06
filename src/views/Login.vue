@@ -90,7 +90,6 @@
     }
 </script>
 
-
 <style scoped lang="less">
 .activeclass{
     color: #2494d4;
