@@ -48,7 +48,7 @@
                 <div class="content">
                     <div class="content_top">
                         <span>综合排序</span>
-                        <span>价格</span>
+                        <span @click='chicked'>{{prices}}</span>
                     </div>
                     <div class="content_top-t">
                         <div class="content-t-left">商品</div>
@@ -142,6 +142,8 @@
                 allpage:6,
                 number: 0,
                 start: true,
+                sorts: 0,
+                prices:'价格'
             }
 
         },
@@ -247,19 +249,22 @@
                 }
 
             },
+            //页面接口
             list(){
                 let _this = this
                 this.ajax.post("/xinda-api/product/package/grid", qs.stringify({
                 limit: 20,
                 start: _this.number,
+                sort:_this.sorts,
                 })).then(function (res) {
                     _this.listpage_ajax_new= res.data.data;
-                    console.log(res.data.data)
+                    // console.log(res.data.data)
                     _this.number = 0
                     _this.isA = false
                     _this.listpage_ajax = _this.listpage_ajax_new.slice(_this.number,_this.number+4)
                 });
             },
+            //分页器下一页方法
             goto:function(index){
             
                 let _this = this
@@ -274,6 +279,21 @@
                 _this.listpage_ajax = _this.listpage_ajax_new.slice(_this.number,_this.number+4)
                 console.log(index);
                 console.log(_this.number);
+           },
+           //价格排序
+           chicked(){
+               let _this = this;
+               if(_this.sorts == 2){
+                    _this.sorts = 3;
+                    _this.list();
+                    _this.prices = '价格 ↓';
+               }
+               else{
+                   _this.sorts = 2;
+                    _this.list();
+                    _this.prices = '价格 ↑';
+               }
+                
            },
             transif(index) {
                 var index = index;
