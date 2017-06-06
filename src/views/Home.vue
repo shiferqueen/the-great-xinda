@@ -160,7 +160,8 @@ import {mapGetters} from "vuex"
         autoplay: 3000,
         autoplayDisableOnInteraction: false,
         pagination: '.swiper-pagination',
-        paginationClickable: true
+        paginationClickable: true,
+        loop:true
       },
       da:[],
       dat:[],
