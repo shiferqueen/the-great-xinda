@@ -557,13 +557,13 @@
     .transition-div {
         width: 110px;
         height: 35px;
-        border-radius: 8px;
-        z-index: 3;
+        z-index: -3;
         position: absolute;
         bottom: -8px;
         right: 5px;
         color: #2693d4;
-        font-size: 35px;
+        text-align: center;
+        font-size: 30px;
     }
     /*// 过渡动画*/
     

@@ -57,8 +57,14 @@
          </li>
          <li>
              <span>新密码：</span>
-             <input  class="ct1" type="password" v-model="newword" placeholder="请输入新密码" @click="prompt()"/>
-              <p class="prompt">{{pro}}</p>
+             <input  class="ct1" type="password" v-model="newword" placeholder="请输入新密码" @click="prompt()" @input="p_len"/>
+             <span v-bind:class="{ valid_password_length: valid_password_length , show_password_length: typed}" class="password_length">{{password_length}}</span>
+             <p class="prompt">{{pro}}</p>
+             <div class="lnu_container">
+                <p v-bind:class="{ lovercase_valid: contains_lovercase }">小写字母</p>
+                <p v-bind:class="{ number_valid: contains_number }">数字</p>
+                <p v-bind:class="{ uppercase_valid: contains_uppercase }">大写字母</p>
+            </div>
          </li>
          
          <li>
@@ -91,7 +97,7 @@ import Vue from 'vue'
                 uesrname:'',
                 com:'',
                 oldword:'',//旧密码
-                newword:'',//新密码
+                newword:null,//新密码
                 newtext:'',//确认新密码
                 msg:'',//提示
                 testpassword:/^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{6,16}$/,
@@ -100,6 +106,12 @@ import Vue from 'vue'
                 save:'保存',//按钮
                 save1:'保存',//按钮
                 pro:'',//新密码后的提示
+                password_length:0,
+                typed: false,
+                valid_password_length: false,
+                contains_lovercase: false,
+                contains_number: false,
+                contains_uppercase: false,
                 selectedProvince: provinces[0],//省
                 selectedCity: 0,//市
                 selectedBlock: 0,//区
@@ -120,6 +132,25 @@ import Vue from 'vue'
                 this.zhang = false,
                 this.password = true
             },
+            p_len:function(){
+                this.password_length = this.newword.length;
+                if (this.password_length >= 6) {
+                    this.valid_password_length = true;
+                } else {
+                    this.valid_password_length = false;
+                }
+
+                if (this.password_length > 0) {
+                    this.typed = true;
+                } else {
+                    this.typed = false;
+                }
+
+                this.contains_lovercase = /[a-z]/.test(this.newword);
+                this.contains_number = /\d/.test(this.newword);
+                this.contains_uppercase = /[A-Z]/.test(this.newword);
+    
+            },
             saveOne:function(){
                let _this = this;
                if(_this.uesrname==''){
@@ -133,22 +164,23 @@ import Vue from 'vue'
                 _this.one = "邮箱格式不正确"
                  _this.c="#f00"
                }else{
-                _this.ajax.post('/xinda-api/member/info',qs.stringify({
+                _this.ajax.post('/xinda-api/member/update-info',qs.stringify({
                 headImg:'/2016/10/28/152843b6d9a04abe83a396d2ba03675f',
                 name:_this.uesrname,
                 gender:1,
                 email:_this.com,
                 regionId:'110106',
-
+                
                 })).then(function(data){
                     // _this.one = data.data.msg;
-                    _this.status = data.data.data.status;
+                    _this.status = data.data.status;
                     if(_this.status==1){
                         _this.one = "*保存成功*",
                         _this.c="#2494d4"
                     }else if(_this.status==-1){
                         _this.one = "保存失败"
                     }
+                    
                 })
                     _this.save1="修改"
                 
@@ -185,16 +217,12 @@ import Vue from 'vue'
             }
         },
         created() {
-            // this.ajax.post('/xinda-api/member/info',qs.stringify({
-            //     headImg:'',
-            //     name:'',
-            //     gender:2,
-            //     email:'',
-            //     regionId:'',
-
-            // })).then(function(data){
-            //     console.log(data)
-            // })
+            let _this = this;
+            _this.ajax.post('/xinda-api/member/info').then(function(data){
+                 console.log(data)
+                 _this.uesrname=data.data.data.name
+                 _this.com=data.data.data.email
+            })
             // 数据初始化,默认选中北京市,默认选中第一个;北京市数据为总数据的前18个
             let beijing = this.provinces.slice(0, 19)
             this.cities = beijing.filter(item => {
@@ -369,7 +397,72 @@ import Vue from 'vue'
         }
         .ct1{
             margin-left: 62px;
+            position: relative;
+            overflow: hidden;
+            outline: none;
+            -webkit-transition: all .1s;
+            transition: all .1s;
         }
+        .password_length {
+            // padding: 2px 10px;
+            position: absolute;
+            top: 384px;
+            left: 760px;
+            -webkit-transform: translateY(-50%);
+            transform: translateY(-50%);
+            background: #FBD490;
+            color: rgba(71, 87, 98, 0.8);
+            border-radius: 4px;
+            font-size: 13px;
+            display: none;
+            -webkit-transition: all .1s;
+            transition: all .1s;
+        }
+        .valid_password_length {
+            background: #00AD7C;
+            color: rgba(255, 255, 255, 0.9);
+            }
+
+            .show_password_length {
+            display: block;
+            }
+
+            .lnu_container {
+            display: block;
+            margin: 10px 130px;
+            width: 320px;
+            height: auto;
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-pack: justify;
+                -ms-flex-pack: justify;
+                    justify-content: space-between;
+            p {
+                width: 100px;
+                height: auto;
+                font-size: 12px;
+                line-height: 1.2;
+                text-align: center;
+                border-radius: 2px;
+                color: rgba(71, 87, 98, 0.8);
+                background: -webkit-linear-gradient(left, #00AD7C 50%, #eee 50%);
+                background: linear-gradient(to right, #00AD7C 50%, #eee 50%);
+                background-size: 201% 100%;
+                background-position: right;
+                -webkit-transition: background .3s;
+                transition: background .3s;
+                }
+            }
+
+           
+
+            .lovercase_valid,
+            .number_valid,
+            .uppercase_valid {
+            background-position: left !important;
+            color: rgba(255, 255, 255, 0.9) !important;
+            }
     }
     .baocun a{
         width: 68px;
