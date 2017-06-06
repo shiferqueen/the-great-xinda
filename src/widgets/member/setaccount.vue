@@ -11,7 +11,7 @@
         </li>
         <li class="username">
             <span>姓名：</span>
-            <input class="c-t"/>
+            <input class="c-t" value=""/>
         </li>
         <li class="sex">
             <span>性别：</span>
@@ -62,7 +62,7 @@
 </template>
 
 <script>
-//  import qs from 'qs'
+ import qs from 'qs'
 
  export default {
         name: 'setaccount',
@@ -83,10 +83,10 @@
             }
         },
         created() {
-            this.ajax.post('/xinda-api/member/info').then(function(data){
-                console.log(data)
-            })
-        }
+        this.ajax.post('/xinda-api/member/info').then(function (data) {
+            console.log(data)
+        })
+    }
     }
 </script>
 

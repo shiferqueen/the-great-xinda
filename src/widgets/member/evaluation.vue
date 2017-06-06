@@ -6,8 +6,8 @@
         </div>
         <ul class="fou_evalu">
             <li>
-                <a v-on:click="get()" :class="{active:weiping}">未评价</a>
-                <a v-on:click="set()" :class="{active:yiping}">已评价</a>
+                <a @click="get()" :class="{active:weiping}">未评价</a>
+                <a @click="set()" :class="{active:yiping}">已评价</a>
             </li>
             <li v-show="weiping">
                 <div class="logo">
