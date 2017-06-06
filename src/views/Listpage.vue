@@ -48,7 +48,7 @@
                 <div class="content">
                     <div class="content_top">
                         <span>综合排序</span>
-                        <span>价格</span>
+                        <span @click='chicked'>{{prices}}</span>
                     </div>
                     <div class="content_top-t">
                         <div class="content-t-left">商品</div>
@@ -85,7 +85,7 @@
                     </div>
                 </div>
                  <div class="bottom_page pagination">
-                    <span v-show="current != 0" @click="current-- && goto(current)">上一页</span>
+                    <span v-show="current != 0" @click="current-- && goto(current--)">上一页</span>
                     <span  v-for="index in pages" @click="goto(index)" :class="{'active':current == index}">{{index}}</span>
                     <span  v-show="allpage != current" @click="current++ && goto(current++)">下一页</span>
                 </div>
@@ -144,6 +144,8 @@
                 allpage:3,
                 number: 0,
                 start: true,
+                sorts: 0,
+                prices:'价格'
             }
 
         },
@@ -183,15 +185,7 @@
                     block: this.selectedBlock
                 }
             },
-            filterlistpage_ajax: function() {
-                // `this` points to the vm instance
-                // var key = this.key;
-                // var listpage_ajax = this.listpage_ajax;
-                // return listpage_ajax.filter(function (listeach) {
-                //     return listeach.toLowerCase().indexOf(key.toLowerCase()) != -1
-                // });
-                console.log('你点击我');
-            },
+           
 
              //  分页器部分
              pages:function(){
@@ -267,7 +261,7 @@
                 sort:_this.sorts,
                 })).then(function (res) {
                     _this.listpage_ajax_new= res.data.data;
-                    // console.log(res.data.data)
+                  
                     _this.number = 0
                     _this.isA = false
                     _this.listpage_ajax = _this.listpage_ajax_new.slice(_this.number,_this.number+4)
@@ -283,11 +277,27 @@
                 //这里可以发送ajax请求
                 if(index ==3 ){
                     index = 2
+                }else if(index ==0){
+                    index = -1
                 }
                 _this.number = (index-1)*4
                 _this.listpage_ajax = _this.listpage_ajax_new.slice(_this.number,_this.number+4)
-                console.log(index);
-                console.log(_this.number);
+             
+           },
+            //价格排序
+           chicked(){
+               let _this = this;
+               if(_this.sorts == 2){
+                    _this.sorts = 3;
+                    _this.list();
+                    _this.prices = '价格 ↓';
+               }
+               else{
+                   _this.sorts = 2;
+                    _this.list();
+                    _this.prices = '价格 ↑';
+               }
+                
            },
         },
         watch: {

@@ -182,7 +182,7 @@ export default {
     //获取接口
  created() {
     //  this.getid();
-    console.log('商品详情数据',this.$route.params.productId);
+   
             let _this = this
             this.ajax.post("/xinda-api/product/package/detail", qs.stringify({
                 sId: this.$route.params.productId
@@ -335,8 +335,7 @@ export default {
                     
 
                     })).then(function (res) {
-                        console.log(that.goodsval);
-                        console.log(id)
+                      
 
                     })
                 })
@@ -360,8 +359,7 @@ export default {
                     
 
                     })).then(function (res) {
-                        console.log(that.goodsval);
-                        console.log(id)
+                      
                         that.$router.push({name: 'shopping'});
                     })
                 })
