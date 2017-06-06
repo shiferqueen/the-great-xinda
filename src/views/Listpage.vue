@@ -71,19 +71,23 @@
                             </p>
                         </div>
                         <div class="con-main-right">
-                            <p @click="transif(index)">￥{{listeach.price}}</p>
+                            <p>￥{{listeach.price}}</p>
                             <span @click="addCartNumb(listeach.id,getuser)">立即购买</span>
-                            <span @click="addCartNum(listeach.id,getuser)">加入购物车</span>
+                            <span @click="addCartNum(listeach.id,getuser,index)">加入购物车</span>
                             <transition name="trans">
-                                <div class="transition-div" v-if="transifs === index"></div>
+                                <div class="transition-div" v-if="transifs == index+1"> + 1</div>
                             </transition>
+                            <transition name="trans">
+                                <div class="transition-div" v-if="transifs == index + 'a'"> + 1</div>
+                            </transition>
+
                         </div>
                     </div>
                 </div>
-                <div class="bottom_page">
-                    <span>上一页</span>
-                    <span>1</span>
-                    <span>下一页</span>
+                 <div class="bottom_page pagination">
+                    <span v-show="current != 0" @click="current-- && goto(current)">上一页</span>
+                    <span  v-for="index in pages" @click="goto(index)" :class="{'active':current == index}">{{index}}</span>
+                    <span  v-show="allpage != current" @click="current++ && goto(current++)">下一页</span>
                 </div>
             </div>
             <div class="main_right">
@@ -115,7 +119,10 @@
     import myhead from '../components/header'
     import myfoot from '../components/footer'
     import qs from 'qs'
-    import { mapActions, mapGetters } from 'vuex'
+    import {
+        mapActions,
+        mapGetters
+    } from 'vuex'
     export default {
         name: 'Listpage',
         components: {
@@ -132,18 +139,24 @@
                 provinces,
                 blocks: 0,
                 transifs: 0,
+                current:1,
+                showItem:2,
+                allpage:3,
+                number: 0,
+                start: true,
             }
 
         },
 
         created() {
             let _this = this
-            this.ajax.post("/xinda-api/product/package/grid", qs.stringify({
-                start: 0, limit: 8, productTypeCode: "1",
-                 sort: 2
-            })).then(function (res) {
-                _this.listpage_ajax = res.data.data;
-            });
+            this.list();
+            // let _this = this
+            // this.ajax.post("/xinda-api/product/package/grid", qs.stringify({
+            //     start: 0,productTypeCode: "1",
+            // })).then(function (res) {
+            //     _this.listpage_ajax = res.data.data;
+            // });
             // ------------以下为省市区三级联动
             // 数据初始化,默认选中北京市,默认选中第一个;北京市数据为总数据的前18个
             let beijing = this.provinces.slice(0, 19)
@@ -159,7 +172,7 @@
                 }
             })
             this.selectedBlock = this.blocks[0]
-            // ----------三级联动结束
+                // ----------三级联动结束
         },
         computed: {
             ...mapGetters(['getCartNum', 'getuser']),
@@ -170,7 +183,7 @@
                     block: this.selectedBlock
                 }
             },
-            filterlistpage_ajax: function () {
+            filterlistpage_ajax: function() {
                 // `this` points to the vm instance
                 // var key = this.key;
                 // var listpage_ajax = this.listpage_ajax;
@@ -180,55 +193,102 @@
                 console.log('你点击我');
             },
 
+             //  分页器部分
+             pages:function(){
+                 let _this = this;
+                var pag = [];
+                       var i = _this.showItem;
+                       while(_this.showItem){
+                           pag.unshift(_this.showItem--);
+                       }
+               
+                 return pag
+               }
+
         },
         methods: {
             ...mapActions(['setstoreid', 'refCartNum', 'user']),
 
+
             //加入购物车
-            addCartNum(id, uname) {
+            addCartNum(id, uname, index) {
                 // this.transif = !this.transif;
+                var index = index + 1;
+                if (this.transifs === index) {
+                    this.transifs = index - '1' + 'a';
+                } else {
+                    this.transifs = index;
+                }
                 if (uname == "") {
-                    this.$router.push({ path: 'action/login' });
+                    this.$router.push({
+                        path: 'action/login'
+                    });
                 } else {
                     let that = this;
                     this.ajax.post("/xinda-api/cart/add", qs.stringify({
                         id: id,
                         num: 1
-                    })).then(function (res) {
+                    })).then(function(res) {
                         that.refCartNum();
+
                     })
                 }
             },
             //立即购买
             addCartNumb(id, uname) {
                 if (uname == "") {
-                    this.$router.push({ path: 'action/login' });
+                    this.$router.push({
+                        path: 'action/login'
+                    });
                 } else {
                     let that = this;
                     this.ajax.post("/xinda-api/cart/add", qs.stringify({
                         id: id,
                         num: 1
-                    })).then(function (res) {
+                    })).then(function(res) {
                         that.refCartNum();
-                        that.$router.push({ name: 'shopping' });
+                        that.$router.push({
+                            name: 'shopping'
+                        });
                     })
 
                 }
 
             },
-            transif(index) {
-                var index = index;
-                console.log(this.transifs, index)
-                if (this.transifs === index) {
-                    this.transifs = false;
-                } else {
-                    this.transifs = index;
-                }
-                console.log(this.transifs, index)
-            },
             storeid(index) {
                 this.setstoreid(index);
-            }
+            },
+              //页面接口
+            list(){
+                let _this = this
+                this.ajax.post("/xinda-api/product/package/grid", qs.stringify({
+                productTypeCode: "1",
+                start: _this.number,
+                sort:_this.sorts,
+                })).then(function (res) {
+                    _this.listpage_ajax_new= res.data.data;
+                    // console.log(res.data.data)
+                    _this.number = 0
+                    _this.isA = false
+                    _this.listpage_ajax = _this.listpage_ajax_new.slice(_this.number,_this.number+4)
+                });
+            },
+            //分页器下一页方法
+            goto:function(index){
+            
+                let _this = this
+                
+                if(index == this.current) return;
+                _this.current = index
+                //这里可以发送ajax请求
+                if(index ==3 ){
+                    index = 2
+                }
+                _this.number = (index-1)*4
+                _this.listpage_ajax = _this.listpage_ajax_new.slice(_this.number,_this.number+4)
+                console.log(index);
+                console.log(_this.number);
+           },
         },
         watch: {
             selectedProvince(newVal, oldVal) {
@@ -244,7 +304,7 @@
                     })
                 }
                 var _this = this
-                // 此时在渲染DOM,渲染结束之后再选中第一个
+                    // 此时在渲染DOM,渲染结束之后再选中第一个
                 Vue.nextTick(() => {
                     _this.selectedCity = _this.cities[0]
                     _this.$emit('input', _this.info)
@@ -271,14 +331,13 @@
                 var _this = this
                 Vue.nextTick(() => {
                     _this.selectedBlock = _this.blocks[0]
-                    // 触发与 v-model相关的 input事件
+                        // 触发与 v-model相关的 input事件
                     _this.$emit('input', _this.info)
                 })
             }
         },
 
     }
-
 </script>
 
 <style lang="less" scoped>
@@ -288,14 +347,14 @@
         width: 0;
         clear: both;
     }
-
+    
     .head_top {
         width: 1205px;
         margin: 25px auto 10px;
         font-size: 14px;
         color: #696969;
     }
-
+    
     .main {
         width: 1200px;
         margin: 0 auto;
@@ -447,23 +506,21 @@
                             color: #fff;
                             border-radius: 5px;
                             cursor: pointer;
+                            z-index: 999;
                         }
                     }
                 }
             }
             .bottom_page {
-                width: 195px;
+                width: 270px;
                 margin: 25px auto;
                 span {
+                    font-size:15px;
                     padding: 10px;
                     border: 1px solid #cdcdcd;
                     color: #cdcdcd;
                     cursor: pointer;
-                    &:nth-child(2) {
-                        border: 1px solid #2693d4;
-                        padding: 10px 15px;
-                        color: #2693d4;
-                    }
+                    
                 }
             }
         }
@@ -491,35 +548,67 @@
             }
         }
     }
-
+    
     .teshuyangshi {
         line-height: 78px !important;
     }
     /*过渡动画的class*/
-
+    
     .transition-div {
         width: 110px;
         height: 35px;
-        background: #2080b9;
         border-radius: 8px;
-        z-index: -3;
+        z-index: 3;
         position: absolute;
         bottom: -8px;
         right: 5px;
+        color: #2693d4;
+        font-size: 35px;
     }
     /*// 过渡动画*/
-
+    
     .trans-enter-active {
-        transition: all .3s ease;
+        animation: bounce-in 1.2s linear;
+    }
+    
+    @keyframes bounce-in {
+        0% {
+            transform: translate(0px, 0px);
+            font-size: 40px;
+        }
+        50% {
+            transform: translate(100px, -400px);
+            font-size: 20px;
+        }
+        100% {
+            transform: translate(200px, -800px);
+            font-size: 0px;
+        }
     }
 
-    .trans-leave-active {
-        transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
-    }
+    //分页器
+    .pagination {
+        position: relative;
 
-    .trans-fade-enter,
-    .trans-leave-active {
-        transform: translate(100px,-100px);
-        opacity: 0;
-    }
+      }
+      .pagination span{
+        display: inline-block;
+        margin:0 5px;
+      }
+      .pagination span a{
+        padding:.5rem;
+        display:inline-block;
+        border:1px solid #ddd;
+        background:#fff;
+
+        color:#0E90D2;
+      }
+      .pagination span a:hover{
+        background:#eee;
+      }
+      .pagination span.active{
+        background:#0E90D2;
+        color:#fff !important;
+      }
+      //分页器结束
 </style>

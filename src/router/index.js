@@ -164,12 +164,6 @@ export default new Router({
                     component: forget
                 }
             ]
-        },
-        // {
-        //     path: '/transUnionPay',
-        //     name: 'transUnionPay',
-        //     component: transUnionPay
-
-        // }
+        }
     ]
 });
