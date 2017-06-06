@@ -22,6 +22,11 @@ import payerror from '@/views/payerror'
 import paysuccess from '@/views/paysuccess'
 import login from '@/views/Login'
 import forget from '@/views/forget'
+import Pagelist from '@/views/Pagelist'
+import serviceProducts from '@/widgets/shopfront/serviceProducts'
+import customService from '@/widgets/shopfront/customService'
+import certification from '@/widgets/shopfront/certification'
+import secondproduct from '@/views/secondproduct'
 
 Vue.use(Router)
 
@@ -43,19 +48,46 @@ export default new Router({
                     component: shoplist,
                 },
                 {
-                    path: "shopfront",
+                    path: "shopfront/:shopfrontID",
+                    alias: '',
                     name: "shopfront",
-                    component: shopfront
+                    component: shopfront,
+                    children: [{
+                            path: "serviceProducts",
+                            alias: '',
+                            name: "serviceProducts",
+                            component: serviceProducts,
+                        }, {
+                            path: "customService",
+                            name: "customService",
+                            component: customService,
+                        }, {
+                            path: "certification",
+                            name: "certification",
+                            component: certification,
+                        }
+
+                    ]
                 },
                 {
-                    path: 'listpage',  //商品列表
+                    path: 'listpage', //商品列表
                     name: 'Listpage',
                     component: Listpage,
                 },
                 {
-                    path: 'products/:productId',  //商品详情
+                    path: 'pagelist', //商品列表
+                    name: 'Pagelist',
+                    component: Pagelist,
+                },
+                {
+                    path: 'products/:productId', //商品详情
                     name: 'Products',
                     component: Products,
+                },
+                {
+                    path: 'secondproduct/:productId', //商品详情2
+                    name: 'secondproduct',
+                    component: secondproduct,
                 },
                 {
                     path: 'shopping', //购物车
@@ -63,7 +95,7 @@ export default new Router({
                     component: shopping,
                 },
                 {
-                    path: 'form', //支付
+                    path: 'form:order', //支付
                     name: 'form',
                     component: form,
                 },
@@ -83,34 +115,33 @@ export default new Router({
                     component: us,
                 },
                 {
-                    path: 'member',//会员
+                    path: 'member', //会员
                     name: 'member',
                     component: member,
-                    children: [
-                    {
-                        path: 'myorder',
-                        alias:'',
-                        name: 'myorder',
-                        component: myorder
-                    },
-                    {
-                        path: 'evaluation',
-                        name: 'evaluation',
-                        component: evaluation
-                    },
-                    {
-                        path: 'uevaluation',
-                        name: 'uevaluation',
-                        component: uevaluation
-                    },
-                    {
-                        path: 'setaccount',
-                        name: 'setaccount',
-                        component: setaccount
-                    },
-                ]
+                    children: [{
+                            path: 'myorder',
+                            alias: '',
+                            name: 'myorder',
+                            component: myorder
+                        },
+                        {
+                            path: 'evaluation',
+                            name: 'evaluation',
+                            component: evaluation
+                        },
+                        {
+                            path: 'uevaluation',
+                            name: 'uevaluation',
+                            component: uevaluation
+                        },
+                        {
+                            path: 'setaccount',
+                            name: 'setaccount',
+                            component: setaccount
+                        },
+                    ]
 
-            }
+                }
             ]
         },
         {
@@ -118,21 +149,21 @@ export default new Router({
             name: 'Action',
             component: Action,
             children: [{
-                path: 'register',
-                name: 'register',
-                component: Register //enroll
-            },
-            {
-                path: 'login',
-                name: 'login',
-                component: login 
-            },
-            {
-                path: 'forget',
-                name: 'forget',
-                component: forget 
-            }]
+                    path: 'register',
+                    name: 'register',
+                    component: Register //enroll
+                },
+                {
+                    path: 'login',
+                    name: 'login',
+                    component: login
+                },
+                {
+                    path: 'forget',
+                    name: 'forget',
+                    component: forget
+                }
+            ]
         }
     ]
 });
-

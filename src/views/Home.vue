@@ -38,7 +38,7 @@
   <div class="label">
     <div class="lab-containt">
         <p>明星产品推荐</p>
-        <span>▲</span>
+        <span></span>
     </div>
   </div>
   <!------内容------>
@@ -46,7 +46,7 @@
     <div class="recom-containt">
       <ul class="clear">
         <li class="fl" v-for="(massage,index) in da">
-          <a href="javascript:void(0)">
+          <a href="#/pagelist">
             <img :src="imgsrcfront+massage.providerImg">
             <h4>{{massage.providerName}}</h4>
             <p>{{massage.serviceName}}</p>
@@ -60,7 +60,7 @@
   <div class="label">
     <div class="lab-containt">
         <p>初创企业必备</p>
-        <span>▲</span>
+        <span></span>
     </div>
   </div>
   <!------内容------>
@@ -68,7 +68,7 @@
     <div class="stabus-containt">
       <ul class="clear">
         <li class="fl" v-for="(mas,index) in dat">
-          <a href="javascript:void(0)">
+          <a href="#/pagelist">
             <img :src="imgsrcfront+mas.providerImg">
             <h4>{{mas.providerName}}</h4>
             <p>{{mas.serviceInfo}}</p>
@@ -84,7 +84,7 @@
   <div class="label">
     <div class="lab-containt">
         <p>知识产权</p>
-        <span>▲</span>
+        <span></span>
     </div>
   </div>
   <!------内容------>
@@ -102,7 +102,7 @@
     <div class="lab-containt">
         <div>推荐服务商</div>
         <p>推荐服务</p>
-        <span>▲</span>
+        <span></span>
     </div>
   </div>
   <!------内容------>
@@ -110,7 +110,7 @@
     <div class="prov-containt">
       <ul class="clear">
         <li class="fl" v-for="(mas,index) in dat">
-          <a href="javascript:void(0)">
+          <a href="#/pagelist">
             <img :src="imgsrcfront+mas.providerImg">
             <h4>{{mas.providerName}}</h4>
             <p class="fz15">服务指数：五星</p>
@@ -128,7 +128,7 @@
   <div class="label">
     <div class="lab-containt">
         <p>合作伙伴</p>
-        <span>▲</span>
+        <span></span>
     </div>
   </div>
   <!------内容------>
@@ -160,7 +160,8 @@ import {mapGetters} from "vuex"
         autoplay: 3000,
         autoplayDisableOnInteraction: false,
         pagination: '.swiper-pagination',
-        paginationClickable: true
+        paginationClickable: true,
+        loop:true
       },
       da:[],
       dat:[],
@@ -246,10 +247,9 @@ import {mapGetters} from "vuex"
       padding-left: 6px;
     }
     span{
-      height: 1px;
-      width:3px;
+      border: 6px solid transparent;
+      border-bottom: 8px solid #2494d4;
       display:block;
-      color:#2494d4;
       position: absolute;
       top:66px;
       left: 35px;
@@ -314,7 +314,7 @@ import {mapGetters} from "vuex"
           div{
             position: absolute;
             top:305px;
-            left:25%;
+            left:35%;
             span{
               font-size: 30px;
               color:#2494d4;
@@ -374,7 +374,7 @@ import {mapGetters} from "vuex"
           }
           div{
             position: absolute;
-            left:25%;
+            left:35%;
             bottom:100px;
             span{
               font-size: 30px;
