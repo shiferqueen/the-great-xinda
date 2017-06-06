@@ -2,7 +2,7 @@
   <div>
       <div class="top">
           <img src="../images/logos/logo.png" alt="">
-          <a href="">欢迎登陆</a>
+          <a href="javascript:void(0)">欢迎登陆</a>
       </div>
       <div class="buttom">
           <div class="next">
@@ -43,9 +43,8 @@
                 testphone:/^1[3|4|5|7|8][0-9]{9}$/,
             }
         },
-        created(){
 
-        },
+
         methods: {
             ...mapActions(["user","refCartNum"]),
             ...mapGetters(['getCartNum']),
@@ -92,7 +91,6 @@
         
     }
 </script>
-
 
 <style scoped lang="less">
 .activeclass{

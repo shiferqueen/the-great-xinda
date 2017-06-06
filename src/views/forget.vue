@@ -3,7 +3,7 @@
 
         <div class="top">
             <img src="../images/logos/logo.png" alt="">
-            <a href="">忘记密码</a>
+            <a href="javascript:void(0)">忘记密码</a>
         </div>
         <div class="buttom">
             <div class="next">
