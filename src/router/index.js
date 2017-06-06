@@ -75,7 +75,7 @@ export default new Router({
                     component: Listpage,
                 },
                 {
-                    path: 'pagelist',  //商品列表
+                    path: 'pagelist', //商品列表
                     name: 'Pagelist',
                     component: Pagelist,
                 },
@@ -84,7 +84,7 @@ export default new Router({
                     name: 'Products',
                     component: Products,
                 },
-                 {
+                {
                     path: 'secondproduct/:productId', //商品详情2
                     name: 'secondproduct',
                     component: secondproduct,
@@ -164,6 +164,12 @@ export default new Router({
                     component: forget
                 }
             ]
-        }
+        },
+        // {
+        //     path: '/transUnionPay',
+        //     name: 'transUnionPay',
+        //     component: transUnionPay
+
+        // }
     ]
 });
