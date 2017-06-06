@@ -140,7 +140,7 @@
             let _this = this
             this.ajax.post("/xinda-api/product/package/grid", qs.stringify({
                 start: 0, limit: 8, productTypeCode: "1",
-                productId: "8a82f52b674543e298d2e5f685946e6e", sort: 2
+                 sort: 2
             })).then(function (res) {
                 _this.listpage_ajax = res.data.data;
             });
