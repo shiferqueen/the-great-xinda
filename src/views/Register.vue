@@ -38,7 +38,12 @@
                             {{ item.name }}
                         </option>
                     </select><br>
-                    <input type="password" v-model="password" class="password" placeholder="请设置密码" @click="helpmsg" @keyup.enter="register"><br>
+                    <input type="password" v-model="password" class="password" placeholder="请设置密码" @click="helpmsg" @keyup.enter="register" @input="p_len"><br>
+                    <div class="lnu_container">
+                        <p v-bind:class="{ lovercase_valid: contains_lovercase }">小写字母</p>
+                        <p v-bind:class="{ number_valid: contains_number }">数字</p>
+                        <p v-bind:class="{ uppercase_valid: contains_uppercase }">大写字母</p>
+                    </div>
                     <input type="text" v-model="imgcode" class="code" placeholder="请输入图片验证码" @click="clear" @keyup.enter="register"> <img @click ='getsrc' :src='imgsrc'><br>
                     <button @click="register" >立即注册</button>
                     <p class="p1">注册即同意遵守<span>《服务协议》</span></p>
@@ -68,7 +73,7 @@
                 imgif: true,
                 imgsrc: "/xinda-api/ajaxAuthcode", //图片验证码链接
                 cellphone: '', //手机号
-                password: '', //密码
+                password: null, //密码
                 validcode: '', //短信验证码
                 imgcode: '', //图片验证码
                 status: '', //状态
@@ -84,6 +89,12 @@
                 reciprocal: 60, //倒数
                 yanzhen: true, //验证码发送
                 stop: '', //动画停止参数
+                password_length:0,
+                typed: false,
+                valid_password_length: false,
+                contains_lovercase: false,
+                contains_number: false,
+                contains_uppercase: false,
             }
         },
         methods: {
@@ -100,6 +111,25 @@
                  let _this = this;
                  _this.status=0;
                  _this.msg="为了您的账号安全，密码至少6位，最多16位，必须包含大写字母、小写字母、数字";
+            },
+            p_len:function(){
+                this.password_length = this.password.length;
+                if (this.password_length >= 6) {
+                    this.valid_password_length = true;
+                } else {
+                    this.valid_password_length = false;
+                }
+
+                if (this.password_length > 0) {
+                    this.typed = true;
+                } else {
+                    this.typed = false;
+                }
+
+                this.contains_lovercase = /[a-z]/.test(this.password);
+                this.contains_number = /\d/.test(this.password);
+                this.contains_uppercase = /[A-Z]/.test(this.password);
+    
             },
             register() {
                 let _this = this;
@@ -292,7 +322,7 @@
         padding-top: 25px;
         .next {
             width: 1200px;
-            height: 450px;
+            height: 470px;
             margin: 0 auto;
             background-color: #fff;
             margin-top: 25px;
@@ -310,6 +340,46 @@
                     padding-left: 10px;
                     border: 1px solid #cecece;
                 }
+                .password {
+                    margin-bottom: 0px;
+                }
+                .lnu_container {
+                    display: block;
+                    margin: 10px auto;
+                    width: 320px;
+                    height: auto;
+                    display: -webkit-box;
+                    display: -ms-flexbox;
+                    display: flex;
+                    -webkit-box-pack: justify;
+                        -ms-flex-pack: justify;
+                            justify-content: space-between;
+                p {
+                    width: 100px;
+                    height: auto;
+                    font-size: 12px;
+                    line-height: 1.2;
+                    text-align: center;
+                    border-radius: 2px;
+                    color: rgba(71, 87, 98, 0.8);
+                    background: -webkit-linear-gradient(left, #00AD7C 50%, #eee 50%);
+                    background: linear-gradient(to right, #00AD7C 50%, #eee 50%);
+                    background-size: 201% 100%;
+                    background-position: right;
+                    -webkit-transition: background .3s;
+                    transition: background .3s;
+                }
+            }
+
+
+
+    .lovercase_valid,
+    .number_valid,
+    .uppercase_valid {
+        background-position: left !important;
+        color: rgba(255, 255, 255, 0.9) !important;
+    }
+
                 select {
                     width: 80px;
                     height: 35px;

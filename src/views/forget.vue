@@ -12,8 +12,13 @@
                     <input type="text" v-model="cellphone" class="phone" placeholder="请输入手机号" @click="clear" @keyup.enter="forget"><br>
                     <input type="text" v-model="validcode" class="code1" placeholder="请输入短信验证码" @click="clear" @keyup.enter="forget"> <input type="button" value="获取短信" @click='huoqu' class="text"> <br>
                     <input type="text" class="code" v-model="imgcode" placeholder="请输入图片验证码" @click="clear" @keyup.enter="forget"> <img @click ='getsrc' src='/xinda-api/ajaxAuthcode'><br>
-                    <input type="password" v-model="password" class="password" placeholder="请输入新密码" @click="helpmsg" @keyup.enter="forget"> <br>
-                    <input type="password" v-model="newpassword" class="password" placeholder="请确认密码" @click="clear" @keyup.enter="forget"> <br> 
+                    <input type="password" v-model="password" class="password" placeholder="请输入新密码" @click="helpmsg" @keyup.enter="forget" @input="p_len"> <br>
+                    <div class="lnu_container">
+                        <p v-bind:class="{ lovercase_valid: contains_lovercase }">Lowercase</p>
+                        <p v-bind:class="{ number_valid: contains_number }">Number</p>
+                        <p v-bind:class="{ uppercase_valid: contains_uppercase }">Uppercase</p>
+                    </div>
+                    <input type="password" v-model="newpassword" class="password1" placeholder="请确认密码" @click="clear" @keyup.enter="forget"> <br> 
                     <button @click="forget" >确认修改</button>
                 </div>
                 <div class="right">
@@ -46,6 +51,11 @@
                 msg:'',//提示消息
                 testphone:/^1[3|4|5|7|8][0-9]{9}$/,
                 testpassword:/^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{6,16}$/,
+                password_length: 0,
+                typed: false,
+                contains_lovercase: false,
+                contains_number: false,
+                contains_uppercase: false,
             }
         },
         methods: {
@@ -62,6 +72,24 @@
                  if(_this.status==0){
                      _this.msg="";
                  }
+            },
+            p_len:function(){
+                 this.password_length = this.password.length;
+                if (this.password_length > 7) {
+                    this.valid_password_length = true;
+                } else {
+                    this.valid_password_length = false;
+                }
+
+                if (this.password_length > 0) {
+                    this.typed = true;
+                } else {
+                    this.typed = false;
+                }
+
+                this.contains_lovercase = /[a-z]/.test(this.password);
+                this.contains_number = /\d/.test(this.password);
+                this.contains_uppercase = /[A-Z]/.test(this.password);
             },
             forget() {
                 let _this = this;
@@ -177,7 +205,42 @@
                 padding-left: 10px;
                 border: 1px solid #cecece;
             }
-
+            .password {
+                margin-bottom: 0px;
+            }
+            .lnu_container {
+                    display: block;
+                    margin: 10px auto;
+                    width: 320px;
+                    height: auto;
+                    display: -webkit-box;
+                    display: -ms-flexbox;
+                    display: flex;
+                    -webkit-box-pack: justify;
+                        -ms-flex-pack: justify;
+                            justify-content: space-between;
+                p {
+                    width: 100px;
+                    height: auto;
+                    font-size: 12px;
+                    line-height: 1.2;
+                    text-align: center;
+                    border-radius: 2px;
+                    color: rgba(71, 87, 98, 0.8);
+                    background: -webkit-linear-gradient(left, #00AD7C 50%, #eee 50%);
+                    background: linear-gradient(to right, #00AD7C 50%, #eee 50%);
+                    background-size: 201% 100%;
+                    background-position: right;
+                    -webkit-transition: background .3s;
+                    transition: background .3s;
+                }
+            }
+        .lovercase_valid,
+        .number_valid,
+        .uppercase_valid {
+            background-position: left !important;
+            color: rgba(255, 255, 255, 0.9) !important;
+    }
             .text {
                 width: 95px;
                 height: 35px;
