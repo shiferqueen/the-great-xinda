@@ -617,8 +617,8 @@ export default {
             width: 190px;
             height: 33px;
         }
-        .button .disabled-button {
-                width: 140px;
+        .button,.disabled-button {
+                width: 110px;
                 height: 35px;
                 margin-left: 10px;
                 border-radius: 3px;
