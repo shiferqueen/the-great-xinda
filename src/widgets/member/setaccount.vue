@@ -11,16 +11,12 @@
         </li>
         <li class="username">
             <span>姓名：</span>
-<<<<<<< HEAD
-            <input class="c-t" value=""/>
-=======
             <input class="c-t" v-model="uesrname" placeholder="请输入姓名"/>
->>>>>>> 62c4520c6c2c463d31ef6304308693ed2ac595ac
         </li>
         <li class="sex">
             <span>性别：</span>
-            <span class="radio-1"><input type="radio" name="sex" checked/>男</span>
-            <span class="radio-2"><input type="radio" name="sex"/>女</span>
+            <span class="radio-1"><input type="radio" name="sex" v-model="picked" value="1" />男</span>
+            <span class="radio-2"><input type="radio" name="sex" v-model="picked" value="2"/>女</span>
         </li>
         <li class="username">
             <span>邮箱：</span>
@@ -86,14 +82,12 @@
 </template>
 
 <script>
-<<<<<<< HEAD
- import qs from 'qs'
-=======
+
 import qs from 'qs'
 
 import provinces from '../../provinces.js'
 import Vue from 'vue'
->>>>>>> 62c4520c6c2c463d31ef6304308693ed2ac595ac
+
 
  export default {
         name: 'setaccount',
@@ -104,6 +98,7 @@ import Vue from 'vue'
                 one:'',
                 uesrname:'',
                 com:'',
+                picked:'1',//性别
                 oldword:'',//旧密码
                 newword:null,//新密码
                 newtext:'',//确认新密码
@@ -175,7 +170,7 @@ import Vue from 'vue'
                 _this.ajax.post('/xinda-api/member/update-info',qs.stringify({
                 headImg:'/2016/10/28/152843b6d9a04abe83a396d2ba03675f',
                 name:_this.uesrname,
-                gender:1,
+                gender:_this.picked,
                 email:_this.com,
                 regionId:'110106',
                 
@@ -225,16 +220,11 @@ import Vue from 'vue'
             }
         },
         created() {
-<<<<<<< HEAD
-        this.ajax.post('/xinda-api/member/info').then(function (data) {
-            console.log(data)
-        })
-    }
-=======
             let _this = this;
             _this.ajax.post('/xinda-api/member/info').then(function(data){
                  console.log(data)
-                 _this.uesrname=data.data.data.name
+                 _this.picked=data.data.data.gender;
+                 _this.uesrname=data.data.data.name;
                  _this.com=data.data.data.email
             })
             // 数据初始化,默认选中北京市,默认选中第一个;北京市数据为总数据的前18个
@@ -307,7 +297,6 @@ import Vue from 'vue'
                 }
             }
         },
->>>>>>> 62c4520c6c2c463d31ef6304308693ed2ac595ac
     }
 </script>
 
