@@ -86,18 +86,10 @@
 </template>
 
 <script>
-<<<<<<< HEAD
-=======
-
->>>>>>> 16db1df0f7205f8ab9cf2718b5c8a9238d575fb5
 import qs from 'qs'
 
 import provinces from '../../provinces.js'
 import Vue from 'vue'
-<<<<<<< HEAD
-=======
-
->>>>>>> 16db1df0f7205f8ab9cf2718b5c8a9238d575fb5
 
  export default {
         name: 'setaccount',
