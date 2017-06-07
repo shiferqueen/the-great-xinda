@@ -87,9 +87,9 @@
     
                 </div>
                 <div class="bottom_page pagination">
-                    <span v-show="current != 0" @click="current-- && goto(current--)">上一页</span>
+                    <span  @click="current-- && goto(current--)">上一页</span>
                     <span v-for="index in pages" @click="goto(index)" :class="{'active':current == index}">{{index}}</span>
-                    <span v-show="allpage != current" @click="current++ && goto(current++)">下一页</span>
+                    <span @click="current++ && goto(current++)">下一页</span>
                 </div>
             </div>
             <div class="main_right">
@@ -275,18 +275,18 @@ export default {
         goto: function (index) {
 
             let _this = this
-
             if (index == this.current) return;
             _this.current = index
             //这里可以发送ajax请求
-            if (index == 6) {
+            if (index >= 6) {
                 index = 5
-            } else if (index == 0) {
-                index = -1
+                _this.current = 5
+            } else if (index < 1) {
+                index = 1
+                _this.current = 1
             }
             _this.number = (index - 1) * 4
             _this.listpage_ajax = _this.listpage_ajax_new.slice(_this.number, _this.number + 4)
-
 
         },
         //价格排序
@@ -535,6 +535,12 @@ export default {
         .bottom_page {
             width: 400px;
             margin: 25px auto;
+            .guding{
+                position: relative;
+                span {
+                position:absolute;
+                }
+            }
             span {
                 padding: 10px;
                 border: 1px solid #cdcdcd;
