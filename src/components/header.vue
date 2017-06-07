@@ -11,7 +11,7 @@
           <div class="hdcon-top-m fl">
             <a href="javascript:" class="goods fl" @click="goods(1)" :class="{blue:serch_idnex==1}">产品</a>
             <a href="javascript:" class="server fl" @click="goods(2)" :class="{blue:serch_idnex==2}">服务商</a>
-            <input type="text" placeholder="搜索您需要的服务或服务商" class="fl" v-model="search"   @keyup="get($event)" >
+            <input type="text" placeholder="搜索您需要的服务或服务商" class="fl" v-model="search" @keyup.enter = "searchInput"   @keyup="get($event)" >
             <h3 @click="clearInput()" class="search-reset">×</h3>
             <button @click="searchInput()" class="search-btn fl">搜索</button>
             <div class="search-select">

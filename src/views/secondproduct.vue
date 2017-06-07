@@ -2,7 +2,9 @@
     <div>
     
         <div>
-            <p class="head_top">首页/财税服务 {{ready}}</p>
+
+            <p class="head_top">首页/商品详情 {{ready}}</p>
+
         </div>
         <!--------------------商品部分------------------------------>
         <div class="goods-main">
@@ -143,19 +145,16 @@
 </template>
 
 <script>
-    import myhead from '../components/header'
-    import myfoot from '../components/footer'
-    import qs from 'qs'
-    import {
-        mapActions,
-        mapGetters
-    } from 'vuex' //好几个页面传输数据
-    export default {
-        name: 'Products',
+import myhead from '../components/header'
+import myfoot from '../components/footer'
+import qs from 'qs'
+import { mapActions, mapGetters } from 'vuex'//好几个页面传输数据
+export default {
+    name: 'Products',
 
-        components: {
-            myhead,
-            myfoot
+    components: {
+        myhead,
+        myfoot
         },
         data() {
             return {

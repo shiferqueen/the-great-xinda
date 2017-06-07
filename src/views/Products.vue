@@ -2,7 +2,7 @@
     <div>
     
         <div>
-            <p class="head_top">首页/财税服务</p>
+            <p class="head_top">首页/商品详情</p>
         </div>
         <!--------------------商品部分------------------------------>
         <div class="goods-main">
@@ -77,8 +77,7 @@
         <!-----------内容切换-------------------->
         <div class="main-bottom">
             <div class="main-nav">
-                <span class="con1" @click="server()">服务内容</span>
-                <span class="con2" @click="evaluate()">商品评价</span>
+                <span class="con1" @click="server()">服务内容</span><span class="con2" @click="evaluate()">商品评价</span>
             </div>
     
             <div class="main-con1" v-show="con1">
@@ -218,8 +217,7 @@ export default {
             let data = res.data.data;
             _this.goodNum = data.goodNum;
             _this.midNum = data.midNum;
-            _this.badNum = data.badNum;
-            console.log("评价条数", res.data.data)
+            _this.badNum = data.badNum; 
         });
 
         this.ajax.post("/xinda-api/product/judge/grid", qs.stringify({
@@ -227,7 +225,6 @@ export default {
         })).then(function (res) {
             let data = res.data.data;
             _this.content = data.content;
-            console.log("评价详情", res.data.data);
         });
             this.ajax.post("/xinda-api/product/package/detail", qs.stringify({
                 sId: this.$route.params.productId
@@ -454,6 +451,7 @@ export default {
              
 
         },
+        
 
     }
 }
