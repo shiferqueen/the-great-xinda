@@ -16,14 +16,14 @@
             <button @click="searchInput()" class="search-btn fl">搜索</button>
             <div class="search-select">
               <transition-group tag="ul" transition-mode="out-in">
-                <li v-for="(value,index) in searchData" :class="{selectback:index==now}" :key="index" @click="searchThis(value.serviceName,value.id)" @mouseover="selectHover(index)" class="search-select-option">
+                <li v-for="(value,index) in searchData" :class="{selectback:index==now}" :key="index" @click="searchThis(value.serviceName,value.id, value.providerName)" @mouseover="selectHover(index)" class="search-select-option">
                   {{serch_idnex == 1 ? value.serviceName : value.providerName}}
                 </li>
                 <!--<li v-if="serch_idnex==2" v-for="(value,index) in providerData" :class="{selectback:index==now}" :key="index"  @click="searchThis(value.providerName,value0.id)" @mouseover="selectHover(index)" class="search-select-option">
                   {{value.providerName}}
                 </li>-->
               </transition-group>
-            </div>
+            </div> 
             <span class="fl">热门服务：</span>
             <span class="fl hand">社保开户</span>
             <span class="fl hand">公司注册</span>
@@ -294,12 +294,12 @@
                 }
             },
             //搜索的内容:点击触发enter事件
-            searchThis: function(value, id) {
+            searchThis: function(value, id,value2) {
                 if (this.serch_idnex == 1) {
                     this.search = value;
                     this.id = id;
                 } else {
-                    this.search = value;
+                    this.search = value2;
                     this.id = id;
                 }
                 this.searchInput();
