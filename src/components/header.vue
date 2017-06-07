@@ -9,10 +9,21 @@
               <a href="javascript:void(0)" class="fr">[切换城市]</a>
           </div>
           <div class="hdcon-top-m fl">
-            <a href="" class="blue goods fl">产品</a>
-            <a href="" class="server fl">服务商</a>
-            <input type="text" placeholder="搜索您需要的服务或服务商" class="fl">
-            <button class="fl">搜索</button>
+            <a href="javascript:" class="goods fl" @click="goods(1)" :class="{blue:serch_idnex==1}">产品</a>
+            <a href="javascript:" class="server fl" @click="goods(2)" :class="{blue:serch_idnex==2}">服务商</a>
+            <input type="text" placeholder="搜索您需要的服务或服务商" class="fl" v-model="search" @keyup.enter = "searchInput"   @keyup="get($event)" >
+            <h3 @click="clearInput()" class="search-reset">×</h3>
+            <button @click="searchInput()" class="search-btn fl">搜索</button>
+            <div class="search-select">
+              <transition-group tag="ul" transition-mode="out-in">
+                <li v-for="(value,index) in searchData" :class="{selectback:index==now}" :key="index" @click="searchThis(value.serviceName,value.id)" @mouseover="selectHover(index)" class="search-select-option">
+                  {{serch_idnex == 1 ? value.serviceName : value.providerName}}
+                </li>
+                <!--<li v-if="serch_idnex==2" v-for="(value,index) in providerData" :class="{selectback:index==now}" :key="index"  @click="searchThis(value.providerName,value0.id)" @mouseover="selectHover(index)" class="search-select-option">
+                  {{value.providerName}}
+                </li>-->
+              </transition-group>
+            </div>
             <span class="fl">热门服务：</span>
             <span class="fl hand">社保开户</span>
             <span class="fl hand">公司注册</span>
@@ -73,6 +84,7 @@
                               <a href="javascript:void(0)">VIE架构</a>
                               <a href="javascript:void(0)">股份公司注册</a>
                               <a href="javascript:void(0)">有限责任公司注册</a>
+
                               <a href="javascript:void(0)">一般纳税人注册地址</a>
                             </p><br><br>
                             <p>
@@ -163,271 +175,403 @@
 </template>
 
 <script>
-export default {
-  name: 'myhead',
-  data(){
-    return {
-      massages:[
-        {text:'全部产品',lin:'#/home'},
-        {text:'财税服务',lin:'#/listpage'},
-        {text:'公司工商',lin:'#/pagelist'},
-        {text:'加盟我们',lin:'#/us'},
-        {text:'店铺',lin:'#/shoplist'}
-      ],
-      active:0
+    export default {
+        name: 'myhead',
+        data() {
+            return {
+                massages: [{
+                    text: '全部产品',
+                    lin: '#/home'
+                }, {
+                    text: '财税服务',
+                    lin: '#/listpage'
+                }, {
+                    text: '公司工商',
+                    lin: '#/pagelist'
+                }, {
+                    text: '加盟我们',
+                    lin: '#/us'
+                }, {
+                    text: '店铺',
+                    lin: '#/shoplist'
+                }],
+                active: 0,
+                search: '',
+                myData: [],
+                flag: 0,
+                id: '',
+                now: -1,
+                serch_idnex: 1,
+            }
+        },
+        computed: {
+            searchData: function() {
+                var search = this.search;
+                let that = this;
+                if (search == '') {
+                    that.myData = []
+                } else {
+                    return that.myData.filter(function(product) {
+                        if (that.serch_idnex == 1) {
+                            return String(product.serviceName).toLowerCase().indexOf(search) != -1
+                        } else {
+                            return String(product.providerName).toLowerCase().indexOf(search) != -1
+                        }
+                    })
+                }
+                return that.myData;
+            },
+            // providerData: function() {
+            //     var search = this.search;
+            //     if (search == '') {
+            //         this.myData = []
+            //     } else {
+            //         return this.myData.filter(function(product) {
+            //             return String(product.providerName).toLowerCase().indexOf(search) != -1
+            //         })
+            //     }
+            //     return this.myData;
+            // }
+
+        },
+        methods: {
+            choice_active: function(index) {
+                this.active = index;
+            },
+            goods(index) {
+                this.serch_idnex = index;
+            },
+            //失去焦点
+            lost() {
+                this.myData = []
+            },
+
+            get: function(event) {
+                let _this = this;
+                // if(event.keyCode == 38 || event.keyCode == 40){ //向上向下
+                //     _this.selectHover();
+                // };
+                _this.myData = []
+                if (_this.serch_idnex == 1) {
+                    _this.ajax.post('/xinda-api/product/package/search-grid', {
+                        start: 0,
+                        limit: 8,
+                        searchName: _this.search,
+                        sort: 2,
+                    }).then(function(data) {
+                        _this.myData = data.data.data;
+                    })
+                } else {
+                    _this.ajax.post('/xinda-api/provider/search-grid', {
+                        start: 0,
+                        limit: 8,
+                        searchName: _this.search,
+                        sort: 1,
+                        productTypeCode: 7,
+                        regionId: 110105,
+                    }).then(function(data) {
+                        _this.myData = data.data.data;
+                    })
+                }
+            },
+            //清除内容
+            clearInput: function() {
+                this.search = '';
+                this.get();
+            },
+            //搜索点击（enter）事件
+            searchInput: function() {
+                if (this.id != '') {
+                    if (this.serch_idnex == 1) {
+                        this.$router.push({
+                            path: '/secondproduct/' + this.id
+                        });
+                    } else {
+                        this.$router.push({
+                            path: '/shopfront/' + this.id
+                        });
+                    }
+                }
+            },
+            //搜索的内容:点击触发enter事件
+            searchThis: function(value, id) {
+                if (this.serch_idnex == 1) {
+                    this.search = value;
+                    this.id = id;
+                } else {
+                    this.search = value;
+                    this.id = id;
+                }
+                this.searchInput();
+                this.myData = [];
+            },
+            //li hover
+            selectHover: function(index) {
+                this.now = index;
+            },
+
+        },
+
     }
-  },
-  methods:{
-    choice_active:function(index){
-      this.active = index;
-    }
-  },
-  // created(){
-  //    this.ajax.post('http://115.182.107.203:8088/xinda/xinda-api/product/style/list',{}).then(function(data) {
-  //      var da = (data.data).data;
-  //      for(var key in da){
-  //       // console.log(key,'==',da[key]);
-  //       // console.log(da[key].itemList)
-  //       var itemList = da[key].itemList;
-  //       for(var key in itemList){
-  //       //console.log((itemList[key].itemList))
-  //       }
-  //      }
-  //     // console.log(da);
-  //    })
-  //  }
-}
 </script>
 
 <style lang="less" scoped>
-.fl{
-  float: left;
-}
-.fr{
-  float: right;
-}
-.show{
-  display: block;
-}
-.hide{
-  display: none;
-}
-.blue{
-  color:#2494d4!important;
-}
-.blueBorder{
-  color:#2494d4!important;
-  border-bottom:2px solid #2494d4; 
-}
-.hand{
-  cursor:pointer;
-}
-.header{
-  width:100%;
-  height: 150px;
-  border-bottom: 1px solid #2494d4;
-  .header-containter{
-     width:1200px;
-     height: 150px;
-     margin: 0 auto;
-     .hdcon-top{
-       height: 110px;
-       width:100%;
-       .hdcon-top-l{
-         width:320px;
-         height: 60px;
-         margin-top: 30px;
-         h1{
-           width:80px;
-           height: 60px;
-           font-size:30px;
-           line-height: 65px;
-           padding-left:70px;
-           background:  url(../images/logos/xinda-logo.png) no-repeat left 3px;
-         }
-         p{
-           margin-top: 18px;
-           font-size: 13px;
-           padding-left:10px;
-           padding-right:117px;
-         }
-         a{
-           margin-top: 5px;
-           padding-right:100px;
-           font-size: 14px;
-           .blue;
-         }
-       }
-     .hdcon-top-m{
-         width:590px;
-         margin-top: 25px;
-         .goods{
-           border-right:1px solid #2494d4;
-           padding-right:10px;
-           font-size: 14px; 
-         }
-         .server{
-           padding-left:10px; 
-           font-size: 14px;
-           margin-right:20px;
-         }
-         input{
-           width:81%;
-           padding: 0 0 0 2%;
-           height: 40px;
-           font-size: 15px;
-           border:2px solid #2494d4;
-           margin-top:5px;
-         }
-         button{
-           margin-top:5px; 
-           width:16%;
-           height: 44px;
-           background-color: #2494d4;
-           text-align: center;
-           line-height: 33px;
-           font-size: 15px;
-           color:#fff;
-         }
-         span{
-           font-size:13px;
-           line-height: 21px;
-           color: #c7c7c7;
-           padding: 0 5px;
-         }
-     }
-     .hdcon-top-r{
-         width:147px;
-         height: 80px;
-         margin-top: 25px;
-         span{
-           width:109px;
-           padding-left:38px; 
-           display: block;
-           height:80px;
-           line-height:80px;
-           color: #a3a3a3;
-           font-size: 15px;
-           background: url(../images/index/u649.png) no-repeat left center;
-           font-weight: bold;
-         }
-     }
-   }
-   .hdcon-bot{
-     width:100%;
-     
-     ul{
-       width:100%;
-       li{
-         .fl;
-         position: relative;
-         &:hover{
-           .allproduces{
-              display: block;
-            }
-         }
-        //  >div{
-        //    z-index: 999;
-        //   //  display: none;
-        //  }
-         .loader{
-           font-size: 18px;
-           text-align: center;
-           padding: 5px 0;
-           width:80px;
-           display: block;
-           color: #333;
-           margin: 0 60px; 
-           &:hover{
-             .blue;
-           }
-         }
-        .allproduces{
-          position: absolute;
-          display: none;
-          z-index: 999;
-          left:0;
-          top:37px;
-          width:100%;
-          height: 400px;
-          .addpro-left{
-            float: left;
-            width:200px;
-            display: block;
-            height: 400px;
-            .addpro-list{
-              width:100%;
-              height: 25%;
-              background:rgba(169, 169, 169, 1);
-              cursor: pointer;
-              color: #fff;
-              img{
-                width:35px;
-                height: 35px;
-                padding-left: 5px;
-                }
-              .addpro-li{
-                width:160px;
-                height: 100%;
-                display: block;
-                position: relative;
-                &:hover{
-                  .addpro-right{
-                    display: block;
-                    z-index: 999;
-                  }
-                }
-                .p1{
-                  height: 40px;
-                  line-height: 40px;
-                  margin:0 10px;
-                  font-size: 17px;
-                 }
-                .span1{
-                   float:left;
-                  font-size: 15px;
-                  padding:5px 5px 0px 5px;
-                }
-                .addpro-right{
-                  display: none;
-                  position: absolute;
-                  width:1000px;
-                  background: #ccc;
-                  height: 100px;
-                  top:0px;
-                  left:160px;
-                  opacity: 0.9;
-                  color: #fff;
-                  p{
-                    width:98%;
-                   
-                    line-height: 19px;
-                    padding:0% 0 0 1%;
-                      span{
-                         float:left;
-                          font-size: 15px;
-                          margin: 3px 2px;
-                          padding: 0px 10px 0 5px;
-                          border-left: 2px solid #2494d4;
-                        }
-                      a{
-                        float:left;
-                        color: #fff;
-                        margin: 2px 0;
-                        padding: 0px 10px;
-                        border-left: 1px solid #fff;
-                        font-size: 15px;
-                      }
-                  }
-                }
-              } 
-            }
-          }
-        }
-       }
-     }
+    .fl {
+        float: left;
     }
-  }
-}
-
+    
+    .fr {
+        float: right;
+    }
+    
+    .show {
+        display: block;
+    }
+    
+    .hide {
+        display: none;
+    }
+    
+    .blue {
+        color: #2494d4!important;
+    }
+    
+    .blueBorder {
+        color: #2494d4!important;
+        border-bottom: 2px solid #2494d4;
+    }
+    
+    .hand {
+        cursor: pointer;
+    }
+    
+    .selectback {
+        background: rgba(169, 169, 169, .9);
+    }
+    
+    .header {
+        width: 100%;
+        height: 150px;
+        border-bottom: 1px solid #2494d4;
+        .header-containter {
+            width: 1200px;
+            height: 150px;
+            margin: 0 auto;
+            .hdcon-top {
+                height: 110px;
+                width: 100%;
+                .hdcon-top-l {
+                    width: 320px;
+                    height: 60px;
+                    margin-top: 30px;
+                    h1 {
+                        width: 80px;
+                        height: 60px;
+                        font-size: 30px;
+                        line-height: 65px;
+                        padding-left: 70px;
+                        background: url(../images/logos/xinda-logo.png) no-repeat left 3px;
+                    }
+                    p {
+                        margin-top: 18px;
+                        font-size: 13px;
+                        padding-left: 10px;
+                        padding-right: 117px;
+                    }
+                    a {
+                        margin-top: 5px;
+                        padding-right: 100px;
+                        font-size: 14px;
+                        .blue;
+                    }
+                }
+                .hdcon-top-m {
+                    width: 590px;
+                    margin-top: 25px;
+                    position: relative;
+                    .goods {
+                        border-right: 1px solid #2494d4;
+                        padding-right: 10px;
+                        font-size: 14px;
+                    }
+                    .search-reset {
+                        position: absolute;
+                        right: 110px;
+                        top: 35px;
+                        color: #ccc;
+                        cursor: pointer;
+                    }
+                    .search-select {
+                        width: 81%;
+                        font-size: 14px;
+                        position: absolute;
+                        z-index: 9999;
+                        top: 70px;
+                        background: #fff;
+                        .search-select-option {
+                            padding: 2px 4px;
+                            cursor: pointer;
+                        }
+                    }
+                    .server {
+                        padding-left: 10px;
+                        font-size: 14px;
+                        margin-right: 20px;
+                    }
+                    input {
+                        width: 81%;
+                        padding: 0 0 0 2%;
+                        height: 40px;
+                        font-size: 15px;
+                        border: 2px solid #2494d4;
+                        margin-top: 5px;
+                    }
+                    button {
+                        margin-top: 5px;
+                        width: 16%;
+                        height: 44px;
+                        background-color: #2494d4;
+                        text-align: center;
+                        line-height: 33px;
+                        font-size: 15px;
+                        color: #fff;
+                    }
+                    span {
+                        font-size: 13px;
+                        line-height: 21px;
+                        color: #c7c7c7;
+                        padding: 0 5px;
+                    }
+                }
+                .hdcon-top-r {
+                    width: 147px;
+                    height: 80px;
+                    margin-top: 25px;
+                    span {
+                        width: 109px;
+                        padding-left: 38px;
+                        display: block;
+                        height: 80px;
+                        line-height: 80px;
+                        color: #a3a3a3;
+                        font-size: 15px;
+                        background: url(../images/index/u649.png) no-repeat left center;
+                        font-weight: bold;
+                    }
+                }
+            }
+            .hdcon-bot {
+                width: 100%;
+                ul {
+                    width: 100%;
+                    li {
+                        .fl;
+                        position: relative;
+                        &:hover {
+                            .allproduces {
+                                display: block;
+                            }
+                        }
+                        //  >div{
+                        //    z-index: 999;
+                        //   //  display: none;
+                        //  }
+                        .loader {
+                            font-size: 18px;
+                            text-align: center;
+                            padding: 5px 0;
+                            width: 80px;
+                            display: block;
+                            color: #333;
+                            margin: 0 60px;
+                            &:hover {
+                                .blue;
+                            }
+                        }
+                        .allproduces {
+                            position: absolute;
+                            display: none;
+                            z-index: 999;
+                            left: 0;
+                            top: 37px;
+                            width: 100%;
+                            height: 400px;
+                            .addpro-left {
+                                float: left;
+                                width: 200px;
+                                display: block;
+                                height: 400px;
+                                .addpro-list {
+                                    width: 100%;
+                                    height: 25%;
+                                    background: rgba(169, 169, 169, 1);
+                                    cursor: pointer;
+                                    color: #fff;
+                                    img {
+                                        width: 35px;
+                                        height: 35px;
+                                        padding-left: 5px;
+                                    }
+                                    .addpro-li {
+                                        width: 160px;
+                                        height: 100%;
+                                        display: block;
+                                        position: relative;
+                                        &:hover {
+                                            .addpro-right {
+                                                display: block;
+                                                z-index: 999;
+                                            }
+                                        }
+                                        .p1 {
+                                            height: 40px;
+                                            line-height: 40px;
+                                            margin: 0 10px;
+                                            font-size: 17px;
+                                        }
+                                        .span1 {
+                                            float: left;
+                                            font-size: 15px;
+                                            padding: 5px 5px 0px 5px;
+                                        }
+                                        .addpro-right {
+                                            display: none;
+                                            position: absolute;
+                                            width: 1000px;
+                                            background: #ccc;
+                                            height: 100px;
+                                            top: 0px;
+                                            left: 160px;
+                                            opacity: 0.9;
+                                            color: #fff;
+                                            p {
+                                                width: 98%;
+                                                line-height: 19px;
+                                                padding: 0% 0 0 1%;
+                                                span {
+                                                    float: left;
+                                                    font-size: 15px;
+                                                    margin: 3px 2px;
+                                                    padding: 0px 10px 0 5px;
+                                                    border-left: 2px solid #2494d4;
+                                                }
+                                                a {
+                                                    float: left;
+                                                    color: #fff;
+                                                    margin: 2px 0;
+                                                    padding: 0px 10px;
+                                                    border-left: 1px solid #fff;
+                                                    font-size: 15px;
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
 </style>

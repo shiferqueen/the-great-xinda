@@ -47,27 +47,21 @@
             </div>
             <div class="shopfront-content-right">
                 <div class="shopfront-content-right-title clear">
-                    <div><router-link :to="shopfront + links" exact>服务产品</router-link></div>
-                    <div><router-link :to="shopfront+links+'/customService'" exact>客服</router-link></div>
-                    <div><router-link :to="shopfront+links+'/certification'" exact>资质证书</router-link></div>
+                    <div @click="changecolor(1)" :class="{'changecolor': mydefault == 1}"><router-link :to="shopfront + links" exact>服务产品</router-link></div>
+                    <div @click="changecolor(2)" :class="{'changecolor': mydefault == 2}"><router-link :to="shopfront+links+'/customService'" exact>客服</router-link></div>
+                    <div @click="changecolor(3)" :class="{'changecolor': mydefault == 3}"><router-link :to="shopfront+links+'/certification'" exact>资质证书</router-link></div>
                 </div>
                 <div class="shopfront-content-right-service-content">服务内容</div>
                 <router-view></router-view>
             </div>
         </div>
-        <div class="shopfront-content-change clear">
+        <!--<div class="shopfront-content-change clear">
             <div>首页</div>
-            <div>上一页</div>
-            <div>1</div>
-            <div>2</div>
-            <div>3</div>
-            <div>4</div>
-            <div>5</div>
-            <div>...</div>
-            <div>7</div>
-            <div>下一页</div>
+            <div v-show="current != 0" @click="current-- && goto(current)">上一页</div>
+            <div v-for="index in pages" @click="goto(index)" :click="{'active':current == index}">{{index}}</div>
+            <div v-show="allpage != current && allpage != 0" @click="current++ && goto(current++)">下一页</div>
             <div>尾页</div>
-        </div>
+        </div>-->
     </div>
   </div>
 </template>
@@ -87,32 +81,60 @@ import { mapActions, mapGetters } from 'vuex'
                 myfoot,
                 serviceProducts,
                 customService,
-                certification
+                certification,
+                
             },
         data() {
             return {
                 lispage_ajax:[],
                 links:this.$route.params.shopfrontID,
-                shopfront:'/shopfront/'
+                shopfront:'/shopfront/',
+                current: 1,
+                allpage: 4,
+                showItem: 3,
+                number: 0,
+                mydefault:1,
             }
         },
         computed: {
             ...mapGetters(['getshopid','getShop']),
+            // pages:function(){
+            //      let _this = this;
+            //     var pag = [];
+            //            var i = _this.showItem;
+            //            while(_this.showItem){
+            //                pag.unshift(_this.showItem--);
+            //            }
+            //      return pag
+            //    }
         },
         methods:{
-            ...mapActions(['currentShop'])
+            ...mapActions(['currentShop']),
+            changecolor(index){
+                this.mydefault = index;
+            }
+            // goto:function(index){
+            //     let _this =this
+            //     if(index == this.current)return;
+            //     _this.current = index
+            //     if(index == 4){
+            //         index = 3
+            //     }
+            //     _this.number = (index-1)*6
+            //      _this.listpage_ajax = _this.listpage_ajax_new.slice(_this.number,_this.number+4)
+            // }
         },
         created(){
             let that = this
             this.ajax.post('/xinda-api/provider/detail',qs.stringify({id: that.$route.params.shopfrontID})).then(function(res){
-
+                            //   console.log(res.data)
                 that.currentShop(res.data.data)
-            });
-            this.ajax.post('/xinda-api/recommend/list',qs.stringify({id: that.$route.params.shopfrontID})).then(function(res){
-        console.log(res.data.data)
-                that.currentShop(res.data.data)
-            });
-        },
+            })
+        //     this.ajax.post('/xinda-api/recommend/list',qs.stringify({id: that.$route.params.shopfrontID})).then(function(res){
+        // console.log(res.data.data)
+        //         that.currentShop(res.data.data)
+        //     });
+        } 
     }
 </script>
 
@@ -188,7 +210,7 @@ import { mapActions, mapGetters } from 'vuex'
     .shopfront-content-right {
         float: right;
         width: 875px;
-        border: 1px solid gray;
+        // border: 1px solid gray;
     }
     
     .shopfront-content-right-title {
@@ -198,9 +220,13 @@ import { mapActions, mapGetters } from 'vuex'
             width: 112px;
             float: left;
             line-height: 40px;
-            border-bottom: 2px solid #2693d4;
-            margin-left: 10px;
+            // border-bottom: 2px solid #2693d4;
+            // margin-left: 10px;
             text-align: center;
+        }
+        .changecolor {
+            background-color: #a5aead;
+            border-bottom: 1px solid #ae6152;
         }
     }
     
@@ -211,26 +237,26 @@ import { mapActions, mapGetters } from 'vuex'
         font-size: 28px;
         color: #2694d3;
     }
-    .shopfront-content-change {
-        margin-top: 40px;
-        margin-left: 470px;
-        div {
-            width: 37px;
-            height: 34px;
-            border: 1px solid gray;
-            font-size: 12px;
-            float: left;
-            text-align: center;
-            line-height: 34px;
-            // margin: 0 5px;
-            cursor: pointer;
-        }
-        div:nth-child(1),
-        div:nth-child(2),
-        div:nth-last-child(1),
-        div:nth-last-child(2) {
-            width: 55px;
-            height: 34px;
-        }
-    }
+    // .shopfront-content-change {
+    //     margin-top: 40px;
+    //     margin-left: 470px;
+    //     div {
+    //         width: 37px;
+    //         height: 34px;
+    //         border: 1px solid gray;
+    //         font-size: 12px;
+    //         float: left;
+    //         text-align: center;
+    //         line-height: 34px;
+    //         margin: 0 5px;
+    //         cursor: pointer;
+    //     }
+    //     div:nth-child(1),
+    //     div:nth-child(2),
+    //     div:nth-last-child(1),
+    //     div:nth-last-child(2) {
+    //         width: 55px;
+    //         height: 34px;
+    //     }
+    // }
 </style>

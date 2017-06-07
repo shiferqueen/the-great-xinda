@@ -28,6 +28,12 @@ import customService from '@/widgets/shopfront/customService'
 import certification from '@/widgets/shopfront/certification'
 import secondproduct from '@/views/secondproduct'
 
+
+
+// import popups from '@/components/popups' //看弹出框样式用
+
+
+
 Vue.use(Router)
 
 export default new Router({
@@ -164,6 +170,6 @@ export default new Router({
                     component: forget
                 }
             ]
-        }
+        },
     ]
 });

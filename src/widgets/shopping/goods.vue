@@ -46,7 +46,8 @@
 <script>
     import qs from 'qs'
     import {
-        mapActions
+        mapActions,
+        mapGetters
     } from 'vuex'
     export default {
         name: 'goods',
@@ -61,6 +62,7 @@
             }
         },
         computed: {
+            ...mapGetters(['getpopupstatus']),
             univalence() {
                 var total = 0;
                 for (var i = 0; i < this.listdatas.length; i++) {
@@ -69,11 +71,17 @@
                 }
                 // console.log('total========', total);
                 return total;
+            },
+            ceshi() {
+                if (this.getpopupstatus) {
+                    console.log('getpopupstatus发生了变化')
+                }
             }
         },
         methods: {
-            ...mapActions(['refCartNum']),
+            ...mapActions(['refCartNum', 'popups']),
             //增加数量
+
             oninput(a, id) {
                 var that = this
                 clearInterval(that.inputs);
@@ -121,15 +129,22 @@
             },
             //删除当前
             deleteone: function(index, id, price) {
-                var that = this;
-                this.listdatas.splice(index, 1);
-                this.ajax.post('/xinda-api/cart/del', qs.stringify({
-                    id: id
-                })).then(function(data) {
-                    that.refCartNum();
-                    that.shoppingnum--;
+                let that = this;
+                this.popups({ //弹出框内容
+                    headers: '是否确定删除',
+                    content: '确定要删除此商品吗？',
+                    ok() {
+                        that.listdatas.splice(index, 1);
+                        that.ajax.post('/xinda-api/cart/del', qs.stringify({
+                            id: id
+                        })).then(function(data) {
+                            that.refCartNum();
+                            that.shoppingnum--;
+                        })
+                    }
                 })
             },
+
             //购物车总数
 
             href(i) {
@@ -166,9 +181,7 @@
             let that = this;
             that.ajax.post('/xinda-api/cart/list').then(function(data) {
                 var data = data.data.data;
-
                 that.listdatas = data;
-                console.log(that.listdatas)
                 that.shoppingnum = data.length;
 
             });
