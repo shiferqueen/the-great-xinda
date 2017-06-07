@@ -153,12 +153,6 @@
         created() {
             let _this = this
             this.list();
-            // let _this = this
-            // this.ajax.post("/xinda-api/product/package/grid", qs.stringify({
-            //     start: 0,productTypeCode: "1",
-            // })).then(function (res) {
-            //     _this.listpage_ajax = res.data.data;
-            // });
             // ------------以下为省市区三级联动
             // 数据初始化,默认选中北京市,默认选中第一个;北京市数据为总数据的前18个
             let beijing = this.provinces.slice(0, 19)
@@ -562,7 +556,7 @@
                     margin: 10px 60px;
                 }
                 p {
-                    margin: 5px 78px;
+                    margin: 5px 75px;
                     font-size: 16px;
                     font-weight: 700;
                     color: #666666;

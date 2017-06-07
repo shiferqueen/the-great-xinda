@@ -43,7 +43,7 @@
                 </div>
                 <div class="goods-r-bottom">
                     <span>
-                        <a href="#/shopfront">查看服务商</a>
+                        <a :href="'#/shopfront/'+provider.id">查看服务商</a>
                     </span>
                 </div>
             </div>
@@ -231,7 +231,7 @@ export default {
     methods: {
         ...mapGetters(['getstoreid']),
         ...mapActions(['refCartNum','user','popups']),
-
+       
             //获取动态验证码
         getsrc() {
             this.imgsrc = '/xinda-api/ajaxAuthcode?' + Math.random()
