@@ -6,8 +6,8 @@
         <div>
             <li>
                 <span>订单号：</span>
-                <input placeholder="请输入订单号搜索" />
-                <a href="#">搜索</a>
+                <input v-model="bn" placeholder="请输入订单号搜索" />
+                <a href="javascript:void(0);" @click="myorderlist">搜索</a>
             </li>
             <li>
                 <span>创建时间：</span>
@@ -16,83 +16,84 @@
             </li>
         </div>
         <ul class="info_list">
-            <li>
-                <strong>商品名称</strong>
-                <strong>单价</strong>
-                <strong>数量</strong>
-                <strong>总金额</strong>
-                <strong>订单状态</strong>
-                <strong>订单操作</strong>
-            </li>
+                <li>
+                    <strong>商品名称</strong>
+                    <strong>单价</strong>
+                    <strong>数量</strong>
+                    <strong>总金额</strong>
+                    <strong>订单状态</strong>
+                    <strong>订单操作</strong>
+                </li>
         </ul>
+        <!--<div v-for="(order,index) in myorder">-->
+        <!--<ul class="order_num">
+                        <li>
+                            <span>订单号:{{order.businessNo}}</span>
+                            <span>下单时间:{{order.createTime}}</span>
+                        </li>
+                    </ul>-->
+        <!--<ul class="pay_del">
+                        <li>
+                            <p>
+                                <img src="../../images/logos/bg_01.jpg" />
+                                <span>信达北京服务中心</span>
+        
+                                <span>注册分公司</span>
+                                <span>￥800.00</span>
+                                <span>￥800.00</span>
+                                <span>等待买家付款</span>
+                                <span>付款</span>
+                            </p>
+                        </li>
+                        <li>
+                            <p>
+                                <img src="../../images/logos/bg_01.jpg" />
+                                <span>信达北京服务中心</span>
+                                <span>注册分公司</span>
+                                <span>￥800.00</span>
+                                <span>￥800.00</span>
+                                <span>等待买家付款</span>
+                                <span @click="del()">删除订单</span>
+                                <span class="number_1">1</span>
+                            </p>
+                        </li>
+                    </ul>-->
         <div>
-        <ul class="order_num">
-            <li>
-                <span>订单号:S347484929274490</span>
-                <span>下单时间:2017-04-21 01:23:32</span>
-            </li>
-        </ul>
-        <ul class="pay_del">
-            <li>
-                <p>
-                    <img src="../../images/logos/bg_01.jpg" />
-                    <span>信达北京服务中心</span>
-                    <span>注册分公司</span>
-                    <span>￥800.00</span>
-                    <span>￥800.00</span>
-                    <span>等待买家付款</span>
-                    <span>付款</span>
-                </p>
-            </li>
-            <li>
-                <p>
-                    <img src="../../images/logos/bg_01.jpg" />
-                    <span>信达北京服务中心</span>
-                    <span>注册分公司</span>
-                    <span>￥800.00</span>
-                    <span>￥800.00</span>
-                    <span>等待买家付款</span>
-                    <span @click="del()">删除订单</span>
-                    <span class="number_1">1</span>
-                </p>
-            </li>
-        </ul>
+              <table border="1px solid #e8e8e8"  cellspacing="0" cellpadding="0">
+                  <thead>
+                      <tr><td colspan="6"><span class="order_sp">订单号:S1706070150090759094<span></span></span><span class="time_sp">下单时间:2017-06-07 09:07:59<span></span></span></td></tr>
+                  </thead>
+                  <tbody class="tbodyr">
+                      <tr class="xinda">
+                          <td class="t_d1">
+                              <img class="logos" src="../../images/logos/bg_01.jpg" />
+                              <span class="t_sp">信达北京服务中心</span>
+                              <span class="t_sp2">注册分公司</span>
+                          </td>
+                          <td class="t_d2">￥800.00</td>
+                          <td class="t_d3">1</td>
+                          <td class="t_d4">￥800.00</td>
+                          <td class="t_d5">等待买家付款</td>
+                          <td class="t_d6" rowspan="2" >
+                              <a class="pay-on" href="">付款</a>
+                              <a class="del-order" href="javascript:void(0);">删除订单</a>
+                          </td>
+                      </tr>
+                      <tr class="xinda">
+                         <td class="t_d1">
+                              <img class="logos" src="../../images/logos/bg_01.jpg" />
+                              <span class="t_sp">信达北京服务中心</span>
+                              <span class="t_sp2">注册分公司</span>
+                          </td>
+                          <td class="t_d2">￥800.00</td>
+                          <td class="t_d3">1</td>
+                          <td class="t_d4">￥800.00</td>
+                          <td class="t_d5">等待买家付款</td>
+                      </tr>
+                  </tbody>
+              </table>
         </div>
-        <div>
-        <ul class="order_num">
-            <li>
-                <span>订单号:S347484929274490</span>
-                <span>下单时间:2017-04-21 01:23:32</span>
-            </li>
-        </ul>
-        <ul class="pay_del">
-            <li>
-                <p>
-                    <img src="../../images/logos/bg_01.jpg" />
-                    <span>信达北京服务中心</span>
-                    <span>注册分公司</span>
-                    <span>￥800.00</span>
-                    <span>￥800.00</span>
-                    <span>等待买家付款</span>
-                    <span>付款</span>
-                </p>
-            </li>
-            <li>
-                <p>
-                    <img src="../../images/logos/bg_01.jpg" />
-                    <span>信达北京服务中心</span>
-                    <span>注册分公司</span>
-                    <span>￥800.00</span>
-                    <span>￥800.00</span>
-                    <span>等待买家付款</span>
-                    <span @
-                    
-                    click="del()">删除订单</span>
-                    <span class="number_1">1</span>
-                </p>
-            </li>
-        </ul>
-        </div>
+        <!--</div>-->
         <div class="page_next">
             <span>上一页</span>
             <span>1</span>
@@ -105,30 +106,151 @@
 import qs from 'qs'
 export default {
     name: 'myorder',
+    data() {
+        return {
+            myorder: [],
+            mycompany: [],
+            bn: ''
+        }
+    },
     created() {
-        this.ajax.post('/xinda-api/business-order/grid', qs.stringify({
-            businessNo: 'S1704020013103044098',
-            startTime: '2017-03-28',
-            endTime: '2017-03-28',
-            start: '0',
-        })).then(function (data) {
-            // console.log('订单接口数据',data)
-        })
+        this.myorderlist();
+        // this.mycompanylist()
     },
     methods: {
-        del: function(){
-            event.target.parentNode.parentNode.parentNode.parentNode.parentNode.removeChild(event.target.parentNode.parentNode.parentNode.parentNode);
-            // console.log(event.target.parentNod)
-        }
+        del: function () {
+            event.target.parentNode.parentNode.parentNode.parentNode.parentNode
+                .removeChild(event.target.parentNode.parentNode.parentNode.parentNode);
+        },
+        myorderlist() {
+            let _this = this;
+            this.ajax.post('/xinda-api/business-order/grid', qs.stringify({
+                businessNo: this.bn,
+                startTime: '2017-03-28',
+                endTime: '2017-03-28',
+                start: '0',
+            })).then(function (data) {
+                _this.myorder = data.data.data;
+                console.log(_this.myorder)
+                for (var time in _this.myorder) {
+                    var createTime = _this.myorder[time].createTime;
+                    _this.myorder[time].createTime = new Date(createTime).format("yyyy-MM-dd hh:mm:ss");
+
+                }
+            })
+        },
     }
 }
 </script>
-
-
 <style scoped lang="less">
-span{
+.tbodyr{
+    border: 1px solid #ebebeb;
+}
+.t_d1{
+    // border: 1px solid #ebebeb;
+}
+.xinda{
+    height: 67px;
+    // border: 1px solid #ebebeb;
+    td{
+        font-size: 12px;
+    }
+}
+table {
+    text-align: left;
+    width:100%;
+    margin-top: 12px;
+    thead{
+        background: #f7f7f7;
+        tr{
+            height:40px;
+            td{
+                 border: 1px solid #e8e8e8;
+                 font-size: 12px;
+                 color: #3f3f3f;
+            }
+        }
+    }
+}
+.order_sp{
+    margin-left: 23px;
+}
+.time_sp{
+    margin-left: 23px;
+}
+.logos{
+    margin-left: 12px;
+    margin-top: 9px;
+    float: left;
+}
+.t_sp{
+    float: left;
+    margin-top: 15px;
+    margin-left: 12px;
+}
+.t_sp2{
+    float: left;
+    margin-left: -95px;
+    margin-top: 35px;
+}
+.t_d1{
+    &:after{
+        content:'';
+        display: block;
+        clear: both;
+    }
+}
+.t_d2{
+    margin-left: 100px;
+    line-height: 67px;
+    float: left;
+}
+.t_d3{
+    position: relative;
+    left: -34px;
+}
+.t_d4{
+    position: relative;
+    left: 50px;
+    color: #2792d6;
+    // border-left: 1px solid #ebebeb;
+    text-align: center;
+}
+.t_d5{
+    position: relative;
+    left: 100px;
+    color: #2792d6;
+    border: 1px solid #ebebeb;
+    text-align: center;
+}
+.t_d6{
+    border: 1px solid #ebebeb;
+    border-left: none;
+}
+.pay-on{
+    width: 56px;
+    height: 23px;
+    display: inline-block;
+    border: 1px solid #2693d4;
+    border-radius: 10%;
+    line-height: 23px;
+    top: -10px;
+    right: -115px;
+    color: #2693d4;
+    text-align: center;
+    position: relative;
+}
+.del-order{
+    color: red;
+    position: relative;
+    top: 16px;
+    right: -60px;
+}
+// ----------------------------------------------------------------
+span {
     cursor: pointer;
 }
+
 .page_next {
     margin-left: 285px;
     span:nth-child(1) {
@@ -207,18 +329,21 @@ span{
             }
             span:nth-child(4) {
                 line-height: 67px;
-                margin-left: -380px;
+                margin-left: 150px;
             }
             span:nth-child(5) {
-                position: absolute;
-                top: 25px;
-                right: 295px;
+                margin-left: 150px;
+                padding: 26px 37px;
                 color: #2693d4;
+                border: 1px solid #e8e8e8;
             }
             span:nth-child(6) {
-                position: absolute;
-                top: 25px;
-                right: 140px;
+                border: 1px solid #e8e8e8;
+                border-top: none;
+                border-left: none;
+                color: #2693d4;
+                padding: 26px 20px;
+                margin-left: -4px;
                 color: #2693d4;
             }
             span:nth-child(7) {
@@ -230,7 +355,7 @@ span{
                 border-radius: 10%;
                 line-height: 23px;
                 top: 40px;
-                right: 20px;
+                right: 40px;
                 color: #2693d4;
                 text-align: center;
             }
@@ -266,23 +391,29 @@ span{
             }
             span:nth-child(4) {
                 line-height: 67px;
-                margin-left: -380px;
+                margin-left: 150px;
             }
             span:nth-child(5) {
-                position: absolute;
-                top: 25px;
-                right: 295px;
+                margin-left: 150px;
+                padding: 26px 37px;
+                color: #2693d4;
+                border: 1px solid #e8e8e8;
+                border-top: none;
                 color: #2693d4;
             }
             span:nth-child(6) {
-                position: absolute;
-                top: 25px;
-                right: 140px;
+                border: 1px solid #e8e8e8;
+                border-top: none;
+                border-left: none;
+                color: #2693d4;
+                padding: 26px 20px;
+                margin-left: -4px;
                 color: #2693d4;
             }
             span:nth-child(7) {
-                position: absolute;
-                right: 20px;
+                padding: 25px 37px;
+                margin-left: -4px;
+                border-top: 1px solid #fff;
                 color: #ff3e3e;
             }
             span {
