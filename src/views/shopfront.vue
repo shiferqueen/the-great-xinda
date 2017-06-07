@@ -47,9 +47,9 @@
             </div>
             <div class="shopfront-content-right">
                 <div class="shopfront-content-right-title clear">
-                    <div><router-link :to="shopfront + links" exact>服务产品</router-link></div>
-                    <div><router-link :to="shopfront+links+'/customService'" exact>客服</router-link></div>
-                    <div><router-link :to="shopfront+links+'/certification'" exact>资质证书</router-link></div>
+                    <div @click="changecolor(1)" :class="{'changecolor': mydefault == 1}"><router-link :to="shopfront + links" exact>服务产品</router-link></div>
+                    <div @click="changecolor(2)" :class="{'changecolor': mydefault == 2}"><router-link :to="shopfront+links+'/customService'" exact>客服</router-link></div>
+                    <div @click="changecolor(3)" :class="{'changecolor': mydefault == 3}"><router-link :to="shopfront+links+'/certification'" exact>资质证书</router-link></div>
                 </div>
                 <div class="shopfront-content-right-service-content">服务内容</div>
                 <router-view></router-view>
@@ -93,6 +93,7 @@ import { mapActions, mapGetters } from 'vuex'
                 allpage: 4,
                 showItem: 3,
                 number: 0,
+                mydefault:1,
             }
         },
         computed: {
@@ -109,6 +110,9 @@ import { mapActions, mapGetters } from 'vuex'
         },
         methods:{
             ...mapActions(['currentShop']),
+            changecolor(index){
+                this.mydefault = index;
+            }
             // goto:function(index){
             //     let _this =this
             //     if(index == this.current)return;
@@ -216,9 +220,13 @@ import { mapActions, mapGetters } from 'vuex'
             width: 112px;
             float: left;
             line-height: 40px;
-            border-bottom: 2px solid #2693d4;
-            margin-left: 10px;
+            // border-bottom: 2px solid #2693d4;
+            // margin-left: 10px;
             text-align: center;
+        }
+        .changecolor {
+            background-color: #a5aead;
+            border-bottom: 1px solid #ae6152;
         }
     }
     

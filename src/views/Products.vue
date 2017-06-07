@@ -239,7 +239,13 @@ export default {
                 _this.providerRegionText = data.providerRegionText;
                 _this.provider = data.provider;
             });
+            //跳转页面置顶
+            this.menu();
     },
+    //跳转页面置顶
+    menu() {
+        window.scrollTo(0,0);
+      },
     computed: {
         ...mapGetters(['getCartNum', 'getuser'])
     },
@@ -247,6 +253,10 @@ export default {
         ...mapGetters(['getstoreid']),
         //获取动态验证码
         ...mapActions(['refCartNum','user','popups']),
+        //跳转页面置顶
+        menu() {
+            window.scrollTo(0,0);
+          },
        
             //获取动态验证码
         getsrc() {
@@ -369,7 +379,7 @@ export default {
             this.goodsval++;
         },
         reduct: function () {
-            if (this.goodsval > 0) {
+            if (this.goodsval > 1) {
                 this.goodsval--;
             }
         },

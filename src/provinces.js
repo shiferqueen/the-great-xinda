@@ -9,14 +9,14 @@ module.exports = [
   "xian": "00",
   "name": "市辖区",
   "level": 2
-}, {"code": "110101", "sheng": "11", "di": "01", "xian": "01", "name": "东城区", "level": 3}, {
+}, {"code": "110101", "sheng": "11", "di": "01", "xian": "01", "name": "朝阳区", "level": 3}, {
   "code": "110102",
   "sheng": "11",
   "di": "01",
   "xian": "02",
   "name": "西城区",
   "level": 3
-}, {"code": "110105", "sheng": "11", "di": "01", "xian": "05", "name": "朝阳区", "level": 3}, {
+}, {"code": "110105", "sheng": "11", "di": "01", "xian": "05", "name": "东城区", "level": 3}, {
   "code": "110106",
   "sheng": "11",
   "di": "01",
