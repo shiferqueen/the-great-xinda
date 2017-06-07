@@ -26,78 +26,95 @@
 </template>
 
 <script>
- import {mapGetters,mapActions} from 'vuex'
+    import {
+        mapGetters,
+        mapActions
+    } from 'vuex'
 
-export default {
-  name: 'top',
-  data() {
-    return{
-      sum:0,
-      status:'',//登录状态
+    export default {
+        name: 'top',
+        data() {
+            return {
+                sum: 0,
+                status: '', //登录状态
+            }
+        },
+        computed: {
+            ...mapGetters(['getCartNum', 'getuser'])
+
+        },
+        mounted() {
+            let _this = this;
+            this.ajax.post("/xinda-api/sso/login-info").then(function(res) { //获取登录信息
+                //   console.log(typeof res.data.data);
+                _this.status = res.data.status;
+            });
+            //   console.log(this.user)
+            this.user();
+            this.refCartNum();
+        },
+        methods: {
+            ...mapActions(['popups']),
+            logout() {
+                let _this = this;
+                this.popups({
+                    headers: '确定要退出登录吗？',
+                    content: '退出后将无法继续购买物品',
+                    ok() {
+                        _this.ajax.post("/xinda-api/sso/logout").then(function(res) { //退出登录信息
+                            if (res.data.status == 1) {
+                                _this.user('');
+                                _this.refCartNum('');
+                                setTimeout(function() {
+                                    console.log(_this.getuser)
+                                }, 500);
+                            }
+                        })
+                    }
+                })
+            },
+            ...mapActions(['refCartNum', 'user']),
+            //  ...mapActions([])
+            goshopping(uname) {
+                if (uname != '') {
+                    this.$router.push({
+                        name: 'shopping'
+                    });
+                } else {
+                    this.$router.push({
+                        name: 'login'
+                    });
+                }
+            },
+            member() {
+                this.$router.push({
+                    name: 'setaccount'
+                });
+            }
+        },
     }
-  },
-   computed:{
-         ...mapGetters(['getCartNum','getuser'])
-
-  },
-  mounted(){
-      let _this = this;
-      this.ajax.post("/xinda-api/sso/login-info").then(function(res){//获取登录信息
-        //   console.log(typeof res.data.data);
-           _this.status=res.data.status;
-      });
-    //   console.log(this.user)
-      this.user();
-      this.refCartNum();
-  },
-  methods: {
-      ...mapGetters(['getCartNum','getuser']),
-    logout(){
-        let _this = this;
-        this.ajax.post("/xinda-api/sso/logout").then(function(res){//退出登录信息
-        console.log(res.data);
-        if(res.data.status==1){
-              _this.user('');
-              _this.refCartNum('');
-              setTimeout(function() {
-                  console.log(_this.getuser)
-              }, 500);
-          }
-       })
-    },
-    ...mapActions(['refCartNum','user']),
-    //  ...mapActions([])
-    goshopping(uname){
-        if(uname!=''){
-            this.$router.push({name:'shopping'});
-        }else{
-            this.$router.push({name:'login'});
-        }
-    },
-    member(){
-         this.$router.push({name:'setaccount'});
-    }
-  },
-}
-
 </script>
 
 <style lang="less" scoped>
     .fl {
         float: left;
     }
-    .pdr{
+    
+    .pdr {
         padding-right: 20px;
     }
+    
     .fr {
         float: right;
     }
-    .cr{
-        cursor:pointer;
-        &:hover{
-             color: #2494d4!important;
-        } 
+    
+    .cr {
+        cursor: pointer;
+        &:hover {
+            color: #2494d4!important;
+        }
     }
+    
     .marg0 {
         margin: 0!important;
         padding: 0!important;
