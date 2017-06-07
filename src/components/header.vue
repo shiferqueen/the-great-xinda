@@ -9,10 +9,21 @@
               <a href="javascript:void(0)" class="fr">[切换城市]</a>
           </div>
           <div class="hdcon-top-m fl">
-            <a href="" class="blue goods fl">产品</a>
-            <a href="" class="server fl">服务商</a>
-            <input type="text" placeholder="搜索您需要的服务或服务商" class="fl">
-            <button class="fl">搜索</button>
+            <a href="javascript:" class="goods fl" @click="goods(1)" :class="{blue:serch_idnex==1}">产品</a>
+            <a href="javascript:" class="server fl" @click="goods(2)" :class="{blue:serch_idnex==2}">服务商</a>
+            <input type="text" placeholder="搜索您需要的服务或服务商" class="fl" v-model="search" @keyup="get($event)" @keydown.enter="searchInput()" @keydown.down="selectDown()" @keydown.up.prevent="selectUp()">
+            <h3 @click="clearInput()" class="search-reset">×</h3>
+            <button @click="searchInput()" class="search-btn fl">搜索</button>
+            <div class="search-select">
+              <transition-group tag="ul" transition-mode="out-in">
+                <li v-if="serch_idnex==1" v-for="(value,index) in myData" :class="{selectback:index==now}" :key="index" @click="searchThis(index)" @mouseover="selectHover(index)" class="search-select-option">
+                  {{value.serviceName}}
+                </li>
+                <li v-if="serch_idnex==2" v-for="(value,index) in myData" :class="{selectback:index==now}" :key="index" @click="searchThis(index)" @mouseover="selectHover(index)" class="search-select-option">
+                  {{value.providerName}}
+                </li>
+              </transition-group>
+            </div>
             <span class="fl">热门服务：</span>
             <span class="fl hand">社保开户</span>
             <span class="fl hand">公司注册</span>
@@ -73,6 +84,7 @@
                               <a href="javascript:void(0)">VIE架构</a>
                               <a href="javascript:void(0)">股份公司注册</a>
                               <a href="javascript:void(0)">有限责任公司注册</a>
+
                               <a href="javascript:void(0)">一般纳税人注册地址</a>
                             </p><br><br>
                             <p>
@@ -174,28 +186,119 @@ export default {
         {text:'加盟我们',lin:'#/us'},
         {text:'店铺',lin:'#/shoplist'}
       ],
-      active:0
+      active:0,
+      search: '',
+      myData: [],
+      flag: 0,
+      id:'',
+      now: -1,
+      serch_idnex:1
     }
   },
   methods:{
     choice_active:function(index){
       this.active = index;
+    },
+    goods(index){
+      this.serch_idnex = index;
+    },
+    get: function(event) {
+      let _this = this;
+      // if(event.keyCode == 38 || event.keyCode == 40){ //向上向下
+      //     _this.selectHover();
+      // };
+      if(this.serch_idnex==1){  
+        _this.ajax.post('/xinda-api/product/package/search-grid',{
+        start:0,
+        limit:8,
+        searchName:_this.search,
+        sort:2,
+        }).then(function(data) {
+          console.log(data);
+          _this.myData = data.data.data;
+        })
+      }else{
+          _this.ajax.post('/xinda-api/provider/search-grid',{
+            start:0,
+            limit:8,
+            searchName:_this.search,
+            sort:1,
+            productTypeCode:7,
+            regionId:110105,	
+          }).then(function(data) {
+            console.log(data);
+            _this.myData = data.data.data;
+        })
+      }
+    },
+    //清除内容
+   clearInput: function() {
+      this.search = '';
+      this.get();
+    },
+  //搜索点击（enter）事件
+  searchInput: function() {
+    if(this.id!=''){
+      if(this.serch_idnex==1){
+       this.search = this.myData[this.now].serviceName;
+       this.$router.push({path:'/secondproduct/' + this.id });
+       location.reload();
+      }else{
+        this.search = this.myData[this.now].providerName;
+        this.$router.push({path:'/shopfront/'+this.id});
+        location.reload();
+      }
+    }
+  },
+  //搜索的内容:点击触发enter事件
+  searchThis: function(index) {
+    if(this.serch_idnex==1){
+       this.search = this.myData[index].serviceName;
+       this.id=this.myData[index].id;
+    }else{
+      this.search = this.myData[index].providerName;
+      this.id=this.myData[index].id;
+    }
+    this.searchInput();
+    this.myData=[];
+  },
+  //li hover
+  selectHover: function(index) {
+    if(this.serch_idnex==1){
+       this.search = this.myData[index].serviceName;
+    }else{
+      this.search = this.myData[index].providerName;
+    }
+    this.now = index;
+  },
+  //向下
+  selectDown: function() {
+    this.now++;
+    if(this.now == this.myData.length) {
+      this.now = 0;
+    }
+    if(this.serch_idnex==1){
+       this.search = this.myData[this.now].serviceName;
+    }else{
+      this.search = this.myData[this.now].providerName;
+    };
+  },
+  //向上
+  selectUp: function() {
+      this.now--;
+      if(this.now == -1) {
+        this.now = this.myData.length - 1;
+      }
+      if(this.serch_idnex==1){
+       this.search = this.myData[this.now].serviceName;
+      }else{
+        this.search = this.myData[this.now].providerName;
+      }
     }
   },
   // created(){
-  //    this.ajax.post('http://115.182.107.203:8088/xinda/xinda-api/product/style/list',{}).then(function(data) {
-  //      var da = (data.data).data;
-  //      for(var key in da){
-  //       // console.log(key,'==',da[key]);
-  //       // console.log(da[key].itemList)
-  //       var itemList = da[key].itemList;
-  //       for(var key in itemList){
-  //       //console.log((itemList[key].itemList))
-  //       }
-  //      }
-  //     // console.log(da);
-  //    })
-  //  }
+     
+  // }
 }
 </script>
 
@@ -221,6 +324,9 @@ export default {
 }
 .hand{
   cursor:pointer;
+}
+.selectback{
+  background:rgba(169, 169, 169, .9);
 }
 .header{
   width:100%;
@@ -261,10 +367,29 @@ export default {
      .hdcon-top-m{
          width:590px;
          margin-top: 25px;
+         position: relative;
          .goods{
            border-right:1px solid #2494d4;
            padding-right:10px;
            font-size: 14px; 
+         }
+         .search-reset{
+            position: absolute;
+            right: 110px;
+            top: 35px;
+            color: #ccc;
+            cursor: pointer;
+         }
+         .search-select{
+           width:81%;
+           font-size: 14px;
+           position: absolute;
+           z-index:9999;
+           top:70px;
+           background: #fff;
+           .search-select-option{
+             padding: 2px 4px;
+           }
          }
          .server{
            padding-left:10px; 
