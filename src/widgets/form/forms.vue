@@ -72,18 +72,23 @@
         created() {
 
             var that = this
-            this.ajax.post("/xinda-api/business-order/detail", qs.stringify({
-                businessNo: that.businessNo,
-            })).then(function(data) {
-                var createTime = data.data.data.businessOrder.createTime;
-                that.newdate = new Date(createTime).format("yyyy-MM-dd hh:mm:ss")
-                that.dataOrder = data.data.data.serviceOrderList
-                for (let k in that.dataOrder) {
-                    that.totalPrice += that.dataOrder[k].totalPrice
+            that.ajax.post("/xinda-api/sso/login-info").then(function(data) {
+                if (data.data.status == 1) {
+                    that.ajax.post("/xinda-api/business-order/detail", qs.stringify({
+                        businessNo: that.businessNo,
+                    })).then(function(data) {
+                        var createTime = data.data.data.businessOrder.createTime;
+                        that.newdate = new Date(createTime).format("yyyy-MM-dd hh:mm:ss")
+                        that.dataOrder = data.data.data.serviceOrderList
+                        for (let k in that.dataOrder) {
+                            that.totalPrice += that.dataOrder[k].totalPrice
+                        }
+                        that.setorder(that.totalPrice)
+                            // console.log(data.data.data.serviceOrderList)
+                    })
                 }
-                that.setorder(that.totalPrice)
-                    // console.log(data.data.data.serviceOrderList)
             })
+
         }
     }
 </script>
