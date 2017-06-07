@@ -131,8 +131,8 @@
             deleteone: function(index, id, price) {
                 let that = this;
                 this.popups({ //弹出框内容
-                    headers: '这是购物车弹出的框',
-                    content: '这是删除购物车对话框的内容',
+                    headers: '是否确定删除',
+                    content: '确定要删除此商品吗？',
                     ok() {
                         that.listdatas.splice(index, 1);
                         that.ajax.post('/xinda-api/cart/del', qs.stringify({
