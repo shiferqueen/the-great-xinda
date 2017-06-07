@@ -222,9 +222,6 @@ export default {
                  console.log("评价详情",res.data.data);
             });
 
-
-            
-
         },
     computed: {
         ...mapGetters(['getCartNum','getuser'])
