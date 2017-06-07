@@ -1,14 +1,18 @@
 <template>
-  <div class="mask"  v-if="getpopups.status">
-    <div class="popup">
-        <div class="popup-header">{{getpopups.headers}}</div>
-        <div class="popup-conter">{{getpopups.content}}</div>
-        <div class="popup-btn">
-            <button class='btnyes' @click="getpopups.confirm">{{getpopups.conbtn}}</button>
-            <button class='btnno' @click="closePopups">{{getpopups.cancelbtn}}</button>
+    <div>
+        <div class="mask"  v-if="getpopups.status">
+            <transition name="bounce">
+                <div class="popup" v-show="getpopups.status" >
+                    <div class="popup-header">{{getpopups.headers}}</div>
+                    <div class="popup-conter">{{getpopups.content}}</div>
+                    <div class="popup-btn">
+                        <button class='btnyes' @click="getpopups.confirm">{{getpopups.conbtn}}</button>
+                        <button class='btnno' @click="closePopups">{{getpopups.cancelbtn}}</button>
+                    </div>
+                </div>
+            </transition>
         </div>
     </div>
-  </div>
 </template>
 
 <script>
@@ -87,6 +91,39 @@
         &:hover {
             background-color: #3c3c3c;
             border: 1px solid #3c3c3c;
+        }
+    }
+    /*过渡动画*/
+    
+    .bounce-enter-active {
+        animation: bounce-in .5s;
+    }
+    
+    .bounce-leave-active {
+        animation: bounce-out .5s;
+    }
+    
+    @keyframes bounce-in {
+        0% {
+            transform: scale(0);
+        }
+        50% {
+            transform: scale(1.5);
+        }
+        100% {
+            transform: scale(1);
+        }
+    }
+    
+    @keyframes bounce-out {
+        0% {
+            transform: scale(1);
+        }
+        50% {
+            transform: scale(1.5);
+        }
+        100% {
+            transform: scale(0);
         }
     }
 </style>

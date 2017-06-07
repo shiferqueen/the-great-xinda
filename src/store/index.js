@@ -50,7 +50,6 @@ export default new Vuex.Store({
             state.transUnionPay = content;
         },
         SETPOPUPS(state, popup) {
-            console.log('popup.ok', popup.ok);
             state.popups = popup;
         },
         CLOSEPOPUPS(state) {
