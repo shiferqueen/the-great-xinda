@@ -11,7 +11,7 @@
           <div class="hdcon-top-m fl">
             <a href="javascript:" class="goods fl" @click="goods(1)" :class="{blue:serch_idnex==1}">产品</a>
             <a href="javascript:" class="server fl" @click="goods(2)" :class="{blue:serch_idnex==2}">服务商</a>
-            <input type="text" placeholder="搜索您需要的服务或服务商" class="fl" v-model="search"   @keyup="get($event)" >
+            <input type="text" placeholder="搜索您需要的服务或服务商" class="fl" v-model="search" @keyup.enter = "searchInput"   @keyup="get($event)" >
             <h3 @click="clearInput()" class="search-reset">×</h3>
             <button @click="searchInput()" class="search-btn fl">搜索</button>
             <div class="search-select">
@@ -272,7 +272,6 @@
                     }).then(function(data) {
                         _this.myData = data.data.data;
                     })
-                    console.log('1111')
                 }
             },
             //清除内容
@@ -284,12 +283,10 @@
             searchInput: function() {
                 if (this.id != '') {
                     if (this.serch_idnex == 1) {
-                        this.search = this.myData[this.now].serviceName;
                         this.$router.push({
                             path: '/secondproduct/' + this.id
                         });
                     } else {
-                        this.search = this.myData[this.now].providerName;
                         this.$router.push({
                             path: '/shopfront/' + this.id
                         });
@@ -298,7 +295,6 @@
             },
             //搜索的内容:点击触发enter事件
             searchThis: function(value, id) {
-                console.log(value)
                 if (this.serch_idnex == 1) {
                     this.search = value;
                     this.id = id;
