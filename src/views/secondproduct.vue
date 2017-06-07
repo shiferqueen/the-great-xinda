@@ -2,11 +2,9 @@
     <div>
     
         <div>
-<<<<<<< HEAD
-            <p class="head_top">首页/商品详情</p>
-=======
-            <p class="head_top">首页/财税服务 {{ready}}</p>
->>>>>>> f887fecf657ffa587c8b20c894fb9bdef93fb762
+
+            <p class="head_top">首页/商品详情 {{ready}}</p>
+
         </div>
         <!--------------------商品部分------------------------------>
         <div class="goods-main">
@@ -147,7 +145,6 @@
 </template>
 
 <script>
-<<<<<<< HEAD
 import myhead from '../components/header'
 import myfoot from '../components/footer'
 import qs from 'qs'
@@ -158,91 +155,6 @@ export default {
     components: {
         myhead,
         myfoot
-    },
-    data() {   
-        return {
-            imgsrc:'/xinda-api/ajaxAuthcode',//图片验证接口
-            imgcode:'',  //图片验证码
-            cellphone:'',  //手机号
-            testphone:/^1[3|4|5|7|8][0-9]{9}$/,
-            msg: '',
-            phonemsg:'',
-            con1: true,
-            con2: false,
-            good: true,
-            mid: false,
-            bad: false,
-            bSign:false,
-            goodsval: 1,
-            reciprocal:60,//等待验证时间
-            yanzheng:true,
-            stop:'',//动画停止参数
-            product:{
-                img:'/static/e3a93cf9c3094fa6afb5b643c4f8d30f.png'
-            },
-            providerProduct:{},
-            providerRegionText:{},
-            provider:{},
-            goodNum:{},
-            badNum:{},
-            midNum:{},
-            content:{},
-            assess: [],
-            tp:"http://115.182.107.203:8088/xinda/pic"
-        }
-    },
-    //获取接口
- created() {
-    //  this.getid();
-    
-            let _this = this
-            this.ajax.post("/xinda-api/product/package/detail", qs.stringify({
-                sId: this.$route.params.productId
-            })).then(function (res) {
-                let data = res.data.data;
-                data.product.img =_this.tp+data.product.img;
-                _this.product = data.product;
-                _this.providerProduct = data.providerProduct;
-                _this.providerRegionText = data.providerRegionText;
-                _this.provider = data.provider;
-            });
-
-
-
-             this.ajax.post("/xinda-api/product/judge/detail", qs.stringify({
-               serviceId:this.$route.params.productId
-            })).then(function (res) {
-                let data = res.data.data;
-                _this.goodNum = data.goodNum;
-                _this.midNum = data.midNum;
-                _this.badNum = data.badNum;
-            });
-
-            this.ajax.post("/xinda-api/product/judge/grid", qs.stringify({
-               serviceId:this.$route.params.productId
-            })).then(function (res) {
-                let data = res.data.data;
-                _this.content = data.content;
-            });
-
-            //跳转页面置顶
-            this.menu();
-
-=======
-    import myhead from '../components/header'
-    import myfoot from '../components/footer'
-    import qs from 'qs'
-    import {
-        mapActions,
-        mapGetters
-    } from 'vuex' //好几个页面传输数据
-    export default {
-        name: 'Products',
-
-        components: {
-            myhead,
-            myfoot
->>>>>>> f887fecf657ffa587c8b20c894fb9bdef93fb762
         },
         data() {
             return {
