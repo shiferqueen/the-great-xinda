@@ -1,7 +1,7 @@
 <template>
   <div>
       <div class="top">
-          <img src="../images/logos/logo.png" alt="">
+         <span @click="location"><img src="../images/logos/logo.png" alt=""></span>
           <a href="javascript:void(0)">欢迎登陆</a>
       </div>
       <div class="buttom">
@@ -48,7 +48,12 @@
         methods: {
             ...mapActions(["user","refCartNum"]),
             ...mapGetters(['getCartNum']),
-       
+         
+            location(){
+                 this.$router.push({
+                            path: '../home'
+                        });
+            },
             getsrc() {
                 this.imgsrc = "/xinda-api/ajaxAuthcode?" + Math.random()
             },

@@ -43,7 +43,7 @@
                 </div>
                 <div class="goods-r-bottom">
                     <span>
-                        <a href="#/shopfront">查看服务商</a>
+                        <a :href="'#/shopfront/'+provider.id">查看服务商</a>
                     </span>
                 </div>
             </div>
@@ -229,19 +229,26 @@ export default {
             _this.content = data.content;
             console.log("评价详情", res.data.data);
         });
-
-
-
-
+            this.ajax.post("/xinda-api/product/package/detail", qs.stringify({
+                sId: this.$route.params.productId
+            })).then(function (res) {
+                let data = res.data.data;
+                data.product.img =_this.tp+data.product.img;
+                _this.product = data.product;
+                _this.providerProduct = data.providerProduct;
+                _this.providerRegionText = data.providerRegionText;
+                _this.provider = data.provider;
+            });
     },
     computed: {
         ...mapGetters(['getCartNum', 'getuser'])
     },
     methods: {
         ...mapGetters(['getstoreid']),
-        ...mapActions(['refCartNum', 'user']),
-
         //获取动态验证码
+        ...mapActions(['refCartNum','user','popups']),
+       
+            //获取动态验证码
         getsrc() {
             this.imgsrc = '/xinda-api/ajaxAuthcode?' + Math.random()
         },
@@ -375,59 +382,68 @@ export default {
         },
 
         addProducts(uname) {
-            if (uname == "") {
-                this.$router.push({ path: '/action/login' });
-            } else {
-                let that = this
+            let that = this;
+            if(uname==""){
+                 that.popups({
+                    headers: "当前尚未登录",
+                    content: "是否跳转到登录页面",
+                    ok() {
+                         that.$router.push({path: '/action/login'});
+                    }
+                })
+            }else{
+                
                 var id = that.$route.params.productId;
-                this.ajax.post("/xinda-api/cart/add", qs.stringify({
+                this.ajax.post("da-api/cart/add", qs.stringify({
                     id: id,
                     num: 1
 
                 })).then(function (res) {
-                    that.refCartNum();
-                    that.ajax.post("/xinda-api/cart/set", qs.stringify({
-                        id: id,
-                        num: that.goodsval
-
+                        that.refCartNum();
+                        that.ajax.post("da-api/cartt", qs.stringify({
+                        id:id,
+                        num:that.goodsval
+                    
 
                     })).then(function (res) {
-                        console.log(that.goodsval);
-                        console.log(id)
-
+                        
                     })
                 })
             }
         },
-        addProductsb(uname) {
-            if (uname == "") {
-                this.$router.push({ path: '/action/login' });
-            } else {
+           addProductsb(uname) {
+            let that = this
+            if(uname==""){
+                 that.popups({
+                    headers: "当前尚未登录",
+                    content: "是否跳转到登录页面",
+                    ok() {
+                         that.$router.push({path: '/action/login'});
+                    }
+                })
+            }else{
                 let that = this
                 var id = that.$route.params.productId;
-                this.ajax.post("/xinda-api/cart/add", qs.stringify({
+                this.ajax.post("da-api/cart/add", qs.stringify({
                     id: id,
                     num: 1
 
                 })).then(function (res) {
-                    that.refCartNum();
-                    that.ajax.post("/xinda-api/cart/set", qs.stringify({
-                        id: id,
-                        num: that.goodsval
-
+                        that.refCartNum();
+                        that.ajax.post("da-api/cartt", qs.stringify({
+                        id:id,
+                        num:that.goodsval
+                    
 
                     })).then(function (res) {
-                        console.log(that.goodsval);
-                        console.log(id)
-                        that.$router.push({ name: 'shopping' });
+                        that.$router.push({name: 'shopping'});
                     })
                 })
 
             }
-
+             
 
         },
-
 
     }
 }
