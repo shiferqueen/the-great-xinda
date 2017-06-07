@@ -47,8 +47,8 @@
                 </div>
                 <div class="content">
                     <div class="content_top">
-                        <span>综合排序</span>
-                        <span @click='chicked'>{{prices}}</span>
+                        <span :class="{nav_line_top: spta ==1}" @click='chicked(1)'>综合排序</span>
+                        <span :class="{nav_line_top: spta ==2}" @click='chicked(2)'>{{prices}}</span>
                     </div>
                     <div class="content_top-t">
                         <div class="content-t-left">商品</div>
@@ -150,6 +150,7 @@ export default {
             pages: [],
             spantoga: true, //样式切换
             spantogb: 2, //样式切换
+            spta:1,
         }
 
     },
@@ -305,7 +306,7 @@ export default {
         
            
         //价格排序
-        chicked() {
+        chicked(c) {
             let _this = this;
             if (_this.sorts == 2) {
                 _this.sorts = 3;
@@ -317,6 +318,7 @@ export default {
                 _this.list();
                 _this.prices = '价格 ↑';
             }
+             _this.spta = c
 
         },
     },
@@ -471,12 +473,13 @@ export default {
                     color: #686868;
                     font-size: 14px;
                     cursor: pointer;
-                    &:first-child {
-                        background: #2693d4;
-                        color: #fff;
-                    }
+                    
                 }
             }
+            .nav_line_top{
+                        background: #2693d4;
+                        color: #fff !important;
+                    }
             .content_top-t {
                 width: 930px;
                 height: 50px;
