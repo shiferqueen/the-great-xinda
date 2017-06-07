@@ -6,22 +6,22 @@
             <swiper :options="swiperOption">
                     <swiper-slide>
                         <a href="javascript:void(0)">
-                            <img src="../images/index/lunbo-2.jpg" width="100%" height="400" />
+                            <img src="../images/index/timg.jpg" width="100%" height="400" />
                         </a>
                     </swiper-slide>
                     <swiper-slide>
                         <a href="javascript:void(0)">
-                            <img src="../images/index/lunbo-2.jpg" width="100%" height="400" />
+                            <img src="../images/index/timg (1).jpg" width="100%" height="400" />
                         </a>
                     </swiper-slide>
                     <swiper-slide>
                         <a href="javascript:void(0)">
-                            <img src="../images/index/lunbo-2.jpg" width="100%" height="400" />
+                            <img src="../images/index/timg (2).jpg" width="100%" height="400" />
                         </a>
                     </swiper-slide>
                     <swiper-slide>
                         <a href="javascript:void(0)">
-                            <img src="../images/index/lunbo-2.jpg" width="100%" height="400" />
+                            <img src="../images/index/timg (3).jpg" width="100%" height="400" />
                         </a>
                     </swiper-slide>
                     <div class="swiper-pagination" slot="pagination">

@@ -1,7 +1,7 @@
 <template>
     <div>
         <div>
-            <p class="head_top">首页/公司工商</p>
+            <p class="head_top">首页/财税服务</p>
         </div>
         <div class="main">
             <div class="main_left">
@@ -145,7 +145,7 @@ export default {
             number: 0,
             start: true,
             sorts: 0,
-            que: 4,
+            que: 2,
             prices: '价格',
             pages: [],
             spantoga: true, //样式切换

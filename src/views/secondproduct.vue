@@ -2,7 +2,7 @@
     <div>
     
         <div>
-            <p class="head_top">首页/财税服务</p>
+            <p class="head_top">首页/商品详情</p>
         </div>
         <!--------------------商品部分------------------------------>
         <div class="goods-main">
@@ -211,7 +211,6 @@ export default {
                 _this.goodNum = data.goodNum;
                 _this.midNum = data.midNum;
                 _this.badNum = data.badNum;
-                 console.log("评价条数",res.data.data)
             });
 
             this.ajax.post("/xinda-api/product/judge/grid", qs.stringify({
@@ -219,16 +218,27 @@ export default {
             })).then(function (res) {
                 let data = res.data.data;
                 _this.content = data.content;
-                 console.log("评价详情",res.data.data);
             });
+
+            //跳转页面置顶
+            this.menu();
 
         },
     computed: {
         ...mapGetters(['getCartNum','getuser'])
     },
+
+    //跳转页面置顶
+    menu() {
+        window.scrollTo(0,0);
+      },
     methods: {
         ...mapGetters(['getstoreid']),
         ...mapActions(['refCartNum','user','popups']),
+        //跳转页面置顶
+        menu() {
+            window.scrollTo(0,0);
+          },
        
             //获取动态验证码
         getsrc() {
@@ -351,7 +361,7 @@ export default {
             this.goodsval++;
         },
         reduct: function () {
-            if (this.goodsval > 0) {
+            if (this.goodsval > 1) {
                 this.goodsval--;
             }
         },

@@ -9,19 +9,19 @@
                     <div class="nav_line">
                         <div class="nav_line_left">服务分类</div>
                         <div class="nav_line_right">
-                            <span>公司注册</span>
-                            <span>公司变更</span>
+                            <span :class="{nav_line_spana: spantoga}" @click="queryb()">公司注册</span>
+                            <span :class="{nav_line_spana: !spantoga}" @click="querya()">公司变更</span>
                         </div>
                     </div>
                     <div class="nav_line">
                         <div class="nav_line_left teshuyangshi">类型</div>
                         <div class="nav_line_right">
-                            <span>分公司注册</span>
-                            <span>公司注册地址</span>
-                            <span>合伙企业注册</span>
-                            <span>外商独资公司注册</span>
-                            <span>VIE架构</span>
-                            <span>一般纳税注册地址</span>
+                            <span :class="{nav_line_spanb: spantogb ==2}" @click="queryc(2)">分公司税务报道</span>
+                            <span :class="{nav_line_spanb: spantogb ==1}" @click="queryc(1)">公司代理记账</span>
+                            <span :class="{nav_line_spanb: spantogb ==4}" @click="queryc(4)">合伙企业注册</span>
+                            <span :class="{nav_line_spanb: spantogb ==5}" @click="queryc(5)">外商独资公司注册</span>
+                            <span :class="{nav_line_spanb: spantogb ==3}" @click="queryc(3)">VIE架构</span>
+                            <span :class="{nav_line_spanb: spantogb ==6}" @click="queryc(6)">一般纳税公司基金</span>
                         </div>
                     </div>
                     <div class="nav_line">
@@ -54,16 +54,15 @@
                         <div class="content-t-left">商品</div>
                         <div class="content-t-right">价格</div>
                     </div>
-    
                     <div class="con-main" v-for="(listeach,index) in listpage_ajax">
                         <div class="con-main-left">
                             <a :href="'#/secondproduct/'+listeach.id" @click="storeid(listeach.id)">
-                                <img src="../images/products/loge_loge.png">
+                                 <img src="../images/products/loge_loge.png">
                             </a>
                         </div>
                         <div class="con-main-middle">
                             <h4>
-                                <a :href="'#/secondproduct/'+listeach.id" @click="storeid(listeach.id)">{{listeach.serviceName}}</a>
+                               <a :href="'#/secondproduct/'+listeach.id" @click="storeid(listeach.id)">{{listeach.serviceName}}</a>
                             </h4>
                             <p>{{listeach.serviceInfo}}</p>
                             <p>
@@ -72,7 +71,7 @@
                             </p>
                         </div>
                         <div class="con-main-right">
-                            <p @click="transif(index)">￥{{listeach.price}}</p>
+                            <p>￥{{listeach.price}}</p>
                             <span @click="addCartNumb(listeach.id,getuser)">立即购买</span>
                             <span @click="addCartNum(listeach.id,getuser,index)">加入购物车</span>
                             <transition name="trans">
@@ -84,12 +83,11 @@
     
                         </div>
                     </div>
-    
                 </div>
                 <div class="bottom_page pagination">
-                    <span  @click="current-- && goto(current--)">上一页</span>
-                    <span v-for="index in pages" @click="goto(index)" :class="{'active':current == index}">{{index}}</span>
-                    <span @click="current++ && goto(current++)">下一页</span>
+                    <span @click="current--">上一页</span>
+                    <span v-for="(value,index) in pages" @click="current = index" :class="{'active':current == index}">{{index+1}}</span>
+                    <span @click="current++">下一页</span>
                 </div>
             </div>
             <div class="main_right">
@@ -121,9 +119,12 @@ import Vue from 'vue'
 import myhead from '../components/header'
 import myfoot from '../components/footer'
 import qs from 'qs'
-import { mapActions, mapGetters } from 'vuex'
+import {
+    mapActions,
+    mapGetters
+} from 'vuex'
 export default {
-    name: 'Pagelist',
+    name: 'Listpage',
     components: {
         myhead,
         myfoot
@@ -131,7 +132,6 @@ export default {
     data() {
         return {
             listpage_ajax: [],
-            listpage_ajax_new: [],
             selectedProvince: provinces[0],
             selectedCity: 0,
             selectedBlock: 0,
@@ -139,13 +139,17 @@ export default {
             provinces,
             blocks: 0,
             transifs: 0,
-            current: 1,
-            showItem: 5,
-            allpage: 6,
+            current: 0,
+            showItem: 2,
+            allpage: 3,
             number: 0,
             start: true,
             sorts: 0,
-            prices: '价格'
+            que: 0,
+            prices: '价格',
+            pages: [],
+            spantoga: true, //样式切换
+            spantogb: 2, //样式切换
         }
 
     },
@@ -153,7 +157,6 @@ export default {
     created() {
         let _this = this
         this.list();
-        // this.goto();
         // ------------以下为省市区三级联动
         // 数据初始化,默认选中北京市,默认选中第一个;北京市数据为总数据的前18个
         let beijing = this.provinces.slice(0, 19)
@@ -181,24 +184,10 @@ export default {
             }
         },
 
-
-        //  分页器部分
-        pages: function () {
-            let _this = this;
-            var pag = [];
-
-            //   if( this.current < this.showItem ){ //如果当前的激活的项 小于要显示的条数
-            //总页数和要显示的条数那个大就显示多少条
-            var i = _this.showItem;
-            while (_this.showItem) {
-                pag.unshift(_this.showItem--);
-            }
-            return pag
-        }
-
     },
     methods: {
         ...mapActions(['setstoreid', 'refCartNum', 'user', 'popups']),
+
 
         //加入购物车
         addCartNum(id, uname, index) {
@@ -235,7 +224,7 @@ export default {
         //立即购买
         addCartNumb(id, uname) {
             let that = this;
-                if (uname == "") {
+            if (uname == "") {
                 that.popups({
                     headers: "当前尚未登录",
                     content: "是否跳转到登录页面",
@@ -257,38 +246,51 @@ export default {
             }
 
         },
+        storeid(index) {
+            this.setstoreid(index);
+        },
         //页面接口
         list() {
             let _this = this
             this.ajax.post("/xinda-api/product/package/grid", qs.stringify({
-                limit: 20,
+                productTypeCode: _this.que,
                 start: _this.number,
                 sort: _this.sorts,
             })).then(function (res) {
                 _this.listpage_ajax_new = res.data.data;
+                _this.pages.length = Math.ceil(_this.listpage_ajax_new.length / 4)
                 _this.number = 0
                 _this.isA = false
                 _this.listpage_ajax = _this.listpage_ajax_new.slice(_this.number, _this.number + 4)
             });
         },
-        //分页器下一页方法
-        goto: function (index) {
 
+
+        //点击按钮
+        querya() {
             let _this = this
-            if (index == this.current) return;
-            _this.current = index
-            //这里可以发送ajax请求
-            if (index >= 6) {
-                index = 5
-                _this.current = 5
-            } else if (index < 1) {
-                index = 1
-                _this.current = 1
-            }
-            _this.number = (index - 1) * 4
-            _this.listpage_ajax = _this.listpage_ajax_new.slice(_this.number, _this.number + 4)
-
+            _this.que = 5;
+            _this.list();
+                _this.spantoga = false
         },
+        queryb() {
+            let _this = this
+            _this.que = 4;
+            _this.list();
+                _this.spantoga = true
+        },
+
+        //下方按钮切换
+          queryc(c) {
+            let _this = this
+            _this.que = c;
+            _this.list();
+            _this.spantogb = c  
+                    
+        },
+        
+        
+           
         //价格排序
         chicked() {
             let _this = this;
@@ -303,12 +305,6 @@ export default {
                 _this.prices = '价格 ↑';
             }
 
-        },
-
-
-
-        storeid(index) {
-            this.setstoreid(index);
         },
     },
     watch: {
@@ -351,16 +347,22 @@ export default {
             }
             var _this = this
             Vue.nextTick(() => {
-                _this.selectedBlock = _this.blocks[6]
+                _this.selectedBlock = _this.blocks[0]
                 // 触发与 v-model相关的 input事件
                 _this.$emit('input', _this.info)
-                _this.list();
             })
+        },
+        current(newv, oldv) {
+            if (newv > this.pages.length - 1 || newv < 0) {
+                this.current = oldv
+            }
+            this.listpage_ajax = this.listpage_ajax_new.slice(this.current, this.current + 4)
+            // ajax.slice(index,index + 4)
+
         }
     },
 
 }
-
 </script>
 
 <style lang="less" scoped>
@@ -419,13 +421,18 @@ export default {
                         border-radius: 5px;
                         margin: 0 18px;
                         cursor: pointer;
-                        &:nth-child(1) {
-                            background: #2693d4;
-                            color: #fff;
-                        }
+
                         &:hover {
                             background: #2080b9;
                         }
+                    }
+                    .nav_line_spana {
+                        background: #2693d4;
+                        color: #fff;
+                    }
+                    .nav_line_spanb {
+                        background: #2693d4;
+                        color: #fff;
                     }
                     select {
                         width: 90px;
@@ -496,7 +503,7 @@ export default {
                         width: 100px;
                         height: 100px;
                         border: 1px solid #cdcdcd;
-                        margin: 15px 0;
+                        margin: 7px 0;
                     }
                 }
                 .con-main-middle {
@@ -506,10 +513,10 @@ export default {
                         margin: 15px 0;
                     }
                     p {
-                        width: 410px;
-                        margin: 15px 0;
+                        margin: 5px 0;
                         color: #686868;
                         font-size: 14px;
+                        width: 465px;
                         span {
                             margin-right: 70px;
                         }
@@ -529,24 +536,24 @@ export default {
                         color: #fff;
                         border-radius: 5px;
                         cursor: pointer;
+                        z-index: 999;
                     }
                 }
             }
         }
         .bottom_page {
-            width: 400px;
+            width: 420px;
             margin: 25px auto;
-            .guding{
-                position: relative;
-                span {
-                position:absolute;
-                }
-            }
             span {
+                font-size: 15px;
                 padding: 10px;
                 border: 1px solid #cdcdcd;
                 color: #cdcdcd;
                 cursor: pointer;
+                &:hover {
+                    background: #7dcdf3 !important;
+                    color: #fff;
+                }
             }
         }
     }
@@ -584,8 +591,6 @@ export default {
 
 
 
-
-
 /*过渡动画的class*/
 
 .transition-div {
@@ -599,8 +604,6 @@ export default {
     text-align: center;
     font-size: 30px;
 }
-
-
 
 
 
@@ -637,7 +640,7 @@ export default {
 }
 
 .pagination span a {
-    padding: .5rem 1rem;
+    padding: .5rem;
     display: inline-block;
     border: 1px solid #ddd;
     background: #fff;
@@ -645,12 +648,13 @@ export default {
     color: #0E90D2;
 }
 
-.pagination span a:hover {
-    background: #eee;
+.pagination span:hover {
+    background: #cdcdcd !important;
 }
 
 .pagination span.active {
     background: #0E90D2;
     color: #fff !important;
-} //分页器结束
+} 
+//分页器结束
 </style>
