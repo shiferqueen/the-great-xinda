@@ -246,6 +246,7 @@ export default {
       }else{
         this.search = this.myData[this.now].providerName;
         this.$router.push({path:'/shopfront/'+this.id});
+        location.reload();
       }
     }
   },

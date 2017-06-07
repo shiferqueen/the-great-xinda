@@ -351,9 +351,10 @@ export default {
             }
             var _this = this
             Vue.nextTick(() => {
-                _this.selectedBlock = _this.blocks[0]
+                _this.selectedBlock = _this.blocks[6]
                 // 触发与 v-model相关的 input事件
                 _this.$emit('input', _this.info)
+                _this.list();
             })
         }
     },
