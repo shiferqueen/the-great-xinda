@@ -2,7 +2,7 @@
     <div>
     
         <div>
-            <p class="head_top">首页/财税服务</p>
+            <p class="head_top">首页/财税服务 {{ready}}</p>
         </div>
         <!--------------------商品部分------------------------------>
         <div class="goods-main">
@@ -190,6 +190,15 @@ export default {
  created() {
     //  this.getid();
     
+           
+
+
+            
+
+        },
+    computed: {
+        ...mapGetters(['getCartNum','getuser']),
+        ready(){
             let _this = this
             this.ajax.post("/xinda-api/product/package/detail", qs.stringify({
                 sId: this.$route.params.productId
@@ -211,7 +220,6 @@ export default {
                 _this.goodNum = data.goodNum;
                 _this.midNum = data.midNum;
                 _this.badNum = data.badNum;
-                 console.log("评价条数",res.data.data)
             });
 
             this.ajax.post("/xinda-api/product/judge/grid", qs.stringify({
@@ -219,15 +227,8 @@ export default {
             })).then(function (res) {
                 let data = res.data.data;
                 _this.content = data.content;
-                 console.log("评价详情",res.data.data);
             });
-
-
-            
-
-        },
-    computed: {
-        ...mapGetters(['getCartNum','getuser'])
+        }
     },
     methods: {
         ...mapGetters(['getstoreid']),
