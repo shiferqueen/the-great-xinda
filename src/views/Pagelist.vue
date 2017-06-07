@@ -48,13 +48,13 @@
                 <div class="content">
                     <div class="content_top">
                         <span>综合排序</span>
-                        <span>价格</span>
+                        <span @click='chicked'>{{prices}}</span>
                     </div>
                     <div class="content_top-t">
                         <div class="content-t-left">商品</div>
                         <div class="content-t-right">价格</div>
                     </div>
-
+    
                     <div class="con-main" v-for="(listeach,index) in listpage_ajax">
                         <div class="con-main-left">
                             <a :href="'#/secondproduct/'+listeach.id" @click="storeid(listeach.id)">
@@ -74,20 +74,22 @@
                         <div class="con-main-right">
                             <p @click="transif(index)">￥{{listeach.price}}</p>
                             <span @click="addCartNumb(listeach.id,getuser)">立即购买</span>
-                            <span @click="addCartNum(listeach.id,getuser)">加入购物车</span>
+                            <span @click="addCartNum(listeach.id,getuser,index)">加入购物车</span>
                             <transition name="trans">
-                                <div class="transition-div" v-if="transifs === index"></div>
+                                <div class="transition-div" v-if="transifs == index+1"> + 1</div>
                             </transition>
-                            
+                            <transition name="trans">
+                                <div class="transition-div" v-if="transifs == index + 'a'"> + 1</div>
+                            </transition>
+    
                         </div>
                     </div>
-                 
-                 
+    
                 </div>
                 <div class="bottom_page pagination">
-                    <span v-show="current != 0" @click="current-- && goto(current)">上一页</span>
-                    <span  v-for="index in pages" @click="goto(index)" :class="{'active':current == index}">{{index}}</span>
-                    <span  v-show="allpage != current" @click="current++ && goto(current++)">下一页</span>
+                    <span v-show="current != 0" @click="current-- && goto(current--)">上一页</span>
+                    <span v-for="index in pages" @click="goto(index)" :class="{'active':current == index}">{{index}}</span>
+                    <span v-show="allpage != current" @click="current++ && goto(current++)">下一页</span>
                 </div>
             </div>
             <div class="main_right">
@@ -108,497 +110,540 @@
                     <p>增值服务</p>
                 </div>
             </div>
-
+    
         </div>
     </div>
 </template>
 
 <script>
-    import provinces from '../provinces.js'
-    import Vue from 'vue'
-    import myhead from '../components/header'
-    import myfoot from '../components/footer'
-    import qs from 'qs'
-    import { mapActions, mapGetters } from 'vuex'
-    export default {
-        name: 'Pagelist',
-        components: {
-            myhead,
-            myfoot
-        },
-        data() {
+import provinces from '../provinces.js'
+import Vue from 'vue'
+import myhead from '../components/header'
+import myfoot from '../components/footer'
+import qs from 'qs'
+import { mapActions, mapGetters } from 'vuex'
+export default {
+    name: 'Pagelist',
+    components: {
+        myhead,
+        myfoot
+    },
+    data() {
+        return {
+            listpage_ajax: [],
+            listpage_ajax_new: [],
+            selectedProvince: provinces[0],
+            selectedCity: 0,
+            selectedBlock: 0,
+            cities: 0,
+            provinces,
+            blocks: 0,
+            transifs: 0,
+            current: 1,
+            showItem: 5,
+            allpage: 6,
+            number: 0,
+            start: true,
+            sorts: 0,
+            prices: '价格'
+        }
+
+    },
+
+    created() {
+        let _this = this
+        this.list();
+        // this.goto();
+        // ------------以下为省市区三级联动
+        // 数据初始化,默认选中北京市,默认选中第一个;北京市数据为总数据的前18个
+        let beijing = this.provinces.slice(0, 19)
+        this.cities = beijing.filter(item => {
+            if (item.level === 2) {
+                return true
+            }
+        })
+        this.selectedCity = this.cities[0]
+        this.blocks = beijing.filter(item => {
+            if (item.level === 3) {
+                return true
+            }
+        })
+        this.selectedBlock = this.blocks[0]
+        // ----------三级联动结束
+    },
+    computed: {
+        ...mapGetters(['getCartNum', 'getuser']),
+        info() {
             return {
-                listpage_ajax: [],
-                listpage_ajax_new: [],
-                selectedProvince: provinces[0],
-                selectedCity: 0,
-                selectedBlock: 0,
-                cities: 0,
-                provinces,
-                blocks: 0,
-                transifs: 0,
-                current:1,
-                showItem:5,
-                allpage:6,
-                number: 0,
-                start: true,
+                province: this.selectedProvince,
+                city: this.selectedCity,
+                block: this.selectedBlock
+            }
+        },
+
+
+        //  分页器部分
+        pages: function () {
+            let _this = this;
+            var pag = [];
+
+            //   if( this.current < this.showItem ){ //如果当前的激活的项 小于要显示的条数
+            //总页数和要显示的条数那个大就显示多少条
+            var i = _this.showItem;
+            while (_this.showItem) {
+                pag.unshift(_this.showItem--);
+            }
+            return pag
+        }
+
+    },
+    methods: {
+        ...mapActions(['setstoreid', 'refCartNum', 'user', 'popups']),
+
+        //加入购物车
+        addCartNum(id, uname, index) {
+            // this.transif = !this.transif;
+            let that = this;
+            if (uname == "") {
+                that.popups({
+                    headers: "当前尚未登录",
+                    content: "是否跳转到登录页面",
+                    ok() {
+
+                        that.$router.push({
+                            path: 'action/login'
+                        });
+                    }
+                })
+            } else {
+                var index = index + 1;
+                if (that.transifs === index) {
+                    this.transifs = index - '1' + 'a';
+                } else {
+                    that.transifs = index;
+                }
+
+                that.ajax.post("/xinda-api/cart/add", qs.stringify({
+                    id: id,
+                    num: 1
+                })).then(function (res) {
+                    that.refCartNum();
+
+                })
+            }
+        },
+        //立即购买
+        addCartNumb(id, uname) {
+            let that = this;
+                if (uname == "") {
+                that.popups({
+                    headers: "当前尚未登录",
+                    content: "是否跳转到登录页面",
+                    ok() {
+                        that.$router.push({
+                            path: 'action/login'
+                        });
+                    }
+                })
+            } else {
+                that.ajax.post("/xinda-api/cart/add", qs.stringify({
+                    id: id,
+                    num: 1
+                })).then(function (res) {
+                    that.refCartNum();
+                    that.$router.push({ name: 'shopping' });
+                })
+
             }
 
         },
-
-        created() {
+        //页面接口
+        list() {
             let _this = this
-            this.list();
-            // this.goto();
-            // ------------以下为省市区三级联动
-            // 数据初始化,默认选中北京市,默认选中第一个;北京市数据为总数据的前18个
-            let beijing = this.provinces.slice(0, 19)
-            this.cities = beijing.filter(item => {
-                if (item.level === 2) {
-                    return true
-                }
-            })
-            this.selectedCity = this.cities[0]
-            this.blocks = beijing.filter(item => {
-                if (item.level === 3) {
-                    return true
-                }
-            })
-            this.selectedBlock = this.blocks[0]
-            // ----------三级联动结束
-        },
-        computed: {
-            ...mapGetters(['getCartNum', 'getuser']),
-            info() {
-                return {
-                    province: this.selectedProvince,
-                    city: this.selectedCity,
-                    block: this.selectedBlock
-                }
-            },
-            filterlistpage_ajax: function () {
-                // `this` points to the vm instance
-                // var key = this.key;
-                // var listpage_ajax = this.listpage_ajax;
-                // return listpage_ajax.filter(function (listeach) {
-                //     return listeach.toLowerCase().indexOf(key.toLowerCase()) != -1
-                // });
-                console.log('你点击我');
-            },
-
-
-            //  分页器部分
-             pages:function(){
-                 let _this = this;
-                var pag = [];
-
-                //   if( this.current < this.showItem ){ //如果当前的激活的项 小于要显示的条数
-                       //总页数和要显示的条数那个大就显示多少条
-                       var i = _this.showItem;
-                       while(_this.showItem){
-                           pag.unshift(_this.showItem--);
-                       }
-                //    }else{ //当前页数大于显示页数了
-                //        var middle = this.current - Math.floor(this.showItem / 2 ),//从哪里开始
-                //            i = this.showItem;
-                //        if( middle >  (this.allpage - this.showItem)  ){
-                //            middle = (this.allpage - this.showItem) + 1
-                //        }
-                //        while(i--){
-                //            pag.push( middle++ );
-                //        }
-                //    }
-                 return pag
-               }
-
-        },
-        methods: {
-            ...mapActions(['setstoreid', 'refCartNum', 'user']),
-            
-            //加入购物车
-            addCartNum(id, uname) {
-                // this.transif = !this.transif;
-                if (uname == "") {
-                    this.$router.push({ path: 'action/login' });
-                } else {
-                    let that = this;
-                    this.ajax.post("/xinda-api/cart/add", qs.stringify({
-                        id: id,
-                        num: 1
-                    })).then(function (res) {
-                        that.refCartNum();
-                    })
-                }
-            },
-            //立即购买
-            addCartNumb(id, uname) {
-                if (uname == "") {
-                    this.$router.push({ path: 'action/login' });
-                } else {
-                    let that = this;
-                    this.ajax.post("/xinda-api/cart/add", qs.stringify({
-                        id: id,
-                        num: 1
-                    })).then(function (res) {
-                        that.refCartNum();
-                        that.$router.push({ name: 'shopping' });
-                    })
-
-                }
-
-            },
-            list(){
-                let _this = this
-                this.ajax.post("/xinda-api/product/package/grid", qs.stringify({
+            this.ajax.post("/xinda-api/product/package/grid", qs.stringify({
                 limit: 20,
                 start: _this.number,
-                })).then(function (res) {
-                    _this.listpage_ajax_new= res.data.data;
-                    console.log(res.data.data)
-                    _this.number = 0
-                    _this.isA = false
-                    _this.listpage_ajax = _this.listpage_ajax_new.slice(_this.number,_this.number+4)
-                });
-            },
-            goto:function(index){
-            
-                let _this = this
-                
-                if(index == this.current) return;
-                _this.current = index
-                //这里可以发送ajax请求
-                if(index ==6 ){
-                    index = 5
-                }
-                _this.number = (index-1)*4
-                _this.listpage_ajax = _this.listpage_ajax_new.slice(_this.number,_this.number+4)
-                console.log(index);
-                console.log(_this.number);
-           },
-            transif(index) {
-                var index = index;
-                console.log(this.transifs, index)
-                if (this.transifs === index) {
-                    this.transifs = false;
-                } else {
-                    this.transifs = index;
-                }
-                console.log(this.transifs, index)
-            },
-            storeid(index) {
-                this.setstoreid(index);
-            }
+                sort: _this.sorts,
+            })).then(function (res) {
+                _this.listpage_ajax_new = res.data.data;
+                _this.number = 0
+                _this.isA = false
+                _this.listpage_ajax = _this.listpage_ajax_new.slice(_this.number, _this.number + 4)
+            });
         },
-        watch: {
-            selectedProvince(newVal, oldVal) {
-                // 港澳台数据只有一级,特殊处理
-                if (newVal.sheng === '71' || newVal.sheng === '81' || newVal.sheng === '82') {
-                    this.cities = [newVal]
-                    this.blocks = [newVal]
-                } else {
-                    this.cities = this.provinces.filter(item => {
-                        if (item.level === 2 && item.sheng && newVal.sheng === item.sheng) {
-                            return true
-                        }
-                    })
-                }
-                var _this = this
-                // 此时在渲染DOM,渲染结束之后再选中第一个
-                Vue.nextTick(() => {
-                    _this.selectedCity = _this.cities[0]
-                    _this.$emit('input', _this.info)
-                })
-            },
-            selectedBlock() {
-                var _this = this
-                Vue.nextTick(() => {
-                    _this.$emit('input', _this.info)
-                })
-            },
-            selectedCity(newVal) {
-                // 选择了一个市,要选择区了 di是城市的代表,sheng
-                if (newVal.sheng === '71' || newVal.sheng === '81' || newVal.sheng === '82') {
-                    this.blocks = [newVal]
-                    this.cities = [newVal]
-                } else {
-                    this.blocks = this.provinces.filter(item => {
-                        if (item.level === 3 && item.sheng && item.sheng == newVal.sheng && item.di === newVal.di && item.name !== '市辖区') {
-                            return true
-                        }
-                    })
-                }
-                var _this = this
-                Vue.nextTick(() => {
-                    _this.selectedBlock = _this.blocks[0]
-                    // 触发与 v-model相关的 input事件
-                    _this.$emit('input', _this.info)
-                })
+        //分页器下一页方法
+        goto: function (index) {
+
+            let _this = this
+
+            if (index == this.current) return;
+            _this.current = index
+            //这里可以发送ajax请求
+            if (index == 6) {
+                index = 5
+            } else if (index == 0) {
+                index = -1
             }
+            _this.number = (index - 1) * 4
+            _this.listpage_ajax = _this.listpage_ajax_new.slice(_this.number, _this.number + 4)
+
+
+        },
+        //价格排序
+        chicked() {
+            let _this = this;
+            if (_this.sorts == 2) {
+                _this.sorts = 3;
+                _this.list();
+                _this.prices = '价格 ↓';
+            }
+            else {
+                _this.sorts = 2;
+                _this.list();
+                _this.prices = '价格 ↑';
+            }
+
         },
 
-    }
+
+
+        storeid(index) {
+            this.setstoreid(index);
+        },
+    },
+    watch: {
+        selectedProvince(newVal, oldVal) {
+            // 港澳台数据只有一级,特殊处理
+            if (newVal.sheng === '71' || newVal.sheng === '81' || newVal.sheng === '82') {
+                this.cities = [newVal]
+                this.blocks = [newVal]
+            } else {
+                this.cities = this.provinces.filter(item => {
+                    if (item.level === 2 && item.sheng && newVal.sheng === item.sheng) {
+                        return true
+                    }
+                })
+            }
+            var _this = this
+            // 此时在渲染DOM,渲染结束之后再选中第一个
+            Vue.nextTick(() => {
+                _this.selectedCity = _this.cities[0]
+                _this.$emit('input', _this.info)
+            })
+        },
+        selectedBlock() {
+            var _this = this
+            Vue.nextTick(() => {
+                _this.$emit('input', _this.info)
+            })
+        },
+        selectedCity(newVal) {
+            // 选择了一个市,要选择区了 di是城市的代表,sheng
+            if (newVal.sheng === '71' || newVal.sheng === '81' || newVal.sheng === '82') {
+                this.blocks = [newVal]
+                this.cities = [newVal]
+            } else {
+                this.blocks = this.provinces.filter(item => {
+                    if (item.level === 3 && item.sheng && item.sheng == newVal.sheng && item.di === newVal.di && item.name !== '市辖区') {
+                        return true
+                    }
+                })
+            }
+            var _this = this
+            Vue.nextTick(() => {
+                _this.selectedBlock = _this.blocks[0]
+                // 触发与 v-model相关的 input事件
+                _this.$emit('input', _this.info)
+            })
+        }
+    },
+
+}
 
 </script>
 
 <style lang="less" scoped>
-    .clear {
-        content: '';
-        display: block;
-        width: 0;
-        clear: both;
-    }
+.clear {
+    content: '';
+    display: block;
+    width: 0;
+    clear: both;
+}
 
-    .head_top {
-        width: 1205px;
-        margin: 25px auto 10px;
-        font-size: 14px;
-        color: #696969;
-    }
+.head_top {
+    width: 1205px;
+    margin: 25px auto 10px;
+    font-size: 14px;
+    color: #696969;
+}
 
-    .main {
-        width: 1200px;
-        margin: 0 auto;
-        &:after {
-            .clear;
-        }
-        .main_left {
+.main {
+    width: 1200px;
+    margin: 0 auto;
+    &:after {
+        .clear;
+    }
+    .main_left {
+        width: 950px;
+        float: left;
+        .navigation {
             width: 950px;
-            float: left;
-            .navigation {
-                width: 950px;
-                background: #f7f7f7;
-                border: 1px solid #cdcdcd;
-                .nav_line {
-                    width: 950px;
-                    border-bottom: 1px solid #cdcdcd;
-                    &:after {
-                        .clear;
-                    }
-                    &:nth-child(3) {
-                        border-bottom: 0 !important;
-                    }
-                    .nav_line_left {
-                        width: 100px;
-                        float: left;
-                        text-align: center;
-                        line-height: 42px;
-                        font-size: 16px;
-                        font-weight: 700;
-                        border-right: 1px solid #cdcdcd;
-                    }
-                    .nav_line_right {
-                        width: 842px;
-                        float: right;
-                        line-height: 38px;
-                        font-size: 16px;
-                        span {
-                            padding: 3px 15px;
-                            border-radius: 5px;
-                            margin: 0 18px;
-                            cursor: pointer;
-                            &:nth-child(1) {
-                                background: #2693d4;
-                                color: #fff;
-                            }
-                            &:hover {
-                                background: #2080b9;
-                            }
-                        }
-                        select {
-                            width: 90px;
-                            height: 20px;
-                            margin: 0 5px;
-                        }
-                    }
-                }
-            }
-            .content {
-                width: 950px;
-                margin-top: 25px;
-                border: 1px solid #cdcdcd;
-                .content_top {
-                    width: 950px;
-                    height: 40px;
-                    background: #f7f7f7;
-                    border-bottom: 1px solid #cdcdcd;
-                    span {
-                        text-align: center;
-                        line-height: 40px;
-                        padding: 12px 25px;
-                        color: #686868;
-                        font-size: 14px;
-                        cursor: pointer;
-                        &:first-child {
-                            background: #2693d4;
-                            color: #fff;
-                        }
-                    }
-                }
-                .content_top-t {
-                    width: 930px;
-                    height: 50px;
-                    margin: 0 auto;
-                    border-bottom: 1px solid #cdcdcd;
-                    &:after {
-                        .clear;
-                    }
-                    .content-t-left {
-                        line-height: 50px;
-                        padding: 0 35px;
-                        float: left;
-                        color: #686868;
-                        font-size: 14px;
-                    }
-                    .content-t-right {
-                        line-height: 50px;
-                        padding: 0 35px;
-                        float: right;
-                        color: #686868;
-                        font-size: 14px;
-                    }
-                }
-                .con-main {
-                    width: 930px;
-                    margin: 0 auto;
-                    border-bottom: 1px solid #cdcdcd;
-                    &:last-child {
-                        border-bottom: 0;
-                    }
-                    &:after {
-                        .clear;
-                    }
-                    .con-main-left {
-                        float: left;
-                        img {
-                            width: 100px;
-                            height: 100px;
-                            border: 1px solid #cdcdcd;
-                            margin: 15px 0;
-                        }
-                    }
-                    .con-main-middle {
-                        float: left;
-                        margin: 0 20px;
-                        h4 {
-                            margin: 15px 0;
-                        }
-                        p {
-                            width:410px;
-                            margin: 15px 0;
-                            color: #686868;
-                            font-size: 14px;
-                            span {
-                                margin-right: 70px;
-                            }
-                        }
-                    }
-                    .con-main-right {
-                        float: right;
-                        position: relative;
-                        p {
-                            font-size: 22px;
-                            color: red;
-                            margin: 25px 30px;
-                        }
-                        span {
-                            padding: 10px 17px;
-                            background: #2693d4;
-                            color: #fff;
-                            border-radius: 5px;
-                            cursor: pointer;
-                        }
-                    }
-                }
-            }
-            .bottom_page {
-                width: 400px;
-                margin: 25px auto;
-                span {
-                    padding: 10px;
-                    border: 1px solid #cdcdcd;
-                    color: #cdcdcd;
-                    cursor: pointer;
-                }
-            }
-        }
-        .main_right {
-            width: 237px;
-            float: right;
+            background: #f7f7f7;
             border: 1px solid #cdcdcd;
-            .border {
-                width: 220px;
-                height: 165px;
-                margin: 0 auto;
+            .nav_line {
+                width: 950px;
                 border-bottom: 1px solid #cdcdcd;
-                &:nth-child(4) {
-                    border-bottom: 0;
+                &:after {
+                    .clear;
                 }
-                img {
-                    margin: 10px 60px;
+                &:nth-child(3) {
+                    border-bottom: 0 !important;
                 }
-                p {
-                    margin: 5px 78px;
+                .nav_line_left {
+                    width: 100px;
+                    float: left;
+                    text-align: center;
+                    line-height: 42px;
                     font-size: 16px;
                     font-weight: 700;
-                    color: #666666;
+                    border-right: 1px solid #cdcdcd;
+                }
+                .nav_line_right {
+                    width: 842px;
+                    float: right;
+                    line-height: 38px;
+                    font-size: 16px;
+                    span {
+                        padding: 3px 15px;
+                        border-radius: 5px;
+                        margin: 0 18px;
+                        cursor: pointer;
+                        &:nth-child(1) {
+                            background: #2693d4;
+                            color: #fff;
+                        }
+                        &:hover {
+                            background: #2080b9;
+                        }
+                    }
+                    select {
+                        width: 90px;
+                        height: 20px;
+                        margin: 0 5px;
+                    }
                 }
             }
         }
+        .content {
+            width: 950px;
+            margin-top: 25px;
+            border: 1px solid #cdcdcd;
+            .content_top {
+                width: 950px;
+                height: 40px;
+                background: #f7f7f7;
+                border-bottom: 1px solid #cdcdcd;
+                span {
+                    text-align: center;
+                    line-height: 40px;
+                    padding: 12px 25px;
+                    color: #686868;
+                    font-size: 14px;
+                    cursor: pointer;
+                    &:first-child {
+                        background: #2693d4;
+                        color: #fff;
+                    }
+                }
+            }
+            .content_top-t {
+                width: 930px;
+                height: 50px;
+                margin: 0 auto;
+                border-bottom: 1px solid #cdcdcd;
+                &:after {
+                    .clear;
+                }
+                .content-t-left {
+                    line-height: 50px;
+                    padding: 0 35px;
+                    float: left;
+                    color: #686868;
+                    font-size: 14px;
+                }
+                .content-t-right {
+                    line-height: 50px;
+                    padding: 0 35px;
+                    float: right;
+                    color: #686868;
+                    font-size: 14px;
+                }
+            }
+            .con-main {
+                width: 930px;
+                margin: 0 auto;
+                border-bottom: 1px solid #cdcdcd;
+                &:last-child {
+                    border-bottom: 0;
+                }
+                &:after {
+                    .clear;
+                }
+                .con-main-left {
+                    float: left;
+                    img {
+                        width: 100px;
+                        height: 100px;
+                        border: 1px solid #cdcdcd;
+                        margin: 15px 0;
+                    }
+                }
+                .con-main-middle {
+                    float: left;
+                    margin: 0 20px;
+                    h4 {
+                        margin: 15px 0;
+                    }
+                    p {
+                        width: 410px;
+                        margin: 15px 0;
+                        color: #686868;
+                        font-size: 14px;
+                        span {
+                            margin-right: 70px;
+                        }
+                    }
+                }
+                .con-main-right {
+                    float: right;
+                    position: relative;
+                    p {
+                        font-size: 22px;
+                        color: red;
+                        margin: 25px 30px;
+                    }
+                    span {
+                        padding: 10px 17px;
+                        background: #2693d4;
+                        color: #fff;
+                        border-radius: 5px;
+                        cursor: pointer;
+                    }
+                }
+            }
+        }
+        .bottom_page {
+            width: 400px;
+            margin: 25px auto;
+            span {
+                padding: 10px;
+                border: 1px solid #cdcdcd;
+                color: #cdcdcd;
+                cursor: pointer;
+            }
+        }
     }
-
-    .teshuyangshi {
-        line-height: 78px !important;
+    .main_right {
+        width: 237px;
+        float: right;
+        border: 1px solid #cdcdcd;
+        .border {
+            width: 220px;
+            height: 165px;
+            margin: 0 auto;
+            border-bottom: 1px solid #cdcdcd;
+            &:nth-child(4) {
+                border-bottom: 0;
+            }
+            img {
+                margin: 10px 60px;
+            }
+            p {
+                margin: 5px 75px;
+                font-size: 16px;
+                font-weight: 700;
+                color: #666666;
+            }
+        }
     }
-    /*过渡动画的class*/
+}
 
-    .transition-div {
-        width: 110px;
-        height: 35px;
-        background: #2080b9;
-        border-radius: 8px;
-        z-index: -3;
-        position: absolute;
-        bottom: -8px;
-        right: 5px;
+.teshuyangshi {
+    line-height: 78px !important;
+}
+
+
+
+
+
+
+
+
+/*过渡动画的class*/
+
+.transition-div {
+    width: 110px;
+    height: 35px;
+    z-index: -3;
+    position: absolute;
+    bottom: -8px;
+    right: 5px;
+    color: #2693d4;
+    text-align: center;
+    font-size: 30px;
+}
+
+
+
+
+
+
+
+
+/*// 过渡动画*/
+
+.trans-enter-active {
+    animation: bounce-in 1.2s linear;
+}
+
+@keyframes bounce-in {
+    0% {
+        transform: translate(0px, 0px);
+        font-size: 40px;
     }
-    /*// 过渡动画*/
-
-    .trans-enter-active {
-        transition: all .3s ease;
+    50% {
+        transform: translate(100px, -400px);
+        font-size: 20px;
     }
-
-    .trans-leave-active {
-        transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+    100% {
+        transform: translate(200px, -800px);
+        font-size: 0px;
     }
+} //分页器
+.pagination {
+    position: relative;
+}
 
-    .trans-fade-enter,
-    .trans-leave-active {
-        transform: translate(100px,-100px);
-        opacity: 0;
-    }
-    //分页器
-    .pagination {
-        position: relative;
+.pagination span {
+    display: inline-block;
+    margin: 0 5px;
+}
 
-      }
-      .pagination span{
-        display: inline-block;
-        margin:0 5px;
-      }
-      .pagination span a{
-        padding:.5rem 1rem;
-        display:inline-block;
-        border:1px solid #ddd;
-        background:#fff;
+.pagination span a {
+    padding: .5rem 1rem;
+    display: inline-block;
+    border: 1px solid #ddd;
+    background: #fff;
 
-        color:#0E90D2;
-      }
-      .pagination span a:hover{
-        background:#eee;
-      }
-      .pagination span.active{
-        background:#0E90D2;
-        color:#fff !important;
-      }
-      //分页器结束
+    color: #0E90D2;
+}
+
+.pagination span a:hover {
+    background: #eee;
+}
+
+.pagination span.active {
+    background: #0E90D2;
+    color: #fff !important;
+} //分页器结束
 </style>

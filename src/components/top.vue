@@ -13,7 +13,7 @@
           <a href="#/action/register" class="blue" v-show="getuser==''?true:false">快速注册</a>
         </span>
         <span class="fr">
-          <a href="#/shopfront" class="blue">服务商入口</a>
+          <a href="#/shoplist" class="blue">服务商入口</a>
         </span>
         <span v-show=true class="fr top-myorder">
           <a href="#/member" v-show="getuser?true:false">我的订单</a>
