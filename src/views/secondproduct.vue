@@ -221,17 +221,24 @@ export default {
                 _this.content = data.content;
                  console.log("评价详情",res.data.data);
             });
-
-
-            
-
+            //跳转页面置顶
+            this.menu();
         },
     computed: {
         ...mapGetters(['getCartNum','getuser'])
     },
+
+    //跳转页面置顶
+    menu() {
+        window.scrollTo(0,0);
+      },
     methods: {
         ...mapGetters(['getstoreid']),
         ...mapActions(['refCartNum','user','popups']),
+        //跳转页面置顶
+        menu() {
+            window.scrollTo(0,0);
+          },
        
             //获取动态验证码
         getsrc() {
@@ -354,7 +361,7 @@ export default {
             this.goodsval++;
         },
         reduct: function () {
-            if (this.goodsval > 0) {
+            if (this.goodsval > 1) {
                 this.goodsval--;
             }
         },
