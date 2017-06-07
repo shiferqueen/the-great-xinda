@@ -11,7 +11,7 @@
             </div>
             <!------------------商品价格部分------------------>
             <div class="goods-middle">
-            <h3 class="">{{providerProduct.serviceName}}</h3>
+                <h3 class="">{{providerProduct.serviceName}}</h3>
                 <p class="word-size">{{providerProduct.serviceInfo}}</p>
                 <div class="bg">
                     <p class="bg-p">市场价：
@@ -43,12 +43,14 @@
                 </div>
                 <div class="goods-r-bottom">
                     <span>
-                        <a href="#/shopfront">查看服务商</a>
+                        <a :href="'#/shopfront/'+provider.id">查看服务商</a>
                     </span>
                 </div>
             </div>
             <div class="consult-box" v-show="bSign">
-                <div class="consult-box-title">&nbsp &nbsp 免费电话咨询<span @click="closeDiv">X</span></div>
+                <div class="consult-box-title">&nbsp &nbsp 免费电话咨询
+                    <span @click="closeDiv">×</span>
+                </div>
                 <div></div>
                 <p class="phonemsg">{{phonemsg}}</p>
                 <div class="entry-num">
@@ -75,13 +77,14 @@
         <!-----------内容切换-------------------->
         <div class="main-bottom">
             <div class="main-nav">
-                <span class="con1" @click="server()">服务内容</span><span class="con2" @click="evaluate()">商品评价</span>
+                <span class="con1" @click="server()">服务内容</span>
+                <span class="con2" @click="evaluate()">商品评价</span>
             </div>
     
-            <div class="main-con1" v-show="con1" >
-                <p v-html="providerProduct.serviceContent" ></p>
-                <p v-html="provider.providerInfo" ></p>
-                
+            <div class="main-con1" v-show="con1">
+                <p v-html="providerProduct.serviceContent"></p>
+                <p v-html="provider.providerInfo"></p>
+    
             </div>
     
             <div class="main-con2" v-show="con2">
@@ -124,17 +127,23 @@
                 <div class="main-con2-m1" v-show="good">
                     <div class="main-m-l">{{content}}</div>
                     <div class="main-m-m"></div>
-                    <div class="main-m-r"><img src=""></div>
+                    <div class="main-m-r">
+                        <img src="">
+                    </div>
                 </div>
                 <div class="main-con2-m2" v-show="mid">
                     <div class="main-m-l"></div>
                     <div class="main-m-m"></div>
-                     <div class="main-m-r"><img src=""></div>
+                    <div class="main-m-r">
+                        <img src="">
+                    </div>
                 </div>
                 <div class="main-con2-m3" v-show="bad">
                     <div class="main-m-l"></div>
                     <div class="main-m-m"></div>
-                     <div class="main-m-r"><img src=""></div>
+                    <div class="main-m-r">
+                        <img src="">
+                    </div>
                 </div>
             </div>
         </div>
@@ -153,43 +162,73 @@ export default {
         myhead,
         myfoot
     },
-    data() {   
+    data() {
         return {
-            imgsrc:'/xinda-api/ajaxAuthcode',//图片验证接口
-            imgcode:'',  //图片验证码
-            cellphone:'',  //手机号
-            testphone:/^1[3|4|5|7|8][0-9]{9}$/,
+            imgsrc: '/xinda-api/ajaxAuthcode',//图片验证接口
+            imgcode: '',  //图片验证码
+            cellphone: '',  //手机号
+            testphone: /^1[3|4|5|7|8][0-9]{9}$/,
             msg: '',
-            phonemsg:'',
+            phonemsg: '',
             con1: true,
             con2: false,
             good: true,
             mid: false,
             bad: false,
-            bSign:false,
+            bSign: false,
             goodsval: 1,
-            reciprocal:60,//等待验证时间
-            yanzheng:true,
-            stop:'',//动画停止参数
-            product:{
-                img:'/static/e3a93cf9c3094fa6afb5b643c4f8d30f.png'
+            reciprocal: 60,//等待验证时间
+            yanzheng: true,
+            stop: '',//动画停止参数
+            product: {
+                img: '/static/e3a93cf9c3094fa6afb5b643c4f8d30f.png'
             },
-            providerProduct:{},
-            providerRegionText:{},
-            provider:{},
-            goodNum:{},
-            badNum:{},
-            midNum:{},
-            content:{},
+            providerProduct: {},
+            providerRegionText: {},
+            provider: {},
+            goodNum: {},
+            badNum: {},
+            midNum: {},
+            content: {},
             assess: [],
-            tp:"http://115.182.107.203:8088/xinda/pic"
+            tp: "http://115.182.107.203:8088/xinda/pic"
         }
     },
     //获取接口
- created() {
-    //  this.getid();
-    
-            let _this = this
+    created() {
+        //  this.getid();
+        console.log('商品详情数据', this.$route.params.productId);
+        let _this = this
+        this.ajax.post("/xinda-api/product/package/detail", qs.stringify({
+            sId: this.$route.params.productId
+        })).then(function (res) {
+            let data = res.data.data;
+            data.product.img = _this.tp + data.product.img;
+            _this.product = data.product;
+            _this.providerProduct = data.providerProduct;
+            _this.providerRegionText = data.providerRegionText;
+            _this.provider = data.provider;
+        });
+
+
+
+        this.ajax.post("/xinda-api/product/judge/detail", qs.stringify({
+            serviceId: this.$route.params.productId
+        })).then(function (res) {
+            let data = res.data.data;
+            _this.goodNum = data.goodNum;
+            _this.midNum = data.midNum;
+            _this.badNum = data.badNum;
+            console.log("评价条数", res.data.data)
+        });
+
+        this.ajax.post("/xinda-api/product/judge/grid", qs.stringify({
+            serviceId: this.$route.params.productId
+        })).then(function (res) {
+            let data = res.data.data;
+            _this.content = data.content;
+            console.log("评价详情", res.data.data);
+        });
             this.ajax.post("/xinda-api/product/package/detail", qs.stringify({
                 sId: this.$route.params.productId
             })).then(function (res) {
@@ -200,91 +239,68 @@ export default {
                 _this.providerRegionText = data.providerRegionText;
                 _this.provider = data.provider;
             });
-
-
-
-             this.ajax.post("/xinda-api/product/judge/detail", qs.stringify({
-               serviceId:this.$route.params.productId
-            })).then(function (res) {
-                let data = res.data.data;
-                _this.goodNum = data.goodNum;
-                _this.midNum = data.midNum;
-                _this.badNum = data.badNum;
-                 console.log("评价条数",res.data.data)
-            });
-
-            this.ajax.post("/xinda-api/product/judge/grid", qs.stringify({
-               serviceId:this.$route.params.productId
-            })).then(function (res) {
-                let data = res.data.data;
-                _this.content = data.content;
-                 console.log("评价详情",res.data.data);
-            });
-
-
-            
-
-        },
+    },
     computed: {
-        ...mapGetters(['getCartNum','getuser'])
+        ...mapGetters(['getCartNum', 'getuser'])
     },
     methods: {
         ...mapGetters(['getstoreid']),
+        //获取动态验证码
         ...mapActions(['refCartNum','user','popups']),
-
+       
             //获取动态验证码
         getsrc() {
             this.imgsrc = '/xinda-api/ajaxAuthcode?' + Math.random()
         },
         //开始免费咨询
-        goinfor(){
+        goinfor() {
             //
         },
 
         //获取短信button
 
-        startReciprocal(){
+        startReciprocal() {
             let that = this
-            that.stop = setInterval(function(){
-                if(that.reciprocal ==0 ){
+            that.stop = setInterval(function () {
+                if (that.reciprocal == 0) {
                     clearInterval(that.stop);
                     that.yanzheng = true;
                     that.reciprocal = 60;
                 }
                 that.reciprocal--;
-            },1000)
+            }, 1000)
         },
         huoqu() {
             let _this = this;
-            if(_this.testphone.test(_this.cellphone) == false){
-                 _this.phonemsg="手机号码不正确，请重新输入";
-            }else{
-                _this.phonemsg="";
+            if (_this.testphone.test(_this.cellphone) == false) {
+                _this.phonemsg = "手机号码不正确，请重新输入";
+            } else {
+                _this.phonemsg = "";
             }
             this.ajax.post('/xinda-api/register/sendsms', qs.stringify({ //发送短信接口
-               cellphone: this.cellphone,
-               smsType:1,
-               imgCode:this.imgcode,
-            })).then(function(data) {
-                    // console.log("短信",data.data)
-                    _this.status = data.data.status;
-                    _this.msg = data.data.msg;
-                    if (data.data.status == 1) {
-                        _this.yanzheng = false;
-                        _this.startReciprocal();
-                    }else if(data.data.status == -1){
-                        _this.getsrc();
-                    }
+                cellphone: this.cellphone,
+                smsType: 1,
+                imgCode: this.imgcode,
+            })).then(function (data) {
+                // console.log("短信",data.data)
+                _this.status = data.data.status;
+                _this.msg = data.data.msg;
+                if (data.data.status == 1) {
+                    _this.yanzheng = false;
+                    _this.startReciprocal();
+                } else if (data.data.status == -1) {
+                    _this.getsrc();
+                }
 
-                });
+            });
         },
-        
+
 
 
         //服务，评价切换方法
         server: function () {
             this.con1 = true,
-            this.con2 = false
+                this.con2 = false
             var con1 = document.getElementsByClassName('con1')[0];
             var con2 = document.getElementsByClassName('con2')[0];
             con1.style.color = '#fff';
@@ -294,7 +310,7 @@ export default {
         },
         evaluate: function () {
             this.con1 = false,
-            this.con2 = true
+                this.con2 = true
             var con2 = document.getElementsByClassName('con2')[0];
             var con1 = document.getElementsByClassName('con1')[0];
             con2.style.color = '#fff';
@@ -303,10 +319,10 @@ export default {
             con1.style.backgroundColor = '#f7f7f7';
         },
         //好评，中评，差评切换
-         goodn: function () {
+        goodn: function () {
             this.good = true,
-            this.mid = false,
-            this.bad = false
+                this.mid = false,
+                this.bad = false
             var good = document.getElementsByClassName('good')[0];
             var mid = document.getElementsByClassName('mid')[0];
             var bad = document.getElementsByClassName('bad')[0];
@@ -316,12 +332,12 @@ export default {
             mid.style.backgroundColor = '#f7f7f7';
             bad.style.color = '#686868';
             bad.style.backgroundColor = '#f7f7f7';
-        
-         },
+
+        },
         midn: function () {
             this.good = false,
-            this.mid = true,
-            this.bad = false
+                this.mid = true,
+                this.bad = false
             var good = document.getElementsByClassName('good')[0];
             var mid = document.getElementsByClassName('mid')[0];
             var bad = document.getElementsByClassName('bad')[0];
@@ -331,12 +347,12 @@ export default {
             mid.style.backgroundColor = '#2693d4';
             bad.style.color = '#686868';
             bad.style.backgroundColor = '#f7f7f7';
-        
+
         },
-         badn: function () {
+        badn: function () {
             this.good = false,
-            this.mid = false,
-            this.bad = true
+                this.mid = false,
+                this.bad = true
             var good = document.getElementsByClassName('good')[0];
             var mid = document.getElementsByClassName('mid')[0];
             var bad = document.getElementsByClassName('bad')[0];
@@ -358,12 +374,12 @@ export default {
             }
         },
 
-         goon(){
+        goon() {
             this.bSign = true
         },
-        closeDiv(){
+        closeDiv() {
             this.bSign = false
-            },
+        },
 
         addProducts(uname) {
             let that = this;
@@ -378,13 +394,13 @@ export default {
             }else{
                 
                 var id = that.$route.params.productId;
-                this.ajax.post("/xinda-api/cart/add", qs.stringify({
+                this.ajax.post("da-api/cart/add", qs.stringify({
                     id: id,
                     num: 1
 
                 })).then(function (res) {
                         that.refCartNum();
-                        that.ajax.post("/xinda-api/cart/set", qs.stringify({
+                        that.ajax.post("da-api/cartt", qs.stringify({
                         id:id,
                         num:that.goodsval
                     
@@ -408,13 +424,13 @@ export default {
             }else{
                 let that = this
                 var id = that.$route.params.productId;
-                this.ajax.post("/xinda-api/cart/add", qs.stringify({
+                this.ajax.post("da-api/cart/add", qs.stringify({
                     id: id,
                     num: 1
 
                 })).then(function (res) {
                         that.refCartNum();
-                        that.ajax.post("/xinda-api/cart/set", qs.stringify({
+                        that.ajax.post("da-api/cartt", qs.stringify({
                         id:id,
                         num:that.goodsval
                     
@@ -428,7 +444,6 @@ export default {
              
 
         },
-
 
     }
 }
@@ -573,6 +588,7 @@ export default {
         }
     }
 }
+
 .consult-box {
     width: 645px;
     height: 420px;
@@ -591,9 +607,14 @@ export default {
         line-height: 44px;
         font-size: 14px;
         span {
+            display: inline-block;
             margin-left: 508px;
-            font-size: 12px;
+            font-size: 26px;
             cursor: pointer;
+            &:hover {
+                transform: rotate(360deg);
+                transition: transform 1.2s;
+            }
         }
     }
     .phonemsg {
@@ -627,11 +648,12 @@ export default {
             width: 190px;
             height: 33px;
         }
-        .button,.disabled-button {
-                width: 110px;
-                height: 35px;
-                margin-left: 10px;
-                border-radius: 3px;
+        .button,
+        .disabled-button {
+            width: 110px;
+            height: 35px;
+            margin-left: 10px;
+            border-radius: 3px;
         }
     }
     .begin-infor {
@@ -640,7 +662,7 @@ export default {
         border-radius: 5px;
         background-color: #4eb5ba;
         margin-top: 20px;
-        margin-left: 170px; 
+        margin-left: 170px;
         line-height: 33px;
         text-align: center;
         color: #fff;
@@ -778,7 +800,9 @@ export default {
                 line-height: 30px;
             }
         }
-        .main-con2-m1,.main-con2-m2,.main-con2-m3{
+        .main-con2-m1,
+        .main-con2-m2,
+        .main-con2-m3 {
             width: 1195px;
             height: 120px;
             border-bottom: 1px solid #cdcdcd;
@@ -801,7 +825,7 @@ export default {
                 float: right;
                 width: 270px;
                 text-align: center;
-                img{
+                img {
                     border-radius: 50%;
                     width: 70px;
                     height: 70px;

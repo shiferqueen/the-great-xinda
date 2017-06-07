@@ -193,16 +193,6 @@ export default {
             while (_this.showItem) {
                 pag.unshift(_this.showItem--);
             }
-            //    }else{ //当前页数大于显示页数了
-            //        var middle = this.current - Math.floor(this.showItem / 2 ),//从哪里开始
-            //            i = this.showItem;
-            //        if( middle >  (this.allpage - this.showItem)  ){
-            //            middle = (this.allpage - this.showItem) + 1
-            //        }
-            //        while(i--){
-            //            pag.push( middle++ );
-            //        }
-            //    }
             return pag
         }
 
@@ -569,7 +559,7 @@ export default {
                 margin: 10px 60px;
             }
             p {
-                margin: 5px 78px;
+                margin: 5px 75px;
                 font-size: 16px;
                 font-weight: 700;
                 color: #666666;

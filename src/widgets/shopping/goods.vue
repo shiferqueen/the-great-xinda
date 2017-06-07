@@ -181,9 +181,7 @@
             let that = this;
             that.ajax.post('/xinda-api/cart/list').then(function(data) {
                 var data = data.data.data;
-
                 that.listdatas = data;
-                console.log(that.listdatas)
                 that.shoppingnum = data.length;
 
             });

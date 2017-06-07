@@ -34,7 +34,7 @@
                     <span @click="addProducts(getuser)">加入购物车</span>
                 </div>
             </div>
-             <!----------------服务商咨询部分-------------->
+            <!----------------服务商咨询部分-------------->
             <div class="goods-right">
                 <div class="goods-r-top">
                     <h2>顶级服务商</h2>
@@ -43,15 +43,16 @@
                 </div>
                 <div class="goods-r-bottom">
                     <span>
-                        <a href="#/shopfront">查看服务商</a>
+                        <a :href="'#/shopfront/'+provider.id">查看服务商</a>
                     </span>
                 </div>
             </div>
             <div class="consult-box" v-show="bSign">
                 <div class="consult-box-title">&nbsp &nbsp 免费电话咨询<span @click="closeDiv">X</span></div>
                 <div></div>
+                <p class="phonemsg">{{phonemsg}}</p>
                 <div class="entry-num">
-                    <input type="input" placeholder="请输入手机号">
+                    <input type="input" v-model="cellphone" placeholder="请输入手机号">
                 </div>
                 <div class="entry-logo">
                     <input type="input" v-model="imgcode" placeholder="请输入图形验证码">
@@ -59,7 +60,8 @@
                 </div>
                 <div class="entry-code">
                     <input type="input" placeholder="请输入验证码">
-                    <button>获取验证码</button>
+                    <input class="button" type="button" v-if="yanzheng" value="获取验证码" @click="huoqu">
+                    <input class="disabled-button" type="button" v-else :value="reciprocal + 's后重新发送'" @click="huoqu" disabled>
                 </div>
                 <div class="begin-infor" @click="goinfor">开始免费咨询</div>
                 <p class="promease">本次电话咨询完全免费，我们将对你的号码严格保密，请放心使用!</p>
@@ -81,7 +83,6 @@
                 <p v-html="provider.providerInfo" ></p>
               <p v-html="providerProduct.serviceInfo" ></p>
                 <p v-html="provider.providerInfo" ></p>
-                
             </div>
     
             <div class="main-con2" v-show="con2">
@@ -155,9 +156,12 @@ export default {
     },
     data() {   
         return {
-            imgsrc:'/xinda-api/ajaxAuthcode',
-            imgcode:'',
-            msg: '数据',
+            imgsrc:'/xinda-api/ajaxAuthcode',//图片验证接口
+            imgcode:'',  //图片验证码
+            cellphone:'',  //手机号
+            testphone:/^1[3|4|5|7|8][0-9]{9}$/,
+            msg: '',
+            phonemsg:'',
             con1: true,
             con2: false,
             good: true,
@@ -165,6 +169,9 @@ export default {
             bad: false,
             bSign:false,
             goodsval: 1,
+            reciprocal:60,//等待验证时间
+            yanzheng:true,
+            stop:'',//动画停止参数
             product:{
                 img:'/static/e3a93cf9c3094fa6afb5b643c4f8d30f.png'
             },
@@ -182,7 +189,7 @@ export default {
     //获取接口
  created() {
     //  this.getid();
-   
+    
             let _this = this
             this.ajax.post("/xinda-api/product/package/detail", qs.stringify({
                 sId: this.$route.params.productId
@@ -215,6 +222,9 @@ export default {
                  console.log("评价详情",res.data.data);
             });
 
+
+            
+
         },
     computed: {
         ...mapGetters(['getCartNum','getuser'])
@@ -222,7 +232,7 @@ export default {
     methods: {
         ...mapGetters(['getstoreid']),
         ...mapActions(['refCartNum','user','popups']),
-
+       
             //获取动态验证码
         getsrc() {
             this.imgsrc = '/xinda-api/ajaxAuthcode?' + Math.random()
@@ -231,6 +241,45 @@ export default {
         goinfor(){
             //
         },
+
+        //获取短信button
+
+        startReciprocal(){
+            let that = this
+            that.stop = setInterval(function(){
+                if(that.reciprocal ==0 ){
+                    clearInterval(that.stop);
+                    that.yanzheng = true;
+                    that.reciprocal = 60;
+                }
+                that.reciprocal--;
+            },1000)
+        },
+        huoqu() {
+            let _this = this;
+            if(_this.testphone.test(_this.cellphone) == false){
+                 _this.phonemsg="手机号码不正确，请重新输入";
+            }else{
+                _this.phonemsg="";
+            }
+            this.ajax.post('/xinda-api/register/sendsms', qs.stringify({ //发送短信接口
+               cellphone: this.cellphone,
+               smsType:1,
+               imgCode:this.imgcode,
+            })).then(function(data) {
+                    // console.log("短信",data.data)
+                    _this.status = data.data.status;
+                    _this.msg = data.data.msg;
+                    if (data.data.status == 1) {
+                        _this.yanzheng = false;
+                        _this.startReciprocal();
+                    }else if(data.data.status == -1){
+                        _this.getsrc();
+                    }
+
+                });
+        },
+        
 
 
         //服务，评价切换方法
@@ -548,6 +597,10 @@ export default {
             cursor: pointer;
         }
     }
+    .phonemsg {
+        margin-left: 70px;
+        color: red
+    }
     .entry-num {
         margin-top: 28px;
         margin-left: 170px;
@@ -575,10 +628,11 @@ export default {
             width: 190px;
             height: 33px;
         }
-        button {
-                width: 80px;
+        .button,.disabled-button {
+                width: 110px;
                 height: 35px;
                 margin-left: 10px;
+                border-radius: 3px;
         }
     }
     .begin-infor {
