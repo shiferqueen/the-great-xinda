@@ -11,10 +11,7 @@
         </li>
         <li class="username">
             <span>姓名：</span>
-<<<<<<< HEAD
             <input class="c-t" value=""/>
-=======
->>>>>>> 16db1df0f7205f8ab9cf2718b5c8a9238d575fb5
             <input class="c-t" v-model="uesrname" placeholder="请输入姓名"/>
         </li>
         <li class="sex">
