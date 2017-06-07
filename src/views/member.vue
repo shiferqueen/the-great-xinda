@@ -31,21 +31,6 @@
         </div>
         <router-view></router-view>
     </div>
-        <!--<div class="page_next">
-            <span>上一页</span>
-            <span>1</span>
-
-
-
-
-
-
-
-
-
-            
-            <span>下一页</span>
-        </div>-->
   </div>
 </template>
 
@@ -216,7 +201,7 @@ export default {
 }
    .main{
        width: 1200px;
-       height: 676px;
+    //    height: 676px;
        margin: 0 auto;
        &:after{
            content:'';
@@ -250,7 +235,7 @@ export default {
                    margin-left: 70px;
                }span{
                    display: block;
-                   margin-left: 70px;
+                   text-align: center;
                }
            }div:last-child{
                margin-top: 9px;
