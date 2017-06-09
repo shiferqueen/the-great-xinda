@@ -1,6 +1,6 @@
 <template>
     <Row>
-        <Col span="6" :xs="{ span: 0, offset: 0 }" :sm="{ span: 24, offset:0 }">
+        <Col :xs="{ span: 0, offset: 0 }" :sm="{ span: 24, offset:0 }">
             <div class="gongshang">
               <div class="zhunzi">
                 ©Copyright 2016 北京信达科技有限公司 京ICP备 16011621号

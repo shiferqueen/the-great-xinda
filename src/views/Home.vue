@@ -1,143 +1,202 @@
 <template>
-  <div>
-    <!---------------轮播---------------------------->
-    <div class="advertisment">
-        <div class="swiper-container">
-            <swiper :options="swiperOption">
-                    <swiper-slide>
-                        <a href="javascript:void(0)">
-                            <img src="../images/index/timg.jpg" width="100%" height="400" />
-                        </a>
-                    </swiper-slide>
-                    <swiper-slide>
-                        <a href="javascript:void(0)">
-                            <img src="../images/index/timg (1).jpg" width="100%" height="400" />
-                        </a>
-                    </swiper-slide>
-                    <swiper-slide>
-                        <a href="javascript:void(0)">
-                            <img src="../images/index/timg (2).jpg" width="100%" height="400" />
-                        </a>
-                    </swiper-slide>
-                    <swiper-slide>
-                        <a href="javascript:void(0)">
-                            <img src="../images/index/timg (3).jpg" width="100%" height="400" />
-                        </a>
-                    </swiper-slide>
-                    <div class="swiper-pagination" slot="pagination">
-                    </div>
-              </swiper>
-            <!-- 如果需要分页器 -->
+  <Row>
+    <Col :xs="{ span: 0}" :sm="{ span: 24}">
+      <!---------------轮播---------------------------->
+      <div class="advertisment">
+          <div class="swiper-container">
+              <swiper :options="swiperOption">
+                      <swiper-slide>
+                          <a href="javascript:void(0)">
+                              <img src="../images/index/timg.jpg" width="100%" height="400" />
+                          </a>
+                      </swiper-slide>
+                      <swiper-slide>
+                          <a href="javascript:void(0)">
+                              <img src="../images/index/timg (1).jpg" width="100%" height="400" />
+                          </a>
+                      </swiper-slide>
+                      <swiper-slide>
+                          <a href="javascript:void(0)">
+                              <img src="../images/index/timg (2).jpg" width="100%" height="400" />
+                          </a>
+                      </swiper-slide>
+                      <swiper-slide>
+                          <a href="javascript:void(0)">
+                              <img src="../images/index/timg (3).jpg" width="100%" height="400" />
+                          </a>
+                      </swiper-slide>
+                      <div class="swiper-pagination" slot="pagination">
+                      </div>
+                </swiper>
+              <!-- 如果需要分页器 -->
 
-          <!-- 如果需要导航按钮 -->
-          <!--<div class="swiper-button-prev"></div>
-          <div class="swiper-button-next"></div>-->
-        </div> 
-  </div>
-  <!------------ 明星产品推荐---------------------->
-  <div class="label">
-    <div class="lab-containt">
-        <p>明星产品推荐</p>
-        <span></span>
+            <!-- 如果需要导航按钮 -->
+            <!--<div class="swiper-button-prev"></div>
+            <div class="swiper-button-next"></div>-->
+          </div> 
+    </div>
+    <!------------ 明星产品推荐---------------------->
+    <div class="label">
+      <div class="lab-containt">
+          <p>明星产品推荐</p>
+          <span></span>
+      </div>
+    </div>
+    <!------内容------>
+    <div class="recommend">
+      <div class="recom-containt">
+        <ul class="clear">
+          <li class="fl" v-for="(massage,index) in da">
+            <a href="#/pagelist">
+              <img :src="imgsrcfront+massage.providerImg">
+              <h4>{{massage.providerName}}</h4>
+              <p>{{massage.serviceName}}</p>
+              <div><span>{{massage.price}}</span>{{massage.unit}}</div>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <!------初创企业必备-------->
+    <div class="label">
+      <div class="lab-containt">
+          <p>初创企业必备</p>
+          <span></span>
+      </div>
+    </div>
+    <!------内容------>
+    <div class="startbusiness">
+      <div class="stabus-containt">
+        <ul class="clear">
+          <li class="fl" v-for="(mas,index) in dat">
+            <a href="#/pagelist">
+              <img :src="imgsrcfront+mas.providerImg">
+              <h4>{{mas.providerName}}</h4>
+              <p>{{mas.serviceInfo}}</p>
+              <div><span>{{mas.price}}</span>{{mas.unit}}</div>
+              <button>查看详情</button>
+            </a>
+          </li>
+          
+        </ul>
+      </div>
+    </div>
+    <!------知识产权-------->
+    <div class="label">
+      <div class="lab-containt">
+          <p>知识产权</p>
+          <span></span>
+      </div>
+    </div>
+    <!------内容------>
+  <div class="intellproperty">
+    <div class="intprop-containt">
+        <img src="../images/index/u82.png" class="fl image1">
+        <img src="../images/index/u84.png" class="fl image2">
+        <img src="../images/index/u86.png" class="fl image3">
+        <img src="../images/index/u88.png" class="fl image4">
+        <img src="../images/index/u100.png" class="fl image5">
     </div>
   </div>
-  <!------内容------>
-  <div class="recommend">
-    <div class="recom-containt">
-      <ul class="clear">
-        <li class="fl" v-for="(massage,index) in da">
-          <a href="#/pagelist">
-            <img :src="imgsrcfront+massage.providerImg">
-            <h4>{{massage.providerName}}</h4>
-            <p>{{massage.serviceName}}</p>
-            <div><span>{{massage.price}}</span>{{massage.unit}}</div>
-          </a>
+  <!------推荐服务商-------->
+    <div class="label">
+      <div class="lab-containt">
+          <div>推荐服务商</div>
+          <p>推荐服务</p>
+          <span></span>
+      </div>
+    </div>
+    <!------内容------>
+    <div class="providers">
+      <div class="prov-containt">
+        <ul class="clear">
+          <li class="fl" v-for="(mas,index) in dat">
+            <a href="#/pagelist">
+              <img :src="imgsrcfront+mas.providerImg">
+              <h4>{{mas.providerName}}</h4>
+              <p class="fz15">服务指数：五星</p>
+              <p class="fz18">提供的服务：{{mas.serviceName}}</p>
+              <button class="fl padbot">发明驳回复审</button>
+              <button class="fl padbot">高新企业担保认定</button>
+              <button class="fl">软件著作权登记</button>
+              <button class="fl">商标快速注册</button>                                    
+            </a>
+          </li>     
+        </ul>
+      </div>
+    </div>
+    <!------合作伙伴-------->
+    <div class="label">
+      <div class="lab-containt">
+          <p>合作伙伴</p>
+          <span></span>
+      </div>
+    </div>
+    <!------内容------>
+    <div class="partner">
+      <div class="partner-containt">
+        <img src="../images/index/u246.png">
+      </div>
+    </div>
+  </Col>
+  <!--这是手机端首页-->
+  <!--这是手机端头部-->
+  <Col :xs="{ span: 24}" :sm="{ span: 0}">
+    <div class="phone_head">
+        <Col class="ph_head_left" span="7">
+            <Icon type="chevron-down"></Icon>
+            <span>北京市</span>
+        </Col>
+        <Col class="ph_head_right" span="17">
+            <h1 class="fl">信达</h1>
+        </Col>
+    </div>
+  </Col>
+  <Col :xs="{ span: 24}" :sm="{ span: 0}">
+    <div class="swiper-container_phone">
+        <swiper :options="swiperOption">
+            <swiper-slide>
+                <a href="javascript:void(0)">
+                    <img src="../images/index/timg.jpg" width="100%" height="250" />
+                </a>
+            </swiper-slide>
+            <swiper-slide>
+                <a href="javascript:void(0)">
+                    <img src="../images/index/timg (1).jpg" width="100%" height="250" />
+                </a>
+            </swiper-slide>
+            <swiper-slide>
+                <a href="javascript:void(0)">
+                    <img src="../images/index/timg (2).jpg" width="100%" height="250" />
+                </a>
+            </swiper-slide>
+            <swiper-slide>
+                <a href="javascript:void(0)">
+                    <img src="../images/index/timg (3).jpg" width="100%" height="250" />
+                </a>
+            </swiper-slide>
+            <div class="swiper-pagination" slot="pagination">
+            </div>
+        </swiper>
+    </div>
+    <div class="phone_coin">
+      <ul>
+        <li>
+          <div>
+
+          </div>
+          <p></p>
         </li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
       </ul>
-    </div>
-  </div>
-  <!------初创企业必备-------->
-  <div class="label">
-    <div class="lab-containt">
-        <p>初创企业必备</p>
-        <span></span>
-    </div>
-  </div>
-  <!------内容------>
-  <div class="startbusiness">
-    <div class="stabus-containt">
-      <ul class="clear">
-        <li class="fl" v-for="(mas,index) in dat">
-          <a href="#/pagelist">
-            <img :src="imgsrcfront+mas.providerImg">
-            <h4>{{mas.providerName}}</h4>
-            <p>{{mas.serviceInfo}}</p>
-            <div><span>{{mas.price}}</span>{{mas.unit}}</div>
-            <button>查看详情</button>
-          </a>
-        </li>
-        
-      </ul>
-    </div>
-  </div>
-  <!------知识产权-------->
-  <div class="label">
-    <div class="lab-containt">
-        <p>知识产权</p>
-        <span></span>
-    </div>
-  </div>
-  <!------内容------>
- <div class="intellproperty">
-   <div class="intprop-containt">
-      <img src="../images/index/u82.png" class="fl image1">
-      <img src="../images/index/u84.png" class="fl image2">
-      <img src="../images/index/u86.png" class="fl image3">
-      <img src="../images/index/u88.png" class="fl image4">
-      <img src="../images/index/u100.png" class="fl image5">
-   </div>
- </div>
- <!------推荐服务商-------->
-  <div class="label">
-    <div class="lab-containt">
-        <div>推荐服务商</div>
-        <p>推荐服务</p>
-        <span></span>
-    </div>
-  </div>
-  <!------内容------>
-  <div class="providers">
-    <div class="prov-containt">
-      <ul class="clear">
-        <li class="fl" v-for="(mas,index) in dat">
-          <a href="#/pagelist">
-            <img :src="imgsrcfront+mas.providerImg">
-            <h4>{{mas.providerName}}</h4>
-            <p class="fz15">服务指数：五星</p>
-            <p class="fz18">提供的服务：{{mas.serviceName}}</p>
-            <button class="fl padbot">发明驳回复审</button>
-            <button class="fl padbot">高新企业担保认定</button>
-            <button class="fl">软件著作权登记</button>
-            <button class="fl">商标快速注册</button>                                    
-          </a>
-        </li>     
-      </ul>
-    </div>
-  </div>
-  <!------合作伙伴-------->
-  <div class="label">
-    <div class="lab-containt">
-        <p>合作伙伴</p>
-        <span></span>
-    </div>
-  </div>
-  <!------内容------>
-  <div class="partner">
-    <div class="partner-containt">
-      <img src="../images/index/u246.png">
-    </div>
-  </div>
-</div>
+    </div> 
+  </Col>
+</Row>
 
 </template>
 
@@ -434,7 +493,7 @@ import {mapGetters} from "vuex"
 // 推荐服务商
 .providers{
   width:100%;
-  height: 440px;
+  height: 460px;
   .prov-containt{
     width: 1200px;
     margin:0 auto;
@@ -451,7 +510,7 @@ import {mapGetters} from "vuex"
       width: 100%;
       li{
         width: 270px;
-        height: 435px;
+        height: 455px;
         border: 1px solid #e8e8e8;
         margin: 0 19px;
         &:first-child{
@@ -469,7 +528,7 @@ import {mapGetters} from "vuex"
 				 }
         a{
           width: 254px;
-          height: 430px;
+          height: 435px;
           display: block;
           margin: 9px;
           text-align: center;
@@ -510,5 +569,50 @@ import {mapGetters} from "vuex"
     }
   }
 }
-
+// 以下为手机端样式
+.phone_head{
+    width: 100%;
+    height: 72px;
+    .ph_head_left{
+        text-align: center;
+        font-size: 20px;
+        line-height: 70px; 
+    }
+    .ph_head_right{
+        text-align: center;
+        h1 {
+            width: 140px;
+            height: 60px;
+            font-size: 35px;
+            margin: 0 25%;
+            line-height: 70px;
+            padding-left: 60px;
+            background: url(../images/logos/xinda-logo.png) no-repeat left 3px;
+        }
+    }
+}
+.swiper-container_phone{
+    width:100%;
+    height: 250px;
+    .swiper-pagination{
+      width:100%;
+      height: 20px;
+    }
+}
+.phone_coin{
+  width:100%;
+  height: 380px;
+  ul{
+    width:100%;
+    li{
+      height: 150px;
+      width: 15%;
+      div{
+        width: 100%;
+        height: 75%;
+        text-align: center;
+      }
+    }
+  }
+}
 </style>

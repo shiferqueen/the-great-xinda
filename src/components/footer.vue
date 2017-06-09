@@ -41,7 +41,7 @@
               </a>
             </div>
             <div class="fl in_choice" >
-              <a href="#/member"  @click="home(4)" :class="{blue:home_index==4}">
+              <a href="#/member" @click="home(4)" :class="{blue:home_index==4}">
                 <Icon type="android-person" class="home"></Icon>
                 <p class="choice">我的</p>
               </a>
