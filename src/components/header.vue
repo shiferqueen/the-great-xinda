@@ -365,7 +365,7 @@
                     height: 60px;
                     margin-top: 30px;
                     h1 {
-                        width: 80px;
+                        width: 140px;
                         height: 60px;
                         font-size: 30px;
                         line-height: 65px;
@@ -386,7 +386,7 @@
                     }
                 }
                 .hdcon-top-m {
-                    width: 590px;
+                    width: 584px;
                     margin-top: 25px;
                     position: relative;
                     .goods {
@@ -396,8 +396,9 @@
                     }
                     .search-reset {
                         position: absolute;
-                        right: 110px;
-                        top: 35px;
+                        right: 130px;
+                        font-size: 20px;
+                        top: 31px;
                         color: #ccc;
                         cursor: pointer;
                     }
@@ -429,7 +430,7 @@
                     button {
                         margin-top: 5px;
                         width: 16%;
-                        height: 44px;
+                        height: 40px;
                         background-color: #2494d4;
                         text-align: center;
                         line-height: 33px;
@@ -448,7 +449,7 @@
                     height: 80px;
                     margin-top: 25px;
                     span {
-                        width: 109px;
+                        width: 140px;
                         padding-left: 38px;
                         display: block;
                         height: 80px;
@@ -479,7 +480,7 @@
                         .loader {
                             font-size: 18px;
                             text-align: center;
-                            padding: 5px 0;
+                            padding: 5px 0 3px;
                             width: 80px;
                             display: block;
                             color: #333;

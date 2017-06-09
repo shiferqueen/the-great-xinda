@@ -251,7 +251,7 @@ import {mapGetters} from "vuex"
       border-bottom: 8px solid #2494d4;
       display:block;
       position: absolute;
-      top:66px;
+      top:64px;
       left: 35px;
     }
   }

@@ -1,6 +1,5 @@
 <template>
   <div>
-
     <div class="top-welcome">
       <div class="top-containter">
         <span class="fl pdr" v-show="getuser==''?false:true" @click="member">{{getuser}}</span>
@@ -19,7 +18,7 @@
           <a href="#/member" v-show="getuser?true:false">我的订单</a>
         </span>
         <a href="#/shopping" class="fr top-shoppingcar" @click.prevent="goshopping(getuser)">购物车
-          <span class="marg0">{{getCartNum}} </span>件</a>
+          <span class="marg0">{{getCartNum}}</span> 件</a>
       </div>
     </div>
   </div>
