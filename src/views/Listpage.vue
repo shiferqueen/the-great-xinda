@@ -1,5 +1,6 @@
 <template>
-    <div>
+    <Row>
+        <Col :xs="0" :sm="24" >
         <div>
             <p class="head_top">首页/财税服务</p>
         </div>
@@ -16,8 +17,8 @@
                     <div class="nav_line">
                         <div class="nav_line_left teshuyangshi">类型</div>
                         <div class="nav_line_right">
-                            <span :class="{nav_line_spanb: spantogb ==2}" @click="queryc(2)">分公司税务报道</span>
                             <span :class="{nav_line_spanb: spantogb ==1}" @click="queryc(1)">公司代理记账</span>
+                            <span :class="{nav_line_spanb: spantogb ==2}" @click="queryc(2)">分公司税务报道</span>
                             <span :class="{nav_line_spanb: spantogb ==4}" @click="queryc(4)">合伙企业注册</span>
                             <span :class="{nav_line_spanb: spantogb ==5}" @click="queryc(5)">外商独资公司注册</span>
                             <span :class="{nav_line_spanb: spantogb ==3}" @click="queryc(3)">VIE架构</span>
@@ -108,9 +109,42 @@
                     <p>增值服务</p>
                 </div>
             </div>
-    
         </div>
-    </div>
+        </Col>
+        <Col :xs="24" :sm="0" >
+        <Row>
+            <div class="main-phone">
+                   <Col span="16" offset="4" class="phone-top">
+                        <span class="phone-top-con">默认排序</span>    
+                        <span class="phone-top-con">默认排序</span> 
+                    </Col>  
+                    <Col span="24">
+                    <div class="con-main-phone" v-for="(listeach,index) in listpage_ajax">
+                        <a :href="'#/products/'+listeach.id" @click="storeid(listeach.id)">
+                        <Col span="8">
+                            <div class="con-main-left-phone">
+                                <a :href="'#/products/'+listeach.id" @click="storeid(listeach.id)">
+                                    <img :src="'http://115.182.107.203:8088/xinda/pic'+listeach.productImg">
+                                </a>
+                            </div>
+                        </Col>
+                        <Col span="15" offset="1">
+                        <div class="con-main-middle-phone">
+                            <p class="title">
+                                <a :href="'#/products/'+listeach.id" @click="storeid(listeach.id)">{{listeach.serviceName}}</a>
+                            </p>
+                            <p>{{listeach.serviceInfo}}</p>
+                            <p><span class="region"><Icon type="android-pin"></Icon> {{listeach.regionName}}</span><span class="teshu"><span class="price">￥{{listeach.price}}</span>元</span></p>
+                            
+                        </div>
+                        </Col>
+                        </a>                           
+                    </div>
+                    </Col> 
+            </div> 
+        </Row>     
+        </Col>
+    </Row>
 </template>
 
 <script>
@@ -145,7 +179,7 @@ export default {
             number: 0,
             start: true,
             sorts: 0,
-            que: 2,
+            que: 1,
             prices: '价格',
             pages: [],
             spantoga: true, //样式切换
@@ -184,20 +218,6 @@ export default {
                 block: this.selectedBlock
             }
         },
-
-
-        //  分页器部分
-        //      pages:function(){
-        //          let _this = this;
-        //         var pag = [];
-        //                var i = _this.showItem;
-        //                while(_this.showItem){
-        //                    pag.unshift(_this.showItem--);
-        //                }
-
-        //          return pag
-        //        }
-
     },
     methods: {
         ...mapActions(['setstoreid', 'refCartNum', 'user', 'popups']),
@@ -372,8 +392,6 @@ export default {
                 this.current = oldv
             }
             this.listpage_ajax = this.listpage_ajax_new.slice(this.current, this.current + 4)
-            // ajax.slice(index,index + 4)
-
         }
     },
 
@@ -672,4 +690,63 @@ export default {
     background: #0E90D2;
     color: #fff !important;
 } //分页器结束
+
+.main-phone{
+    padding:0 10px;
+    .phone-top{
+        height: 40px;
+        border: 1px solid #2693d4;
+        border-radius: 5px;
+        .phone-top-con{
+         
+          font-size:18px;
+          padding:15px 13px !important;
+        }
+    }
+    .con-main-phone {
+        width: 100%;
+        margin: 0 auto;
+        border-bottom: 1px solid #cdcdcd;
+    
+    &:after {
+        .clear;
+    }
+    .con-main-left-phone {
+        float: left;
+        img {
+            width: 100px;
+            height: 100px;
+            border: 1px solid #cdcdcd;
+            margin: 25px 0;
+        }
+    }
+    .con-main-middle-phone {
+        .title {
+            font-size:16px;
+            margin: 20px 0;
+        }
+        p {
+            margin: 5px 0;
+            color: #686868;
+            font-size: 14px;
+            margin-bottom: 10px;
+            .region {
+                 font-size: 12px;
+                margin-right: 15%;
+                
+            }
+           .teshu{
+               font-size:8px;
+               margin-right:10%;
+            .price{
+                 font-size: 18px;
+                 margin-right: 5px;
+                 color: red;
+            }
+           }
+        }
+    }           
+ }
+}
+ 
 </style>
