@@ -77,7 +77,6 @@
               <button>查看详情</button>
             </a>
           </li>
-          
         </ul>
       </div>
     </div>
@@ -182,19 +181,94 @@
     <div class="phone_coin">
       <ul>
         <li>
-          <div>
-
-          </div>
-          <p></p>
+          <a href="javascript:void(0)">
+            <div class="bg1">
+              财
+            </div>
+            <p>财税服务</p>
+          </a>
         </li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
+        <li>
+          <a href="javascript:void(0)">
+            <div class="bg2">
+            创
+            </div>
+            <p>开公司</p>
+          </a>
+        </li>
+        <li>
+          <a href="javascript:void(0)">
+            <div class="bg3">
+            更
+            </div>
+            <p>公司变更</p>
+          </a>
+        </li>
+        <li>
+          <a href="javascript:void(0)">
+            <div class="bg4">
+            社
+            </div>
+            <p>个人社保</p>
+          </a>
+        </li>
+        <li>
+          <a href="javascript:void(0)">
+            <div class="bg5">
+            保
+            </div>
+            <p>公司社保</p>
+          </a>
+        </li>
+        <li>
+          <a href="javascript:void(0)">
+            <div class="bg6">
+            专
+            </div>
+            <p>知识产权</p>
+          </a>
+        </li>
+        <li>
+          <a href="javascript:void(0)">
+            <div class="bg7">
+              <Icon type="navicon-round"></Icon>
+            </div>
+            <p>全部服务</p>
+          </a>
+        </li>
       </ul>
-    </div> 
+    </div>
+    <div class="phone-containt">
+        <p>知识产权</p>
+        <span></span>
+    </div>
+    <Row>
+      <Col span="24">
+        <img src="../images/phone/u8037.png" width="98%">
+      </Col>
+    </Row>
+    <div class="phone-containt">
+        <p>初创企业</p>
+        <span></span>
+    </div>
+    <div class="phone_business">
+      <div class="stabus-containt">
+        <ul class="clear">
+          <li v-for="(mas,index) in dat">
+            <a href="#/pagelist">
+              <img :src="imgsrcfront+mas.providerImg">
+              <h4>{{mas.providerName}}</h4>
+              <p>{{mas.serviceInfo}}</p>
+              <div><span>{{mas.price}}</span>{{mas.unit}}</div>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="home_bottom">
+        <img src="../images/logos/logo.png">
+        <p>一站式企业交流中心</p>
+    </div>
   </Col>
 </Row>
 
@@ -421,7 +495,7 @@ import {mapGetters} from "vuex"
           img{
             width: 124px;
             height: 125px;
-            margin: 30px 65px 10px;
+          margin: 30px 65px 10px;
           }
           h4{
             line-height: 40px;
@@ -601,18 +675,139 @@ import {mapGetters} from "vuex"
 }
 .phone_coin{
   width:100%;
-  height: 380px;
+  height: 280px;
+  .bg1{
+    background-color: #79c4fd;
+  }
+  .bg2{
+    background-color: #fd7879;
+  }
+  .bg3{
+    background-color: #ba73fd;
+  }
+  .bg4{
+    background-color: #79a0fb;
+  }
+  .bg5{
+    background-color: #fba479;
+  }
+  .bg6{
+    background-color: #53ff8f;
+  }
+  .bg7{
+    background-color: #737cff;
+  }
   ul{
     width:100%;
     li{
-      height: 150px;
+      height: 110px;
       width: 15%;
-      div{
+      float: left;
+      margin: 5% 5% 0;
+      a{
         width: 100%;
-        height: 75%;
-        text-align: center;
+        height: 100%;
+        div{
+          width: 100%;
+          height: 80%;
+          line-height: 90px;
+          text-align: center;
+          border-radius: 20px;
+          color:#fff;
+          font-size:40px;
+        }
+        P{
+          text-align: center;
+          font-size: 17px;
+          line-height: 21px;
+        }
+      } 
+    }
+  }
+}
+// 手机端小标题公共样式
+.phone-containt{
+    width:100%;
+    height: 50px;
+    border-bottom: 2px solid #2494d4;
+    position: relative;
+    margin-bottom: 10px;
+    p{
+      float:left;
+      font-size: 16px;
+      position: absolute;
+      color:#000;
+      top: 20px;
+      left: 15px;
+    }
+    span{
+      border: 6px solid transparent;
+      border-bottom: 8px solid #2494d4;
+      display:block;
+      position: absolute;
+      top:36px;
+      left: 40px;
+    }
+  }
+.phone_business{
+  width:100%;
+
+  .stabus-containt{
+    width: 100%;
+    ul{
+      width: 100%;
+      li{
+        width: 98%;
+        margin: 0 auto;
+        height: 200px;
+        border-bottom: 1px solid #e8e8e8;
+        a{
+          width: 95%;
+          height: 200px;
+          display: block;
+          img{
+            float: left;
+            width: 25%;
+            height: 60%;
+            margin:5% 0 5% 3%;
+            border: 1px solid #e8e8e8;
+          }
+          h4{
+            line-height: 60px;
+            font-size: 16px;
+            float: left;
+            margin-left: 10%;
+          }
+          p{
+            line-height: 25px;
+            width: 60%;
+            float: right;
+            font-size: 14px;
+          }
+          div{
+            float: right;
+            width: 60%;
+            span{
+              font-size: 30px;
+              color:#fe1415;
+              padding-right: 10px;
+            }
+          }
+        }
       }
     }
   }
+}
+.home_bottom{
+  width:100%;
+ height: auto;
+ text-align: center;
+ padding-top: 30px;
+ padding-bottom: 100px;
+ p{
+   width: 100%;
+   color: #aeaeae;
+   font-size: 16px;
+ }
 }
 </style>

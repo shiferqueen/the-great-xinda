@@ -132,13 +132,14 @@ export default {
     a{
        width:100%;
        height: 100%;
+       display: block;
        color: #b3b3b3;
       .home{
-        font-size: 55px;
+        font-size: 50px;
         line-height: 60px;
       }
       .choice{
-        font-size: 24px;
+        font-size: 20px;
         line-height: 20px;
       }
     }
