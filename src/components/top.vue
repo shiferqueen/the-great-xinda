@@ -1,6 +1,7 @@
 <template>
   <div>
-
+    <Row>
+    <Col :xs="{span:0}" :sm="{span:24}">
     <div class="top-welcome">
       <div class="top-containter">
         <span class="fl pdr" v-show="getuser==''?false:true" @click="member">{{getuser}}</span>
@@ -22,6 +23,11 @@
           <span class="marg0">{{getCartNum}} </span>件</a>
       </div>
     </div>
+    </Col>
+    <Col :xs="{span:24}" :sm="{span:0}">
+        <p class="top-p">注册</p>
+    </Col>
+    </Row>
   </div>
 </template>
 
@@ -155,4 +161,13 @@
             }
         }
     }
+.top-p{
+    width:100%;
+    height:40px;
+    text-align: center;
+    font-size:20px;
+    font-family: "Hiragino Sans GB";
+    background-color: #e5e5e5;
+    
+}
 </style>

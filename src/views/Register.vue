@@ -1,10 +1,12 @@
 <template>
-    <div>
 
+    <Row>
+        <Col :xs="{span:0}" :sm="{span:24}">
         <div class="top">
             <span @click="location"><img src="../images/logos/logo.png" alt=""></span>
             <a href="javascript:void(0)">欢迎注册</a>
         </div>
+       
         <div class="buttom">
             <div class="next">
                 <div class="left">
@@ -50,15 +52,64 @@
                 </div>
                 <div class="right">
                     <div class="right1">
+                        <div class="right2">
                         <p>已有账号？</p>
                         <a href="#/action/login">立即登录>></a>
                         <img src="../images/logos/xiaoren.png" alt="">
-
-                    </div>
+                        </div>
+                    </div>  
                 </div>
             </div>
         </div>
-    </div>
+        </Col>
+        <Col :xs="{span:22,offset:2}" :sm="{span:0}">
+             <div class="left-p">
+                    <p :class="[status==1 ? 'activeclass' : 'errorclass']">{{msg}}</p>
+                    <input type="text" v-model="cellphone" class="phone" placeholder="请输入手机号" @click="clear" @keyup.enter="register"><br>
+                        
+                    <input type="text" v-model="validcode" class="code1" placeholder="请输入短信验证码" @click="clear" @keyup.enter="register">
+                        <!--短信发送之前-->  
+                    <input type="button" v-if="yanzhen" value="获取短信" @click='huoqu' class="text" > 
+                        <!--发送之后-->
+                    <input type="button" v-else :value="reciprocal + 's后重新发送'" @click='huoqu' class="disabled-text" disabled> 
+                    <br>
+                    <select class="first" name="province" v-model="selectedProvince">
+                        <option v-for="(item, index) in provinces"
+                            v-if="item.level === 1"
+                            :value="item">
+                            {{ item.name }}
+                        </option>
+                    </select>
+                    <select name="city" v-model="selectedCity">
+                        <option
+                            v-for="(item, index) in cities"
+                            :value="item">
+                            {{ item.name }}
+                        </option>
+                    </select>
+                    <select name="block" v-model="selectedBlock">
+                        <option
+                            v-for="(item, index) in blocks"
+                            :value="item">
+                            {{ item.name }}
+                        </option>
+                    </select><br>
+                    <input type="password" v-model="password" class="password" placeholder="请设置密码" @click="helpmsg" @keyup.enter="register" @input="p_len"><br>
+                    <div class="lnu_container">
+                        <p v-bind:class="{ lovercase_valid: contains_lovercase }">小写字母</p>
+                        <p v-bind:class="{ number_valid: contains_number }">数字</p>
+                        <p v-bind:class="{ uppercase_valid: contains_uppercase }">大写字母</p>
+                    </div>
+                    <input type="text" v-model="imgcode" class="code" placeholder="请输入图片验证码" @click="clear" @keyup.enter="register"> <img @click ='getsrc' :src='imgsrc'><br>
+                    <button @click="register" >立即注册</button>
+                    <p class="p1">注册即同意遵守<span>《服务协议》</span></p>
+            </div>
+  
+        </Col>
+    </Row>
+    
+   
+ 
 </template>
 
 <script>
@@ -456,12 +507,16 @@
                 height: 433px;
                 float: left;
                 .right1 {
-                    width: 100px;
-                    height: 262px;
+                    width: 500px;
+                    height: 300px;
                     margin-top: 43px;
-                    padding-left: 187px;
+                    
+                    padding-left: 10px;
                     border-left: 1px solid #cecece;
-                    p {
+                    .right2{
+                        width:100px;
+                        margin-left:183px;
+                        p {
                         margin-bottom: 24px;
                         font-size: 16px;
                     }
@@ -473,10 +528,18 @@
                     img {
                         padding: 24px 0;
                     }
+                    }
+                    
 
                 }
             }
         }
     }
-
+.left-p{
+    input{
+        width:100%;
+        height:30px;
+        margin: 0 auto
+    }
+}
 </style>
