@@ -751,7 +751,6 @@ import {mapGetters} from "vuex"
   }
 .phone_business{
   width:100%;
-
   .stabus-containt{
     width: 100%;
     ul{
