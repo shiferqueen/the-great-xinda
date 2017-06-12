@@ -178,6 +178,11 @@
                 width: 598px;
                 height: 433px;
                 float: left;
+                p{
+                    color: red;
+                    text-align: center;
+                    margin-top: 15px
+                }
                 input {
                     width: 282px;
                     height: 35px;
@@ -268,6 +273,11 @@
     width:100%;
     margin: 0 auto;
     padding: 0 10px;
+    p{
+        color: red;
+        text-align: center;
+        margin-top: 15px
+    }
     input{
         width:100%;
         height: 40px;
