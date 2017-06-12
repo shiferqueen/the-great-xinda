@@ -14,9 +14,9 @@
                     <input type="text" class="code" v-model="imgcode" placeholder="请输入图片验证码" @click="clear" @keyup.enter="forget"> <img @click ='getsrc' src='/xinda-api/ajaxAuthcode'><br>
                     <input type="password" v-model="password" class="password" placeholder="请输入新密码" @click="helpmsg" @keyup.enter="forget" @input="p_len"> <br>
                     <div class="lnu_container">
-                        <p v-bind:class="{ lovercase_valid: contains_lovercase }">Lowercase</p>
-                        <p v-bind:class="{ number_valid: contains_number }">Number</p>
-                        <p v-bind:class="{ uppercase_valid: contains_uppercase }">Uppercase</p>
+                        <p v-bind:class="{ lovercase_valid: contains_lovercase }">小写字母</p>
+                        <p v-bind:class="{ number_valid: contains_number }">数字</p>
+                        <p v-bind:class="{ uppercase_valid: contains_uppercase }">大写字母</p>
                     </div>
                     <input type="password" v-model="newpassword" class="password1" placeholder="请确认密码" @click="clear" @keyup.enter="forget"> <br> 
                     <button @click="forget" >确认修改</button>
