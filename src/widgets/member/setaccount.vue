@@ -11,13 +11,12 @@
         </li>
         <li class="username">
             <span>姓名：</span>
-            <input class="c-t" value=""/>
             <input class="c-t" v-model="uesrname" placeholder="请输入姓名"/>
         </li>
         <li class="sex">
             <span>性别：</span>
-            <span class="radio-1"><input type="radio" name="sex" v-model="picked" value="1" />男</span>
-            <span class="radio-2"><input type="radio" name="sex" v-model="picked" value="2"/>女</span>
+            <span class="radio-1"><input type="radio" name="radio" v-model="picked" value="1">男</span>
+            <span class="radio-2"><input type="radio" name="radio" v-model="picked" value="2" checked/>女</span>
         </li>
         <li class="username">
             <span>邮箱：</span>
@@ -310,10 +309,11 @@ import Vue from 'vue'
         a:first-child{
             // color: #2693d4;
             // border-bottom: 2px solid #2693d4;
-            padding: 0px 20px;
+            padding: 2px 20px;
         }
         a:last-child{
             margin-left:10px;
+            padding: 2px 20px;
         }
     }
     .now-img{

@@ -16,7 +16,11 @@
     </li>
     <li class="score">
         <span>评分：</span>
-        <img src="../../images/logos/111111.jpg"/>
+        <Row>
+            <i-col span="12">
+                <Rate show-text v-model="valueText"></Rate>
+            </i-col>
+        </Row>
     </li>
     <li class="feel">
         <span>感受：</span>
@@ -29,6 +33,13 @@
 </template>
 
 <script>
+ export default {
+        data () {
+            return {
+                valueText: 3
+            }
+        }
+    }
 </script>
 
 

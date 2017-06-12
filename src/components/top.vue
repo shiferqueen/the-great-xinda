@@ -1,6 +1,14 @@
 <template>
   <div>
-
+    <!--实验iview-->
+    <!--<div class="ceshi">
+        <Row>
+            <Col style="background-color: pink;" :xs="2" :sm="4" :md="6" :lg="8">王方云</Col>
+            <Col style="background-color: red;height:80px;" :xs="20" :sm="16" :md="12" :lg="8">李锁常</Col>
+            <Col style="background-color: blue;" :xs="2" :sm="4" :md="6" :lg="8">张维佳</Col>
+        </Row>
+    </div>-->
+<!--测试结束-->
     <div class="top-welcome">
       <div class="top-containter">
         <span class="fl pdr" v-show="getuser==''?false:true" @click="member">{{getuser}}</span>
@@ -24,7 +32,6 @@
     </div>
   </div>
 </template>
-
 <script>
     import {
         mapGetters,
@@ -96,6 +103,12 @@
 </script>
 
 <style lang="less" scoped>
+    //测试
+// .ceshi{
+//     margin-bottom: 500px;
+// }
+    //测试结束
+
     .fl {
         float: left;
     }
