@@ -12,7 +12,7 @@ Vue.config.productionTip = false
 Vue.use(iView)
 Vue.prototype.md5 = md5
 Vue.prototype.ajax = axios
-
+Vue.use(iView);
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 // axios.defaults.baseURL = 'https://api.example.com';
 // axios.defaults.headers.common['Authorization'] = AUTH_TOKEN;

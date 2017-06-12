@@ -1,6 +1,5 @@
 <template>
   <div class="main">
-
     <p>首页/公司工商</p>
     <div class="person_main">
         <div>
@@ -77,7 +76,8 @@ export default {
     line-height: 34px;
     font-size: 14px;
     margin-top: 37px;
-    }span:nth-child(3){
+    }
+    span:nth-child(3){
     width: 66px;
     height: 34px;
     border: 1px solid #e8e8e8;
