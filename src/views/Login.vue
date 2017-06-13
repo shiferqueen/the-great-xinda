@@ -32,6 +32,7 @@
                 <div class="top-p">
                     <p>登录</p>
                     <a href="#/action/Register">>>立即注册</a>
+                    <a href="#/Home" class="return">返回首页<<</a>
                 </div>
             </Col>
             <Col :xs="{span:24}" :sm="{span:0}">
@@ -243,6 +244,7 @@
                         font-size: 16px;
                         color: #2b91ce;
                     }
+                    
                     img {
                         padding: 24px 0;
                     }
@@ -267,6 +269,9 @@
         z-index: 1;
         margin: -28px 5px;
         color: #2b91ce;
+    }
+    .return{
+        float: left;
     }
 }
 .left-p{
