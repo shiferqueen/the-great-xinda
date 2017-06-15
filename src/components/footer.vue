@@ -52,7 +52,10 @@
 </template>
 
 <script>
-
+import {
+        mapGetters,
+        mapActions
+} from 'vuex'
 export default {
   name: 'myfoot',
   data() {
@@ -63,12 +66,32 @@ export default {
      methods: {
         home(index) {
            this.home_index = index;
+          //  if(index==4){
+          //     if(this.getuser==''){
+          //        this.$router.push({
+          //               name: 'login'
+          //         });
+          //     }else{
+          //       this.$router.push({
+          //               name: 'member'
+          //         });
+          //     }
+          //  }
         }, 
+    },
+    computed: {
+      ...mapGetters(['getuser'])
+
     },
 }
 </script>
 
 <style lang="less" scoped>
+@media screen and (max-width:768px){
+	.index_choice{
+		font-size:50px;
+	}
+}
 .fl{
   float: left;
 }
@@ -119,12 +142,13 @@ export default {
     }
   }
 .index_choice{
-  height: 90px;
+  height: 10%;
   width:100%;
   border-top: 1px solid #ececec;
   position:fixed;
-  bottom: 0;
+  bottom: -2px;
   left: 0;
+  z-index: 999;
   background: rgba(255,255,255,.9);
   .in_choice{
     width: 25%;
@@ -132,14 +156,16 @@ export default {
     a{
        width:100%;
        height: 100%;
+       display: block;
        color: #b3b3b3;
-      .home{
-        font-size: 55px;
-        line-height: 60px;
-      }
+       line-height: 70%;
+       .home{
+         font-size: 80%;
+          line-height: 105%;
+       }
       .choice{
-        font-size: 24px;
-        line-height: 20px;
+        font-size: 33%;
+        line-height: 50%;
       }
     }
   }
