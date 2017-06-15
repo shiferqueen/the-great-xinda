@@ -1,38 +1,4 @@
 <template>
-<<<<<<< HEAD
-  <div>
-    <!--实验iview-->
-    <!--<div class="ceshi">
-        <Row>
-            <Col style="background-color: pink;" :xs="2" :sm="4" :md="6" :lg="8">王方云</Col>
-            <Col style="background-color: red;height:80px;" :xs="20" :sm="16" :md="12" :lg="8">李锁常</Col>
-            <Col style="background-color: blue;" :xs="2" :sm="4" :md="6" :lg="8">张维佳</Col>
-        </Row>
-    </div>-->
-<!--测试结束-->
-    <div class="top-welcome">
-      <div class="top-containter">
-        <span class="fl pdr" v-show="getuser==''?false:true" @click="member">{{getuser}}</span>
-        <p class="fl">欢迎来到信达!</p>
-        <p class="fl cr" v-show="getuser==''?false:true"  @click="logout()">【退出】</p>
-        <span class="fl">
-          <a href="#/action/login" class="blue" v-show="getuser==''?true:false">登录</a>
-        </span>
-        <span class="fl">
-          <a href="#/action/register" class="blue" v-show="getuser==''?true:false">快速注册</a>
-        </span>
-        <span class="fr">
-          <a href="#/shoplist" class="blue">服务商入口</a>
-        </span>
-        <span v-show=true class="fr top-myorder">
-          <a href="#/member" v-show="getuser?true:false">我的订单</a>
-        </span>
-        <a href="#/shopping" class="fr top-shoppingcar" @click.prevent="goshopping(getuser)">购物车
-          <span class="marg0">{{getCartNum}} </span>件</a>
-      </div>
-    </div>
-  </div>
-=======
   <Row>
     <Col :xs="{ span: 0, offset: 0 }" :sm="{ span: 24, offset:0 }">
         <div class="top-welcome">
@@ -58,7 +24,6 @@
         </div>
     </Col>
   </Row>
->>>>>>> 239ab386a8b448692a4c908f92b0f73a2465f32c
 </template>
 <script>
     import {
@@ -123,7 +88,7 @@
             },
             member() {
                 this.$router.push({
-                    name: 'setaccount'
+                    name: 'myorder'
                 });
             }
         },
@@ -131,12 +96,6 @@
 </script>
 
 <style lang="less" scoped>
-    //测试
-// .ceshi{
-//     margin-bottom: 500px;
-// }
-    //测试结束
-
     .fl {
         float: left;
     }

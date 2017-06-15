@@ -6,15 +6,10 @@ import router from './router'
 import store from './store'
 import axios from 'axios'
 import md5 from 'md5'
-<<<<<<< HEAD
-import iView from 'iview';
-import 'iview/dist/styles/iview.css';
-=======
 import iView from 'iview'
 import 'iview/dist/styles/iview.css'
 Vue.config.productionTip = false
 Vue.use(iView)
->>>>>>> 239ab386a8b448692a4c908f92b0f73a2465f32c
 Vue.prototype.md5 = md5
 Vue.prototype.ajax = axios
 Vue.use(iView);
