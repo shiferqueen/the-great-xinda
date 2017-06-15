@@ -1,6 +1,6 @@
 <template>
-    <div>
-    
+     <Row>
+        <Col :xs="0" :sm="24" >
         <div>
             <p class="head_top">首页/商品详情</p>
         </div>
@@ -146,7 +146,119 @@
                 </div>
             </div>
         </div>
-    </div>
+   </Col>
+   <Col :xs="24" :sm="0" >
+            <Row>
+                <div class="main-phone">
+                    <div class="phone-top">
+                        <Col  span="24" class="phone-img">
+                            <img :src="product.img">
+                             <div class="word-top">
+                                <h3 class="">{{providerProduct.serviceName}}</h3>
+                                <p class="word-size">{{providerProduct.serviceInfo}}</p>
+                            </div>
+                        </Col>
+                        <Col span="24" class="productarea">
+                          <p class="region">区域：{{providerRegionText}}</p>
+                        </Col>
+                        <Col span="24"  class="productprice">
+                            <p class="price">价格：<span class="teshu">￥{{providerProduct.price}}</span>
+                            <span class="huadiao">￥{{product.marketPrice}} </span></p>
+                        </Col>
+                        <Col span="24"  class="label">
+                                <div class="lab-containt">
+                                    <p>服务商家</p>
+                                    <span></span>
+                                </div>
+                        </Col>
+                        <Col span="24" class="store">
+                            <Row>
+                                <Col span="8" class="picture">
+                                     <img :src="imgA" class="imagepic">
+                                     <p class="gold">
+                                        <img class="logo" src="../images/logos/little01.png">
+                                        <span>金牌服务商</span>
+                                    </p>
+                                </Col>
+                                <Col span="16" class="word-word">
+                                    <ul>
+                                    <li>{{provider.name}}</li>
+                                    <li>信誉&nbsp &nbsp
+                                        <img src="../images/logos/little07.png">
+                                        <img src="../images/logos/little07.png">
+                                        <img src="../images/logos/little07.png">
+                                        <img src="../images/logos/little07.png">
+                                        <img src="../images/logos/little04.png">
+                                    </li>
+                                    <li>{{providerProduct.regionName}}</li>
+                                    <li>累计服务客户次数：{{providerBusiness.serviceNum}} &nbsp|&nbsp &nbsp 好评率：100%</li>
+                                    <li class="go-to-shop">
+                                        <a :href="'#/shopfront/' + provider.id" class="go-to-shop">进入店铺</a>
+                                    </li>
+                                </ul>
+                                </Col>
+                            </Row>
+                        </Col>
+                    </div>
+                    <Col span="24"  class="label">
+                        <div class="lab-containt">
+                            <p>服务介绍</p>
+                            <span></span>
+                        </div>
+                    </Col>
+                    <div class="main-con">
+                        <p class="con-word" v-html="providerProduct.serviceContent"></p>
+                    </div>
+                     <Col span="24"  class="label">
+                        <div class="lab-containt">
+                            <p>用户评价</p>
+                            <span></span>
+                        </div>
+                     </Col>
+                     <Col span="24" class="button-button">
+                        <Row>
+                             <Col class="lianxi" span="8">
+                               <div class="m1"  @click="goon"> <Icon  class="icon" type="android-contacts"></Icon></br>联系商家</div>
+                            </Col>
+                            <Col class="gouwuche" span="8">
+                                <div class="m" @click="addProductsc(getuser)">加入购物车</div>
+                            </Col>
+                            <Col class="goumai" span="8" @click="addProductsd(getuser)">
+                                <div class="m" @click="addProductsd(getuser)">立即购买</div>
+                            </Col>
+                        </Row>
+                     </Col>
+                        
+                    <Col span="24" class="phone-bottom">
+                    </Col> 
+                    <div>
+                            <div class="consult-box" v-show="bSign">
+                                <div class="consult-box-title">&nbsp &nbsp 免费电话咨询
+                                    <span @click="closeDiv">×</span>
+                                </div>
+                                <div></div>
+                                <p class="phonemsg">{{phonemsg}}</p>
+                                <div class="entry-num">
+                                    <input type="input" v-model="cellphone" placeholder="请输入手机号">
+                                </div>
+                                <div class="entry-logo">
+                                    <input type="input" v-model="imgcode" placeholder="请输入图形验证码">
+                                    <img @click="getsrc" :src="imgsrc">
+                                </div>
+                                <div class="entry-code">
+                                    <input type="input" placeholder="请输入验证码">
+                                    <input class="button" type="button" v-if="yanzheng" value="获取验证码" @click="huoqu">
+                                    <input class="disabled-button" type="button" v-else :value="reciprocal + 's后重新发送'" @click="huoqu" disabled>
+                                </div>
+                                <div class="begin-infor" @click="goinfor">开始免费咨询</div>
+                                    <p class="promease">本次电话咨询完全免费，我们将对你的号码严格保密，请放心使用!</p>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+            </Row>     
+        </Col>     
+  </Row>
 </template>
 
 <script>
@@ -182,15 +294,19 @@ export default {
             product: {
                 img: '/static/e3a93cf9c3094fa6afb5b643c4f8d30f.png'
             },
+            providerBusiness:{},
             providerProduct: {},
             providerRegionText: {},
-            provider: {},
+            provider: {
+                providerImg:'/static/8c419db3f572418a80ff5a08397fb857.png'
+            },
             goodNum: {},
             badNum: {},
             midNum: {},
             content: {},
             assess: [],
-            tp: "http://115.182.107.203:8088/xinda/pic"
+            tp: "http://115.182.107.203:8088/xinda/pic",
+            imgA:''
         }
     },
     //获取接口
@@ -202,9 +318,12 @@ export default {
             sId: this.$route.params.productId
         })).then(function (res) {
             let data = res.data.data;
+            console.log(data)
             data.product.img = _this.tp + data.product.img;
+            _this.imgA = _this.tp + data.provider.providerImg;
             _this.product = data.product;
             _this.providerProduct = data.providerProduct;
+            _this.providerBusiness = data.providerBusiness;
             _this.providerRegionText = data.providerRegionText;
             _this.provider = data.provider;
         });
@@ -401,13 +520,15 @@ export default {
             }else{
                 
                 var id = that.$route.params.productId;
+
                 this.ajax.post("xinda-api/cart/add", qs.stringify({
+
                     id: id,
                     num: 1
 
                 })).then(function (res) {
                         that.refCartNum();
-                        that.ajax.post("xinda-api/set", qs.stringify({
+                        that.ajax.post("/xinda-api/cart/set", qs.stringify({
                         id:id,
                         num:that.goodsval
                     
@@ -437,7 +558,7 @@ export default {
 
                 })).then(function (res) {
                         that.refCartNum();
-                        that.ajax.post("xinda-api/set", qs.stringify({
+                        that.ajax.post("/xinda-api/cart/set", qs.stringify({
                         id:id,
                         num:that.goodsval
                     
@@ -451,7 +572,53 @@ export default {
              
 
         },
-        
+         addProductsc(uname) {
+            let that = this;
+            if(uname==""){
+                         that.$router.push({path: '/action/login'});
+            }else{ 
+                var id = that.$route.params.productId;
+                this.ajax.post("xinda-api/cart/add", qs.stringify({
+
+                    id: id,
+                    num: 1
+                })).then(function (res) {
+                        that.refCartNum();
+                        that.ajax.post("/xinda-api/cart/set", qs.stringify({
+                        id:id,
+                        num:that.goodsval
+                    })).then(function (res) {    
+                    })
+                })
+            }
+        },
+           addProductsd(uname) {
+            let that = this
+            if(uname==""){
+                that.$router.push({path: '/action/login'});
+            }else{
+                let that = this
+                var id = that.$route.params.productId;
+                this.ajax.post("xinda-api/cart/add", qs.stringify({
+                    id: id,
+                    num: 1
+
+                })).then(function (res) {
+                        that.refCartNum();
+                        that.ajax.post("/xinda-api/cart/set", qs.stringify({
+                        id:id,
+                        num:that.goodsval
+                    
+
+                    })).then(function (res) {
+                        that.$router.push({name: 'shopping'});
+                    })
+                })
+
+            }
+             
+
+        },
 
     }
 }
@@ -844,4 +1011,252 @@ export default {
         }
     }
 }
+// 手机端
+.main-phone{
+  
+    .phone-img{
+         
+        img{
+            position: relative;
+            width:100%;
+        }
+    }
+    .word-top{
+        position: absolute;
+        bottom: 6px;
+        background: rgba(0, 0, 0, .4);
+        color:#fff;
+        width: 100%; 
+        padding: 8px 3%;  
+        h3{
+            font-size:18px;
+        }  
+        p{
+            font-size:14px;
+        }   
+    }
+    .productarea{
+        border-bottom:1px solid #c5c5c5;
+        .region{
+            font-size: 16px;
+            margin: 0 3% 
+        }
+    }
+    .productprice{
+        border-bottom:3px solid #ebebeb;
+        .price{
+           font-size: 16px;
+            margin: 0 3% ;
+            .teshu{
+                font-size: 20px;
+                color: red;
+                margin-right:3% ;
+            }
+            .huadiao {
+                font-size: 16px;
+                text-decoration: line-through;
+            }
+        }  
+    }
+
+    //导航线
+    .label{
+    width:100%;
+    .lab-containt{
+            width:100%;
+            margin: 8px auto 0;
+            height: 35px;
+            border-bottom: 2px solid #2494d4;
+            position: relative;
+            &:after {
+                .clear;
+            }
+            p{
+            float:left;
+            font-size: 16px;
+            color:#000;
+            padding-top: 5px;
+            padding-left: 6px;
+            }
+            span{
+            border: 6px solid transparent;
+            border-bottom: 8px solid #2494d4;
+            display:block;
+            position: absolute;
+            top:20px;
+            left: 32px;
+            }
+        }
+    }
+  .store{
+      margin-top:10px;
+      .picture{
+          .imagepic{
+              width:75%;
+              height:auto;
+             margin-top: 11%;
+             margin-left: 10%;
+          }
+          .gold{
+            margin-top: 12%;
+            margin-left: 10%;
+          .logo{
+            width:15%;
+            height:15%;
+            vertical-align: middle;
+          }
+          img{
+             vertical-align: middle; 
+          }
+         }
+        }
+      .word-word{
+        li{
+            margin-top:2%;
+        }
+      }
+      .go-to-shop {
+        width: 40%;
+        height: 33px;
+        border-radius: 3px;
+        background-color: #ff591b;
+        text-align: center;
+        line-height: 33px;
+        color: #fff;
+        cursor: pointer;
+        margin-bottom:10%;
+    }
+       border-bottom:2px solid #ebebeb;
+  }
+    .main-con{
+        padding-bottom:10px;
+        border-bottom:2px solid #ebebeb;
+        .con-word{
+            font-size:14px;
+            padding-top:10px;
+        }
+    }
+    .phone-bottom{
+        height: 270px;
+        z-index: -10;
+    }
+    .button-button{
+        position:fixed;
+        bottom:87px;
+        .m{
+           font-size:18px;
+           padding:35px 0; 
+           text-align: center;
+           z-index: 10;
+        }
+        .m1{
+           font-size:18px;
+           padding:18px 0; 
+           text-align: center;
+           z-index: 10;
+           .icon{
+            font-size:32px;
+           }
+        }
+        .lianxi{
+            background: #eeeff3;
+        }
+        .gouwuche{
+            background: #2693d4;
+            color:#fff;
+        }
+        .goumai{
+            background: #fb4146;
+            color:#fff;
+        }
+    }
+    .consult-box {
+    width: 100%;
+    height: 280px;
+    border: 1px solid gray;
+    position: fixed;
+    top: 60px;
+    left: 0px;
+    z-index: 9;
+    background-color: #fff;
+    input {
+        border: 1px solid gray;
+    }
+    .consult-box-title {
+        height: 44px;
+        background-color: #f8f8f8;
+        font-size: 14px;
+        span {
+            display: inline-block;
+            margin-left:60%;
+            font-size: 26px;
+            cursor: pointer;
+            &:hover {
+                transform: rotate(360deg);
+                transition: transform 1.2s;
+            }
+        }
+    }
+    .phonemsg {
+        margin-left:10%;
+        color: red
+    }
+    .entry-num {
+        margin-top: 10px;
+        margin-left: 20%;
+        input {
+            width: 76%;
+            height: 20px
+        }
+    }
+    .entry-logo {
+        margin-top: 6px;
+        margin-left: 20%;
+        input {
+        width: 50%;
+        height: 20px;
+        }
+        img {
+            vertical-align: bottom;
+            margin-left: 10px;
+        }
+    }
+    .entry-code {
+        margin-top: 15px;
+        margin-left:20%;
+        input {
+            width: 50%;
+            height: 20px;
+        }
+        .button,
+        .disabled-button {
+            width: 26%;
+            height: 33%;
+            margin-left: 10px;
+            border-radius: 3px;
+        }
+    }
+    .begin-infor {
+        width: 67%;
+        height: 33px;
+        border-radius: 5px;
+        background-color: #4eb5ba;
+        margin-top: 15px;
+        margin-left: 20%;
+        text-align: center;
+        color: #fff;
+        cursor: pointer;
+    }
+    .promease {
+        margin-top: 22px;
+        margin-left: 6%;
+        margin-right: 6%;
+        font-size: 12px;
+    }
+}
+
+}
+
+
+
 </style>

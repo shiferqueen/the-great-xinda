@@ -9,9 +9,9 @@ import md5 from 'md5'
 import iView from 'iview'
 import 'iview/dist/styles/iview.css'
 
-
 Vue.config.productionTip = false
 Vue.use(iView)
+
 
 Vue.prototype.md5 = md5
 Vue.prototype.ajax = axios
