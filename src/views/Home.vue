@@ -142,16 +142,16 @@
     </Col>
     <!--这是手机端首页-->
     <!--这是手机端头部-->
-    <Col :xs="{ span: 24}" :sm="{ span: 0}">
-    <div class="phone_head">
-      <Col class="ph_head_left" span="7">
-      <Icon type="chevron-down"></Icon>
-      <span>北京市</span>
-      </Col>
-      <Col class="ph_head_right" span="17">
-      <h1 class="fl">信达</h1>
-      </Col>
-    </div>
+    <Col :xs="{ span: 24}" :sm="{ span: 0}" id="phone">
+      <div class="phone_head">
+        <Col class="ph_head_left" span="7">
+        <Icon type="chevron-down"></Icon>
+        <span>北京市</span>
+        </Col>
+        <Col class="ph_head_right" span="17">
+        <h1 class="fl">信达</h1>
+        </Col>
+      </div>
     </Col>
     <transition name="ifrow">
       <div v-if="ifRow" class="ifrows">
@@ -255,126 +255,125 @@
         </Row>
       </div>
     </transition>
-  
-    <Col :xs="{ span: 24}" :sm="{ span: 0}">
-    <div class="swiper-container_phone">
-      <swiper :options="swiperOption">
-        <swiper-slide>
-          <a href="javascript:void(0)">
-            <img src="../images/index/timg.jpg" width="100%" height="250" />
-          </a>
-        </swiper-slide>
-        <swiper-slide>
-          <a href="javascript:void(0)">
-            <img src="../images/index/timg (1).jpg" width="100%" height="250" />
-          </a>
-        </swiper-slide>
-        <swiper-slide>
-          <a href="javascript:void(0)">
-            <img src="../images/index/timg (2).jpg" width="100%" height="250" />
-          </a>
-        </swiper-slide>
-        <swiper-slide>
-          <a href="javascript:void(0)">
-            <img src="../images/index/timg (3).jpg" width="100%" height="250" />
-          </a>
-        </swiper-slide>
-        <div class="swiper-pagination" slot="pagination">
-        </div>
-      </swiper>
-    </div>
-    <div class="phone_coin">
-      <ul class="phone_con">
-        <li class="ph_coin">
-          <a href="javascript:void(0)" class="icon_link">
-            <div class="bg1 wenzi">
-              财
-            </div>
-            <p class="shuoming">财税服务</p>
-          </a>
-        </li>
-        <li class="ph_coin">
-          <a href="javascript:void(0)" class="icon_link">
-            <div class="bg2 wenzi">
-              创
-            </div>
-            <p class="shuoming">开公司</p>
-          </a>
-        </li>
-        <li class="ph_coin">
-          <a href="javascript:void(0)" class="icon_link">
-            <div class="bg3 wenzi">
-              更
-            </div>
-            <p class="shuoming">公司变更</p>
-          </a>
-        </li>
-        <li class="ph_coin">
-          <a href="javascript:void(0)" class="icon_link">
-            <div class="bg4 wenzi">
-              社
-            </div>
-            <p class="shuoming">个人社保</p>
-          </a>
-        </li>
-        <li class="ph_coin">
-          <a href="javascript:void(0)" class="icon_link">
-            <div class="bg5 wenzi">
-              保
-            </div>
-            <p class="shuoming">公司社保</p>
-          </a>
-        </li>
-        <li class="ph_coin">
-          <a href="javascript:void(0)" class="icon_link">
-            <div class="bg6 wenzi">
-              专
-            </div>
-            <p class="shuoming">知识产权</p>
-          </a>
-        </li>
-        <li class="ph_coin" @click="ifRow=!ifRow">
-          <a href="javascript:void(0)" class="icon_link">
-            <div class="bg7 wenzi">
-              <Icon type="navicon-round"></Icon>
-            </div>
-            <p class="shuoming">全部服务</p>
-          </a>
-        </li>
-      </ul>
-    </div>
-    <div class="phone-containt">
-      <p>知识产权</p>
-      <span></span>
-    </div>
-    <Row>
-      <Col span="24">
-      <img src="../images/phone/u8037.png" width="98%">
-      </Col>
-    </Row>
-    <div class="phone-containt">
-      <p>初创企业</p>
-      <span></span>
-    </div>
-    <div class="phone_business">
-      <div class="stabus-containt">
-        <ul class="clear">
-          <li v-for="(mas,index) in dat">
-            <a href="#/pagelist">
-              <img :src="imgsrcfront+mas.providerImg">
-              <h4>{{mas.providerName}}</h4>
-              <p>{{mas.serviceInfo}}</p>
-              <div>
-                <span>{{mas.price}}</span>{{mas.unit}}</div>
+    <Col :xs="{ span: 24}" :sm="{ span: 0}" id="iphone">
+      <div class="swiper-container_phone">
+        <swiper :options="swiperOption">
+          <swiper-slide>
+            <a href="javascript:void(0)">
+              <img src="../images/index/timg.jpg" width="100%" height="250" />
+            </a>
+          </swiper-slide>
+          <swiper-slide>
+            <a href="javascript:void(0)">
+              <img src="../images/index/timg (1).jpg" width="100%" height="250" />
+            </a>
+          </swiper-slide>
+          <swiper-slide>
+            <a href="javascript:void(0)">
+              <img src="../images/index/timg (2).jpg" width="100%" height="250" />
+            </a>
+          </swiper-slide>
+          <swiper-slide>
+            <a href="javascript:void(0)">
+              <img src="../images/index/timg (3).jpg" width="100%" height="250" />
+            </a>
+          </swiper-slide>
+          <div class="swiper-pagination" slot="pagination">
+          </div>
+        </swiper>
+      </div>
+      <div class="phone_coin">
+        <ul class="phone_con">
+          <li class="ph_coin">
+            <a href="javascript:void(0)" class="icon_link">
+              <div class="bg1 wenzi">
+                财
+              </div>
+              <p class="shuoming">财税服务</p>
+            </a>
+          </li>
+          <li class="ph_coin">
+            <a href="javascript:void(0)" class="icon_link">
+              <div class="bg2 wenzi">
+                创
+              </div>
+              <p class="shuoming">开公司</p>
+            </a>
+          </li>
+          <li class="ph_coin">
+            <a href="javascript:void(0)" class="icon_link">
+              <div class="bg3 wenzi">
+                更
+              </div>
+              <p class="shuoming">公司变更</p>
+            </a>
+          </li>
+          <li class="ph_coin">
+            <a href="javascript:void(0)" class="icon_link">
+              <div class="bg4 wenzi">
+                社
+              </div>
+              <p class="shuoming">个人社保</p>
+            </a>
+          </li>
+          <li class="ph_coin">
+            <a href="javascript:void(0)" class="icon_link">
+              <div class="bg5 wenzi">
+                保
+              </div>
+              <p class="shuoming">公司社保</p>
+            </a>
+          </li>
+          <li class="ph_coin">
+            <a href="javascript:void(0)" class="icon_link">
+              <div class="bg6 wenzi">
+                专
+              </div>
+              <p class="shuoming">知识产权</p>
+            </a>
+          </li>
+          <li class="ph_coin" @click="ifRow=!ifRow">
+            <a href="javascript:void(0)" class="icon_link">
+              <div class="bg7 wenzi">
+                <Icon type="navicon-round"></Icon>
+              </div>
+              <p class="shuoming">全部服务</p>
             </a>
           </li>
         </ul>
       </div>
-    </div>
-    <div class="home_bottom">
-      <img src="../images/logos/logo.png">
-      <p>一站式企业交流中心</p>
-    </div>
+      <div class="phone-containt">
+        <p>知识产权</p>
+        <span></span>
+      </div>
+      <Row>
+        <Col span="24">
+        <img src="../images/phone/u8037.png" width="98%">
+        </Col>
+      </Row>
+      <div class="phone-containt">
+        <p>初创企业</p>
+        <span></span>
+      </div>
+      <div class="phone_business">
+        <div class="stabus-containt">
+          <ul class="clear">
+            <li v-for="(mas,index) in dat">
+              <a href="#/pagelist">
+                <img :src="imgsrcfront+mas.providerImg">
+                <h4>{{mas.providerName}}</h4>
+                <p>{{mas.serviceInfo}}</p>
+                <div>
+                  <span>{{mas.price}}</span>{{mas.unit}}</div>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="home_bottom">
+        <img src="../images/logos/logo.png">
+        <p>一站式企业交流中心</p>
+      </div>
     </Col>
   </Row>
 </template>
@@ -768,13 +767,23 @@ export default {
 }
 
 // 以下为手机端样式
+@media screen and (max-width:768px){
+	#phone,{
+		font-size:50px;
+	}
+}
+@media screen and (max-width:768px){
+	#iphone,{
+		font-size:12px;
+	}
+}
 .phone_head {
   width: 100%;
   height: 72px;
   border-bottom: 1px solid #e8e8e8;
   .ph_head_left {
     text-align: center;
-    font-size: 20px;
+    font-size: 35%;
     line-height: 70px;
   }
   .ph_head_right {
@@ -782,7 +791,7 @@ export default {
     h1 {
       width: 140px;
       height: 60px;
-      font-size: 35px;
+      font-size: 65%;
       margin: 0 25%;
       line-height: 70px;
       padding-left: 60px;
@@ -803,7 +812,8 @@ export default {
 //手机小图标
 .phone_coin {
   width: 100%;
-  height: 280px;
+  height: 220px;
+  display: block;
   .bg1 {
     background-color: #79c4fd;
   }
@@ -828,7 +838,7 @@ export default {
   .phone_con {
     width: 100%;
     .ph_coin {
-      height: 110px;
+      height: 50%;
       width: 15%;
       float: left;
       margin: 5% 5% 0;
@@ -840,12 +850,12 @@ export default {
           text-align: center;
           border-radius: 10px;
           color: #fff;
-          font-size: 40px;
+          font-size: 280%;
         }
         .shuoming {
           text-align: center;
-          font-size: 17px;
-          line-height: 21px;
+          font-size: 100%;
+          line-height: 250%;
         }
       }
     }
@@ -861,19 +871,19 @@ export default {
   margin-bottom: 10px;
   p {
     float: left;
-    font-size: 16px;
+    font-size: 10%;
     position: absolute;
     color: #000;
-    top: 20px;
-    left: 15px;
+    top: 55%;
+    left: 7%;
   }
   span {
     border: 6px solid transparent;
     border-bottom: 8px solid #2494d4;
     display: block;
     position: absolute;
-    top: 36px;
-    left: 40px;
+    top: 75%;
+    left: 12%;
   }
 }
 
@@ -886,11 +896,10 @@ export default {
       li {
         width: 98%;
         margin: 0 auto;
-        height: 200px;
         border-bottom: 1px solid #e8e8e8;
         a {
           width: 95%;
-          height: 200px;
+          height: 180px;
           display: block;
           img {
             float: left;
@@ -900,8 +909,8 @@ export default {
             border: 1px solid #e8e8e8;
           }
           h4 {
-            line-height: 60px;
-            font-size: 16px;
+            line-height: 300%;
+            font-size: 130%;
             float: left;
             margin-left: 10%;
           }
@@ -909,13 +918,13 @@ export default {
             line-height: 25px;
             width: 60%;
             float: right;
-            font-size: 14px;
+            font-size: 100%;
           }
           div {
             float: right;
             width: 60%;
             span {
-              font-size: 30px;
+              font-size: 230%;
               color: #fe1415;
               padding-right: 10px;
             }
@@ -954,15 +963,14 @@ export default {
 .ifrows {
   z-index: 9999;
 }
-
-.ifrow-enter-active,
-.ifrow-leave-active {
-  transition: opacity .5s
+.ifrow-enter-active {
+  transition: all .3s ease;
 }
-
-.ifrow-enter,
 .ifrow-leave-active {
+  transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+}
+.ifrow-enter, .ifrow-leave-active {
+  transform: translateX(10px);
   opacity: 0;
-  transition: opacity .5s
 }
 </style>

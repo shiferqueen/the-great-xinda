@@ -87,6 +87,11 @@ export default {
 </script>
 
 <style lang="less" scoped>
+@media screen and (max-width:768px){
+	.index_choice{
+		font-size:50px;
+	}
+}
 .fl{
   float: left;
 }
@@ -137,11 +142,11 @@ export default {
     }
   }
 .index_choice{
-  height: 90px;
+  height: 10%;
   width:100%;
   border-top: 1px solid #ececec;
   position:fixed;
-  bottom: 0;
+  bottom: -2px;
   left: 0;
   z-index: 999;
   background: rgba(255,255,255,.9);
@@ -153,13 +158,14 @@ export default {
        height: 100%;
        display: block;
        color: #b3b3b3;
-      .home{
-        font-size: 50px;
-        line-height: 60px;
-      }
+       line-height: 70%;
+       .home{
+         font-size: 80%;
+          line-height: 105%;
+       }
       .choice{
-        font-size: 20px;
-        line-height: 20px;
+        font-size: 33%;
+        line-height: 50%;
       }
     }
   }
