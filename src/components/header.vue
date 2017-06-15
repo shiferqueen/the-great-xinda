@@ -479,7 +479,7 @@
                         display: none;
                         z-index: 999;
                         left: 0;
-                        top: 37px;
+                        top: 38px;
                         width: 100%;
                         height: 400px;
                         .addpro-left {
@@ -527,7 +527,7 @@
                                         background: #ccc;
                                         height: 100px;
                                         top: 0px;
-                                        left: 160px;
+                                        left: 165px;
                                         opacity: 0.9;
                                         color: #fff;
                                         p {

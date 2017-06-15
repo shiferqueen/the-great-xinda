@@ -25,74 +25,31 @@
                     <strong>订单操作</strong>
                 </li>
         </ul>
-        <!--<div v-for="(order,index) in myorder">-->
-        <!--<ul class="order_num">
-                        <li>
-                            <span>订单号:{{order.businessNo}}</span>
-                            <span>下单时间:{{order.createTime}}</span>
-                        </li>
-                    </ul>-->
-        <!--<ul class="pay_del">
-                        <li>
-                            <p>
-                                <img src="../../images/logos/bg_01.jpg" />
-                                <span>信达北京服务中心</span>
-        
-                                <span>注册分公司</span>
-                                <span>￥800.00</span>
-                                <span>￥800.00</span>
-                                <span>等待买家付款</span>
-                                <span>付款</span>
-                            </p>
-                        </li>
-                        <li>
-                            <p>
-                                <img src="../../images/logos/bg_01.jpg" />
-                                <span>信达北京服务中心</span>
-                                <span>注册分公司</span>
-                                <span>￥800.00</span>
-                                <span>￥800.00</span>
-                                <span>等待买家付款</span>
-                                <span @click="del()">删除订单</span>
-                                <span class="number_1">1</span>
-                            </p>
-                        </li>
-                    </ul>-->
-        <div>
-              <table border="1px solid #e8e8e8"  cellspacing="0" cellpadding="0">
-                  <thead>
-                      <tr><td colspan="6"><span class="order_sp">订单号:S1706070150090759094<span></span></span><span class="time_sp">下单时间:2017-06-07 09:07:59<span></span></span></td></tr>
-                  </thead>
-                  <tbody class="tbodyr">
-                      <tr class="xinda">
-                          <td class="t_d1">
-                              <img class="logos" src="../../images/logos/bg_01.jpg" />
-                              <span class="t_sp">信达北京服务中心</span>
-                              <span class="t_sp2">注册分公司</span>
-                          </td>
-                          <td class="t_d2">￥800.00</td>
-                          <td class="t_d3">1</td>
-                          <td class="t_d4">￥800.00</td>
-                          <td class="t_d5">等待买家付款</td>
-                          <td class="t_d6" rowspan="2" >
-                              <a class="pay-on" href="">付款</a>
-                              <a class="del-order" href="javascript:void(0);">删除订单</a>
-                          </td>
-                      </tr>
-                      <tr class="xinda">
-                         <td class="t_d1">
-                              <img class="logos" src="../../images/logos/bg_01.jpg" />
-                              <span class="t_sp">信达北京服务中心</span>
-                              <span class="t_sp2">注册分公司</span>
-                          </td>
-                          <td class="t_d2">￥800.00</td>
-                          <td class="t_d3">1</td>
-                          <td class="t_d4">￥800.00</td>
-                          <td class="t_d5">等待买家付款</td>
-                      </tr>
-                  </tbody>
-              </table>
-        </div>
+<div v-for="(order,index) in myorder">
+        <table border="1px solid #e8e8e8"  cellspacing="0" cellpadding="0">
+            <thead>
+                <tr><td colspan="6"><span class="order_sp">订单号:{{order.businessNo}}</span><span class="time_sp">下单时间:{{order.createTime}}</span></td></tr>
+            </thead>
+            <tbody class="tbody">
+                <tr class="xinda" v-for="(service,idx) in order.serviceList">
+                    <td class="t_d1">
+                            <img class="logos" src="../../images/logos/bg_01.jpg" />
+                            <span class="t_sp">{{service.providerName}}</span><br>
+                            <span class="t_sp2">{{service.serviceName}}</span>
+                    </td>
+                    <td class="t_d2">￥{{service.unitPrice}}</td>
+                    <td class="t_d3">{{service.buyNum}}</td>
+                    <td class="t_d4">￥{{service.totalPrice}}</td>
+                    <td class="t_d5">{{service.status==1?"等待买家付款":"已付款"}}</td>
+                    <td class="t_d6" :rowspan="order.serviceList.length" v-if="idx===0">
+                        <a class="pay-on" @click="servicepay(index)" v-if="order.status==1">付款</a>
+                        <a class="pay-on"  v-else style="color:#ccc;border-color:#ccc">已支付</a>
+                        <a class="del-order" @click="removelist(index)" v-if="order.status==1">删除订单</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</div>
         <!--</div>-->
         <div class="page_next">
             <span>上一页</span>
@@ -104,34 +61,48 @@
 
 <script>
 import qs from 'qs'
+    import {
+        mapActions,
+        mapGetters
+    } from 'vuex'
 export default {
     name: 'myorder',
     data() {
         return {
             myorder: [],
-            mycompany: [],
             bn: ''
         }
     },
     created() {
         this.myorderlist();
-        // this.mycompanylist()
+        // this.mypanylist();
     },
     methods: {
-        del: function () {
-            event.target.parentNode.parentNode.parentNode.parentNode.parentNode
-                .removeChild(event.target.parentNode.parentNode.parentNode.parentNode);
-        },
+        ...mapActions(['refCartNum', 'popups']),
         myorderlist() {
             let _this = this;
-            this.ajax.post('/xinda-api/business-order/grid', qs.stringify({
+            this.ajax.post('/xinda-api/business-order/grid', qs.stringify({//获取业务订单
                 businessNo: this.bn,
                 startTime: '2017-03-28',
                 endTime: '2017-03-28',
                 start: '0',
             })).then(function (data) {
                 _this.myorder = data.data.data;
-                console.log(_this.myorder)
+                console.log(data.data.data)
+                
+                _this.myorder.forEach(function(order) {
+                    _this.ajax.post('/xinda-api/service-order/grid', qs.stringify({
+                    businessNo:order.businessNo,
+                    startTime: '2017-03-28',
+                    endTime: '2017-03-28',
+                    start: '0',
+                    })).then(function (data) {
+                        // order.serviceList = data.data.data;
+                        _this.$set(order,'serviceList',data.data.data);
+                        // console.log(data)
+                    })
+
+                });
                 for (var time in _this.myorder) {
                     var createTime = _this.myorder[time].createTime;
                     _this.myorder[time].createTime = new Date(createTime).format("yyyy-MM-dd hh:mm:ss");
@@ -139,19 +110,51 @@ export default {
                 }
             })
         },
+        // 删除订单
+        removelist(index){
+            let _this= this
+            this.ajax.post("/xinda-api/ business-order/del",qs.stringify({
+                id:this.myorder[index].id
+            })).then(function(data){
+                if(data.data.status==1){
+                _this.myorder.splice(index,1)
+                } 
+             })
+            },
+            // removelist: function(index) {
+            //     let that = this;
+            //     this.popups({ //弹出框内容
+            //         headers: '是否确定删除',
+            //         content: '确定要删除此商品吗？',
+            //         ok() {
+            //             // let _this= this
+            //             that.myorder.splice(index, 1);
+            //             this.ajax.post("/xinda-api/ business-order/del",qs.stringify({
+            //                 id:this.myorder[index].id
+            //             })).then(function(data){
+                            
+            //             })
+                        
+            //         }
+            //     })
+            // },
+        //付款
+        servicepay(index){
+            // this.$router.push({path:"/form"+this.myorder[index].businessNo})
+            // console.log(this.myorder[index].businessNo)
+            location.href = '#/form' + this.myorder[index].businessNo;
+        }
     }
 }
 </script>
 <style scoped lang="less">
-.tbodyr{
+a{cursor: pointer;}
+.tbody{
     border: 1px solid #ebebeb;
-}
-.t_d1{
-    // border: 1px solid #ebebeb;
 }
 .xinda{
     height: 67px;
-    // border: 1px solid #ebebeb;
+    // border: 1px solid red;
     td{
         font-size: 12px;
     }
@@ -160,6 +163,7 @@ table {
     text-align: left;
     width:100%;
     margin-top: 12px;
+    border: 1px solid #ebebeb;
     thead{
         background: #f7f7f7;
         tr{
@@ -183,17 +187,22 @@ table {
     margin-top: 9px;
     float: left;
 }
+.img-span{
+    width: 20%;
+}
 .t_sp{
-    float: left;
-    margin-top: 15px;
-    margin-left: 12px;
+    position: relative;
+    top: 10px;
+    left: 20px;
 }
 .t_sp2{
-    float: left;
-    margin-left: -95px;
-    margin-top: 35px;
+    position: relative;
+    top: 20px;
+    left: 20px;
 }
 .t_d1{
+     width:28%;
+     border-bottom: 1px solid #ebebeb;
     &:after{
         content:'';
         display: block;
@@ -201,29 +210,33 @@ table {
     }
 }
 .t_d2{
-    margin-left: 100px;
+    width:8%;
+    text-align: center;
+    border-bottom: 1px solid #ebebeb;
     line-height: 67px;
-    float: left;
 }
 .t_d3{
-    position: relative;
-    left: -34px;
+    width:10%;
+    text-align: center;
+    line-height: 67px;
+    border-bottom: 1px solid #ebebeb;
 }
 .t_d4{
-    position: relative;
-    left: 50px;
+    width: 12%;
     color: #2792d6;
     // border-left: 1px solid #ebebeb;
     text-align: center;
+    line-height: 67px;
+    border: 1px solid #ebebeb;
 }
 .t_d5{
-    position: relative;
-    left: 100px;
+    width: 13%;
     color: #2792d6;
     border: 1px solid #ebebeb;
     text-align: center;
 }
 .t_d6{
+    width: 10%;
     border: 1px solid #ebebeb;
     border-left: none;
 }
@@ -234,17 +247,13 @@ table {
     border: 1px solid #2693d4;
     border-radius: 10%;
     line-height: 23px;
-    top: -10px;
-    right: -115px;
     color: #2693d4;
     text-align: center;
-    position: relative;
+    margin-left: 30px;
 }
 .del-order{
     color: red;
-    position: relative;
-    top: 16px;
-    right: -60px;
+    margin-left: 35px;
 }
 // ----------------------------------------------------------------
 span {
@@ -512,7 +521,7 @@ span {
                 font-size: 14px;
                 width: 112px;
                 float: left;
-                line-height: 31px;
+                line-height: 29px;
                 border-bottom: 2px solid #2693d4;
                 text-align: center;
             }
@@ -534,7 +543,7 @@ span {
                     width: 263px;
                     height: 23px;
                     float: left;
-                    margin-left: 24px;
+                    margin-left: 4px;
                     border: 1px solid #b0b0b0;
                 }
                 a {

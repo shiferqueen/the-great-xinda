@@ -15,9 +15,7 @@
                 </div>
                 <div class="logo-right">
                     <h4>信达北京服务中心</h4>
-                    <p>服务单号：
-                        <span class="pink-color">B1823</span>
-                    </p>
+                    <p>服务单号<span class="pink-color">B1823</span></p>
                     <span class="goumai">购买内容：test</span>
                 </div>
                 <div class="goumai-time">
@@ -33,9 +31,7 @@
                 </div>
                 <div class="logo-right">
                     <h4>信达北京服务中心</h4>
-                    <p>服务单号：
-                        <span class="pink-color">B1823</span>
-                    </p>
+                    <p>服务单号<span class="pink-color">B1823</span></p>
                     <span class="goumai">购买内容：test</span>
                 </div>
                 <div class="goumai-time">
@@ -61,10 +57,25 @@ export default {
     data() {
         return {
             weiping: true,
-            yiping: false
+            yiping: false,
+            evaluation:[]
         }
     },
+    created (){
+        this.evaluationlist();
+    },
     methods: {
+        evaluationlist() {
+            let _this = this;
+            this.ajax.post('/xinda-api/service/judge/grid',qs.stringify({
+                start:'0',
+                limit:'6',
+                status:'2',
+            })).then(function(data){
+                _this.evaluation = data.data.data;
+                console.log(data)
+            })
+        },
         get: function () {
             this.weiping = true,
             this.yiping = false
@@ -74,15 +85,6 @@ export default {
             this.yiping = true
         }
     },
-    created() {
-        this.ajax.post('/xinda-api/service/judge/grid', qs.stringify({
-            start:0,
-            limit:6,
-            status:2,
-        })).then(function (data) {
-            console.log(data)
-        })
-    }
 }
 </script>
 
@@ -90,8 +92,6 @@ export default {
 a {
     cursor: pointer
 }
-
-;
 // 未评价开始
 .logo {
     width: 98px;

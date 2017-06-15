@@ -1,31 +1,35 @@
 <template>
-  <Row>
-    <Col :xs="{ span: 0, offset: 0 }" :sm="{ span: 24, offset:0 }">
-        <div class="top-welcome">
-            <div class="top-containter">
-                <span class="fl pdr" v-show="getuser==''?false:true" @click="member">{{getuser}}</span>
-                <p class="fl">欢迎来到信达!</p>
-                <p class="fl cr" v-show="getuser==''?false:true"  @click="logout()">【退出】</p>
-                <span class="fl">
-                     <a href="#/action/login" class="blue" v-show="getuser==''?true:false">登录</a>
-                </span>
-                <span class="fl">
-                    <a href="#/action/register" class="blue" v-show="getuser==''?true:false">快速注册</a>
-                </span>
-                <span class="fr">
-                    <a href="#/shoplist" class="blue">服务商入口</a>
-                </span>
-                <span v-show=true class="fr top-myorder">
-                    <a href="#/member" v-show="getuser?true:false">我的订单</a>
-                </span>
-                <a href="#/shopping" class="fr top-shoppingcar" @click.prevent="goshopping(getuser)">购物车
-                <span class="marg0">{{getCartNum}}</span> 件 </a>
-            </div>
-        </div>
-    </Col>
-  </Row>
-</template>
+    <Row>
+    <Col :xs="{span:0}" :sm="{span:24}">
+    <div class="top-welcome">
+      <div class="top-containter">
+        <span class="fl pdr" v-show="getuser==''?false:true" @click="member">{{getuser}}</span>
+        <p class="fl">欢迎来到信达!</p>
+        <p class="fl cr" v-show="getuser==''?false:true"  @click="logout()">【退出】</p>
+        <span class="fl">
+          <a href="#/action/login" class="blue" v-show="getuser==''?true:false">登录</a>
+        </span>
+        <span class="fl">
+          <a href="#/action/register" class="blue" v-show="getuser==''?true:false">快速注册</a>
+        </span>
+        <span class="fr">
+          <a href="#/shoplist" class="blue">服务商入口</a>
+        </span>
+        <span v-show=true class="fr top-myorder">
+          <a href="#/member" v-show="getuser?true:false">我的订单</a>
+        </span>
+        <a href="#/shopping" class="fr top-shoppingcar" @click.prevent="goshopping(getuser)">购物车
+          <span class="marg0">{{getCartNum}} </span>件</a>
+      </div>
+    </div>
 
+    </Col>
+  
+    </Row>
+
+  
+
+</template>
 <script>
     import {
         mapGetters,
@@ -97,6 +101,12 @@
 </script>
 
 <style lang="less" scoped>
+    //测试
+// .ceshi{
+//     margin-bottom: 500px;
+// }
+    //测试结束
+
     .fl {
         float: left;
     }
@@ -156,4 +166,13 @@
             }
         }
     }
+.top-p{
+    width:100%;
+    height:40px;
+    text-align: center;
+    font-size:20px;
+    font-family: "Hiragino Sans GB";
+    background-color: #e5e5e5;
+    
+}
 </style>
