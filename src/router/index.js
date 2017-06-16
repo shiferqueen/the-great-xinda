@@ -31,6 +31,7 @@ import secondproduct from '@/views/secondproduct'
 
 
 import iview from '@/views/myiView' //iview 样式用
+import logged from '@/widgets/member/logged'
 
 
 
@@ -145,6 +146,11 @@ export default new Router({
                             path: 'setaccount',
                             name: 'setaccount',
                             component: setaccount
+                        },
+                        {
+                            path: 'logged',
+                            name: 'logged',
+                            component: logged
                         },
                     ]
 

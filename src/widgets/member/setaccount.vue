@@ -1,5 +1,5 @@
 <template>
-<Row>
+<div>
     <Col :xs="0" :sm="24">
  <div class="setaccount">
      <div class="wangzhe">
@@ -189,7 +189,7 @@
  </div>
  </Col>
  <!--移动端代码结束-->
- </Row>
+ </div>
 </template>
 
 <script>
@@ -411,9 +411,6 @@ import Vue from 'vue'
 
 <style scoped lang="less">
 // 移动端代码
-.ivu-row{
-    min-width:362px;
-}
 .head{
     height: 60px;
     background: #e8e8e8;
@@ -625,11 +622,11 @@ import Vue from 'vue'
 // 移动端代码结束
 .setaccount{
     margin-top: -34%;
+    margin-left: 31%;
 }
     .wangzhe{
         width: 948px;
         border-bottom: 2px solid #ccc;
-        margin-left: 32%;
         .active{
             color: #2693d4;
             border-bottom: 2px solid #2693d4;
@@ -644,7 +641,6 @@ import Vue from 'vue'
     }
     .now-img{
         margin-top:25px;
-        margin-left: 32%;
         &:after{
             content:'';
             display: block;
@@ -661,7 +657,6 @@ import Vue from 'vue'
     }
     .sex{
         margin-top: 2%;
-        margin-left: 32%;
     }
     .radio-1{
         margin-left: 30px;
@@ -671,11 +666,9 @@ import Vue from 'vue'
     }
     .username{
         margin-top: 1%;
-        margin-left: 32%;
     }
     .youxiang{
         margin-top: 2%;
-        margin-left: 32%;
     }
     .c-t{
         border: 1px solid #ccc;
@@ -686,7 +679,6 @@ import Vue from 'vue'
     }
     .bj-hz{
         margin-top: 2%;
-        margin-left: 32%;
         select{
             border: 1px solid #ccc;
             width: 75px;
@@ -695,7 +687,7 @@ import Vue from 'vue'
     }
     .save{
         margin-top: 40px;
-        margin-left: 30%;
+        margin-left: -2%;
         a{
 width: 68px;
             height: 24px;
@@ -725,6 +717,7 @@ width: 68px;
         margin-left: 33%;
         li{
             margin-top: 37px;
+            margin-left: -49%;
             input{
                 border: 1px solid #ccc;
                 margin-left: 15px;
