@@ -1,5 +1,6 @@
 <template>
-    <div>
+    <Row>
+        <Col :xs="0" :sm="24" >
         <div>
             <p class="head_top">首页/公司工商</p>
         </div>
@@ -108,9 +109,51 @@
                     <p>增值服务</p>
                 </div>
             </div>
-    
+            
         </div>
-    </div>
+ </Col>
+ <Col :xs="24" :sm="0" >
+            <Row>
+                <div class="main-phone">
+                    <Col span="16" offset="4" class="phone-top">
+                            <Row>
+                                    <Col span="12" class="phone-top-con">
+                                    <div :class="{top :spta ==1}" @click='chicked(1)'>综合排序</div>
+                                    </Col>    
+                                    <Col span="12" class="phone-top-con">
+                                    <div :class="{top :spta ==2}" @click='chicked(2)'>{{prices}}</div>
+                                    </Col> 
+                            </Row>
+                        </Col>  
+                        <Col span="24">
+                            <div class="con-main-phone" v-for="(listeach,index) in listpage_ajax">
+                                <a :href="'#/secondproduct/'+listeach.id" @click="storeid(listeach.id)">
+                                    <Col span="8">
+                                        <div class="con-main-left-phone">
+                                            <a :href="'#/secondproduct/'+listeach.id" @click="storeid(listeach.id)">
+                                                    <img src="../images/products/loge_loge.png">
+                                            </a>
+                                        </div>
+                                    </Col>
+                                    <Col span="15" offset="1">
+                                        <div class="con-main-middle-phone">
+                                            <p class="title">
+                                                <a :href="'#/secondproduct/'+listeach.id" @click="storeid(listeach.id)">{{listeach.serviceName}}</a>
+                                            </p>
+                                            <p>{{listeach.serviceInfo}}</p>
+                                            <p><span class="region"><Icon type="android-pin"></Icon> {{listeach.regionName}}</span><span class="teshu"><span class="price">￥{{listeach.price}}</span>元</span></p>
+                                            
+                                        </div>
+                                    </Col>
+                                </a>                           
+                            </div>
+                      </Col>
+                      <Col span="24" class="phone-bottom">
+                      </Col> 
+                </div> 
+            </Row>     
+        </Col>
+ </Row>
 </template>
 
 <script>
@@ -157,6 +200,9 @@ export default {
 
     created() {
         let _this = this
+        window.onresize = function(){
+         _this.changePage();
+        };
         this.list();
         // ------------以下为省市区三级联动
         // 数据初始化,默认选中北京市,默认选中第一个;北京市数据为总数据的前18个
@@ -250,7 +296,7 @@ export default {
         storeid(index) {
             this.setstoreid(index);
         },
-        //页面接口
+             //页面接口
         list() {
             let _this = this
             this.ajax.post("/xinda-api/product/package/grid", qs.stringify({
@@ -262,8 +308,17 @@ export default {
                 _this.pages.length = Math.ceil(_this.listpage_ajax_new.length / 4)
                 _this.number = 0
                 _this.isA = false
-                _this.listpage_ajax = _this.listpage_ajax_new.slice(_this.number, _this.number + 4)
+                //屏幕大小监控
+               _this.changePage();
             });
+        },
+        //改变分页数据
+        changePage(){
+            if(document.body.clientWidth>600){
+                this.listpage_ajax = this.listpage_ajax_new.slice(this.number, this.number + 4)
+            }else{
+                this.listpage_ajax = this.listpage_ajax_new
+            }
         },
 
 
@@ -306,6 +361,9 @@ export default {
                 _this.prices = '价格 ↑';
             }
              _this.spta = c
+              if(_this.spta == 1){
+                 _this.prices = '价格';
+             }             
 
         },
     },
@@ -660,4 +718,78 @@ export default {
     color: #fff !important;
 } 
 //分页器结束
+
+.main-phone{
+    padding:0 10px;
+        .phone-top{
+            margin-top:10px;
+            height: 30px;
+            border: 1px solid #2693d4;
+            border-radius: 5px;
+            .phone-top-con{
+            height: 28px;
+            font-size:14px;
+            text-align: center;
+            div{
+            height: 28px;
+            padding: 3px 0;  
+            }
+        }
+         
+    }
+    .top{
+          background:#2693d4; 
+          color:#fff; 
+       }
+    .con-main-phone {
+        width: 100%;
+        margin: 0 auto;
+        border-bottom: 1px solid #cdcdcd;
+    
+    &:after {
+        .clear;
+    }
+    .con-main-left-phone {
+        float: left;
+        img {
+            width: 100%;
+            height: auto;
+            border: 1px solid #cdcdcd;
+            margin: 25px 0;
+        }
+    }
+    .con-main-middle-phone {
+        .title {
+            font-size:16px;
+            margin: 20px 0;
+        }
+        p {
+            margin: 5px 0;
+            color: #686868;
+            font-size: 14px;
+            margin-bottom: 10px;
+            .region {
+                 font-size: 12px;
+                margin-right: 5%;
+                
+            }
+           .teshu{
+               font-size:8px;
+               margin-right:5%;
+            .price{
+                 font-size: 18px;
+                 margin-right: 2px;
+                 color: red;
+            }
+           }
+        }
+    } 
+   
+    } 
+    .phone-bottom{
+        height:170px;         
+    }
+  
+}
+ 
 </style>

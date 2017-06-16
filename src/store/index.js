@@ -22,7 +22,9 @@ export default new Vuex.Store({
         //银联支付中转内容
         transUnionPay: '123',
         //弹出框
-        popups: {}
+        popups: {},
+        //首页类型
+        indexnum:'',
     },
     //突变集合---用来操作状态集合
     mutations: {
@@ -51,6 +53,9 @@ export default new Vuex.Store({
         },
         SETPOPUPS(state, popup) {
             state.popups = popup;
+        },
+        SETINDEXNUM(state, indexnum) {
+            state.indexnum =indexnum;
         },
         CLOSEPOPUPS(state) {
             state.popups = {};
@@ -90,6 +95,10 @@ export default new Vuex.Store({
         setUnionPay({ commit }, content) {
             commit('SETUNIONPAY', content)
         },
+        setindexnum({ commit }, indexnum) {
+            commit('SETINDEXNUM', indexnum)
+        },
+
         popups({ commit }, popup) {
             popup.status = true;
             if (popup.ok) {
@@ -138,6 +147,9 @@ export default new Vuex.Store({
         },
         getpopupstatus(state) {
             return state.popupstatus
+        },
+         getindexnum(state) {
+            return state.indexnum
         }
     }
 });

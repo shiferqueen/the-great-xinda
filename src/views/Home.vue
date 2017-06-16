@@ -163,14 +163,14 @@
                 财税服务
               </template>
               <Menu-group title="代理记账">
-                <Menu-item name="1-1">小规模记账</Menu-item>
-                <Menu-item name="1-2">一般纳税人记录</Menu-item>
+                <Menu-item name="1-1"><p  @click="chuan(1)">小规模记账</p></Menu-item>
+                <Menu-item name="1-2"><p  @click="chuan(1)">一般纳税人记录</p></Menu-item>
               </Menu-group>
               <Menu-group title="税务代办">
-                <Menu-item name="1-3">国税地税报道</Menu-item>
-                <Menu-item name="1-4">代开增值税专用发票</Menu-item>
-                <Menu-item name="1-5">所得税汇算清缴</Menu-item>
-                <Menu-item name="1-6">一般纳税人资质申办</Menu-item>
+                <Menu-item name="1-3"><p  @click="chuan(1)">国税地税报道</p></Menu-item>
+                <Menu-item name="1-4"><p  @click="chuan(1)">代开增值税专用发票</p></Menu-item>
+                <Menu-item name="1-5"><p  @click="chuan(1)">所得税汇算清缴</p></Menu-item>
+                <Menu-item name="1-6"><p  @click="chuan(1)">一般纳税人资质申办</p></Menu-item>
               </Menu-group>
               <Menu-group title="审计报告">
                 <Menu-item name="1-7">验资报告</Menu-item>
@@ -184,21 +184,21 @@
                 公司工商
               </template>
               <Menu-group title="公司注册">
-                <Menu-item name="2-1">分公司注册</Menu-item>
-                <Menu-item name="2-2">合伙企业注册</Menu-item>
-                <Menu-item name="2-3">外商独资公司</Menu-item>
-                <Menu-item name="2-4">VIE架构</Menu-item>
-                <Menu-item name="2-5">股份公司注册</Menu-item>
-                <Menu-item name="2-6">有限责任公司注册</Menu-item>
-                <Menu-item name="2-7">一般纳税人注册地址</Menu-item>
+                <Menu-item name="2-1"><p  @click="chuan(4)">分公司注册</p></Menu-item>
+                <Menu-item name="2-2"><p  @click="chuan(4)">合伙企业注册</p></Menu-item>
+                <Menu-item name="2-3"><p  @click="chuan(4)">外商独资公司</p></Menu-item>
+                <Menu-item name="2-4"><p  @click="chuan(4)">VIE架构</p></Menu-item>
+                <Menu-item name="2-5"><p  @click="chuan(4)">股份公司注册</p></Menu-item>
+                <Menu-item name="2-6"><p  @click="chuan(4)">有限责任公司注册</p></Menu-item>
+                <Menu-item name="2-7"><p  @click="chuan(4)">一般纳税人注册地址</p></Menu-item>
               </Menu-group>
               <Menu-group title="公司变更">
-                <Menu-item name="2-8">公司股权变更</Menu-item>
-                <Menu-item name="2-9">公司名称变更</Menu-item>
-                <Menu-item name="2-10">公司注册地址变更</Menu-item>
-                <Menu-item name="2-11">内资公司注销</Menu-item>
-                <Menu-item name="2-12">法人、高管或注册资本变更</Menu-item>
-                <Menu-item name="2-13">公司经营范围变更</Menu-item>
+                <Menu-item name="2-8"><p  @click="chuan(5)">公司股权变更</p></Menu-item>
+                <Menu-item name="2-9"><p  @click="chuan(5)">公司名称变更</p></Menu-item>
+                <Menu-item name="2-10"><p  @click="chuan(5)">公司注册地址变更</p></Menu-item>
+                <Menu-item name="2-11"><p  @click="chuan(5)">内资公司注销</p></Menu-item>
+                <Menu-item name="2-12"><p  @click="chuan(5)">法人、高管或注册资本变更</p></Menu-item>
+                <Menu-item name="2-13"><p  @click="chuan(5)">公司经营范围变更</p></Menu-item>
               </Menu-group>
             </Submenu>
             <Submenu name="3">
@@ -206,31 +206,31 @@
                 知识产权
               </template>
               <Menu-group title="专利申请">
-                <Menu-item name="3-1">审查意见答复</Menu-item>
-                <Menu-item name="3-2">外观专利减缓（共同申请）</Menu-item>
-                <Menu-item name="3-3">发明不减缓</Menu-item>
-                <Menu-item name="3-4">发明减缓（个人）</Menu-item>
-                <Menu-item name="3-5">实用新型专利减缓</Menu-item>
-                <Menu-item name="3-6">专利申请复审</Menu-item>
-                <Menu-item name="3-7">外观设计专利（不减缓）</Menu-item>
-                <Menu-item name="3-8">办理实用新型检索报告</Menu-item>
-                <Menu-item name="3-9">实用新型专利</Menu-item>
-                <Menu-item name="3-10">外观专利减缓</Menu-item>
-                <Menu-item name="3-11">实用新型专科减缓（共同申请）</Menu-item>
+                <Menu-item name="3-1"><p  @click="chicked()">审查意见答复</p></Menu-item>
+                <Menu-item name="3-2"><p  @click="chicked()">外观专利减缓（共同申请）</p></Menu-item>
+                <Menu-item name="3-3"><p  @click="chicked()">发明不减缓</p></Menu-item>
+                <Menu-item name="3-4"><p  @click="chicked()">发明减缓（个人）</p></Menu-item>
+                <Menu-item name="3-5"><p  @click="chicked()">实用新型专利减缓</p></Menu-item>
+                <Menu-item name="3-6"><p  @click="chicked()">专利申请复审</p></Menu-item>
+                <Menu-item name="3-7"><p  @click="chicked()">外观设计专利（不减缓）</p></Menu-item>
+                <Menu-item name="3-8"><p  @click="chicked()">办理实用新型检索报告</p></Menu-item>
+                <Menu-item name="3-9"><p  @click="chicked()">实用新型专利</p></Menu-item>
+                <Menu-item name="3-10"><p  @click="chicked()">外观专利减缓</p></Menu-item>
+                <Menu-item name="3-11"><p  @click="chicked()">实用新型专科减缓（共同申请）</p></Menu-item>
               </Menu-group>
               <Menu-group title="商标注册">
-                <Menu-item name="3-12">LOGO设计+商标注册</Menu-item>
-                <Menu-item name="3-13">商标变更</Menu-item>
-                <Menu-item name="3-14">商标续展</Menu-item>
-                <Menu-item name="3-15">商标驳回复审</Menu-item>
-                <Menu-item name="3-16">商标快速注册</Menu-item>
-                <Menu-item name="3-17">著名商标认定</Menu-item>
+                <Menu-item name="3-12"><p  @click="chicked()">LOGO设计+商标注册</p></Menu-item>
+                <Menu-item name="3-13"><p  @click="chicked()">商标变更</p></Menu-item>
+                <Menu-item name="3-14"><p  @click="chicked()">商标续展</p></Menu-item>
+                <Menu-item name="3-15"><p  @click="chicked()">商标驳回复审</p></Menu-item>
+                <Menu-item name="3-16"><p  @click="chicked()">商标快速注册</p></Menu-item>
+                <Menu-item name="3-17"><p  @click="chicked()">著名商标认定</p></Menu-item>
               </Menu-group>
               <Menu-group title="版权保护">
-                <Menu-item name="3-18">电视剧作品登记</Menu-item>
-                <Menu-item name="3-19">美术著作权</Menu-item>
-                <Menu-item name="3-20">软件著作权</Menu-item>
-                <Menu-item name="3-21">音乐作品</Menu-item>
+                <Menu-item name="3-18"><p  @click="chicked()">电视剧作品登记</p></Menu-item>
+                <Menu-item name="3-19"><p  @click="chicked()">美术著作权</p></Menu-item>
+                <Menu-item name="3-20"><p  @click="chicked()">软件著作权</p></Menu-item>
+                <Menu-item name="3-21"><p  @click="chicked()">音乐作品</p></Menu-item>
               </Menu-group>
             </Submenu>
             <Submenu name="4">
@@ -238,16 +238,16 @@
                 社保办理
               </template>
               <Menu-group title="企业社保">
-                <Menu-item name="4-1">社保/公积金账户注销</Menu-item>
-                <Menu-item name="4-2">社保开户</Menu-item>
-                <Menu-item name="4-3">社会公积金代缴</Menu-item>
-                <Menu-item name="4-4">公积金开户</Menu-item>
+                <Menu-item name="4-1"><p  @click="chuan(6)">社保/公积金账户注销</p></Menu-item>
+                <Menu-item name="4-2"><p  @click="chuan(6)">社保开户</p></Menu-item>
+                <Menu-item name="4-3"><p  @click="chuan(6)">社会公积金代缴</p></Menu-item>
+                <Menu-item name="4-4"><p  @click="chuan(6)">公积金开户</p></Menu-item>
               </Menu-group>
               <Menu-group title="个人社保">
-                <Menu-item name="4-5">个人社保代理</Menu-item>
-                <Menu-item name="4-6">个人代理社保和公积金</Menu-item>
-                <Menu-item name="4-7">新参保（个人）</Menu-item>
-                <Menu-item name="4-8">个人代理公积金</Menu-item>
+                <Menu-item name="4-5"><p  @click="chuan(6)">个人社保代理</p></Menu-item>
+                <Menu-item name="4-6"><p  @click="chuan(6)">个人代理社保和公积金</p></Menu-item>
+                <Menu-item name="4-7"><p  @click="chuan(6)">新参保（个人）</p></Menu-item>
+                <Menu-item name="4-8"><p  @click="chuan(6)">个人代理公积金</p></Menu-item>
               </Menu-group>
             </Submenu>
           </Menu>
@@ -285,7 +285,7 @@
       <div class="phone_coin">
         <ul class="phone_con">
           <li class="ph_coin">
-            <a href="javascript:void(0)" class="icon_link">
+            <a href="javascript:void(0)" class="icon_link" @click="chuan(3)">
               <div class="bg1 wenzi">
                 财
               </div>
@@ -293,7 +293,7 @@
             </a>
           </li>
           <li class="ph_coin">
-            <a href="javascript:void(0)" class="icon_link">
+            <a href="javascript:void(0)" class="icon_link" @click="chuan(4)">
               <div class="bg2 wenzi">
                 创
               </div>
@@ -301,7 +301,7 @@
             </a>
           </li>
           <li class="ph_coin">
-            <a href="javascript:void(0)" class="icon_link">
+            <a href="javascript:void(0)" class="icon_link"  @click="chuan(5)">
               <div class="bg3 wenzi">
                 更
               </div>
@@ -309,15 +309,15 @@
             </a>
           </li>
           <li class="ph_coin">
-            <a href="javascript:void(0)" class="icon_link">
+            <a href="javascript:void(0)" class="icon_link" @click="chuan(6)">
               <div class="bg4 wenzi">
                 社
               </div>
-              <p class="shuoming">个人社保</p>
+              <p class="shuoming" >个人社保</p>
             </a>
           </li>
           <li class="ph_coin">
-            <a href="javascript:void(0)" class="icon_link">
+            <a href="javascript:void(0)" class="icon_link"  @click="chuan(6)">
               <div class="bg5 wenzi">
                 保
               </div>
@@ -325,11 +325,11 @@
             </a>
           </li>
           <li class="ph_coin">
-            <a href="javascript:void(0)" class="icon_link">
+            <a href="javascript:void(0)" class="icon_link" @click="chuan(1)">
               <div class="bg6 wenzi">
-                专
+                代
               </div>
-              <p class="shuoming">知识产权</p>
+              <p class="shuoming">代理记账</p>
             </a>
           </li>
           <li class="ph_coin" @click="ifRow=!ifRow">
@@ -360,7 +360,9 @@
           <ul class="clear">
             <li v-for="(mas,index) in dat">
               <a href="#/pagelist">
-                <img :src="imgsrcfront+mas.providerImg">
+              <div class="img">
+                 <img :src="imgsrcfront+mas.providerImg">
+              </div>
                 <h4>{{mas.providerName}}</h4>
                 <p>{{mas.serviceInfo}}</p>
                 <div>
@@ -429,8 +431,19 @@ export default {
     //  console.log(this.getuser())
   },
   methods: {
-    ...mapActions(["user"]),
-    ...mapGetters(["getuser"]),
+    ...mapActions(["user","setindexnum"]),
+    ...mapGetters(["getuser","getindexnum"]),
+    chuan:function(index){
+            let _this = this;
+            _this.setindexnum(index);
+            
+            _this.$router.push({ path: 'listpage' });
+            
+    },
+    chicked:function(){
+      let _this = this;
+       _this.$router.push({ path: 'pagelist' });
+    }
   }
 }
 
@@ -901,12 +914,18 @@ export default {
           width: 95%;
           height: 180px;
           display: block;
-          img {
+          .img {
             float: left;
             width: 25%;
             height: 60%;
             margin: 5% 0 5% 3%;
             border: 1px solid #e8e8e8;
+            position: relative;
+            img{
+              width:100%;
+              position: absolute;
+              top:30%;
+            }
           }
           h4 {
             line-height: 300%;

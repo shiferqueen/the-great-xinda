@@ -39,19 +39,19 @@
                 </Col>
                 <Col :xs="18" :sm="21">
                     <Row type="flex" class="conterrow-row">
-                        <Col :xs='{span:16,order:1}' :sm="{span:4,order:1}"  class="nobr"><nobr>{{listdata.serviceName}}</nobr></Col>
+                        <Col :xs='{span:16,order:1}' :sm="{span:5,order:1}"  class="nobr"><nobr>{{listdata.serviceName}}</nobr></Col>
                         <Col :xs="0" :sm="{span:4,order:2}">￥ {{listdata.unitPrice}}</Col>
-                        <Col :xs='{span:24,order:4}' :sm="{span:6,order:3}" class="inputCol">
+                        <Col :xs='{span:24,order:4}' :sm="{span:7,order:3}" class="inputCol">
                             <span v-if="!shows">购买数量：</span><input type="button" @click="min(listdata.buyNum,listdata.serviceId,index)" value="-"><input @input='oninput(listdata.buyNum,listdata.serviceId)' type="number" min=1 v-model="listdata.buyNum"><input type="button" @click="add(listdata.buyNum,listdata.serviceId,index)" value="+">
                         </Col>
                         <Col class="totalSum" :xs="{span:24,order:3}" :sm="{span:3,order:4}">￥ {{listdata.unitPrice*listdata.buyNum}}</Col>
                         <Col :xs='0' :sm="{span:2,order:5}"> &nbsp </Col>
                         <!--deleteone 删除当前-->
-                        <Col :xs='{span:8,order:2}' :sm="{span:2,order:6}" class="conterrow-del">
+                        <Col :xs='{span:8,order:2}' :sm="{span:3,order:6}" class="conterrow-del">
                             <div @click="deleteone(index,listdata.serviceId,listdata.totalPrice)">删除<span v-if="!shows">订单</span></div>
                         </Col>
                         <Col :xs='{span:24,order:6}' :sm="{span:0,order:7}">
-                            <Icon type="ios-location-outline"></Icon> <span style="font-size:14px;">{{address(listdata)}}</span>
+                            <Icon type="ios-location-outline"></Icon> <span style="font-size:14px;">{{address(listdata.providerId)}}</span>
                         </Col>
                     </Row>
                 </Col>
@@ -114,7 +114,8 @@ export default {
             shoppingnum: 0,
             inputs: '', //input的setTimeout 
             trans: false,
-            show: true
+            show: true,
+            dizhi:{},
         }
     },
     computed: {
@@ -128,13 +129,7 @@ export default {
             // console.log('total========', total);
             return total;
         },
-        ceshi() {
-            if (this.getpopupstatus) {
-                console.log('getpopupstatus发生了变化')
-            }
-        },
         shows(){
-            console.log(document.body.clientWidth)
             let that=this;
             if(document.body.clientWidth < 768){
                 that.show=false
@@ -156,9 +151,7 @@ export default {
                 that.ajax.post('/xinda-api/cart/set', qs.stringify({
                     id: id,
                     num: a,
-                })).then(function (data) {
-                    console.log(data)
-                })
+                }))
             }, 500)
         },
         add: function (nums, id, index) {
@@ -210,6 +203,15 @@ export default {
                     })
                 }
             })
+            setTimeout(function(){
+                if(document.body.clientWidth < 768 && that.shoppingnum == 0){
+                    document.body.style.height = window.screen.height+'px';
+                    document.body.style.overflow = 'hidden';
+                    document.getElementsByClassName('elsecart')[0].style.height = window.screen.height+'px';   
+                    document.body.style.background='#f6f6f6';
+                }
+            },0)
+            
         },
 
         //购物车总数
@@ -243,15 +245,16 @@ export default {
             }
         },
         //地址
-        address(obj){
+        address(id){
             let that = this
             this.ajax.post('/xinda-api/provider/detail', qs.stringify({
-                        id: obj.providerId
+                        id: id
             })).then(function (data) {
-                obj.addresss = data.data.data.regionName
+                that.$set(that.dizhi,id,data.data.data.regionName)
+                // that.dizhi[id] =  data.data.data.regionName;
+                // that.listdata;
             })
-            console.log(obj.addresss)
-            return  obj.addresss;
+            return that.dizhi[id];
         },
        
     },
@@ -268,22 +271,24 @@ export default {
                         height[i].style.height = height[i].offsetWidth - 2 + 'px';
                     }
                     var heights = document.getElementsByClassName('index_choice')[0].scrollHeight;
-                    document.getElementsByClassName('weixininput')[0].style.bottom = heights+'px';
+                    if(document.getElementsByClassName('weixininput').length!=0){
+                         document.getElementsByClassName('weixininput')[0].style.bottom = heights+ 'px';
+                    }
+                   
                 }, 0);
             }
+            setTimeout(function() {
+                if(document.body.clientWidth < 768 && that.shoppingnum == 0){
+                    document.body.style.height = window.screen.height+'px';
+                    document.body.style.overflow = 'hidden';
+                    document.getElementsByClassName('elsecart')[0].style.height = window.screen.height+'px';   
+                    
+                }
+            }, 0);
             
             that.shoppingnum = data.length;
         });
-        setTimeout(function() {
-            if(document.body.clientWidth < 768 || that.shoppingnum==0){
-                document.body.style.height = window.screen.height+'px';
-                document.body.style.overflow = 'hidden';
-                document.getElementsByClassName('elsecart')[0].style.height = window.screen.height+'px';   
-              
-            }else{
-                document.body.style.background='#f6f6f6'
-            }
-        }, 0);
+        
         
     },
 
@@ -435,7 +440,7 @@ div {
 .goods-end {
 
     margin-top: 25px;
-    margin-bottom: 100px;
+    margin-bottom: 150px;
     span{
         color:#fe0100;
     }

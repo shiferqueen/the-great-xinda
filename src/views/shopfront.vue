@@ -103,7 +103,7 @@
                             <!--<Row>{{liscon.regionName}} {{'&nbsp &nbsp &nbsp'}} {{liscon.marketPrice}}</Row>-->
                             <Row class="ph_mt10">
                                 <Col span="14" class="ph_fz8">{{liscon.regionName}}</Col>
-                                <Col span="8" class="ph_price ph_fz8">￥{{liscon.marketPrice}}</Col>
+                                <Col span="8" class="ph_price ph_fz8">￥{{liscon.price}}</Col>
                                 <Col span="2" class="ph_fz8">元</Col>
                             </Row>                        
                         </Col>
@@ -158,7 +158,7 @@ export default {
             })
         },
         onresize(){
-            if(window.screen.width < 768){
+            if(document.body.scrollWidth < 768){
             this.ifnone = false;
             console.log(this.ifnone)
         }
