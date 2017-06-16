@@ -47,27 +47,29 @@
                     </span>
                 </div>
             </div>
-            <div class="consult-box" v-show="bSign">
-                <div class="consult-box-title">&nbsp &nbsp 免费电话咨询
-                    <span @click="closeDiv">×</span>
+            <transition name="slide-fade">
+                <div class="consult-box" v-show="bSign">
+                    <div class="consult-box-title">&nbsp &nbsp 免费电话咨询
+                        <span @click="closeDiv">×</span>
+                    </div>
+                    <div></div>
+                    <p class="phonemsg">{{phonemsg}}</p>
+                    <div class="entry-num">
+                        <input type="input" v-model="cellphone" placeholder="请输入手机号">
+                    </div>
+                    <div class="entry-logo">
+                        <input type="input" v-model="imgcode" placeholder="请输入图形验证码">
+                        <img @click="getsrc" :src="imgsrc">
+                    </div>
+                    <div class="entry-code">
+                        <input type="input" placeholder="请输入验证码">
+                        <input class="button" type="button" v-if="yanzheng" value="获取验证码" @click="huoqu">
+                        <input class="disabled-button" type="button" v-else :value="reciprocal + 's后重新发送'" @click="huoqu" disabled>
+                    </div>
+                    <div class="begin-infor" @click="goinfor">开始免费咨询</div>
+                    <p class="promease">本次电话咨询完全免费，我们将对你的号码严格保密，请放心使用!</p>
                 </div>
-                <div></div>
-                <p class="phonemsg">{{phonemsg}}</p>
-                <div class="entry-num">
-                    <input type="input" v-model="cellphone" placeholder="请输入手机号">
-                </div>
-                <div class="entry-logo">
-                    <input type="input" v-model="imgcode" placeholder="请输入图形验证码">
-                    <img @click="getsrc" :src="imgsrc">
-                </div>
-                <div class="entry-code">
-                    <input type="input" placeholder="请输入验证码">
-                    <input class="button" type="button" v-if="yanzheng" value="获取验证码" @click="huoqu">
-                    <input class="disabled-button" type="button" v-else :value="reciprocal + 's后重新发送'" @click="huoqu" disabled>
-                </div>
-                <div class="begin-infor" @click="goinfor">开始免费咨询</div>
-                <p class="promease">本次电话咨询完全免费，我们将对你的号码严格保密，请放心使用!</p>
-            </div>
+            </transition>
         </div>
         <!--------------------导航栏图部分------------------>
         <div class="banner">
@@ -218,13 +220,13 @@
                      <Col span="24" class="button-button">
                         <Row>
                              <Col class="lianxi" span="8">
-                               <div class="m1"  @click="goon"> <Icon  class="icon" type="android-contacts"></Icon></br>联系商家</div>
+                               <div class="m1"  @click="goon"> <Icon class="icon" type="ios-telephone"></Icon></br>联系商家</div>
                             </Col>
                             <Col class="gouwuche" span="8">
-                                <div class="m" @click="addProductsc(getuser)">加入购物车</div>
+                                <div class="m" @click="addProducts(getuser)">加入购物车</div>
                             </Col>
-                            <Col class="goumai" span="8" @click="addProductsd(getuser)">
-                                <div class="m" @click="addProductsd(getuser)">立即购买</div>
+                            <Col class="goumai" span="8">
+                                <div class="m" @click="addProductsb(getuser)">立即购买</div>
                             </Col>
                         </Row>
                      </Col>
@@ -232,6 +234,7 @@
                     <Col span="24" class="phone-bottom">
                     </Col> 
                     <div>
+                        <transition name="slide-fade">
                             <div class="consult-box" v-show="bSign">
                                 <div class="consult-box-title">&nbsp &nbsp 免费电话咨询
                                     <span @click="closeDiv">×</span>
@@ -253,9 +256,12 @@
                                 <div class="begin-infor" @click="goinfor">开始免费咨询</div>
                                     <p class="promease">本次电话咨询完全免费，我们将对你的号码严格保密，请放心使用!</p>
                                 </div>
+                        </transition>
                             </div>
                         </div>
                 </div>
+                //加入购物车弹出框
+                <div class="shoppingadd" v-show="ifshow"></div>
             </Row>     
         </Col>     
   </Row>
@@ -275,6 +281,7 @@ export default {
     },
     data() {
         return {
+            ifshow:false,
             imgsrc: '/xinda-api/ajaxAuthcode',//图片验证接口
             imgcode: '',  //图片验证码
             cellphone: '',  //手机号
@@ -516,23 +523,30 @@ export default {
                     }
                 })
             }else{
-                
+                // that.ifshow=true
+                // setTimeout(function(){
+                //     that.ifshow=false
+                // },2000)
+                this.$Notice.success({
+                    duration:2,
+                    desc: '加入成功'
+                });
                 var id = that.$route.params.productId;
 
-                this.ajax.post("xinda-api/cart/add", qs.stringify({
+                that.ajax.post("xinda-api/cart/add", qs.stringify({
 
                     id: id,
-                    num: 1
+                    num:that.goodsval
                 })).then(function (res) {
                         that.refCartNum();
-                        that.ajax.post("/xinda-api/cart/set", qs.stringify({
-                        id:id,
-                        num:that.goodsval
-                    
+                    //     that.ajax.post("/xinda-api/cart/set", qs.stringify({
+                    //     id:id,
+                    //     num:that.goodsval
+                      
 
-                    })).then(function (res) {
-                        
-                    })
+                    // })).then(function (res) {
+                    //    \
+                    // })
                 })
             }
         },
@@ -568,47 +582,6 @@ export default {
             }
              
 
-        },
-         addProductsc(uname) {
-            let that = this;
-            if(uname==""){
-                         that.$router.push({path: '/action/login'});
-            }else{ 
-                var id = that.$route.params.productId;
-                this.ajax.post("xinda-api/cart/add", qs.stringify({
-
-                    id: id,
-                    num: 1
-                })).then(function (res) {
-                        that.refCartNum();
-                        that.ajax.post("/xinda-api/cart/set", qs.stringify({
-                        id:id,
-                        num:that.goodsval
-                    })).then(function (res) {    
-                    })
-                })
-            }
-        },
-           addProductsd(uname) {
-            let that = this
-            if(uname==""){
-                that.$router.push({path: '/action/login'});
-            }else{
-                let that = this
-                var id = that.$route.params.productId;
-                this.ajax.post("xinda-api/cart/add", qs.stringify({
-                    id: id,
-                    num: 1
-                })).then(function (res) {
-                        that.refCartNum();
-                        that.ajax.post("/xinda-api/cart/set", qs.stringify({
-                        id:id,
-                        num:that.goodsval
-                    })).then(function (res) {
-                        that.$router.push({name: 'shopping'});
-                    })
-                })
-            }
         },
 
     }
@@ -1133,7 +1106,7 @@ export default {
     }
      .button-button{
         position:fixed;
-        
+        cursor: pointer;
          .m1{
            font-size:16px;
            padding:8px 0; 
@@ -1267,7 +1240,26 @@ export default {
         }
     }
 }
-
+//加入购物车弹出框
+// .shoppingadd {
+//     width:150px;
+//     height:60px;
+//     border: 1px solid red;
+//     position:fixed;
+//     top:300px;
+//     left:100px;
+//     z-index:20;
+// }
+.slide-fade-enter-active {
+  transition: all .3s ease;
+}
+.slide-fade-leave-active {
+  transition: all .3s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+}
+.slide-fade-enter, .slide-fade-leave-active {
+  transform: translateY(10px);
+  opacity: 0;
+}
 
 
 </style>
