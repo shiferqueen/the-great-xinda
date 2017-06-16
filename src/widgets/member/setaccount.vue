@@ -174,8 +174,8 @@
              </Col>
          </Row>
          <Row class="qw_30">
-             <Col :xs="6" class="qw_31">再次输入新密码：</Col>
-             <Col :xs="18">
+             <Col :xs="8" class="qw_31">再次输入新密码：</Col>
+             <Col :xs="16">
                 <input class="qw_32" type="password" v-model="newtext" placeholder="请确认新密码"/>
              </Col>
          </Row>
@@ -415,29 +415,29 @@ import Vue from 'vue'
     min-width:362px;
 }
 .head{
-    height: 77px;
+    height: 60px;
     background: #e8e8e8;
     div.icon{
         padding-left: 2%;
         i{
-            line-height:77px;
-            font-size:25px;
+            line-height:60px;
+            font-size:14px;
         }
     }
     .wo_dan{
-        font-size: 29px;
+        font-size: 14px;
         line-height: 77px;
         padding-left: 25%;
     }
 }
 .qw_1{
-    height: 49px;
-    margin-top: 30px;
+    height: 40px;
+    margin-top: 10px;
     border-bottom: 2px solid #2693d4;
     a{
         color: black;
-        font-size: 29px;
-        line-height: 49px;
+        font-size: 14px;
+        line-height: 40px;
         margin-left:27px;
         }
 }
@@ -445,7 +445,7 @@ import Vue from 'vue'
     height: 128px;
     
     .qw_3{
-        font-size: 20px;
+        font-size: 14px;
         text-align: center;
         display: block;
         line-height: 128px; 
@@ -459,11 +459,11 @@ import Vue from 'vue'
     .qw_6{
         text-align: center;
         line-height: 60px;
-        font-size: 20px;
+        font-size: 14px;
     }
     .qw_7{
         border: 1px solid #ccc;
-        width: 327px;
+        width: 180px;
         vertical-align: middle;
         margin-top: 10px;
         height: 43px;
@@ -476,10 +476,10 @@ import Vue from 'vue'
     .qw_9{
         text-align: center;
         line-height: 60px;
-        font-size: 20px;
+        font-size: 14px;
     }
     .qw_10{
-        font-size: 20px;
+        font-size: 14px;
         line-height: 60px;
         .radio-11{
 
@@ -491,11 +491,11 @@ import Vue from 'vue'
     .qw_12{
         text-align: center;
         line-height: 60px;
-        font-size: 20px;
+        font-size: 14px;
     }
     .qw_13{
         border: 1px solid #ccc;
-        width: 327px;
+        width: 180px;
         vertical-align: middle;
         margin-top: 10px;
         height: 43px;
@@ -508,44 +508,44 @@ import Vue from 'vue'
     .qw_15{
         text-align: center;
         line-height: 60px;
-        font-size: 20px;
+        font-size: 14px;
     }
     .qw_16{
         line-height: 60px;
         select{
             border: 1px solid #ccc;
-            width: 130px;
-            height: 40px;
+            width: 70px;
+            height: 35px;
         }
     }
 }
 .qw_20{
-    height: 114px;
+    height: 60px;
     border-bottom: 2px solid #dfdfdf;
-    line-height: 114px;
+    line-height: 34px;
     p{
         margin-left:3%;
         height: 30px;
-        font-size: 20px;
+        font-size: 14px;
         margin-left: 26%;
     }
     a{
-        width: 120px;
-        height: 40px;
+        width: 60px;
+        height: 27px;
         display: inline-block;
         border: 1px solid #2693d4;
         border-radius: 8%;
-        line-height: 40px;
+        line-height: 28px;
         color: #2693d4;
         text-align: center;
-        font-size: 20px;
-        margin-left:25%;
+        font-size: 14px;
+        margin-left: 25%;
     }
 }
 .qw_21{
     height: 60px;
     border-bottom: 2px solid #2693d4;
-    font-size: 26px;
+    font-size: 14px;
     line-height: 70px;
     p{
         margin-left: 27px;
@@ -553,20 +553,21 @@ import Vue from 'vue'
 }
 .qw_22{
     height: 60px;
-    margin-top: 110px;
+    margin-top: 10px;
     .qw_25{
         text-align: center;
         line-height: 60px;
-        font-size: 20px;
+        font-size: 14px;
     }
     .qw_26{
         border: 1px solid #ccc;
-        width: 327px;
+        width: 180px;
         vertical-align: middle;
         margin-top: 10px;
         height: 43px;
         padding: 5px;
         border-radius: 5px;
+        margin-left: 10%;
     }
 }
 .qw_27{
@@ -574,16 +575,17 @@ import Vue from 'vue'
     .qw_28{
         text-align: center;
         line-height: 60px;
-        font-size: 20px;
+        font-size: 14px;
     }
     .qw_29{
         border: 1px solid #ccc;
-        width: 327px;
+        width: 180px;
         vertical-align: middle;
         margin-top: 10px;
         height: 43px;
         padding: 5px;
         border-radius: 5px;
+        margin-left: 10%;
     }
 }
 .qw_30{
@@ -591,11 +593,11 @@ import Vue from 'vue'
     .qw_31{
         text-align: center;
         line-height: 60px;
-        font-size: 20px;
+        font-size: 14px;
     }
     .qw_32{
         border: 1px solid #ccc;
-        width: 327px;
+        width: 180px;
         vertical-align: middle;
         margin-top: 10px;
         height: 43px;
@@ -608,17 +610,16 @@ import Vue from 'vue'
     border-bottom: 6px solid #dfdfdf;
     text-align: center;
     .qw_41{
-        width: 120px;
-        height: 40px;
+        width: 60px;
+        height: 27px;
         display: inline-block;
         border: 1px solid #2693d4;
         border-radius: 8%;
-        line-height: 40px;
+        line-height: 28px;
         color: #2693d4;
         text-align: center;
-        font-size: 20px;
-        margin-left: 25%;
-        margin-top: 10%;
+        font-size: 14px;
+        margin-left: 34%;
     }
 }
 // 移动端代码结束
