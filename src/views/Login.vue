@@ -112,7 +112,8 @@
                                     //登录成功
                                     _this.user();
                                     _this.refCartNum();
-                                    _this.c = "#2494d4"
+                                    _this.c = "#2494d4";
+                                    _this.$Message.success('登录成功');
                                     setTimeout(function () {
                                         _this.$router.push({ path: '/home' });
                                     }, 500);
