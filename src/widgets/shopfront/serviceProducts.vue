@@ -1,33 +1,50 @@
 <template>
-    <div class="">
-        <div class="shopfront-content-right-service-list">
-            <ul class="clear">
-                <li v-for="(lispages,index) in listpage_ajax">
-                    <nobr>
-                        <p>{{lispages.serviceName}}</p>
-                    </nobr>
-                    <div>
-                        <span></span>
-                        <span></span>
-                    </div>
-                    <span>{{lispages.serviceInfo}}</span>
-                    </br>
-                    <span>销量：{{lispages.buyNum}}</span>
-                    </br>
-                    <strong>￥ {{lispages.price}}</strong>
-                    <br>
-                    <s>原价：￥{{lispages.marketPrice}}</s>
-                    <a :href="'#/secondproduct/'+lispages.id" @click="storeid(lispages.id)">查看详情>>></a>
-                </li>
-            </ul>
-        </div>
-        <div class="shopfront-content-change clear">
-            <div @click="goto(1)">首页</div>
-            <div v-show="current != 1" @click="current-- && goto(current--)">上一页</div>
-            <div v-for="index in pages" @click="goto(index)" :class="{'active':current == index}">{{index}}</div>
-            <div v-show="allpage != current && allpage != 0" @click="current++ && goto(current++)">下一页</div>
-            <div @click="goto(3)">尾页</div>
-        </div>
+    <div>
+        <!--<Row>-->
+            <!--<Col :xs="0" :sm="24">-->
+                <div class="shopfront-content-right-service-list">
+                    <ul class="clear">
+                        <li v-for="(lispages,index) in listpage_ajax">
+                            <nobr>
+                                <p>{{lispages.serviceName}}</p>
+                            </nobr>
+                            <div>
+                                <span></span>
+                                <span></span>
+                            </div>
+                            <span>{{lispages.serviceInfo}}</span>
+                            </br>
+                            <span>销量：{{lispages.buyNum}}</span>
+                            </br>
+                            <strong>￥ {{lispages.price}}</strong>
+                            <br>
+                            <s>原价：￥{{lispages.marketPrice}}</s>
+                            <a :href="'#/secondproduct/'+lispages.id" @click="storeid(lispages.id)">查看详情>>></a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="shopfront-content-change clear">
+                    <div @click="goto(1)">首页</div>
+                    <div v-show="current != 1" @click="current-- && goto(current--)">上一页</div>
+                    <div v-for="index in pages" @click="goto(index)" :class="{'active':current == index}">{{index}}</div>
+                    <div v-show="allpage != current && allpage != 0" @click="current++ && goto(current++)">下一页</div>
+                    <div @click="goto(3)">尾页</div>
+                </div>
+            <!--</Col>-->
+            <!--<Col :xs="24" :sm="0">-->
+                <!--<div v-for="(liscon,index) in listpage_ajax_new">
+                    <Row>
+                        <Col span="5" offset="1">aaa<img :src="'http://115.182.107.203:8088/xinda/pic' + liscon.providerImg"></Col>
+                        <Col span="17" offset="1">
+                            <Row>aaa</Row>
+                            <Row>aaa</Row>
+                            <Row>aaa</Row>
+                            <Row>aaa</Row>                        
+                        </Col>
+                    </Row>
+                </div>
+            </Col>    
+        </Row>-->
     </div>
 </template>
 <script>
@@ -39,6 +56,7 @@ export default {
         return {
             lispage_ajax: [],
             listpage_ajax: [],
+            listpage_ajax_new:[],
             name: {},
             number: 0,
             current: 1,
@@ -47,7 +65,7 @@ export default {
         }
     },
     computed: {
-        ...mapGetters(['getshopid']),
+        // ...mapGetters(['getshopid']),
         pages: function () {
             let _this = this;
             var pag = [];
@@ -59,7 +77,7 @@ export default {
         }
     },
     methods: {
-        ...mapActions(['setstoreid']),
+        // ...mapActions(['setstoreid']),
         goto: function (index) {
             let _this = this
             if (index == this.current) return;
@@ -80,13 +98,17 @@ export default {
             let data = res.data.data
             _this.name = data.name
             // console.log(res.data.data.name)
+            
         }),
-            this.ajax.post("/xinda-api/product/package/grid", qs.stringify({
+            this.ajax.post("/xinda-api/product/package/grid", qs.stringify({     //接口（电脑端和手机端）
                 limit: 18,
                 start: _this.number,
+                // Sid:_this.getshopid,
+        
             })).then(function (res) {
                 _this.listpage_ajax_new = res.data.data;
                 // console.log(res.data.data)
+                // console.log(_this.listpage_ajax_new)
                 _this.number = 0
                 _this.isA = false
                 _this.listpage_ajax = _this.listpage_ajax_new.slice(_this.number, _this.number + 6)
@@ -102,8 +124,8 @@ export default {
     padding-top: 20px;
     border: 1px solid gray;
     li {
-        width: 250px;
-        height: 210px;
+        width: 260px;
+        height: 245px;
         border: 1px solid gray;
         float: left;
         border: 1px solid #b6b6b6;

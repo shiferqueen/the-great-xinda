@@ -27,6 +27,7 @@ import serviceProducts from '@/widgets/shopfront/serviceProducts'
 import customService from '@/widgets/shopfront/customService'
 import certification from '@/widgets/shopfront/certification'
 import secondproduct from '@/views/secondproduct'
+import Exeice from '@/views/exeice'
 
 
 
@@ -48,6 +49,7 @@ export default new Router({
                     alias: '',
                     component: Home
                 },
+
                 {
                     path: "shoplist",
                     name: "shoplist",
@@ -149,6 +151,11 @@ export default new Router({
 
                 }
             ]
+        },
+        {
+            path: "/exeice",
+            name: "Exeice",
+            component: Exeice
         },
         {
             path: '/action',
