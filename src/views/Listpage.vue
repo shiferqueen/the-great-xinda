@@ -197,13 +197,18 @@ export default {
         }
 
     },
-
+     
     created() {
         
         let _this = this
         window.onresize = function(){
                 _this.changePage();
         };
+        if(this.getindexnum == ""){
+               this.que = 1
+            }else{
+              this.que = this.getindexnum
+            }
         this.list();
         // ------------以下为省市区三级联动
         // 数据初始化,默认选中北京市,默认选中第一个;北京市数据为总数据的前18个
@@ -223,7 +228,7 @@ export default {
         // ----------三级联动结束
     },
     computed: {
-        ...mapGetters(['getCartNum', 'getuser']),
+        ...mapGetters(['getCartNum', 'getuser','getindexnum']),
         info() {
             return {
                 province: this.selectedProvince,
@@ -233,7 +238,7 @@ export default {
         },
     },
     methods: {
-        ...mapActions(['setstoreid', 'refCartNum', 'user', 'popups']),
+        ...mapActions(['setstoreid', 'refCartNum', 'user', 'popups','setindexnum']),
 
 
         //加入购物车
@@ -298,12 +303,14 @@ export default {
         },
         //页面接口
         list() {
+            
             let _this = this
             this.ajax.post("/xinda-api/product/package/grid", qs.stringify({
                 productTypeCode: _this.que,
                 start: _this.number,
                 sort: _this.sorts,
             })).then(function (res) {
+                //_this.que = _this.indexnum;
                 _this.listpage_ajax_new = res.data.data;
                 _this.pages.length = Math.ceil(_this.listpage_ajax_new.length / 4)
                 _this.number = 0

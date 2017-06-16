@@ -1144,16 +1144,16 @@ export default {
     }
     .button-button{
         position:fixed;
-        bottom:87px;
+        bottom:9%;
         .m{
-           font-size:18px;
-           padding:35px 0; 
+           font-size:16px;
+           padding:25px 0; 
            text-align: center;
            z-index: 10;
         }
          .m1{
-           font-size:18px;
-           padding:18px 0; 
+           font-size:16px;
+           padding:8px 0; 
            text-align: center;
            z-index: 10;
            .icon{

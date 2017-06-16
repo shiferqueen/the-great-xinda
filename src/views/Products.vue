@@ -312,13 +312,11 @@ export default {
     //获取接口
     created() {
         //  this.getid();
-        console.log('商品详情数据', this.$route.params.productId);
         let _this = this
         this.ajax.post("/xinda-api/product/package/detail", qs.stringify({
             sId: this.$route.params.productId
         })).then(function (res) {
             let data = res.data.data;
-            console.log(data)
             data.product.img = _this.tp + data.product.img;
             _this.imgA = _this.tp + data.provider.providerImg;
             _this.product = data.product;
@@ -1140,18 +1138,18 @@ export default {
         height: 270px;
         z-index: -10;
     }
-    .button-button{
+     .button-button{
         position:fixed;
-        bottom:87px;
+        bottom:9%;
         .m{
-           font-size:18px;
-           padding:35px 0; 
+           font-size:16px;
+           padding:25px 0; 
            text-align: center;
            z-index: 10;
         }
-        .m1{
-           font-size:18px;
-           padding:18px 0; 
+         .m1{
+           font-size:16px;
+           padding:8px 0; 
            text-align: center;
            z-index: 10;
            .icon{
