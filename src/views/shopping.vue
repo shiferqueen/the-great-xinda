@@ -1,7 +1,7 @@
 <template>
-  <div class="width1200" style="margin-top:25px;">
-     <goods></goods>
-     <hotService></hotService>
+  <div>
+    <goods class="width1200"></goods>
+    <hotService class="width1200"></hotService>
   </div>
 </template>
 
@@ -12,10 +12,11 @@ import hotService from '@/widgets/shopping/hotService'
 
 export default {
   name: 'shopping',
-  components:{
+  components: {
     goods,
     hotService,
-  }
+  },
+
 }
 
 
@@ -24,7 +25,13 @@ export default {
 
 <style scoped>
 .width1200{
-    width:1200px;
-    margin:0 auto;
+  min-width:320px;
+}
+@media screen and (min-width: 1200px) {
+  .width1200 {
+    width: 1200px;
+    margin: 0 auto;
+    margin-top:25px;
+  }
 }
 </style>
