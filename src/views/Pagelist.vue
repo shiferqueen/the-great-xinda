@@ -1,6 +1,6 @@
 <template>
     <Row>
-        <Col :xs="0" :sm="24" >
+        <Col :xs="0" :sm="24">
         <div>
             <p class="head_top">首页/公司工商</p>
         </div>
@@ -39,7 +39,7 @@
                                 </option>
                             </select>
                             <select name="block" v-model="selectedBlock">
-                                <option v-for="(item, index) in blocks" :value="item">
+                                <option v-for="(item, index) in blocks" :value="item" >
                                     {{ item.name }}
                                 </option>
                             </select>
@@ -48,7 +48,7 @@
                 </div>
                 <div class="content">
                     <div class="content_top">
-                       <span :class="{nav_line_top: spta ==1}" @click='chicked(1)'>综合排序</span>
+                        <span :class="{nav_line_top: spta ==1}" @click='chicked(1)'>综合排序</span>
                         <span :class="{nav_line_top: spta ==2}" @click='chicked(2)'>{{prices}}</span>
                     </div>
                     <div class="content_top-t">
@@ -56,33 +56,37 @@
                         <div class="content-t-right">价格</div>
                     </div>
                     <div class="con-main" v-for="(listeach,index) in listpage_ajax">
-                        <div class="con-main-left">
-                            <a :href="'#/secondproduct/'+listeach.id" @click="storeid(listeach.id)">
-                                 <img src="../images/products/loge_loge.png">
-                            </a>
-                        </div>
-                        <div class="con-main-middle">
-                            <h4>
-                               <a :href="'#/secondproduct/'+listeach.id" @click="storeid(listeach.id)">{{listeach.serviceName}}</a>
-                            </h4>
-                            <p>{{listeach.serviceInfo}}</p>
-                            <p>
-                                <span>{{listeach.providerName}}</span>
-                                <span>{{listeach.regionName}}</span>
-                            </p>
-                        </div>
-                        <div class="con-main-right">
-                            <p>￥{{listeach.price}}</p>
-                            <span @click="addCartNumb(listeach.id,getuser)">立即购买</span>
-                            <span @click="addCartNum(listeach.id,getuser,index)">加入购物车</span>
-                            <transition name="trans">
-                                <div class="transition-div" v-if="transifs == index+1"> + 1</div>
-                            </transition>
-                            <transition name="trans">
-                                <div class="transition-div" v-if="transifs == index + 'a'"> + 1</div>
-                            </transition>
+                        <div v-if="listeach.regionName == '北京-北京市-'+selectedBlock.name">
+                            <div class="con-main-left">
+                                <a :href="'#/secondproduct/'+listeach.id" @click="storeid(listeach.id)">
+                                    <img src="../images/products/loge_loge.png">
+                                </a>
+                            </div>
+                            <div class="con-main-middle">
+                                <h4>
+                                    <a :href="'#/secondproduct/'+listeach.id" @click="storeid(listeach.id)">{{listeach.serviceName}}</a>
+                                </h4>
+                                <p>{{listeach.serviceInfo}}</p>
+                                <p>
+                                    <span>{{listeach.providerName}}</span>
+                                    <span>{{listeach.regionName}}</span>
+                                </p>
+                            </div>
+                            <div class="con-main-right">
+                                <p>￥{{listeach.price}}</p>
+                                <span @click="addCartNumb(listeach.id,getuser)">立即购买</span>
+                                <span @click="addCartNum(listeach.id,getuser,index)">加入购物车</span>
+                                <transition name="trans">
+                                    <div class="transition-div" v-if="transifs == index+1"> + 1</div>
+                                </transition>
+                                <transition name="trans">
+                                    <div class="transition-div" v-if="transifs == index + 'a'"> + 1</div>
+                                </transition>
+    
+                            </div>
     
                         </div>
+    
                     </div>
                 </div>
                 <div class="bottom_page pagination">
@@ -109,51 +113,56 @@
                     <p>增值服务</p>
                 </div>
             </div>
-            
+    
         </div>
- </Col>
- <Col :xs="24" :sm="0" >
-            <Row>
-                <div class="main-phone">
-                    <Col span="16" offset="4" class="phone-top">
-                            <Row>
-                                    <Col span="12" class="phone-top-con">
-                                    <div :class="{top :spta ==1}" @click='chicked(1)'>综合排序</div>
-                                    </Col>    
-                                    <Col span="12" class="phone-top-con">
-                                    <div :class="{top :spta ==2}" @click='chicked(2)'>{{prices}}</div>
-                                    </Col> 
-                            </Row>
-                        </Col>  
-                        <Col span="24">
-                            <div class="con-main-phone" v-for="(listeach,index) in listpage_ajax">
-                                <a :href="'#/secondproduct/'+listeach.id" @click="storeid(listeach.id)">
-                                    <Col span="8">
-                                        <div class="con-main-left-phone">
-                                            <a :href="'#/secondproduct/'+listeach.id" @click="storeid(listeach.id)">
-                                                    <img src="../images/products/loge_loge.png">
-                                            </a>
-                                        </div>
-                                    </Col>
-                                    <Col span="15" offset="1">
-                                        <div class="con-main-middle-phone">
-                                            <p class="title">
-                                                <a :href="'#/secondproduct/'+listeach.id" @click="storeid(listeach.id)">{{listeach.serviceName}}</a>
-                                            </p>
-                                            <p>{{listeach.serviceInfo}}</p>
-                                            <p><span class="region"><Icon type="android-pin"></Icon> {{listeach.regionName}}</span><span class="teshu"><span class="price">￥{{listeach.price}}</span>元</span></p>
-                                            
-                                        </div>
-                                    </Col>
-                                </a>                           
-                            </div>
-                      </Col>
-                      <Col span="24" class="phone-bottom">
-                      </Col> 
-                </div> 
-            </Row>     
         </Col>
- </Row>
+        <Col :xs="24" :sm="0">
+        <Row>
+            <div class="main-phone">
+                <Col span="16" offset="4" class="phone-top">
+                <Row>
+                    <Col span="12" class="phone-top-con">
+                    <div :class="{top :spta ==1}" @click='chicked(1)'>综合排序</div>
+                    </Col>
+                    <Col span="12" class="phone-top-con">
+                    <div :class="{top :spta ==2}" @click='chicked(2)'>{{prices}}</div>
+                    </Col>
+                </Row>
+                </Col>
+                <Col span="24">
+                <div class="con-main-phone" v-for="(listeach,index) in listpage_ajax">
+                    <a :href="'#/secondproduct/'+listeach.id" @click="storeid(listeach.id)">
+                        <Col span="8">
+                        <div class="con-main-left-phone">
+                            <a :href="'#/secondproduct/'+listeach.id" @click="storeid(listeach.id)">
+                                <img src="../images/products/loge_loge.png">
+                            </a>
+                        </div>
+                        </Col>
+                        <Col span="15" offset="1">
+                        <div class="con-main-middle-phone">
+                            <p class="title">
+                                <a :href="'#/secondproduct/'+listeach.id" @click="storeid(listeach.id)">{{listeach.serviceName}}</a>
+                            </p>
+                            <p>{{listeach.serviceInfo}}</p>
+                            <p>
+                                <span class="region">
+                                    <Icon type="android-pin"></Icon> {{listeach.regionName}}</span>
+                                <span class="teshu">
+                                    <span class="price">￥{{listeach.price}}</span>元</span>
+                            </p>
+    
+                        </div>
+                        </Col>
+                    </a>
+                </div>
+                </Col>
+                <Col span="24" class="phone-bottom">
+                </Col>
+            </div>
+        </Row>
+        </Col>
+    </Row>
 </template>
 
 <script>
@@ -193,15 +202,15 @@ export default {
             pages: [],
             spantoga: true, //样式切换
             spantogb: 2, //样式切换
-             spta:1,
+            spta: 1,
         }
 
     },
 
     created() {
         let _this = this
-        window.onresize = function(){
-         _this.changePage();
+        window.onresize = function () {
+            _this.changePage();
         };
         this.list();
         // ------------以下为省市区三级联动
@@ -218,7 +227,7 @@ export default {
                 return true
             }
         })
-        this.selectedBlock = this.blocks[0]
+        this.selectedBlock = this.blocks[6]
         // ----------三级联动结束
     },
     computed: {
@@ -296,7 +305,7 @@ export default {
         storeid(index) {
             this.setstoreid(index);
         },
-             //页面接口
+        //页面接口
         list() {
             let _this = this
             this.ajax.post("/xinda-api/product/package/grid", qs.stringify({
@@ -305,18 +314,22 @@ export default {
                 sort: _this.sorts,
             })).then(function (res) {
                 _this.listpage_ajax_new = res.data.data;
+                res.data.data[0].regionName="北京-北京市-门头沟区"
+                res.data.data[1].regionName="北京-北京市-门头沟区"
+                res.data.data[2].regionName="北京-北京市-门头沟区"
+                res.data.data[3].regionName="北京-北京市-门头沟区"
                 _this.pages.length = Math.ceil(_this.listpage_ajax_new.length / 4)
                 _this.number = 0
                 _this.isA = false
                 //屏幕大小监控
-               _this.changePage();
+                _this.changePage();
             });
         },
         //改变分页数据
-        changePage(){
-            if(document.body.clientWidth>600){
+        changePage() {
+            if (document.body.clientWidth > 600) {
                 this.listpage_ajax = this.listpage_ajax_new.slice(this.number, this.number + 4)
-            }else{
+            } else {
                 this.listpage_ajax = this.listpage_ajax_new
             }
         },
@@ -327,28 +340,28 @@ export default {
             let _this = this
             _this.que = 5;
             _this.list();
-                _this.spantoga = false
+            _this.spantoga = false
         },
         queryb() {
             let _this = this
             _this.que = 4;
             _this.list();
-                _this.spantoga = true
+            _this.spantoga = true
         },
 
         //下方按钮切换
-          queryc(c) {
+        queryc(c) {
             let _this = this
             _this.que = c;
             _this.list();
-            _this.spantogb = c  
-                    
+            _this.spantogb = c
+
         },
-        
-        
-           
+
+
+
         //价格排序
-      chicked(c) {
+        chicked(c) {
             let _this = this;
             if (_this.sorts == 2) {
                 _this.sorts = 3;
@@ -360,10 +373,10 @@ export default {
                 _this.list();
                 _this.prices = '价格 ↑';
             }
-             _this.spta = c
-              if(_this.spta == 1){
-                 _this.prices = '价格';
-             }             
+            _this.spta = c
+            if (_this.spta == 1) {
+                _this.prices = '价格';
+            }
 
         },
     },
@@ -407,7 +420,7 @@ export default {
             }
             var _this = this
             Vue.nextTick(() => {
-                _this.selectedBlock = _this.blocks[0]
+                _this.selectedBlock = _this.blocks[6]
                 // 触发与 v-model相关的 input事件
                 _this.$emit('input', _this.info)
             })
@@ -495,6 +508,7 @@ export default {
                         color: #fff;
                     }
                     select {
+                        font-size: 14px;
                         width: 90px;
                         height: 20px;
                         margin: 0 5px;
@@ -518,11 +532,10 @@ export default {
                     color: #686868;
                     font-size: 14px;
                     cursor: pointer;
-                  
                 }
-                .nav_line_top{
-                        background: #2693d4;
-                        color: #fff !important;
+                .nav_line_top {
+                    background: #2693d4;
+                    color: #fff !important;
                 }
             }
             .content_top-t {
@@ -652,6 +665,7 @@ export default {
 
 
 
+
 /*过渡动画的class*/
 
 .transition-div {
@@ -665,6 +679,7 @@ export default {
     text-align: center;
     font-size: 30px;
 }
+
 
 
 
@@ -716,80 +731,75 @@ export default {
 .pagination span.active {
     background: #0E90D2;
     color: #fff !important;
-} 
-//分页器结束
+}
 
-.main-phone{
-    padding:0 10px;
-        .phone-top{
-            margin-top:10px;
-            height: 30px;
-            border: 1px solid #2693d4;
-            border-radius: 5px;
-            .phone-top-con{
+//分页器结束
+.main-phone {
+    padding: 0 10px;
+    .phone-top {
+        margin-top: 10px;
+        height: 30px;
+        border: 1px solid #2693d4;
+        border-radius: 5px;
+        .phone-top-con {
             height: 28px;
-            font-size:14px;
+            font-size: 14px;
             text-align: center;
-            div{
-            height: 28px;
-            padding: 3px 0;  
+            div {
+                height: 28px;
+                padding: 3px 0;
             }
         }
-         
     }
-    .top{
-          background:#2693d4; 
-          color:#fff; 
-       }
+    .top {
+        background: #2693d4;
+        color: #fff;
+    }
     .con-main-phone {
         width: 100%;
         margin: 0 auto;
         border-bottom: 1px solid #cdcdcd;
-    
-    &:after {
-        .clear;
-    }
-    .con-main-left-phone {
-        float: left;
-        img {
-            width: 100%;
-            height: auto;
-            border: 1px solid #cdcdcd;
-            margin: 25px 0;
+
+        &:after {
+            .clear;
         }
-    }
-    .con-main-middle-phone {
-        .title {
-            font-size:16px;
-            margin: 20px 0;
-        }
-        p {
-            margin: 5px 0;
-            color: #686868;
-            font-size: 14px;
-            margin-bottom: 10px;
-            .region {
-                 font-size: 12px;
-                margin-right: 5%;
-                
+        .con-main-left-phone {
+            float: left;
+            img {
+                width: 100%;
+                height: auto;
+                border: 1px solid #cdcdcd;
+                margin: 25px 0;
             }
-           .teshu{
-               font-size:8px;
-               margin-right:5%;
-            .price{
-                 font-size: 18px;
-                 margin-right: 2px;
-                 color: red;
-            }
-           }
         }
-    } 
-   
-    } 
-    .phone-bottom{
-        height:170px;         
+        .con-main-middle-phone {
+            .title {
+                font-size: 16px;
+                margin: 20px 0;
+            }
+            p {
+                margin: 5px 0;
+                color: #686868;
+                font-size: 14px;
+                margin-bottom: 10px;
+                .region {
+                    font-size: 12px;
+                    margin-right: 5%;
+                }
+                .teshu {
+                    font-size: 8px;
+                    margin-right: 5%;
+                    .price {
+                        font-size: 18px;
+                        margin-right: 2px;
+                        color: red;
+                    }
+                }
+            }
+        }
     }
-  
+    .phone-bottom {
+        height: 170px;
+    }
 }
- 
 </style>

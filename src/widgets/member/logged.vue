@@ -8,14 +8,14 @@
             <p>小明明</p>
         </div>
         <div class="myorder">
-            <div class="mse">
+            <div class="mse" @click="href(1)">
                 <img src="../../images/logos/110-2.jpg" />
                 <a>我的订单</a>
                 <span>＞</span>
             </div>
         </div>
         <div class="myorder">
-            <div class="mse">
+            <div class="mse" @click="href(2)">
                 <img src="../../images/logos/1231.jpg" />
                 <a>账户设置</a>
                 <span>＞</span>
@@ -55,6 +55,18 @@ export default {
                 }
             })
         },
+        href(i){
+            switch(i){
+                case 1:
+                this.$router.push({ path: '/member/myorder' });
+                break;
+                
+                case 2:
+                this.$router.push({ path: '/member/setaccount' });
+                break;
+
+            }
+        }
     }
 }
 </script>
