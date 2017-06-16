@@ -26,9 +26,6 @@
     </Col>
   
     </Row>
-
-  
-
 </template>
 <script>
     import {
@@ -93,7 +90,7 @@
             },
             member() {
                 this.$router.push({
-                    name: 'setaccount'
+                    name: 'myorder'
                 });
             }
         },
@@ -101,12 +98,6 @@
 </script>
 
 <style lang="less" scoped>
-    //测试
-// .ceshi{
-//     margin-bottom: 500px;
-// }
-    //测试结束
-
     .fl {
         float: left;
     }

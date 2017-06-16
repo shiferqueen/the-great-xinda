@@ -30,7 +30,7 @@ import secondproduct from '@/views/secondproduct'
 
 
 
-// import popups from '@/components/popups' //看弹出框样式用
+import iview from '@/views/myiView' //iview 样式用
 
 
 
@@ -48,6 +48,7 @@ export default new Router({
                     alias: '',
                     component: Home
                 },
+
                 {
                     path: "shoplist",
                     name: "shoplist",
@@ -171,5 +172,10 @@ export default new Router({
                 }
             ]
         },
+        {
+            path: '/iview',
+            name: 'iview',
+            component: iview
+        }
     ]
 });

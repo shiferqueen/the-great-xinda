@@ -5,11 +5,11 @@
             <a>我的评价</a>
         </div>
         <ul class="fou_evalu">
-            <li>
+            <li class="zh_1">
                 <a @click="get()" :class="{active:weiping}">未评价</a>
                 <a @click="set()" :class="{active:yiping}">已评价</a>
             </li>
-            <li v-show="weiping">
+            <li v-show="weiping" class="zh_2">
                 <div class="logo">
                     <img src="../../images/logos/xinda-logo.png" />
                 </div>
@@ -43,9 +43,9 @@
             </li>
         </ul>
         <div class="page_next">
-            <span>上一页</span>
-            <span>1</span>
-            <span>下一页</span>
+            <span class="zh_4">上一页</span>
+            <span class="zh_5">1</span>
+            <span class="zh_6">下一页</span>
         </div>
     </div>
     <!--未评价结束-->
@@ -99,24 +99,26 @@ a {
     float: left;
     border: 1px solid #ccc;
 }
-
 .my_evalu {
     width: 948px;
     height: 21px;
     border-bottom: 2px solid #ccc;
-    a {
+    margin-top: 3%;
+    margin-left: 31%;
+    a{
         color: #2693d4;
         border-bottom: 2px solid #2693d4;
-        padding: 0px 20px;
+        padding: 3px 20px;
     }
 }
 
 .fou_evalu {
-    width: 948px;
-    height: 193px;
-    border: 1px solid #ccc;
-    margin-top: 24px;
-    li:nth-child(1) {
+        width: 950px;
+        height: 189px;
+        border: 1px solid #ccc;
+        margin-top: 24px;
+        margin-left: 488px;
+    .zh_1 {
         width: 948px;
         height: 41px;
         background-color: #f7f7f7;
@@ -132,7 +134,7 @@ a {
             line-height: 41px;
         }
     }
-    li:nth-child(2) {
+    .zh_2 {
         width: 939px;
         height: 100px;
         margin-top: 28px;
@@ -148,8 +150,8 @@ a {
             float: left;
             border: 1px solid #ccc;
             img {
-                width: 98px;
-                height: 98px;
+                width: 96px;
+                height: 96px;
             }
         }
         .logo-right {
@@ -207,7 +209,7 @@ a {
 }
 
 .page_next {
-    span:nth-child(1) {
+    .zh_4 {
         width: 66px;
         height: 34px;
         border: 1px solid #e8e8e8;
@@ -219,7 +221,7 @@ a {
         margin-top: 37px;
         margin-left: 385px;
     }
-    span:nth-child(2) {
+    .zh_5 {
         width: 37px;
         height: 34px;
         border: 1px solid #2693d4;
@@ -231,7 +233,7 @@ a {
         font-size: 14px;
         margin-top: 37px;
     }
-    span:nth-child(3) {
+    .zh_6 {
         width: 66px;
         height: 34px;
         border: 1px solid #e8e8e8;
@@ -258,8 +260,8 @@ a {
         float: left;
         border: 1px solid #ccc;
         img {
-            width: 98px;
-            height: 98px;
+            width: 96px;
+            height: 96px;
         }
     }
     .logo-right {

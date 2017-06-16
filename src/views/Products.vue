@@ -404,7 +404,6 @@ export default {
                 this.ajax.post("/xinda-api/cart/add", qs.stringify({
                     id: id,
                     num: 1
-
                 })).then(function (res) {
                         that.refCartNum();
                         that.ajax.post("/xinda-api/cart/set", qs.stringify({
@@ -434,25 +433,17 @@ export default {
                 this.ajax.post("/xinda-api/cart/add", qs.stringify({
                     id: id,
                     num: 1
-
                 })).then(function (res) {
                         that.refCartNum();
                         that.ajax.post("/xinda-api/cart/set", qs.stringify({
                         id:id,
                         num:that.goodsval
-                    
-
                     })).then(function (res) {
                         that.$router.push({name: 'shopping'});
                     })
                 })
-
             }
-             
-
         },
-        
-
     }
 }
 </script>
