@@ -41,7 +41,7 @@
 				</a>
 			</div>
 			<div class="fl in_choice">
-				<a href="#/member" @click="home(4)" :class="{blue:home_index==4}">
+				<a @click="home(4)" :class="{blue:home_index==4}">
 					<Icon type="android-person" class="home"></Icon>
 					<p class="choice">我的</p>
 				</a>
@@ -66,6 +66,13 @@ export default {
 	methods: {
 		home(index) {
 			this.home_index = index;
+			if(index == 4){
+				if(this.getuser){
+					this.$router.push({path:'/member'})
+				}else{
+					this.$router.push({path:'/action/login'})
+				}
+			}
 			//  if(index==4){
 			//     if(this.getuser==''){
 			//        this.$router.push({
