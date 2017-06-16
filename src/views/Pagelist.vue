@@ -723,16 +723,16 @@ export default {
     padding:0 10px;
         .phone-top{
             margin-top:10px;
-            height: 40px;
+            height: 30px;
             border: 1px solid #2693d4;
             border-radius: 5px;
             .phone-top-con{
-            height: 38px;
-            font-size:16px;
+            height: 28px;
+            font-size:14px;
             text-align: center;
             div{
-            height: 38px;
-            padding: 6px 0;  
+            height: 28px;
+            padding: 3px 0;  
             }
         }
          
