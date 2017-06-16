@@ -97,15 +97,15 @@
                 </div>
             </Col>
             <Col :xs="24" :sm="0">
-                <Row>
+                <Row style="margin-top: 20px;">
                     <Col span="16" offset="4" style="border: 1px solid #2693d4; border-radius:5px">
                         <!--<div class="ph_title clear">
                             <div class="ph_sort">默认排序</div>
                             <div class="ph_sales">销量</div>
                         </div>-->
                         <Row>
-                            <Col span="12" style="padding:5px 0; background:#2693d4; text-align:center; color:#fff;">默认排序</Col>
-                            <Col span="12" style="text-align: center;padding: 5px 0;">销量</Col>
+                            <Col span="12" style="text-align:center;"><p :class="{bccol: bccoll ==1}" @click="changenum(1)" style="padding:5px 0;">默认排序</p></Col>
+                            <Col span="12" style="text-align: center;"><p :class="{bccol: bccoll ==2}" @click="changenum(2)" style="padding:5px 0;">销量</p></Col>
                         </Row>
                     </Col>
                 </Row>
@@ -145,19 +145,21 @@ export default {
             provinces,
             blocks: 0,
             lispage: [],
-           
+           sort_one:1,
+           bccoll:1,
         }
 
     },
     created() {
-        let _this = this;
-        this.ajax.post('/xinda-api/provider/grid', { start: 0, limit: 6, productTypeCode: 10 }).then(function (data) {
-            _this.lispage_ajax = data.data.data
-            _this.lispage = _this.lispage_ajax.map(function (value) {
-                return value.productTypes.split(',')
-            })
-            // console.log(_this.lispage)
-        })
+       this.move();
+        // let _this = this;
+        // this.ajax.post('/xinda-api/provider/grid', { start: 0, limit: 6, productTypeCode: 10 }).then(function (data) {
+        //     _this.lispage_ajax = data.data.data
+        //     _this.lispage = _this.lispage_ajax.map(function (value) {
+        //         return value.productTypes.split(',')
+        //     })
+        //     // console.log(_this.lispage)
+        // })
         // ----------以下为省市区三级联动
         // 数据初始化,默认选中北京市,默认选中第一个;北京市数据为总数据的前18个
         let beijing = this.provinces.slice(0, 19)
@@ -190,6 +192,26 @@ export default {
         goshop(id) {
             this.setgoshop(id)
             console.log(id)
+        },
+        // changenum(){
+        //     console.log(this.sort_one)
+        //     this.sort_one = 2,
+        //     move()
+        // },
+        move(){
+            let _this = this;
+        this.ajax.post('/xinda-api/provider/grid', { sort: _this.sort_one, start: 0, limit: 6, productTypeCode: 10 }).then(function (data) {
+            _this.lispage_ajax = data.data.data
+            _this.lispage = _this.lispage_ajax.map(function (value) {
+                return value.productTypes.split(',')
+            })
+            // console.log(_this.lispage)
+        })
+    },
+    changenum(n){
+            this.sort_one = 3,
+            this.move(),
+            this.bccoll = n
         }
     },
     components: {
@@ -504,5 +526,10 @@ export default {
 }
 .clored {
     color: red;
+}
+.bccol {
+     background:#2693d4;
+     color:#fff;
+     
 }
 </style>
