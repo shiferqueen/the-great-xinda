@@ -6,17 +6,13 @@ import router from './router'
 import store from './store'
 import axios from 'axios'
 import md5 from 'md5'
-import VueRouter from 'vue-router'
 import iView from 'iview'
 import 'iview/dist/styles/iview.css'
-
-
-Vue.use(VueRouter);
-Vue.use(iView);
-
+Vue.config.productionTip = false
+Vue.use(iView)
 Vue.prototype.md5 = md5
 Vue.prototype.ajax = axios
-
+Vue.use(iView);
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 
 Vue.config.productionTip = false

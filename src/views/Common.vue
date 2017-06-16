@@ -1,8 +1,8 @@
 <template>
   <div>
-    <!--<myhead></myhead>-->
+    <myhead></myhead>
     <router-view></router-view>
-    <!--<myfoot></myfoot>-->
+    <myfoot></myfoot>
   </div>
 
   

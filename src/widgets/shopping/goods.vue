@@ -267,16 +267,19 @@ export default {
                     for (let i = 0, l = height.length; i < l; i++) {
                         height[i].style.height = height[i].offsetWidth - 2 + 'px';
                     }
+                    var heights = document.getElementsByClassName('index_choice')[0].scrollHeight;
+                    document.getElementsByClassName('weixininput')[0].style.bottom = heights+'px';
                 }, 0);
             }
             
             that.shoppingnum = data.length;
         });
         setTimeout(function() {
-            if(document.body.clientWidth < 768){
+            if(document.body.clientWidth < 768 || that.shoppingnum==0){
                 document.body.style.height = window.screen.height+'px';
                 document.body.style.overflow = 'hidden';
-                document.getElementsByClassName('elsecart')[0].style.height = window.screen.height+'px';        
+                document.getElementsByClassName('elsecart')[0].style.height = window.screen.height+'px';   
+              
             }else{
                 document.body.style.background='#f6f6f6'
             }
@@ -302,7 +305,6 @@ div {
 }
 
 
-
 @media screen and (max-width: 768px) {
     .headcol {
         padding: 4% 2.6%;
@@ -313,10 +315,10 @@ div {
         color: red;
     }
     div {
-        font-size: 16px;
+        font-size: 14px;
     }
     .storerow {
-        font-size: 29px;
+        font-size: 28px;
         padding-left: 2.6%;
         font-weight: 700; 
     }
@@ -356,7 +358,7 @@ div {
             border-bottom: 1px solid #ccc;
         }
         span{
-            font-size: 14px;
+            font-size: 12px;
         }
     }
     .conterrow-del{
@@ -462,10 +464,9 @@ div {
 // 微信端支付
 .weixininput{
     z-index: 999;
-    height:10%;
+    height:8%;
     background: #e5e5e5;
     position:fixed;
-    bottom: 0;
     width: 100%;
     padding-left: 2.5%;
     .weixininput-col{

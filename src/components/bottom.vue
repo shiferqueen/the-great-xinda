@@ -1,14 +1,18 @@
 <template>
-  <div>
-    <div class="gongshang">
-      <div class="zhunzi">
-        ©Copyright 2016 北京信达科技有限公司 京ICP备 16011621号
-      </div>
-    </div>
-  </div>
+    <Row>
+        <Col :xs="{ span: 0, offset: 0 }" :sm="{ span: 24, offset:0 }">
+            <div class="gongshang">
+              <div class="zhunzi">
+                ©Copyright 2016 北京信达科技有限公司 京ICP备 16011621号
+              </div>
+            </div>
+        </Col>
+    </Row>
+
 </template>
 
 <script>
+
 export default {
   name: 'bottom'
 }
@@ -27,4 +31,5 @@ export default {
     line-height: 50px;
   }
 }
+
 </style>
