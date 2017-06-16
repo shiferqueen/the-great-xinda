@@ -6,19 +6,19 @@ import router from './router'
 import store from './store'
 import axios from 'axios'
 import md5 from 'md5'
+import VueRouter from 'vue-router'
+import iView from 'iview'
+import 'iview/dist/styles/iview.css'
+
+
+Vue.use(VueRouter);
+Vue.use(iView);
 
 Vue.prototype.md5 = md5
 Vue.prototype.ajax = axios
 
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
-// axios.defaults.baseURL = 'https://api.example.com';
-// axios.defaults.headers.common['Authorization'] = AUTH_TOKEN;
-// axios.post('http://115.182.107.203:8088/xinda/xinda-api/cart/list', {})
-//     .then(function(res) {
-//     })
-//     .catch(function(err) {
-//         console.log(err);
-//     })
+
 Vue.config.productionTip = false
 new Vue({
     el: '#app',

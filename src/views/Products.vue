@@ -401,13 +401,12 @@ export default {
             }else{
                 
                 var id = that.$route.params.productId;
-                this.ajax.post("da-api/cart/add", qs.stringify({
+                this.ajax.post("xinda-api/cart/add", qs.stringify({
                     id: id,
                     num: 1
-
                 })).then(function (res) {
                         that.refCartNum();
-                        that.ajax.post("da-api/cartt", qs.stringify({
+                        that.ajax.post("xinda-api/cart", qs.stringify({
                         id:id,
                         num:that.goodsval
                     
@@ -431,28 +430,20 @@ export default {
             }else{
                 let that = this
                 var id = that.$route.params.productId;
-                this.ajax.post("da-api/cart/add", qs.stringify({
+                this.ajax.post("xinda-api/cart/add", qs.stringify({
                     id: id,
                     num: 1
-
                 })).then(function (res) {
                         that.refCartNum();
-                        that.ajax.post("da-api/cartt", qs.stringify({
+                        that.ajax.post("xinda-api/cart", qs.stringify({
                         id:id,
                         num:that.goodsval
-                    
-
                     })).then(function (res) {
                         that.$router.push({name: 'shopping'});
                     })
                 })
-
             }
-             
-
         },
-        
-
     }
 }
 </script>
