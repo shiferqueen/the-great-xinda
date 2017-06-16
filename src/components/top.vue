@@ -67,9 +67,7 @@
                             if (res.data.status == 1) {
                                 _this.user('');
                                 _this.refCartNum('');
-                                setTimeout(function() {
-                                    console.log(_this.getuser)
-                                }, 500);
+                                _this.$router.push({path:'/home'})
                             }
                         })
                     }
@@ -79,10 +77,12 @@
             //  ...mapActions([])
             goshopping(uname) {
                 if (uname != '') {
+                    
                     this.$router.push({
                         name: 'shopping'
                     });
                 } else {
+                    this.$Message.warning('当前尚未登录，自动跳转到登录页面');
                     this.$router.push({
                         name: 'login'
                     });

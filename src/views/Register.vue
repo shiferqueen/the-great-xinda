@@ -255,12 +255,12 @@
                     smsType: 1,
                     imgCode: this.imgcode,
                 })).then(function(data) {
-                    console.log(data.data)
                     _this.status = data.data.status;
                     _this.msg = data.data.msg;
                     if (data.data.status == 1) {
                         _this.yanzhen = false;
                         _this.startReciprocal();
+                        _this.$Message.success('短信已发送');
                     }
 
                 })

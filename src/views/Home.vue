@@ -360,7 +360,9 @@
           <ul class="clear">
             <li v-for="(mas,index) in dat">
               <a href="#/pagelist">
-                <img :src="imgsrcfront+mas.providerImg">
+              <div class="img">
+                 <img :src="imgsrcfront+mas.providerImg">
+              </div>
                 <h4>{{mas.providerName}}</h4>
                 <p>{{mas.serviceInfo}}</p>
                 <div>
@@ -912,12 +914,18 @@ export default {
           width: 95%;
           height: 180px;
           display: block;
-          img {
+          .img {
             float: left;
             width: 25%;
             height: 60%;
             margin: 5% 0 5% 3%;
             border: 1px solid #e8e8e8;
+            position: relative;
+            img{
+              width:100%;
+              position: absolute;
+              top:30%;
+            }
           }
           h4 {
             line-height: 300%;

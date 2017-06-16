@@ -77,7 +77,7 @@ export default {
         }
     },
     methods: {
-        // ...mapActions(['setstoreid']),
+        ...mapActions(['setstoreid']),
         goto: function (index) {
             let _this = this
             if (index == this.current) return;
@@ -195,8 +195,8 @@ export default {
     }
     // 分页器背景颜色
     .active {
-        border: 1px solid red;
-        color: red
+        border: 1px solid #2693d4;
+        color: #2693d4;
     }
     div:nth-child(1),
     div:nth-child(2),

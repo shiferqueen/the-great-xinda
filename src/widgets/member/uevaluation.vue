@@ -15,11 +15,9 @@
         <span class="xh_12"><input type="radio" name="radio" checked/>差评</span>
     </li>
     <li class="score">
-            <Row>
                 <i-col span="12">
                     评分：<Rate show-text v-model="valueText" style="margin-left:27px;"></Rate>
                 </i-col>
-            </Row>
     </li>
     <li class="feel">
         <span>感受：</span>
@@ -98,13 +96,16 @@
         width: 684px;
         height: 128px;
         float:left;
+        margin-top: 12%;
+
     }
     .feel{
         margin-top: -23%;
         margin-left: 32%;
         span{
-            margin-top: 10px;
-            float:left;
+            margin-top: 14%;
+            float: left;
+            margin-left: -45%;
         }
     }
     .submit{
@@ -117,7 +118,10 @@
             text-align: center;
             line-height: 40px;
             border-radius:6%;
-            margin-left: 630px;
+            margin-left: 38%;
+            color: #fff;
+            margin-top: 25%;
+
         }
     }
 </style>

@@ -31,7 +31,7 @@
             </Col>
         </Col>
         <router-view></router-view>
-    </div>
+    </div> 
   </Row>
 </template>
 <script>
@@ -52,8 +52,6 @@ export default {
     display: block;
     }
    .main{
-    //    width: 1200px;
-    //    height: 676px;
        margin: 0 auto;
        &:after{
            content:'';
@@ -68,7 +66,6 @@ export default {
            margin-left: 15%;
        }
    }
-   .person_main{
        .container{
            width: 242px;
            height: 551px;
@@ -124,7 +121,6 @@ export default {
                
            }
        }
-   }
    li{list-style: none;}
    a{text-decoration: none;}
 </style>
