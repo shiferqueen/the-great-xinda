@@ -506,7 +506,7 @@ export default {
     padding-bottom: 20px;
 }
 .ph_shoplistimg {
-    border: 1px solid gray;
+    // border: 1px solid gray;
     margin-bottom: 20px;
     text-align: center;
     img {
