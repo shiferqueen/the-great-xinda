@@ -158,7 +158,7 @@ export default {
             })
         },
         onresize(){
-            if(window.screen.width < 768){
+            if(document.body.scrollWidth < 768){
             this.ifnone = false;
             console.log(this.ifnone)
         }
