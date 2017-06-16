@@ -25,77 +25,87 @@
             <Col span="2">操作</Col>
         </Row>
         <div v-if="shoppingnum!=0">
-        <div v-for='(listdata,index) in listdatas'>
-            <Row class="storerow">
-                <Col class='agnlf' :xs='24' :sm="{offset:1, span:23}">
-                <span v-if="shows">店铺：</span>{{listdata.providerName}}</Col>
-            </Row>
+            <div v-for='(listdata,index) in listdatas'>
+                <Row class="storerow">
+                    <Col class='agnlf' :xs='24' :sm="{offset:1, span:23}">
+                    <span v-if="shows">店铺：</span>{{listdata.providerName}}</Col>
+                </Row>
     
-            <Row class="conterrow" type="flex" align="middle">
-                <Col :xs="6" :sm="3">
-                <div class="conterrowimg">
-                    <img :src='srcimg + listdata.providerImg'>
-                </div>
-                </Col>
-                <Col :xs="18" :sm="21">
+                <Row class="conterrow" type="flex" align="middle">
+                    <Col :xs="6" :sm="3">
+                    <div class="conterrowimg">
+                        <img :src='srcimg + listdata.providerImg'>
+                    </div>
+                    </Col>
+                    <Col :xs="18" :sm="21">
                     <Row type="flex" class="conterrow-row">
-                        <Col :xs='{span:16,order:1}' :sm="{span:5,order:1}"  class="nobr"><nobr>{{listdata.serviceName}}</nobr></Col>
+                        <Col :xs='{span:16,order:1}' :sm="{span:5,order:1}" class="nobr">
+                        <nobr>{{listdata.serviceName}}</nobr>
+                        </Col>
                         <Col :xs="0" :sm="{span:4,order:2}">￥ {{listdata.unitPrice}}</Col>
                         <Col :xs='{span:24,order:4}' :sm="{span:7,order:3}" class="inputCol">
-                            <span v-if="!shows">购买数量：</span><input type="button" @click="min(listdata.buyNum,listdata.serviceId,index)" value="-"><input @input='oninput(listdata.buyNum,listdata.serviceId)' type="number" min=1 v-model="listdata.buyNum"><input type="button" @click="add(listdata.buyNum,listdata.serviceId,index)" value="+">
+                        <span v-if="!shows">购买数量：</span>
+                        <input type="button" @click="min(listdata.buyNum,listdata.serviceId,index)" value="-">
+                        <input @input='oninput(listdata.buyNum,listdata.serviceId)' type="number" min=1 v-model="listdata.buyNum">
+                        <input type="button" @click="add(listdata.buyNum,listdata.serviceId,index)" value="+">
                         </Col>
                         <Col class="totalSum" :xs="{span:24,order:3}" :sm="{span:3,order:4}">￥ {{listdata.unitPrice*listdata.buyNum}}</Col>
                         <Col :xs='0' :sm="{span:2,order:5}"> &nbsp </Col>
                         <!--deleteone 删除当前-->
                         <Col :xs='{span:8,order:2}' :sm="{span:3,order:6}" class="conterrow-del">
-                            <div @click="deleteone(index,listdata.serviceId,listdata.totalPrice)">删除<span v-if="!shows">订单</span></div>
+                        <div @click="deleteone(index,listdata.serviceId,listdata.totalPrice)">删除
+                            <span v-if="!shows">订单</span>
+                        </div>
                         </Col>
                         <Col :xs='{span:24,order:6}' :sm="{span:0,order:7}">
-                            <Icon type="ios-location-outline"></Icon> <span style="font-size:14px;">{{address(listdata.providerId)}}</span>
+                        <Icon type="ios-location-outline"></Icon>
+                        <span style="font-size:14px;">{{address(listdata.providerId)}}</span>
                         </Col>
                     </Row>
+                    </Col>
+                </Row>
+            </div>
+            <Row class="goods-end" type="flex" justify="end">
+                <Col :xs="0" :sm="3"> 金额总计
+                <strong>￥{{univalence}} &nbsp &nbsp</strong>
+                </Col>
+                <Col :xs="{pull:1}" :sm='0'>
+                <p>
+                    共
+                    <span>{{shoppingnum}}</span>件商品 小计：
+                    <span>￥ {{univalence}}</span>
+                </p>
+                </Col>
+            </Row>
+    
+            <Row class="goodsinput" type="flex" justify="end">
+                <Col :xs="0" :sm="3">
+                <input type="button" value="去结算" @click="href(1)">
+                </Col>
+                <Col :xs="0" :sm="3">
+                <input type="button" value="继续购物" @click="href(2)">
+                </Col>
+            </Row>
+    
+            <Row type="flex" align="middle" class="weixininput">
+                <Col :xs="16" :sm="0">
+                <div>
+                    合计
+                    <span>￥{{univalence}}</span>
+                </div>
+                </Col>
+                <Col :xs="8" :sm="0" class="weixininput-col">
+                <input type="button" value="去结算" @click="href(1)">
                 </Col>
             </Row>
         </div>
-        <Row class="goods-end" type="flex" justify="end">
-            <Col :xs="0" :sm="3"> 金额总计
-                <strong>￥{{univalence}} &nbsp &nbsp</strong>
-            </Col>
-            <Col :xs="{pull:1}" :sm='0'>
-                <p>
-                    共<span>{{shoppingnum}}</span>件商品 小计： <span>￥ {{univalence}}</span>
-                </p>
-            </Col>
-        </Row>
-
-
-        <Row class="goodsinput" type="flex" justify="end">
-            <Col :xs="0" :sm="3">
-                <input type="button" value="去结算" @click="href(1)">
-            </Col>
-            <Col :xs="0" :sm="3">
-                <input type="button" value="继续购物" @click="href(2)">
-            </Col>
-        </Row>
-        
-        <Row type="flex" align="middle" class="weixininput">
-            <Col :xs="16" :sm="0" >
-                <div>
-                    合计<span>￥{{univalence}}</span>
-                </div>
-            </Col>
-            <Col :xs="8" :sm="0" class="weixininput-col">
-                 <input type="button" value="去结算" @click="href(1)">
-            </Col>
-        </Row>
-    </div>
-    <div v-else class="elsecart" style="height:100%;">
-        <div>
-            <img src="../../images/goods/cart.png">
+        <div v-else class="elsecart" style="height:100%;">
+            <div v-if="!shows">
+                <img src="../../images/goods/cart.png">
+            </div>
+            <p>购物车空空如也，去首页逛逛吧！</p>
+            <a href="#/home">去首页</a>
         </div>
-        <p>购物车空空如也，去首页逛逛吧！</p>
-        <a href="#/home">去首页</a>
-    </div>
     </div>
 </template>
 <script>
@@ -115,7 +125,7 @@ export default {
             inputs: '', //input的setTimeout 
             trans: false,
             show: true,
-            dizhi:{},
+            dizhi: {},
         }
     },
     computed: {
@@ -129,21 +139,21 @@ export default {
             // console.log('total========', total);
             return total;
         },
-        shows(){
-            let that=this;
-            if(document.body.clientWidth < 768){
-                that.show=false
-            }else{
-                 that.show=true
+        shows() {
+            let that = this;
+            if (document.body.clientWidth < 768) {
+                that.show = false
+            } else {
+                that.show = true
             }
             return that.show
         }
-        
+
     },
     methods: {
         ...mapActions(['refCartNum', 'popups']),
         //增加数量
-        
+
         oninput(a, id) {
             var that = this
             clearInterval(that.inputs);
@@ -203,15 +213,13 @@ export default {
                     })
                 }
             })
-            setTimeout(function(){
-                if(document.body.clientWidth < 768 && that.shoppingnum == 0){
-                    document.body.style.height = window.screen.height+'px';
-                    document.body.style.overflow = 'hidden';
-                    document.getElementsByClassName('elsecart')[0].style.height = window.screen.height+'px';   
-                    document.body.style.background='#f6f6f6';
+            setTimeout(function () {
+                if (document.body.clientWidth < 768 && that.shoppingnum == 0) {
+                    document.getElementsByClassName('elsecart')[0].style.height = window.screen.height + 'px';
+                    document.body.style.background = '#f6f6f6';
                 }
-            },0)
-            
+            }, 0)
+
         },
 
         //购物车总数
@@ -221,20 +229,35 @@ export default {
             switch (i) {
                 case 1:
                     if (that.shoppingnum > 0) {
-                        this.ajax.post('/xinda-api/cart/submit').then(function (data) {
+                        that.ajax.post('/xinda-api/cart/submit').then(function (data) {
                             // console.log(data)
-
-                            if (data.data.status === 1) {
-                                // console.log(that.setorder)
-                                that.refCartNum();
-                                location.href = '#/form' + data.data.data;
+                            if (document.body.clientWidth >= 768) {
+                                if (data.data.status === 1) {
+                                    // console.log(that.setorder)
+                                    that.refCartNum();
+                                    location.href = '#/form' + data.data.data;
+                                } else {
+                                    this.$Notice.warning({
+                                        desc: data.data.msg
+                                    });
+                                }
                             } else {
-                                alert(data.data.msg);
+                                that.ajax.post('/xinda-api/pay/weixin-js-pay', qs.stringify({
+                                    businessNo: data.data.data
+                                })).then(function (data) {
+                                    console.log(data)
+                                    that.$Notice.warning({
+                                        desc: '请在微信端打开'
+                                    });
+                                })
                             }
+
 
                         })
                     } else {
-                        alert('您的购物车没有商品');
+                        this.$Notice.warning({
+                            desc: '购物车没有商品'
+                        });
                     }
                     break;
 
@@ -245,18 +268,18 @@ export default {
             }
         },
         //地址
-        address(id){
+        address(id) {
             let that = this
             this.ajax.post('/xinda-api/provider/detail', qs.stringify({
-                        id: id
+                id: id
             })).then(function (data) {
-                that.$set(that.dizhi,id,data.data.data.regionName)
+                that.$set(that.dizhi, id, data.data.data.regionName)
                 // that.dizhi[id] =  data.data.data.regionName;
                 // that.listdata;
             })
             return that.dizhi[id];
         },
-       
+
     },
 
     created() {
@@ -265,31 +288,30 @@ export default {
             var data = data.data.data;
             that.listdatas = data;
             if (document.body.clientWidth < 768) {
-                setTimeout(function() {
+                setTimeout(function () {
                     let height = document.getElementsByClassName('conterrowimg');
                     for (let i = 0, l = height.length; i < l; i++) {
                         height[i].style.height = height[i].offsetWidth - 2 + 'px';
                     }
                     var heights = document.getElementsByClassName('index_choice')[0].scrollHeight;
-                    if(document.getElementsByClassName('weixininput').length!=0){
-                         document.getElementsByClassName('weixininput')[0].style.bottom = heights+ 'px';
+                    if (document.getElementsByClassName('weixininput').length != 0) {
+                        document.getElementsByClassName('weixininput')[0].style.bottom = heights + 'px';
                     }
-                   
+
                 }, 0);
             }
-            setTimeout(function() {
-                if(document.body.clientWidth < 768 && that.shoppingnum == 0){
-                    document.body.style.height = window.screen.height+'px';
-                    document.body.style.overflow = 'hidden';
-                    document.getElementsByClassName('elsecart')[0].style.height = window.screen.height+'px';   
-                    
+            setTimeout(function () {
+                if (document.body.clientWidth < 768 && that.shoppingnum == 0) {
+                    document.getElementsByClassName('elsecart')[0].style.height = window.screen.height + 'px';
+                } else if (that.shoppingnum == 0) {
+                    document.body.style.background = 'f6f6f6'
                 }
             }, 0);
-            
+
             that.shoppingnum = data.length;
         });
-        
-        
+
+
     },
 
 }
@@ -325,7 +347,7 @@ div {
     .storerow {
         font-size: 28px;
         padding-left: 2.6%;
-        font-weight: 700; 
+        font-weight: 700;
     }
     .conterrow {
         padding: 2% 0;
@@ -339,12 +361,11 @@ div {
             img {
                 position: absolute;
                 width: 70%;
-                top:50%;
+                top: 50%;
                 left: 50%;
-                transform: translate(-50%,-50%)
+                transform: translate(-50%, -50%)
             }
         }
-        
     }
     .inputCol {
         input:nth-child(2),
@@ -362,21 +383,21 @@ div {
             border-top: 1px solid #ccc;
             border-bottom: 1px solid #ccc;
         }
-        span{
+        span {
             font-size: 12px;
         }
     }
-    .conterrow-del{
-        color:#ed3f14;
+    .conterrow-del {
+        color: #ed3f14;
     }
-    .conterrow-row{
+    .conterrow-row {
         padding-left: 15px;
     }
-    .totalSum{
+    .totalSum {
         color: #fe0100;
         font-weight: 700;
     }
-    .nobr{
+    .nobr {
         overflow: hidden;
         text-overflow: ellipsis;
     }
@@ -400,7 +421,7 @@ div {
             width: 41px;
         }
     }
-     .inputCol {
+    .inputCol {
         input:nth-child(1),
         input:nth-child(3) {
             width: 18px;
@@ -411,12 +432,12 @@ div {
             width: 33px;
             text-align: center;
         }
-        
     }
-    .weixininput{
+    .weixininput {
         display: none;
     }
 }
+
 .headrow {
     margin-top: 25px;
     div {
@@ -428,7 +449,7 @@ div {
 }
 
 .conterrow {
- 
+
     .conterrow-del {
         cursor: pointer;
         &:hover {
@@ -441,8 +462,8 @@ div {
 
     margin-top: 25px;
     margin-bottom: 150px;
-    span{
-        color:#fe0100;
+    span {
+        color: #fe0100;
     }
     strong {
         color: #2a91d6;
@@ -451,7 +472,7 @@ div {
 }
 
 .goodsinput {
-    width:100%;
+    width: 100%;
     input {
         cursor: pointer;
         background: #fff;
@@ -467,21 +488,21 @@ div {
 
 
 // 微信端支付
-.weixininput{
+.weixininput {
     z-index: 999;
-    height:8%;
+    height: 8%;
     background: #e5e5e5;
-    position:fixed;
+    position: fixed;
     width: 100%;
     padding-left: 2.5%;
-    .weixininput-col{
+    .weixininput-col {
         height: 100%;
     }
-    span{
-        color:#fe0100;
+    span {
+        color: #fe0100;
     }
-    input{
-        color:#fff;
+    input {
+        color: #fff;
         text-align: center;
         background: #fb2d2d;
         width: 100%;
@@ -490,61 +511,63 @@ div {
 }
 
 //购物车数量为0
-@media screen and (max-width: 768px){
-    .elsecart{
+@media screen and (max-width: 768px) {
+    .elsecart {
         padding-top: 30%;
         width: 100%;
         text-align: center;
         background: #f6f6f6;
-        div{
-            width:20%;
+        div {
+            width: 20%;
             margin: 0 auto;
-            img{
-                width:100%;
-            } 
+            img {
+                width: 100%;
+            }
         }
-        p{
+        p {
             margin-top: 2%;
-            color:#4eb5ba;
+            color: #4eb5ba;
             margin-bottom: 5%;
         }
-        a{
+        a {
             padding: 1% 5%;
             background: #4eb5ba;
-            color:#fff;
+            color: #fff;
             border-radius: 6px;
         }
     }
 }
-@media screen and (min-width: 768px){
 
-    .elsecart{
+@media screen and (min-width: 768px) {
+
+    .elsecart {
         padding-top: 8%;
         width: 100%;
         text-align: center;
-        
-        div{
-            width:20%;
+
+        div {
+            width: 20%;
             margin: 0 auto;
-            img{
-                width:100%;
-            } 
+            img {
+                width: 100%;
+            }
         }
-        p{
+        p {
             margin-top: 2%;
-            color:#4eb5ba;
+            color: #4eb5ba;
             margin-bottom: 2%;
             font-weight: 700;
         }
-        a{
+        a {
             font-weight: 700;
             padding: 1% 3%;
             background: #4eb5ba;
-            color:#fff;
+            color: #fff;
             border-radius: 6px;
         }
     }
 }
+
 
 /*去除input 上下箭头*/
 
