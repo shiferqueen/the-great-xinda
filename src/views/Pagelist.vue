@@ -111,7 +111,6 @@
             </div>
             
         </div>
-        <myfoot></myfoot>
  </Col>
  <Col :xs="24" :sm="0" >
             <Row>

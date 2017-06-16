@@ -1142,23 +1142,14 @@ export default {
         height: 270px;
         z-index: -10;
     }
-    .button-button{
+   .button-button{
         position:fixed;
-        bottom:9%;
-        .m{
-           font-size:16px;
-           padding:25px 0; 
-           text-align: center;
-           z-index: 10;
-        }
+        
          .m1{
            font-size:16px;
            padding:8px 0; 
            text-align: center;
            z-index: 10;
-           .icon{
-            font-size:32px;
-           }
         }
         .lianxi{
             background: #eeeff3;
@@ -1251,12 +1242,41 @@ export default {
     }
     .promease {
         margin-top: 22px;
-        margin-left: 8%;
+        margin-left: 6%;
         margin-right: 6%;
         font-size: 12px;
     }
 }
 
+}
+@media screen and (max-width: 768px){
+    .button-button{
+        bottom:62.38px;
+        .m{
+           font-size:16px;
+           padding:25px 0; 
+           text-align: center;
+           z-index: 10;
+        }
+        .icon{
+            font-size:32px;
+           }
+        
+    }
+}
+@media screen and (max-width:400px){
+    .button-button{
+        bottom:54.58px;
+        .m{
+           font-size:14px;
+           padding:22px 0; 
+           text-align: center;
+           z-index: 10;
+        }
+        .icon{
+            font-size:22px;
+        }
+    }
 }
 
 

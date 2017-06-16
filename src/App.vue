@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    
     <top></top>
     <popups></popups>
     <router-view></router-view>
@@ -8,17 +9,17 @@
 </template>
 
 <script>
-    import top from './components/top'
-    import bottom from './components/bottom'
-    import popups from '@/components/popups'
-    export default {
-    name: 'app',
-    components:{
-        top,
-        bottom,
-        popups
-    }
-    }
+import top from './components/top'
+import bottom from './components/bottom'
+import popups from '@/components/popups'
+export default {
+  name: 'app',
+  components: {
+    top,
+    bottom,
+    popups
+  }
+}
 </script>
 
 
@@ -31,22 +32,27 @@
   color: #2c3e50;
   /*margin-top: 60px;*/
 }
-*{
+
+* {
   padding: 0;
   margin: 0;
   border: 0;
 }
-li{
+
+li {
   list-style: none;
 }
-a:visited,a:link{
-	color: #000;
-	text-decoration:none;
+
+a:visited,
+a:link {
+  color: #000;
+  text-decoration: none;
 }
-.clear:after{
-	content:'';
-	display:block;
-	clear:both;
+
+.clear:after {
+  content: '';
+  display: block;
+  clear: both;
 }
 </style>
                                                                               
