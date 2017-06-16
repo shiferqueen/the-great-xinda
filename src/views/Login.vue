@@ -1,12 +1,41 @@
 <template>
     <div>
-        <div class="top">
-            <span @click="location"><img src="../images/logos/logo.png" alt=""></span>
-            <a href="javascript:void(0)">欢迎登陆</a>
-        </div>
-        <div class="buttom">
-            <div class="next">
-                <div class="left">
+        <Row>
+            <Col :xs="{span:0}" :sm="{span:24}">
+                <div class="top">
+                    <span @click="location"><img src="../images/logos/logo.png" alt=""></span>
+                    <a href="javascript:void(0)">欢迎登陆</a>
+                </div>
+                <div class="buttom">
+                    <div class="next">
+                        <div class="left">
+                            <p :class="[status==1 ? 'activeclass' : 'errorclass']">{{msg}}</p>
+                            <input type="text" class="phone" v-model="cellphone" autofocus placeholder="请输入手机号码" @click="clear" @keyup.enter="jiaodian(1)"><br>
+                            <input type="password" class="password" v-model="password" placeholder="请输入密码" @click="clear" @keyup.enter="jiaodian(2)">                    <br>
+                            <input type="text" class="code" v-model="imgcode" placeholder="请输入验证码" @click="clear" @keyup.enter="jiaodian(3)">                    <img @click='getsrc' :src='imgsrc'><br>
+                            <button @click="jiaodian(4)">立即登录</button><br>
+                            <a href="#/action/forget">忘记密码?</a>
+                        </div>
+                        <div class="right">
+                            <div class="right1">
+                                <div class="right2">
+                                    <p>还没有账号？</p>
+                                    <a href="#/action/register">立即注册>></a>
+                                    <img src="../images/logos/xiaoren.png" alt="">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </Col>
+            <Col :xs="{span:24}" :sm="{span:0}">
+                <div class="top-p">
+                    <p>登录</p>
+                    <a href="#/action/Register">>>立即注册</a>
+                </div>
+            </Col>
+            <Col :xs="{span:24}" :sm="{span:0}">
+                <div class="left-p">
                     <p :class="[status==1 ? 'activeclass' : 'errorclass']">{{msg}}</p>
                     <input type="text" class="phone" v-model="cellphone" autofocus placeholder="请输入手机号码" @click="clear" @keyup.enter="jiaodian(1)"><br>
                     <input type="password" class="password" v-model="password" placeholder="请输入密码" @click="clear" @keyup.enter="jiaodian(2)">                    <br>
@@ -14,15 +43,8 @@
                     <button @click="jiaodian(4)">立即登录</button><br>
                     <a href="#/action/forget">忘记密码?</a>
                 </div>
-                <div class="right">
-                    <div class="right1">
-                        <p>还没有账号？</p>
-                        <a href="#/action/register">立即注册>></a>
-                        <img src="../images/logos/xiaoren.png" alt="">
-                    </div>
-                </div>
-            </div>
-        </div>
+            </Col>
+        </Row>
     </div>
 </template>
 
@@ -116,16 +138,9 @@
         color: #2494d4;
         padding: 20px 150px 0;
     }
-
-    .errorclass {
-        color: red;
-        padding: 20px 70px 0 120px;
-    }
-
     input {
         border: 1px solid #ccc;
     }
-
     .top {
         width: 1200px;
         height: 97px;
@@ -163,6 +178,11 @@
                 width: 598px;
                 height: 433px;
                 float: left;
+                p{
+                    color: red;
+                    text-align: center;
+                    margin-top: 15px
+                }
                 input {
                     width: 282px;
                     height: 35px;
@@ -200,17 +220,21 @@
                     margin-left: 145px;
                 }
             }
-            .right {
+         .right {
                 width: 494px;
                 height: 433px;
                 float: left;
                 .right1 {
-                    width: 100px;
-                    height: 262px;
+                    width: 500px;
+                    height: 300px;
                     margin-top: 43px;
-                    padding-left: 187px;
+                    
+                    padding-left: 10px;
                     border-left: 1px solid #cecece;
-                    p {
+                    .right2{
+                        width:100px;
+                        margin-left:183px;
+                        p {
                         margin-bottom: 24px;
                         font-size: 16px;
                     }
@@ -226,4 +250,65 @@
             }
         }
     }
+}
+.top-p{
+    width:100%;
+    height: 35px;
+    background-color: #e5e5e5;
+    p{
+       font-size:18px;
+       width:50px;
+       margin: 0 auto;
+       line-height: 38px;
+       text-align: center;
+    }
+    a{
+        float: right;
+        z-index: 1;
+        margin: -28px 5px;
+        color: #2b91ce;
+    }
+}
+.left-p{
+    width:100%;
+    margin: 0 auto;
+    padding: 0 10px;
+    p{
+        color: red;
+        text-align: center;
+        margin-top: 15px
+    }
+    input{
+        width:100%;
+        height: 40px;
+        margin:20px 0;
+        border-radius: 5px;
+        padding: 0 5px
+    }
+    .code{
+        width: 78%;
+    }
+    img{
+        width: 20%;
+        height: 40px;
+        margin: -16px 0
+    }
+    button {
+        width: 100%;
+        height: 30px;
+        border-radius: 5px;
+        margin: 20px 0;
+        cursor: pointer;
+        color: #2b91ce;
+        border: 1px solid #2b91ce;
+        background-color: #fff;
+    }
+    a{
+        display: block;
+        margin: 0 auto;
+        color:#2494d4;
+        width:100px;
+        text-align: center
+    }
+}
 </style>

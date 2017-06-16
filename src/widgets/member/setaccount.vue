@@ -1,29 +1,30 @@
 <template>
+<Row>
+    <Col :xs="0" :sm="24">
  <div class="setaccount">
-     <div class="my_evalu">
+     <div class="wangzhe">
          <a :class="{active:zhang}" v-on:click="set()" >账户设置</a>
          <a :class="{active:password}" v-on:click="alter()" >修改密码</a>
      </div>
-     <ul  v-show="zhang">
+     <div  v-show="zhang">
         <li class="now-img">
             <span>当前头像：</span>
             <img src="/static/img/huiyuan.cad76df.png"/>
         </li>
-        <li class="username">
+        <div class="username">
             <span>姓名：</span>
-            <input class="c-t" value=""/>
             <input class="c-t" v-model="uesrname" placeholder="请输入姓名"/>
-        </li>
-        <li class="sex">
+        </div>
+        <div class="sex">
             <span>性别：</span>
-            <span class="radio-1"><input type="radio" name="sex" v-model="picked" value="1" />男</span>
-            <span class="radio-2"><input type="radio" name="sex" v-model="picked" value="2"/>女</span>
-        </li>
-        <li class="username">
+            <span class="radio-1"><input type="radio" name="radio" v-model="picked" value="1">男</span>
+            <span class="radio-2"><input type="radio" name="radio" v-model="picked" value="2">女</span>
+        </div>
+        <div class="youxiang">
             <span>邮箱：</span>
             <input class="c-t" placeholder="请输入邮箱" v-model="com"/>
-        </li>
-        <li class="bj-hz">
+        </div>
+        <div class="bj-hz">
             <span>所在地区：</span>
             <select name="province" v-model="selectedProvince">
                 <option v-for="(item, index) in provinces"
@@ -44,13 +45,13 @@
                             {{ item.name }}
                 </option>
             </select>
-        </li>
-        <li class="save">
+        </div>
+        <div class="save">
             <p :style="{color:c}">{{one}}</p>
-            <a href="javascript:void(0)" @click="saveOne()" v-text="save1">{{save1}}</a>
+            <a href="javascript:void(0)" @cdivck="saveOne()" v-text="save1">{{save1}}</a>
            
-        </li>
-     </ul>
+        </div>
+     </div>
      <ul class="passw" v-show="password">
          <li>
              <span>旧密码：</span>
@@ -67,12 +68,11 @@
                 <p v-bind:class="{ uppercase_valid: contains_uppercase }">大写字母</p>
             </div>
          </li>
-         
          <li>
              <span>再次输入新密码：</span>
              <input type="password" v-model="newtext" placeholder="请确认新密码"/>
          </li>
-         <li class="msgli">
+         <li class="msgli" style="height:50px;">
              <p :style="{color:c,fontSize:f}">{{msg}}</p>
          </li>
          <li class="baocun">
@@ -80,6 +80,116 @@
          </li>
      </ul>
  </div>
+ </Col>
+ <!--移动端代码-->
+    <Col :xs="24" :sm="0">
+    <div class="">
+        <Row class="head">
+                <Col :xs="3" class="icon">
+                    <Icon type="ios-arrow-left"></Icon>
+                </Col>
+                <Col :xs="21" class="wo_dan">
+                    账户设置
+                </Col>
+            </Row> 
+     <Row :xs="24" class="qw_1">
+         <a>账户设置</a>
+     </Row>
+     <ul>
+        <Row class="qw_2">
+            <Col :xs="6">
+                <span class="qw_3">当前头像：</span>
+            </Col>
+            <Col :xs="18">
+                <img class="qw_4" src="/static/img/huiyuan.cad76df.png"/>
+            </Col>
+        </Row>
+        <Row class="qw_5">
+            <Col class="qw_6" :xs="6">姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名：</Col>
+            <Col :xs="18">
+                <input class="qw_7" v-model="uesrname" placeholder="请输入姓名"/>
+            </Col>
+        </Row>
+        <Row class="qw_8">
+            <Col class="qw_9" :xs="6">性&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别：</Col>
+            <Col class="qw_10" :xs="18">
+                <span class=""><input type="radio" name="radio" v-model="picked" value="1">男</span>
+                <span class="radio-2"><input type="radio" name="radio" v-model="picked" value="2" checked/>女</span>
+            </Col>
+        </Row>
+        <Row class="qw_11">
+            <Col :xs="6" class="qw_12">邮&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;箱：</Col>
+            <Col :xs="18">
+                <input class="qw_13" placeholder="请输入邮箱" v-model="com"/>
+            </Col>
+        </Row>
+        <Row class="qw_14">
+            <Col :xs="6" class="qw_15">所在地区：</Col>
+            <Col :xs="18" class="qw_16">
+                <select name="province" v-model="selectedProvince">
+                    <option v-for="(item, index) in provinces"
+                                v-if="item.level === 1"
+                                :value="item">
+                                {{ item.name }}
+                    </option>
+                </select>
+                <select name="city" v-model="selectedCity">
+                    <option v-for="(item, index) in cities"
+                                :value="item">
+                                {{ item.name }}
+                    </option>
+                </select>
+                <select name="block" v-model="selectedBlock">
+                    <option v-for="(item, index) in blocks"
+                                :value="item">
+                                {{ item.name }}
+                    </option>
+                </select>
+            </Col>
+        </Row>
+        <Row>
+            <Col :xs="24" class="qw_20">
+                <p :style="{color:c}">{{one}}</p>
+                <a href="javascript:void(0)" @click="saveOne()" v-text="save1">{{save1}}</a>
+           </Col>
+        </Row>
+     </ul>
+     <!--2-->
+     <Row>
+        <Col :xs="24" class="qw_21">
+            <p>修改密码</p>
+        </Col>
+    </Row>
+     <ul class="">
+         <Row class="qw_22">
+             <Col :xs="6" class="qw_25">旧密码：</Col>
+             <Col :xs="18">
+                <input class="qw_26" type="password"  v-model="oldword" placeholder="请输入旧密码"/>
+             </Col>
+         </Row>
+         <Row class="qw_27">
+             <Col :xs="6" class="qw_28">新密码：</Col>
+             <Col :xs="18">
+                <input  class="qw_29" type="password" v-model="newword" placeholder="请输入新密码" @click="prompt()" @input="p_len"/>
+             </Col>
+         </Row>
+         <Row class="qw_30">
+             <Col :xs="6" class="qw_31">再次输入新密码：</Col>
+             <Col :xs="18">
+                <input class="qw_32" type="password" v-model="newtext" placeholder="请确认新密码"/>
+             </Col>
+         </Row>
+         <Row class="msgli">
+             <Col :xs="24" :style="{color:c,fontSize:f}">{{msg}}</Col>
+         </Row>
+         <Row class="qw_40">
+             <Col :xs="24" class="qw_41" @click="con()" v-text="save">{{save}}</Col>
+         </Row>
+     </ul>
+ </div>
+ </Col>
+ <!--移动端代码结束-->
+ </Row>
 </template>
 
 <script>
@@ -299,25 +409,241 @@ import Vue from 'vue'
     }
 </script>
 
-<style lang="less">
-    .my_evalu{
+<style scoped lang="less">
+// 移动端代码
+.ivu-row{
+    min-width:362px;
+}
+.head{
+    height: 77px;
+    background: #e8e8e8;
+    div.icon{
+        padding-left: 2%;
+        i{
+            line-height:77px;
+            font-size:25px;
+        }
+    }
+    .wo_dan{
+        font-size: 29px;
+        line-height: 77px;
+        padding-left: 25%;
+    }
+}
+.qw_1{
+    height: 49px;
+    margin-top: 30px;
+    border-bottom: 2px solid #2693d4;
+    a{
+        color: black;
+        font-size: 29px;
+        line-height: 49px;
+        margin-left:27px;
+        }
+}
+.qw_2{
+    height: 128px;
+    
+    .qw_3{
+        font-size: 20px;
+        text-align: center;
+        display: block;
+        line-height: 128px; 
+    }
+    .qw_4{
+        margin-top: 3%;
+    }
+}
+.qw_5{
+    height: 60px;
+    .qw_6{
+        text-align: center;
+        line-height: 60px;
+        font-size: 20px;
+    }
+    .qw_7{
+        border: 1px solid #ccc;
+        width: 327px;
+        vertical-align: middle;
+        margin-top: 10px;
+        height: 43px;
+        padding: 5px;
+        border-radius: 5px;
+    }
+}
+.qw_8{
+    height:60px;
+    .qw_9{
+        text-align: center;
+        line-height: 60px;
+        font-size: 20px;
+    }
+    .qw_10{
+        font-size: 20px;
+        line-height: 60px;
+        .radio-11{
+
+        }
+    }
+}
+.qw_11{
+    height:60px;
+    .qw_12{
+        text-align: center;
+        line-height: 60px;
+        font-size: 20px;
+    }
+    .qw_13{
+        border: 1px solid #ccc;
+        width: 327px;
+        vertical-align: middle;
+        margin-top: 10px;
+        height: 43px;
+        padding: 5px;
+        border-radius: 5px;
+    }
+}
+.qw_14{
+    height:60px;
+    .qw_15{
+        text-align: center;
+        line-height: 60px;
+        font-size: 20px;
+    }
+    .qw_16{
+        line-height: 60px;
+        select{
+            border: 1px solid #ccc;
+            width: 130px;
+            height: 40px;
+        }
+    }
+}
+.qw_20{
+    height: 114px;
+    border-bottom: 2px solid #dfdfdf;
+    line-height: 114px;
+    p{
+        margin-left:3%;
+        height: 30px;
+        font-size: 20px;
+        margin-left: 26%;
+    }
+    a{
+        width: 120px;
+        height: 40px;
+        display: inline-block;
+        border: 1px solid #2693d4;
+        border-radius: 8%;
+        line-height: 40px;
+        color: #2693d4;
+        text-align: center;
+        font-size: 20px;
+        margin-left:25%;
+    }
+}
+.qw_21{
+    height: 60px;
+    border-bottom: 2px solid #2693d4;
+    font-size: 26px;
+    line-height: 70px;
+    p{
+        margin-left: 27px;
+    }
+}
+.qw_22{
+    height: 60px;
+    margin-top: 110px;
+    .qw_25{
+        text-align: center;
+        line-height: 60px;
+        font-size: 20px;
+    }
+    .qw_26{
+        border: 1px solid #ccc;
+        width: 327px;
+        vertical-align: middle;
+        margin-top: 10px;
+        height: 43px;
+        padding: 5px;
+        border-radius: 5px;
+    }
+}
+.qw_27{
+    height: 60px;
+    .qw_28{
+        text-align: center;
+        line-height: 60px;
+        font-size: 20px;
+    }
+    .qw_29{
+        border: 1px solid #ccc;
+        width: 327px;
+        vertical-align: middle;
+        margin-top: 10px;
+        height: 43px;
+        padding: 5px;
+        border-radius: 5px;
+    }
+}
+.qw_30{
+    height: 60px;
+    .qw_31{
+        text-align: center;
+        line-height: 60px;
+        font-size: 20px;
+    }
+    .qw_32{
+        border: 1px solid #ccc;
+        width: 327px;
+        vertical-align: middle;
+        margin-top: 10px;
+        height: 43px;
+        padding: 5px;
+        border-radius: 5px;
+    }
+}
+.qw_40{
+    height: 170px;
+    border-bottom: 6px solid #dfdfdf;
+    text-align: center;
+    .qw_41{
+        width: 120px;
+        height: 40px;
+        display: inline-block;
+        border: 1px solid #2693d4;
+        border-radius: 8%;
+        line-height: 40px;
+        color: #2693d4;
+        text-align: center;
+        font-size: 20px;
+        margin-left: 25%;
+        margin-top: 10%;
+    }
+}
+// 移动端代码结束
+.setaccount{
+    margin-top: -34%;
+}
+    .wangzhe{
         width: 948px;
         border-bottom: 2px solid #ccc;
+        margin-left: 32%;
         .active{
             color: #2693d4;
             border-bottom: 2px solid #2693d4;
         }
         a:first-child{
-            // color: #2693d4;
-            // border-bottom: 2px solid #2693d4;
-            padding: 0px 20px;
+            padding: 2px 20px;
         }
         a:last-child{
             margin-left:10px;
+            padding: 2px 20px;
         }
     }
     .now-img{
         margin-top:25px;
+        margin-left: 32%;
         &:after{
             content:'';
             display: block;
@@ -329,10 +655,12 @@ import Vue from 'vue'
         }
         img{
             float: left;
+            margin-left: 30px;
         }
     }
     .sex{
-        margin-top: 25px;
+        margin-top: 2%;
+        margin-left: 32%;
     }
     .radio-1{
         margin-left: 30px;
@@ -341,7 +669,12 @@ import Vue from 'vue'
         margin-left: 30px;
     }
     .username{
-        margin-top: 27px;
+        margin-top: 1%;
+        margin-left: 32%;
+    }
+    .youxiang{
+        margin-top: 2%;
+        margin-left: 32%;
     }
     .c-t{
         border: 1px solid #ccc;
@@ -351,7 +684,8 @@ import Vue from 'vue'
         border-radius: 5px;
     }
     .bj-hz{
-        margin-top: 25px;
+        margin-top: 2%;
+        margin-left: 32%;
         select{
             border: 1px solid #ccc;
             width: 75px;
@@ -360,16 +694,25 @@ import Vue from 'vue'
     }
     .save{
         margin-top: 40px;
-        margin-left: 80px;
+        margin-left: 30%;
         a{
-            width: 68px;
+width: 68px;
             height: 24px;
             display: inline-block;
             border: 1px solid #2693d4;
             border-radius: 8%;
             line-height: 24px;
             color: #2693d4;
-            text-align: center;   
+            text-align: center;
+            margin-left: 93px; width: 68px;
+            height: 24px;
+            display: inline-block;
+            border: 1px solid #2693d4;
+            border-radius: 8%;
+            line-height: 24px;
+            color: #2693d4;
+            text-align: center;
+            margin-left: 93px;   
         }
         p{
             font-size:14px;
@@ -378,10 +721,12 @@ import Vue from 'vue'
     }
     // 修改密码
     .passw{
+        margin-left: 33%;
         li{
             margin-top: 37px;
             input{
                 border: 1px solid #ccc;
+                margin-left: 15px;
                 width: 180px;
                 height: 25px;
                 padding: 5px 5px;
@@ -427,6 +772,8 @@ import Vue from 'vue'
             }
 
             .show_password_length {
+                margin-top: -13%;
+                margin-left: 39px;
             display: block;
             }
 
@@ -446,6 +793,7 @@ import Vue from 'vue'
                 height: auto;
                 font-size: 12px;
                 line-height: 1.2;
+                margin-left:-15px;
                 text-align: center;
                 border-radius: 2px;
                 color: rgba(71, 87, 98, 0.8);
@@ -456,15 +804,6 @@ import Vue from 'vue'
                 -webkit-transition: background .3s;
                 transition: background .3s;
                 }
-            }
-
-           
-
-            .lovercase_valid,
-            .number_valid,
-            .uppercase_valid {
-            background-position: left !important;
-            color: rgba(255, 255, 255, 0.9) !important;
             }
     }
     .baocun a{

@@ -1,36 +1,62 @@
 <template>
     <div>
-
-        <div class="top">
-            <img src="../images/logos/logo.png" alt="">
-            <a href="javascript:void(0)">忘记密码</a>
-        </div>
-        <div class="buttom">
-            <div class="next">
-                <div class="left">
+        <Row>
+            <Col :xs="{span:0}" :sm="{span:24}">
+                <div class="top">
+                    <img src="../images/logos/logo.png" alt="">
+                    <a href="javascript:void(0)">忘记密码</a>
+                </div>
+                <div class="buttom">
+                    <div class="next">
+                        <div class="left">
+                            <p :class="[status==1 ? 'activeclass' : 'errorclass']">{{msg}}</p>
+                            <input type="text" v-model="cellphone" class="phone" placeholder="请输入手机号" @click="clear" @keyup.enter="forget"><br>
+                            <input type="text" v-model="validcode" class="code1" placeholder="请输入短信验证码" @click="clear" @keyup.enter="forget"> <input type="button" value="获取短信" @click='huoqu' class="text"> <br>
+                            <input type="text" class="code" v-model="imgcode" placeholder="请输入图片验证码" @click="clear" @keyup.enter="forget"> <img @click ='getsrc' src='/xinda-api/ajaxAuthcode'><br>
+                            <input type="password" v-model="password" class="password" placeholder="请输入新密码" @click="helpmsg" @keyup.enter="forget" @input="p_len"> <br>
+                            <div class="lnu_container">
+                                <p v-bind:class="{ lovercase_valid: contains_lovercase }">小写字母</p>
+                                <p v-bind:class="{ number_valid: contains_number }">数字</p>
+                                <p v-bind:class="{ uppercase_valid: contains_uppercase }">大写字母</p>
+                            </div>
+                            <input type="password" v-model="newpassword" class="password1" placeholder="请确认密码" @click="clear" @keyup.enter="forget"> <br> 
+                            <button @click="forget" >确认修改</button>
+                        </div>
+                        <div class="right">
+                            <div class="right1">
+                                <div class="right2">
+                                    <p>想起密码？</p>
+                                    <a href="#/action/login">返回登录>></a>
+                                    <img src="../images/logos/xiaoren.png" alt="">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </Col>
+            <Col :xs="{span:24}" :sm="{span:0}">
+                <div class="top-p">
+                    <p>忘记密码</p>
+                    <a href="#/action/login">>>返回登录</a>
+                </div>
+            </Col>
+            <Col :xs="{span:24}" :sm="{span:0}">
+                 <div class="left-p">
                     <p :class="[status==1 ? 'activeclass' : 'errorclass']">{{msg}}</p>
                     <input type="text" v-model="cellphone" class="phone" placeholder="请输入手机号" @click="clear" @keyup.enter="forget"><br>
                     <input type="text" v-model="validcode" class="code1" placeholder="请输入短信验证码" @click="clear" @keyup.enter="forget"> <input type="button" value="获取短信" @click='huoqu' class="text"> <br>
                     <input type="text" class="code" v-model="imgcode" placeholder="请输入图片验证码" @click="clear" @keyup.enter="forget"> <img @click ='getsrc' src='/xinda-api/ajaxAuthcode'><br>
                     <input type="password" v-model="password" class="password" placeholder="请输入新密码" @click="helpmsg" @keyup.enter="forget" @input="p_len"> <br>
                     <div class="lnu_container">
-                        <p v-bind:class="{ lovercase_valid: contains_lovercase }">Lowercase</p>
-                        <p v-bind:class="{ number_valid: contains_number }">Number</p>
-                        <p v-bind:class="{ uppercase_valid: contains_uppercase }">Uppercase</p>
+                        <p v-bind:class="{ lovercase_valid: contains_lovercase }">小写字母</p>
+                        <p v-bind:class="{ number_valid: contains_number }">数字</p>
+                        <p v-bind:class="{ uppercase_valid: contains_uppercase }">大写字母</p>
                     </div>
                     <input type="password" v-model="newpassword" class="password1" placeholder="请确认密码" @click="clear" @keyup.enter="forget"> <br> 
                     <button @click="forget" >确认修改</button>
                 </div>
-                <div class="right">
-                    <div class="right1">
-                        <p>想起密码？</p>
-                        <a href="#/action/login">返回登录>></a>
-                        <img src="../images/logos/xiaoren.png" alt="">
-
-                    </div>
-                </div>
-            </div>
-        </div>
+            </Col>
+        </Row>
     </div>
 </template>
 
@@ -154,9 +180,8 @@
 
 .errorclass {
     color: red;
-
-   padding: 20px 70px 0 120px;
-
+    text-align: center;
+    margin-top: 15px
 }
 
 .top {
@@ -281,29 +306,122 @@
             }
         }
         .right {
-            width: 494px;
-            height: 433px;
-            float: left;
-            .right1 {
-                width: 100px;
-                height: 262px;
-                margin-top: 43px;
-                padding-left: 187px;
-                border-left: 1px solid #cecece;
-                p {
-                    margin-bottom: 24px;
-                    font-size: 16px;
-                }
-                a {
-                    margin-bottom: 24px;
-                    font-size: 16px;
-                    color: #2b91ce;
-                }
-                img {
-                    padding: 24px 0;
+                width: 494px;
+                height: 433px;
+                float: left;
+                .right1 {
+                    width: 500px;
+                    height: 300px;
+                    margin-top: 43px;
+                    
+                    padding-left: 10px;
+                    border-left: 1px solid #cecece;
+                    .right2{
+                        width:100px;
+                        margin-left:183px;
+                        p {
+                        margin-bottom: 24px;
+                        font-size: 16px;
+                    }
+                    a {
+                        margin-bottom: 24px;
+                        font-size: 16px;
+                        color: #2b91ce;
+                    }
+                    img {
+                        padding: 24px 0;
+                    }
                 }
             }
         }
+    }
+}
+.top-p{
+    width:100%;
+    height: 35px;
+    background-color: #e5e5e5;
+    p{
+       font-size:18px;
+       width:100px;
+       margin: 0 auto;
+       line-height: 38px;
+       text-align: center;
+    }
+    a{
+        float: right;
+        z-index: 1;
+        margin: -28px 5px;
+        color: #2b91ce;
+    }
+}
+.left-p{
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 10px;
+    input{
+        width: 100%;
+        height: 30px;
+        border: 1px solid #ccc;
+        margin: 10px 0;
+        border-radius: 5px
+    }
+    .code{
+        width:78%;
+    }
+    img{
+        width: 20%;
+        height: 30px;
+        margin: 10px 0;
+        float: right;
+    }
+    .text{
+        background-color:#2b91ce;
+        color:#fff;
+        border-radius: 5px;
+        margin: 10px 0
+    }
+    .lnu_container {
+        display: block;
+        margin: 10px 0;
+        width: 100%;
+        height: auto;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-pack: justify;
+            -ms-flex-pack: justify;
+                justify-content: space-between;
+    p {
+        width: 80px;
+        height: auto;
+        font-size: 12px;
+        line-height: 1.2;
+        text-align: center;
+        border-radius: 2px;
+        color: rgba(71, 87, 98, 0.8);
+        background: -webkit-linear-gradient(left, #00AD7C 50%, #eee 50%);
+        background: linear-gradient(to right, #00AD7C 50%, #eee 50%);
+        background-size: 200% 100%;
+        background-position: right;
+        -webkit-transition: background .3s;
+        transition: background .3s;
+    }
+}
+    .lovercase_valid,
+    .number_valid,
+    .uppercase_valid {
+        background-position: left !important;
+        color: rgba(255, 255, 255, 0.9) !important;
+    }
+    button {
+        width: 100%;
+        height: 35px;
+        border-radius: 5px;
+        margin: 10px 0;
+        cursor: pointer;
+        color: #2b91ce;
+        border: 1px solid #2b91ce;
+        background-color: #fff;
     }
 }
 </style>

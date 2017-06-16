@@ -1,5 +1,6 @@
 <template>
-  <div>
+<Row>
+  <Col :xs="{ span: 0}" :sm="{ span: 24}">
     <div class="header">
       <div class="header-containter">
         <div class="hdcon-top">
@@ -19,9 +20,6 @@
                 <li v-for="(value,index) in searchData" :class="{selectback:index==now}" :key="index" @click="searchThis(value.serviceName,value.id, value.providerName)" @mouseover="selectHover(index)" class="search-select-option">
                   {{serch_idnex == 1 ? value.serviceName : value.providerName}}
                 </li>
-                <!--<li v-if="serch_idnex==2" v-for="(value,index) in providerData" :class="{selectback:index==now}" :key="index"  @click="searchThis(value.providerName,value0.id)" @mouseover="selectHover(index)" class="search-select-option">
-                  {{value.providerName}}
-                </li>-->
               </transition-group>
             </div> 
             <span class="fl">热门服务：</span>
@@ -165,13 +163,16 @@
                     </div>
                   </div>
                 </div>
-            </div>
+              </div>
             </li>
           </ul>
         </div>
       </div>
     </div>
-  </div>
+  </Col>
+  
+</Row>
+
 </template>
 
 <script>
@@ -221,18 +222,6 @@
                 }
                 return that.myData;
             },
-            // providerData: function() {
-            //     var search = this.search;
-            //     if (search == '') {
-            //         this.myData = []
-            //     } else {
-            //         return this.myData.filter(function(product) {
-            //             return String(product.providerName).toLowerCase().indexOf(search) != -1
-            //         })
-            //     }
-            //     return this.myData;
-            // }
-
         },
         methods: {
             choice_active: function(index) {
@@ -316,253 +305,249 @@
 </script>
 
 <style lang="less" scoped>
-    .fl {
-        float: left;
-    }
-    
-    .fr {
-        float: right;
-    }
-    
-    .show {
-        display: block;
-    }
-    
-    .hide {
-        display: none;
-    }
-    
-    .blue {
-        color: #2494d4!important;
-    }
-    
-    .blueBorder {
-        color: #2494d4!important;
-        border-bottom: 2px solid #2494d4;
-    }
-    
-    .hand {
-        cursor: pointer;
-    }
-    
-    .selectback {
-        background: rgba(169, 169, 169, .9);
-    }
-    
-    .header {
-        width: 100%;
+.fl {
+    float: left;
+}
+
+.fr {
+    float: right;
+}
+
+.show {
+    display: block;
+}
+
+.hide {
+    display: none;
+}
+
+.blue {
+    color: #2494d4!important;
+}
+
+.blueBorder {
+    color: #2494d4!important;
+    border-bottom: 2px solid #2494d4;
+}
+
+.hand {
+    cursor: pointer;
+}
+
+.selectback {
+    background: rgba(169, 169, 169, .9);
+}
+
+.header {
+    width: 100%;
+    height: 150px;
+    border-bottom: 1px solid #2494d4;
+    .header-containter {
+        width: 1200px;
         height: 150px;
-        border-bottom: 1px solid #2494d4;
-        .header-containter {
-            width: 1200px;
-            height: 150px;
-            margin: 0 auto;
-            .hdcon-top {
-                height: 110px;
-                width: 100%;
-                .hdcon-top-l {
-                    width: 320px;
+        margin: 0 auto;
+        .hdcon-top {
+            height: 110px;
+            width: 100%;
+            .hdcon-top-l {
+                width: 320px;
+                height: 60px;
+                margin-top: 30px;
+                h1 {
+                    width: 140px;
                     height: 60px;
-                    margin-top: 30px;
-                    h1 {
-                        width: 80px;
-                        height: 60px;
-                        font-size: 30px;
-                        line-height: 65px;
-                        padding-left: 70px;
-                        background: url(../images/logos/xinda-logo.png) no-repeat left 3px;
-                    }
-                    p {
-                        margin-top: 18px;
-                        font-size: 13px;
-                        padding-left: 10px;
-                        padding-right: 117px;
-                    }
-                    a {
-                        margin-top: 5px;
-                        padding-right: 100px;
-                        font-size: 14px;
-                        .blue;
-                    }
+                    font-size: 30px;
+                    line-height: 65px;
+                    padding-left: 70px;
+                    background: url(../images/logos/xinda-logo.png) no-repeat left 3px;
                 }
-                .hdcon-top-m {
-                    width: 590px;
-                    margin-top: 25px;
-                    position: relative;
-                    .goods {
-                        border-right: 1px solid #2494d4;
-                        padding-right: 10px;
-                        font-size: 14px;
-                    }
-                    .search-reset {
-                        position: absolute;
-                        right: 110px;
-                        top: 35px;
-                        color: #ccc;
-                        cursor: pointer;
-                    }
-                    .search-select {
-                        width: 81%;
-                        font-size: 14px;
-                        position: absolute;
-                        z-index: 9999;
-                        top: 70px;
-                        background: #fff;
-                        .search-select-option {
-                            padding: 2px 4px;
-                            cursor: pointer;
-                        }
-                    }
-                    .server {
-                        padding-left: 10px;
-                        font-size: 14px;
-                        margin-right: 20px;
-                    }
-                    input {
-                        width: 81%;
-                        padding: 0 0 0 2%;
-                        height: 40px;
-                        font-size: 15px;
-                        border: 2px solid #2494d4;
-                        margin-top: 5px;
-                    }
-                    button {
-                        margin-top: 5px;
-                        width: 16%;
-                        height: 44px;
-                        background-color: #2494d4;
-                        text-align: center;
-                        line-height: 33px;
-                        font-size: 15px;
-                        color: #fff;
-                    }
-                    span {
-                        font-size: 13px;
-                        line-height: 21px;
-                        color: #c7c7c7;
-                        padding: 0 5px;
-                    }
+                p {
+                    margin-top: 18px;
+                    font-size: 13px;
+                    padding-left: 10px;
+                    padding-right: 117px;
                 }
-                .hdcon-top-r {
-                    width: 147px;
-                    height: 80px;
-                    margin-top: 25px;
-                    span {
-                        width: 109px;
-                        padding-left: 38px;
-                        display: block;
-                        height: 80px;
-                        line-height: 80px;
-                        color: #a3a3a3;
-                        font-size: 15px;
-                        background: url(../images/index/u649.png) no-repeat left center;
-                        font-weight: bold;
-                    }
+                a {
+                    margin-top: 5px;
+                    padding-right: 100px;
+                    font-size: 14px;
+                    .blue;
                 }
             }
-            .hdcon-bot {
+            .hdcon-top-m {
+                width: 584px;
+                margin-top: 25px;
+                position: relative;
+                .goods {
+                    border-right: 1px solid #2494d4;
+                    padding-right: 10px;
+                    font-size: 14px;
+                }
+                .search-reset {
+                    position: absolute;
+                    right: 130px;
+                    font-size: 20px;
+                    top: 31px;
+                    color: #ccc;
+                    cursor: pointer;
+                }
+                .search-select {
+                    width: 81%;
+                    font-size: 14px;
+                    position: absolute;
+                    z-index: 9999;
+                    top: 70px;
+                    background: #fff;
+                    .search-select-option {
+                        padding: 2px 4px;
+                        cursor: pointer;
+                    }
+                }
+                .server {
+                    padding-left: 10px;
+                    font-size: 14px;
+                    margin-right: 20px;
+                }
+                input {
+                    width: 81%;
+                    padding: 0 0 0 2%;
+                    height: 40px;
+                    font-size: 15px;
+                    border: 2px solid #2494d4;
+                    margin-top: 5px;
+                }
+                button {
+                    margin-top: 5px;
+                    width: 16%;
+                    height: 40px;
+                    background-color: #2494d4;
+                    text-align: center;
+                    line-height: 33px;
+                    font-size: 15px;
+                    color: #fff;
+                }
+                span {
+                    font-size: 13px;
+                    line-height: 21px;
+                    color: #c7c7c7;
+                    padding: 0 5px;
+                }
+            }
+            .hdcon-top-r {
+                width: 147px;
+                height: 80px;
+                margin-top: 25px;
+                span {
+                    width: 140px;
+                    padding-left: 38px;
+                    display: block;
+                    height: 80px;
+                    line-height: 80px;
+                    color: #a3a3a3;
+                    font-size: 15px;
+                    background: url(../images/index/u649.png) no-repeat left center;
+                    font-weight: bold;
+                }
+            }
+        }
+        .hdcon-bot {
+            width: 100%;
+            ul {
                 width: 100%;
-                ul {
-                    width: 100%;
-                    li {
-                        .fl;
-                        position: relative;
-                        &:hover {
-                            .allproduces {
-                                display: block;
-                            }
-                        }
-                        //  >div{
-                        //    z-index: 999;
-                        //   //  display: none;
-                        //  }
-                        .loader {
-                            font-size: 18px;
-                            text-align: center;
-                            padding: 5px 0;
-                            width: 80px;
-                            display: block;
-                            color: #333;
-                            margin: 0 60px;
-                            &:hover {
-                                .blue;
-                            }
-                        }
+                li {
+                    .fl;
+                    position: relative;
+                    &:hover {
                         .allproduces {
-                            position: absolute;
-                            display: none;
-                            z-index: 999;
-                            left: 0;
-                            top: 37px;
-                            width: 100%;
+                            display: block;
+                        }
+                    }
+                    .loader {
+                        font-size: 18px;
+                        text-align: center;
+                        padding: 5px 0 3px;
+                        width: 80px;
+                        display: block;
+                        color: #333;
+                        margin: 0 60px;
+                        &:hover {
+                            .blue;
+                        }
+                    }
+                    .allproduces {
+                        position: absolute;
+                        display: none;
+                        z-index: 999;
+                        left: 0;
+                        top: 38px;
+                        width: 100%;
+                        height: 400px;
+                        .addpro-left {
+                            float: left;
+                            width: 200px;
+                            display: block;
                             height: 400px;
-                            .addpro-left {
-                                float: left;
-                                width: 200px;
-                                display: block;
-                                height: 400px;
-                                .addpro-list {
-                                    width: 100%;
-                                    height: 25%;
-                                    background: rgba(169, 169, 169, 1);
-                                    cursor: pointer;
-                                    color: #fff;
-                                    img {
-                                        width: 35px;
-                                        height: 35px;
-                                        padding-left: 5px;
-                                    }
-                                    .addpro-li {
-                                        width: 160px;
-                                        height: 100%;
-                                        display: block;
-                                        position: relative;
-                                        &:hover {
-                                            .addpro-right {
-                                                display: block;
-                                                z-index: 999;
-                                            }
-                                        }
-                                        .p1 {
-                                            height: 40px;
-                                            line-height: 40px;
-                                            margin: 0 10px;
-                                            font-size: 17px;
-                                        }
-                                        .span1 {
-                                            float: left;
-                                            font-size: 15px;
-                                            padding: 5px 5px 0px 5px;
-                                        }
+                            .addpro-list {
+                                width: 100%;
+                                height: 25%;
+                                background: rgba(169, 169, 169, 1);
+                                cursor: pointer;
+                                color: #fff;
+                                img {
+                                    width: 35px;
+                                    height: 35px;
+                                    padding-left: 5px;
+                                }
+                                .addpro-li {
+                                    width: 160px;
+                                    height: 100%;
+                                    display: block;
+                                    position: relative;
+                                    &:hover {
                                         .addpro-right {
-                                            display: none;
-                                            position: absolute;
-                                            width: 1000px;
-                                            background: #ccc;
-                                            height: 100px;
-                                            top: 0px;
-                                            left: 160px;
-                                            opacity: 0.9;
-                                            color: #fff;
-                                            p {
-                                                width: 98%;
-                                                line-height: 19px;
-                                                padding: 0% 0 0 1%;
-                                                span {
-                                                    float: left;
-                                                    font-size: 15px;
-                                                    margin: 3px 2px;
-                                                    padding: 0px 10px 0 5px;
-                                                    border-left: 2px solid #2494d4;
-                                                }
-                                                a {
-                                                    float: left;
-                                                    color: #fff;
-                                                    margin: 2px 0;
-                                                    padding: 0px 10px;
-                                                    border-left: 1px solid #fff;
-                                                    font-size: 15px;
-                                                }
+                                            display: block;
+                                            z-index: 999;
+                                        }
+                                    }
+                                    .p1 {
+                                        height: 40px;
+                                        line-height: 40px;
+                                        margin: 0 10px;
+                                        font-size: 17px;
+                                    }
+                                    .span1 {
+                                        float: left;
+                                        font-size: 15px;
+                                        padding: 5px 5px 0px 5px;
+                                    }
+                                    .addpro-right {
+                                        display: none;
+                                        position: absolute;
+                                        width: 1000px;
+                                        background: #ccc;
+                                        height: 100px;
+                                        top: 0px;
+                                        left: 165px;
+                                        opacity: 0.9;
+                                        color: #fff;
+                                        p {
+                                            width: 98%;
+                                            line-height: 19px;
+                                            padding: 0% 0 0 1%;
+                                            span {
+                                                float: left;
+                                                font-size: 15px;
+                                                margin: 3px 2px;
+                                                padding: 0px 10px 0 5px;
+                                                border-left: 2px solid #2494d4;
+                                            }
+                                            a {
+                                                float: left;
+                                                color: #fff;
+                                                margin: 2px 0;
+                                                padding: 0px 10px;
+                                                border-left: 1px solid #fff;
+                                                font-size: 15px;
                                             }
                                         }
                                     }
@@ -574,4 +559,5 @@
             }
         }
     }
+}
 </style>

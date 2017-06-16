@@ -1,38 +1,105 @@
 <template>
-  <div>
-    <div class="tail">
-      <div class="aboutus clear">
-        <div class="ab-left fl">
-          <p class="title">关于我们</p>
-          <p class="containt">联系我们：contact@xinkeher.com</p>
-          <p class="containt">公司地址：北京市朝阳区大望路soho现代城</p>
-          <p class="containt">官方客服电话：010-83421842</p>
-        </div>
-        <div class="ab-right fr">
-          <img src="../images/index/u265.png" class="fl">
-          <div class="fl wenzi">
-            <p>扫描二维码</p>
-            <span>关注我们</span>
+  <Row>
+    <Col  :xs="{ span: 0}" :sm="{ span: 24}">
+      <div class="tail">
+        <div class="aboutus clear">
+          <div class="ab-left fl">
+            <p class="title">关于我们</p>
+            <p class="containt">联系我们：contact@xinkeher.com</p>
+            <p class="containt">公司地址：北京市朝阳区大望路soho现代城</p>
+            <p class="containt">官方客服电话：010-83421842</p>
+          </div>
+          <div class="ab-right fr">
+            <img src="../images/index/u265.png" class="fl">
+            <div class="fl wenzi">
+              <p>扫描二维码</p>
+              <span>关注我们</span>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    <!--<p>这是尾部</p>-->
-  </div>
+    </Col>
+    <!--这是手机端尾部-->
+    <Col span="6" :xs="{ span: 24}" :sm="{ span: 0}">
+        <div class="index_choice">
+            <div class="fl in_choice">
+              <a href="#/home"  @click="home(1)" :class="{blue:home_index==1}">
+                <Icon type="home" class="home"></Icon>
+                <p class="choice">首页</p>
+              </a>
+            </div>
+            <div class="fl in_choice" >
+              <a href="#/shoplist"  @click="home(2)" :class="{blue:home_index==2}">
+                <Icon type="ios-home" class="home"></Icon>
+                <p class="choice">店铺</p>
+              </a>
+            </div>
+            <div class="fl in_choice" >
+              <a href="#/shopping"  @click="home(3)" :class="{blue:home_index==3}">
+                <Icon type="android-cart" class="home"></Icon>
+                <p class="choice">购物车</p>
+              </a>
+            </div>
+            <div class="fl in_choice" >
+              <a href="#/member" @click="home(4)" :class="{blue:home_index==4}">
+                <Icon type="android-person" class="home"></Icon>
+                <p class="choice">我的</p>
+              </a>
+            </div>
+        </div>
+    </Col>
+  </Row>
 </template>
 
 <script>
+import {
+        mapGetters,
+        mapActions
+} from 'vuex'
 export default {
-  name: 'myfoot'
+  name: 'myfoot',
+  data() {
+        return {
+            home_index: 1,
+        }
+    },
+     methods: {
+        home(index) {
+           this.home_index = index;
+          //  if(index==4){
+          //     if(this.getuser==''){
+          //        this.$router.push({
+          //               name: 'login'
+          //         });
+          //     }else{
+          //       this.$router.push({
+          //               name: 'member'
+          //         });
+          //     }
+          //  }
+        }, 
+    },
+    computed: {
+      ...mapGetters(['getuser'])
+
+    },
 }
 </script>
 
 <style lang="less" scoped>
+@media screen and (max-width:768px){
+	.index_choice{
+		font-size:50px;
+	}
+}
 .fl{
   float: left;
 }
 .fr{
   float: right;
+}
+.blue{
+  color: #2693d4!important;
 }
   .tail{
     width:100%;
@@ -74,4 +141,33 @@ export default {
       }
     }
   }
+.index_choice{
+  height: 10%;
+  width:100%;
+  border-top: 1px solid #ececec;
+  position:fixed;
+  bottom: -2px;
+  left: 0;
+  z-index: 999;
+  background: rgba(255,255,255,.9);
+  .in_choice{
+    width: 25%;
+    text-align: center;
+    a{
+       width:100%;
+       height: 100%;
+       display: block;
+       color: #b3b3b3;
+       line-height: 70%;
+       .home{
+         font-size: 80%;
+          line-height: 105%;
+       }
+      .choice{
+        font-size: 33%;
+        line-height: 50%;
+      }
+    }
+  }
+}
 </style>
