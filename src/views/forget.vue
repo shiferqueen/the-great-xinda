@@ -254,7 +254,7 @@
                     color: rgba(71, 87, 98, 0.8);
                     background: -webkit-linear-gradient(left, #00AD7C 50%, #eee 50%);
                     background: linear-gradient(to right, #00AD7C 50%, #eee 50%);
-                    background-size: 201% 100%;
+                    background-size: 200% 100%;
                     background-position: right;
                     -webkit-transition: background .3s;
                     transition: background .3s;
