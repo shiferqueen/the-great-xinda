@@ -41,7 +41,7 @@
               </a>
             </div>
             <div class="fl in_choice" >
-              <a href="#/member" @click="home(4)" :class="{blue:home_index==4}">
+              <a href="javascript:void(0)" @click="home(4)" :class="{blue:home_index==4}">
                 <Icon type="android-person" class="home"></Icon>
                 <p class="choice">我的</p>
               </a>
@@ -52,7 +52,10 @@
 </template>
 
 <script>
-
+import {
+        mapGetters,
+        mapActions
+} from 'vuex'
 export default {
   name: 'myfoot',
   data() {
@@ -63,7 +66,22 @@ export default {
      methods: {
         home(index) {
            this.home_index = index;
+           if(index==4){
+              if(this.getuser==''){
+                 this.$router.push({
+                        name: 'login'
+                  });
+              }else{
+                this.$router.push({
+                        name: 'member'
+                  });
+              }
+           }
         }, 
+    },
+    computed: {
+      ...mapGetters(['getuser'])
+
     },
 }
 </script>
@@ -125,6 +143,7 @@ export default {
   position:fixed;
   bottom: 0;
   left: 0;
+  z-index: 999;
   background: rgba(255,255,255,.9);
   .in_choice{
     width: 25%;
@@ -132,13 +151,14 @@ export default {
     a{
        width:100%;
        height: 100%;
+       display: block;
        color: #b3b3b3;
       .home{
-        font-size: 55px;
+        font-size: 50px;
         line-height: 60px;
       }
       .choice{
-        font-size: 24px;
+        font-size: 20px;
         line-height: 20px;
       }
     }
