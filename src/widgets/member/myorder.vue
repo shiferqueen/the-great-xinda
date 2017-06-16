@@ -59,7 +59,7 @@
     </Col>
         <!--移动端代码-->
         <!--移动端代码-->
-        <!--<Col :xs="24" :sm="0" style="background-color:#f8f8f8;">
+        <Col :xs="24" :sm="0" style="background-color:#f8f8f8;">
             <Row class="head">
                 <Col :xs="3" class="icon">
                     <Icon type="ios-arrow-left"></Icon>
@@ -97,13 +97,13 @@
                             <Col class="del_order" :xs="6"><a @click="removelist(index)" v-if="order.status==1">删除订单</a></Col>
                             <Col class="pay_for" :xs="6" >
                                 <!--<a @click="servicepay(index)">付款</a>-->
-                                <!--<a @click="servicepay(index)" v-if="order.status==1">付款</a>
+                                <a @click="servicepay(index)" v-if="order.status==1">付款</a>
                                 <a v-else style="color:#ccc;border-color:#ccc">已支付</a>
-                            </Col>-->
-                    <!--</Row>
+                            </Col>
+                    </Row>
                 </div>
-            </div>-->
-        <!--</Col>-->
+            </div>
+        </Col>
     </Row>
 </template>
 
@@ -199,115 +199,115 @@ export default {
 //     min-width:362px;
 // }
 // 移动端代码
-// .head{
-//     height: 72px;
-//     background: #e8e8e8;
-//     div.icon{
-//         padding-left: 2%;
-//         i{
-//             line-height:77px;
-//             font-size:25px;
-//         }
-//     }
-//     .wo_dan{
-//         font-size: 16px;
-//         line-height: 77px;
-//         padding-left: 25%;
-//     }
-// }
-// .header{
-//     background: #fff;
-//     margin-top: 20px;
-//     height: 73px;
-//     line-height: 73px;
-//     .hao_time{
-//         padding-left: 2%;
+.head{
+    height: 72px;
+    background: #e8e8e8;
+    div.icon{
+        padding-left: 2%;
+        i{
+            line-height:77px;
+            font-size:25px;
+        }
+    }
+    .wo_dan{
+        font-size: 16px;
+        line-height: 77px;
+        padding-left: 25%;
+    }
+}
+.header{
+    background: #fff;
+    margin-top: 20px;
+    height: 73px;
+    line-height: 73px;
+    .hao_time{
+        padding-left: 2%;
 
-//         white-space:nowrap;
-//     }
-//     .pay_1{
-//         padding-left: 13%;
+        white-space:nowrap;
+    }
+    .pay_1{
+        padding-left: 13%;
 
-//         white-space:nowrap;
-//     }
-// }
-// .xiangqi{
-//     // width: 750px;
-//     height: 120px;
-//     background: #f8f8f8;
-//     .logo_2{
-//         height: 50px;
-//     }
-//     .logo_1{
-//         padding-left: 2%;
-//         img{
-//             width: 60%;
-//             border: 2px solid #c3c3c3;
-//         }
-//     }
-//     .xin_pany{
-//         font-size: 14px;
-//     }
-//     .xia_1{
-//         font-size: 14px;
-//     }
-//     .money{
-//         font-size: 14px;
-//         color: red;
-//         .yuan{
-//             font-size: 12px;
-//             color: black;
-//         }
-//         .yi{
-//             color: black;
-//         }
-//     }
-// }
-// .zongji{
-//     background: #fff;
-//     height: 60px;
-//     .buynum1{
-//         font-size: 14px;
-//         .er{
-//             color: red;
-//         }
-//     }
-//     .del_order{
-//         color: red;
-//         font-size: 14px;
-//     }
-//     .pay_for{
-//         a{
-//         width: 49px;
-//         height: 25px;
-//         display: block;
-//         border-radius: 2%;
-//         line-height: 25px;
-//         font-size: 14px;
-//         background-color: #2693d4;
-//         color: #cfd5d8;
-//         text-align: center;
-//         }
-//     }
-// }
-// .zongji2{
-//     background: #fff;
-//     height: 73px;
-//     .buynum2{
-//         margin-left: -7%;
-//         font-size: 14px;
-//         text-align: center;
-//         line-height: 73px;
-//         .er{
-//             color: red;
-//         }
-//     }
-//     .pay_for2{
-//         line-height: 73px;
-//         font-size: 13px;
-//         text-align: center;
-//     }
-// }
+        white-space:nowrap;
+    }
+}
+.xiangqi{
+    // width: 750px;
+    height: 120px;
+    background: #f8f8f8;
+    .logo_2{
+        height: 50px;
+    }
+    .logo_1{
+        padding-left: 2%;
+        img{
+            width: 60%;
+            border: 2px solid #c3c3c3;
+        }
+    }
+    .xin_pany{
+        font-size: 14px;
+    }
+    .xia_1{
+        font-size: 14px;
+    }
+    .money{
+        font-size: 14px;
+        color: red;
+        .yuan{
+            font-size: 12px;
+            color: black;
+        }
+        .yi{
+            color: black;
+        }
+    }
+}
+.zongji{
+    background: #fff;
+    height: 60px;
+    .buynum1{
+        font-size: 14px;
+        .er{
+            color: red;
+        }
+    }
+    .del_order{
+        color: red;
+        font-size: 14px;
+    }
+    .pay_for{
+        a{
+        width: 49px;
+        height: 25px;
+        display: block;
+        border-radius: 2%;
+        line-height: 25px;
+        font-size: 14px;
+        background-color: #2693d4;
+        color: #cfd5d8;
+        text-align: center;
+        }
+    }
+}
+.zongji2{
+    background: #fff;
+    height: 73px;
+    .buynum2{
+        margin-left: -7%;
+        font-size: 14px;
+        text-align: center;
+        line-height: 73px;
+        .er{
+            color: red;
+        }
+    }
+    .pay_for2{
+        line-height: 73px;
+        font-size: 13px;
+        text-align: center;
+    }
+}
 // 移动端代码结束
 .trn{
     color: #2693d4;
