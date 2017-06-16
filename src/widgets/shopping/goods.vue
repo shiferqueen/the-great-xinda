@@ -250,7 +250,8 @@ export default {
             this.ajax.post('/xinda-api/provider/detail', qs.stringify({
                         id: id
             })).then(function (data) {
-                that.dizhi[id] =  data.data.data.regionName;
+                that.$set(that.dizhi,id,data.data.data.regionName)
+                // that.dizhi[id] =  data.data.data.regionName;
                 // that.listdata;
             })
             return that.dizhi[id];
