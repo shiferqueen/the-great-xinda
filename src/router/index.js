@@ -31,7 +31,7 @@ import Exeice from '@/views/exeice'
 
 
 
-// import popups from '@/components/popups' //看弹出框样式用
+import iview from '@/views/myiView' //iview 样式用
 
 
 
@@ -178,5 +178,10 @@ export default new Router({
                 }
             ]
         },
+        {
+            path: '/iview',
+            name: 'iview',
+            component: iview
+        }
     ]
 });
