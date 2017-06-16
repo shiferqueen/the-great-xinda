@@ -32,11 +32,12 @@
                 <div class="top-p">
                     <p>登录</p>
                     <a href="#/action/Register">>>立即注册</a>
+                    <a href="#/Home" class="return">返回首页<<</a>
                 </div>
             </Col>
             <Col :xs="{span:24}" :sm="{span:0}">
                 <div class="left-p">
-                    <p :class="[status==1 ? 'activeclass' : 'errorclass']">{{msg}}</p>
+                    <p :class="[status==1 ? 'activeclass' : 'errorclass']" :style="{color:c}">{{msg}}</p>
                     <input type="text" class="phone" v-model="cellphone" autofocus placeholder="请输入手机号码" @click="clear" @keyup.enter="jiaodian(1)"><br>
                     <input type="password" class="password" v-model="password" placeholder="请输入密码" @click="clear" @keyup.enter="jiaodian(2)">                    <br>
                     <input type="text" class="code" v-model="imgcode" placeholder="请输入验证码" @click="clear" @keyup.enter="jiaodian(3)">                    <img @click='getsrc' :src='imgsrc'><br>
@@ -63,6 +64,7 @@
                 msg: '',//提示消息
                 imgsrc: "/xinda-api/ajaxAuthcode",
                 testphone: /^1[3|4|5|7|8][0-9]{9}$/,
+                c:'#f00'
             }
         },
 
@@ -110,6 +112,7 @@
                                     //登录成功
                                     _this.user();
                                     _this.refCartNum();
+                                    _this.c = "#2494d4"
                                     setTimeout(function () {
                                         _this.$router.push({ path: '/home' });
                                     }, 500);
@@ -136,7 +139,8 @@
 <style scoped lang="less">
     .activeclass {
         color: #2494d4;
-        padding: 20px 150px 0;
+        // padding: 20px  0;
+        // text-align: left;
     }
     input {
         border: 1px solid #ccc;
@@ -181,7 +185,7 @@
                 p{
                     color: red;
                     text-align: center;
-                    margin-top: 15px
+                    margin-top: 15px;
                 }
                 input {
                     width: 282px;
@@ -243,6 +247,7 @@
                         font-size: 16px;
                         color: #2b91ce;
                     }
+                    
                     img {
                         padding: 24px 0;
                     }
@@ -268,6 +273,9 @@
         margin: -28px 5px;
         color: #2b91ce;
     }
+    .return{
+        float: left;
+    }
 }
 .left-p{
     width:100%;
@@ -276,7 +284,7 @@
     p{
         color: red;
         text-align: center;
-        margin-top: 15px
+        margin-top: 15px;
     }
     input{
         width:100%;

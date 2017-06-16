@@ -1,5 +1,6 @@
 <template>
-    <div>
+    <Row>
+        <Col :xs="0" :sm="24" >
         <div>
             <p class="head_top">首页/财税服务</p>
         </div>
@@ -16,8 +17,8 @@
                     <div class="nav_line">
                         <div class="nav_line_left teshuyangshi">类型</div>
                         <div class="nav_line_right">
-                            <span :class="{nav_line_spanb: spantogb ==2}" @click="queryc(2)">分公司税务报道</span>
                             <span :class="{nav_line_spanb: spantogb ==1}" @click="queryc(1)">公司代理记账</span>
+                            <span :class="{nav_line_spanb: spantogb ==2}" @click="queryc(2)">分公司税务报道</span>
                             <span :class="{nav_line_spanb: spantogb ==4}" @click="queryc(4)">合伙企业注册</span>
                             <span :class="{nav_line_spanb: spantogb ==5}" @click="queryc(5)">外商独资公司注册</span>
                             <span :class="{nav_line_spanb: spantogb ==3}" @click="queryc(3)">VIE架构</span>
@@ -108,11 +109,52 @@
                     <p>增值服务</p>
                 </div>
             </div>
-    
         </div>
-    </div>
+        </Col>
+        <Col :xs="24" :sm="0" >
+            <Row>
+                <div class="main-phone">
+                    <Col span="16" offset="4" class="phone-top">
+                            <Row>
+                                    <Col span="12" class="phone-top-con">
+                                    <div :class="{top :spta ==1}" @click='chicked(1)'>综合排序</div>
+                                    </Col>    
+                                    <Col span="12" class="phone-top-con">
+                                    <div :class="{top :spta ==2}" @click='chicked(2)'>{{prices}}</div>
+                                    </Col> 
+                            </Row>
+                        </Col>  
+                        <Col span="24">
+                            <div class="con-main-phone" v-for="(listeach,index) in listpage_ajax">
+                                <a :href="'#/products/'+listeach.id" @click="storeid(listeach.id)">
+                                    <Col span="8">
+                                        <div class="con-main-left-phone">
+                                            <a :href="'#/products/'+listeach.id" @click="storeid(listeach.id)">
+                                                <img :src="'http://115.182.107.203:8088/xinda/pic'+listeach.productImg">
+                                            </a>
+                                        </div>
+                                    </Col>
+                                    <Col span="15" offset="1">
+                                        <div class="con-main-middle-phone">
+                                            <p class="title">
+                                                <a :href="'#/products/'+listeach.id" @click="storeid(listeach.id)">{{listeach.serviceName}}</a>
+                                            </p>
+                                            <p>{{listeach.serviceInfo}}</p>
+                                            <p><span class="region"><Icon type="android-pin"></Icon> {{listeach.regionName}}</span><span class="teshu"><span class="price">￥{{listeach.price}}</span>元</span></p>
+                                            
+                                        </div>
+                                    </Col>
+                                </a>                           
+                            </div>
+                      </Col>
+                      <Col span="24" class="phone-bottom">
+                      </Col> 
+                </div> 
+            </Row>     
+        </Col>
+    </Row>
 </template>
-
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
 <script>
 import provinces from '../provinces.js'
 import Vue from 'vue'
@@ -145,18 +187,28 @@ export default {
             number: 0,
             start: true,
             sorts: 0,
-            que: 2,
+            que: 1,
             prices: '价格',
             pages: [],
             spantoga: true, //样式切换
-            spantogb: 2, //样式切换
+            spantogb: 1, //样式切换
             spta:1,
+            spt:1,
         }
 
     },
-
+     
     created() {
+        
         let _this = this
+        window.onresize = function(){
+                _this.changePage();
+        };
+        if(this.getindexnum == ""){
+               this.que = 1
+            }else{
+              this.que = this.getindexnum
+            }
         this.list();
         // ------------以下为省市区三级联动
         // 数据初始化,默认选中北京市,默认选中第一个;北京市数据为总数据的前18个
@@ -176,7 +228,7 @@ export default {
         // ----------三级联动结束
     },
     computed: {
-        ...mapGetters(['getCartNum', 'getuser']),
+        ...mapGetters(['getCartNum', 'getuser','getindexnum']),
         info() {
             return {
                 province: this.selectedProvince,
@@ -184,23 +236,9 @@ export default {
                 block: this.selectedBlock
             }
         },
-
-
-        //  分页器部分
-        //      pages:function(){
-        //          let _this = this;
-        //         var pag = [];
-        //                var i = _this.showItem;
-        //                while(_this.showItem){
-        //                    pag.unshift(_this.showItem--);
-        //                }
-
-        //          return pag
-        //        }
-
     },
     methods: {
-        ...mapActions(['setstoreid', 'refCartNum', 'user', 'popups']),
+        ...mapActions(['setstoreid', 'refCartNum', 'user', 'popups','setindexnum']),
 
 
         //加入购物车
@@ -265,21 +303,30 @@ export default {
         },
         //页面接口
         list() {
+            
             let _this = this
             this.ajax.post("/xinda-api/product/package/grid", qs.stringify({
                 productTypeCode: _this.que,
                 start: _this.number,
                 sort: _this.sorts,
             })).then(function (res) {
+                //_this.que = _this.indexnum;
                 _this.listpage_ajax_new = res.data.data;
                 _this.pages.length = Math.ceil(_this.listpage_ajax_new.length / 4)
                 _this.number = 0
                 _this.isA = false
-                _this.listpage_ajax = _this.listpage_ajax_new.slice(_this.number, _this.number + 4)
+                //屏幕大小监控
+               _this.changePage();
             });
         },
-
-
+        //改变分页数据
+        changePage(){
+            if(document.body.clientWidth>600){
+                this.listpage_ajax = this.listpage_ajax_new.slice(this.number, this.number + 4)
+            }else{
+                this.listpage_ajax = this.listpage_ajax_new
+            }
+        },
         //点击按钮
         querya() {
             let _this = this
@@ -319,6 +366,9 @@ export default {
                 _this.prices = '价格 ↑';
             }
              _this.spta = c
+             if(_this.spta == 1){
+                 _this.prices = '价格';
+             }
 
         },
     },
@@ -372,8 +422,6 @@ export default {
                 this.current = oldv
             }
             this.listpage_ajax = this.listpage_ajax_new.slice(this.current, this.current + 4)
-            // ajax.slice(index,index + 4)
-
         }
     },
 
@@ -672,4 +720,78 @@ export default {
     background: #0E90D2;
     color: #fff !important;
 } //分页器结束
+
+.main-phone{
+    padding:0 10px;
+         .phone-top{
+            margin-top:10px;
+            height: 30px;
+            border: 1px solid #2693d4;
+            border-radius: 5px;
+            .phone-top-con{
+            height: 28px;
+            font-size:14px;
+            text-align: center;
+            div{
+            height: 28px;
+            padding: 3px 0;  
+            }
+        }
+         
+    }
+    .top{
+          background:#2693d4; 
+          color:#fff; 
+       }
+    .con-main-phone {
+        width: 100%;
+        margin: 0 auto;
+        border-bottom: 1px solid #cdcdcd;
+    
+    &:after {
+        .clear;
+    }
+    .con-main-left-phone {
+        float: left;
+        img {
+            width: 100%;
+            height: auto;
+            border: 1px solid #cdcdcd;
+            margin: 25px 0;
+         }
+    }
+    .con-main-middle-phone {
+        .title {
+            font-size:16px;
+            margin: 20px 0;
+        }
+        p {
+            margin: 5px 0;
+            color: #686868;
+            font-size: 14px;
+            margin-bottom: 10px;
+            .region {
+                 font-size: 12px;
+                margin-right: 10%;
+                
+            }
+           .teshu{
+               font-size:8px;
+               margin-right:5%;
+            .price{
+                 font-size: 18px;
+                 margin-right: 3px;
+                 color: red;
+            }
+           }
+        }
+    } 
+   
+    } 
+    .phone-bottom{
+        height:170px;         
+    }
+  
+}
+ 
 </style>

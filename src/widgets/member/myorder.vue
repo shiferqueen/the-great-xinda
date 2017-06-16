@@ -56,14 +56,10 @@
             <span class="xh_11">1</span>
             <span class="xh_12">下一页</span>
         </div>
-    </div>
     </Col>
         <!--移动端代码-->
+        <!--移动端代码-->
         <Col :xs="24" :sm="0" style="background-color:#f8f8f8;">
-            <!--<dt class="head">
-                <Icon class="icon" type="ios-arrow-left"></Icon>
-                <dd class="wo_dan">我的订单</dd>
-            </dt> -->
             <Row class="head">
                 <Col :xs="3" class="icon">
                     <Icon type="ios-arrow-left"></Icon>
@@ -72,59 +68,41 @@
                     我的订单
                 </Col>
             </Row> 
-            <Row class="header">
-                <Col :xs="12" class="hao_time">
-                    订单号:{{}}
-                </Col>
-                <Col :xs="12" class="pay_1">
-                    等待买家付款
-                </Col>
-            </Row>
-            <Row type="flex" justify="center" align="middle" class="xiangqi">
-                <Col :xs="8" class="logo_1">
-                    <img src="../../images/logos/未标题-1.jpg" />
-                </Col>
-                <Col :xs="16" class="logo_2">
-                    <dd class="xin_pany">新公司注册</dd>
-                    <dd class="xia_1">下单时间&nbsp;:</dd>
-                    <dd class="money"> ￥1400 &nbsp;
-                        <span class="yuan">元</span>
-                        &nbsp;
-                        <span class="yi">×1</span>
-                    </dd>
-                </Col>
-            </Row>
-            <Row class="zongji" type="flex" justify="center" align="middle">
-                    <Col class="buynum1" :xs="12">合计：<span class="er">￥1400</span></Col>
-                    <Col class="del_order" :xs="6">删除订单</Col>
-                    <Col class="pay_for" :xs="6">付款</Col>
-            </Row>
-            <Row class="header">
-                <Col :xs="12" class="hao_time">
-                    订单号:123456789
-                </Col>
-                <Col :xs="12" class="pay_1">
-                    已付款
-                </Col>
-            </Row>
-            <Row type="flex" justify="center" align="middle" class="xiangqi">
-                <Col :xs="8" class="logo_1">
-                    <img src="../../images/logos/未标题-1.jpg" />
-                </Col>
-                <Col :xs="16" class="logo_2">
-                    <dd class="xin_pany">新公司注册</dd>
-                    <dd class="xia_1">下单时间&nbsp;:</dd>
-                    <dd class="money"> ￥1400 &nbsp;
-                        <span class="yuan">元</span>
-                        &nbsp;
-                        <span class="yi">×1</span>
-                    </dd>
-                </Col>
-            </Row>
-            <Row class="zongji2">
-                    <Col class="buynum2" :xs="12">合计：<span class="er">￥1400</span></Col>
-                    <Col class="pay_for2" :xs="12">交易完成</Col>
-            </Row>
+            <div v-for="(order,index) in myorder">
+                <div v-for="(service,idx) in order.serviceList">
+                    <Row class="header">
+                        <Col :xs="14" class="hao_time">
+                            订单号:{{order.businessNo}}
+                        </Col>
+                        <Col :xs="10" class="pay_1">
+                            {{service.status==1?"等待买家付款":"已付款"}}
+                        </Col>
+                    </Row>
+                    <Row type="flex" justify="center" align="middle" class="xiangqi">
+                        <Col :xs="6" class="logo_1">
+                            <img src="../../images/logos/未标题-1.jpg" />
+                        </Col>
+                        <Col :xs="18" class="logo_2">
+                            <dd class="xin_pany">{{service.providerName}}</dd>
+                            <dd class="xia_1">下单时间&nbsp;:{{order.createTime}}</dd>
+                            <dd class="money"> ￥{{service.unitPrice}}
+                                <span class="yuan">元</span>
+                                &nbsp;
+                                <span class="yi">×{{service.buyNum}}</span>
+                            </dd>
+                        </Col>
+                    </Row>
+                    <Row class="zongji" type="flex" justify="center" align="middle">
+                            <Col class="buynum1" :xs="12">合计：<span class="er">￥{{service.totalPrice}}</span></Col>
+                            <Col class="del_order" :xs="6"><a @click="removelist(index)" v-if="order.status==1">删除订单</a></Col>
+                            <Col class="pay_for" :xs="6" >
+                                <!--<a @click="servicepay(index)">付款</a>-->
+                                <a @click="servicepay(index)" v-if="order.status==1">付款</a>
+                                <a v-else style="color:#ccc;border-color:#ccc">已支付</a>
+                            </Col>
+                    </Row>
+                </div>
+            </div>
         </Col>
     </Row>
 </template>
@@ -196,12 +174,12 @@ export default {
             //         headers: '是否确定删除',
             //         content: '确定要删除此商品吗？',
             //         ok() {
-            //             // let _this= this
+            //             let _this= this
             //             that.myorder.splice(index, 1);
             //             this.ajax.post("/xinda-api/ business-order/del",qs.stringify({
             //                 id:this.myorder[index].id
             //             })).then(function(data){
-                            
+            //                 id: 111
             //             })
                         
             //         }
@@ -217,16 +195,12 @@ export default {
 }
 </script>
 <style scoped lang="less">
-span {
-    cursor: pointer;
-}
-.ivu-row{
-    min-width:362px;
-}
+// .ivu-row{
+//     min-width:362px;
+// }
 // 移动端代码
 .head{
-    // width: 750px;
-    height: 77px;
+    height: 72px;
     background: #e8e8e8;
     div.icon{
         padding-left: 2%;
@@ -236,7 +210,7 @@ span {
         }
     }
     .wo_dan{
-        font-size: 29px;
+        font-size: 16px;
         line-height: 77px;
         padding-left: 25%;
     }
@@ -248,40 +222,40 @@ span {
     line-height: 73px;
     .hao_time{
         padding-left: 2%;
-        font-size: 26px;
+
         white-space:nowrap;
     }
     .pay_1{
         padding-left: 13%;
-        font-size: 26px;
+
         white-space:nowrap;
     }
 }
 .xiangqi{
     // width: 750px;
-    height: 263px;
+    height: 120px;
     background: #f8f8f8;
     .logo_2{
-        height: 170px;
+        height: 50px;
     }
     .logo_1{
         padding-left: 2%;
         img{
+            width: 60%;
             border: 2px solid #c3c3c3;
         }
     }
     .xin_pany{
-        font-size: 30px;
+        font-size: 14px;
     }
     .xia_1{
-        font-size: 23px;
+        font-size: 14px;
     }
     .money{
-        font-size: 23px;
-        margin-top: 40px;
+        font-size: 14px;
         color: red;
         .yuan{
-            font-size: 16px;
+            font-size: 12px;
             color: black;
         }
         .yi{
@@ -291,27 +265,29 @@ span {
 }
 .zongji{
     background: #fff;
-    height: 73px;
+    height: 60px;
     .buynum1{
-        font-size: 24px;
+        font-size: 14px;
         .er{
             color: red;
         }
     }
     .del_order{
         color: red;
-        font-size: 24px;
+        font-size: 14px;
     }
     .pay_for{
-        width: 122px;
-        height: 47px;
+        a{
+        width: 49px;
+        height: 25px;
         display: block;
         border-radius: 2%;
-        line-height: 47px;
-        font-size: 23px;
+        line-height: 25px;
+        font-size: 14px;
         background-color: #2693d4;
         color: #cfd5d8;
         text-align: center;
+        }
     }
 }
 .zongji2{
@@ -319,7 +295,7 @@ span {
     height: 73px;
     .buynum2{
         margin-left: -7%;
-        font-size: 24px;
+        font-size: 14px;
         text-align: center;
         line-height: 73px;
         .er{
@@ -328,7 +304,7 @@ span {
     }
     .pay_for2{
         line-height: 73px;
-        font-size: 23px;
+        font-size: 13px;
         text-align: center;
     }
 }

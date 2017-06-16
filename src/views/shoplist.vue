@@ -1,98 +1,128 @@
 <template>
     <div>
-        <div class="wid">
-            <p class="shoplist">首页/公司工商</p>
-            <div class="service-area-list clear">
-                <div class="service-area">服务区域</div>
-                <div class="service-area-right">
-                    <select name="province" v-model="selectedProvince">
-                        <option v-for="(item, index) in provinces" v-if="item.level === 1" :value="item">
-                            {{ item.name }}
-                        </option>
-                    </select>
-                    <select name="city" v-model="selectedCity">
-                        <option v-for="(item, index) in cities" :value="item">
-                            {{ item.name }}
-                        </option>
-                    </select>
-                    <select name="block" v-model="selectedBlock">
-                        <option v-for="(item, index) in blocks" :value="item">
-                            {{ item.name }}
-                        </option>
-                    </select>
-                </div>
-            </div>
-            <div class="product-type-list clear">
-                <div class="product-type">产品类型</div>
-                <div>
-                    <ul class="clear">
-                        <li class="product-all">所有</li>
-                        <li>专利申请</li>
-                        <li class="product-space">版权保护</li>
-                        <li class="product-space">商标注册</li>
-                        <li class="product-space">代理记账</li>
-                        <li class="product-space">公司注册</li>
-                        <li class="product-space">企业社保</li>
-                        <li class="product-space">公司变更</li>
-                        <li class="product-space">税务代办</li>
-                        <li class="product-space">个人社保</li>
-                        <li class="product-space">审计报告</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="all-items">
-                <div class="all-items-top">
-                    <ul class="clear">
-                        <li class="all-items-top-all">综合排序</li>
-                        <li class="all-items-top-price">价格</li>
-                        <li class="all-items-top-num">接单数</li>
-                    </ul>
-                </div>
-                <div class="all-items-content">
-                    <div class="all-items-content-left clear" v-for="(liscon,index) in lispage_ajax">
-                        <div>
-                            <p class="all-items-content-left-logo">
-                                <img :src="'http://115.182.107.203:8088/xinda/pic'+liscon.providerImg">
-                            </p>
-                            <p class="all-items-content-left-gold">
-                                <img src="../images/logos/little01.png">
-                                <span>金牌服务商</span>
-                            </p>
+        <Row>
+            <Col :xs ="0" :sm="24">
+                <div class="wid">
+                    <p class="shoplist">首页/公司工商</p>
+                    <div class="service-area-list clear">
+                        <div class="service-area">服务区域</div>
+                        <div class="service-area-right">
+                            <select name="province" v-model="selectedProvince">
+                                <option v-for="(item, index) in provinces" v-if="item.level === 1" :value="item">
+                                    {{ item.name }}
+                                </option>
+                            </select>
+                            <select name="city" v-model="selectedCity">
+                                <option v-for="(item, index) in cities" :value="item">
+                                    {{ item.name }}
+                                </option>
+                            </select>
+                            <select name="block" v-model="selectedBlock">
+                                <option v-for="(item, index) in blocks" :value="item">
+                                    {{ item.name }}
+                                </option>
+                            </select>
                         </div>
-                        <div class="all-items-content-left-infor">
+                    </div>
+                    <div class="product-type-list clear">
+                        <div class="product-type">产品类型</div>
+                        <div>
                             <ul class="clear">
-                                <li>{{liscon.providerName}}</li>
-                                <li>信誉&nbsp &nbsp
-                                    <img src="../images/logos/little07.png">
-                                    <img src="../images/logos/little07.png">
-                                    <img src="../images/logos/little07.png">
-                                    <img src="../images/logos/little07.png">
-                                    <img src="../images/logos/little04.png">
-                                </li>
-                                <li>{{liscon.regionName}}</li>
-                                <li>累计服务客户次数：{{liscon.orderNum}} &nbsp|&nbsp &nbsp 好评率：100%</li>
-                                <li>
-                                    <ul class="all-items-tax clear">
-                                        <li class="all-items-tax-fir" v-for="lis in lispage[index]">{{lis}}</li>
-                                        <!--<li class="all-items-tax-sec">{{liscon.productTypes.substr(5,4)}}</li>-->
-                                        <!--<li class="all-items-tax-sec">{{liscon.productTypes.substr(10,4)}}</li>-->
-                                        <!--<li class="all-items-tax-sec">{{liscon.productTypes.substr(15,4)}}</li>-->
-                                    </ul>
-                                </li>
-                                <li class="go-to-shop">
-                                    <a :href="'#/shopfront/' + liscon.id">进入店铺</a>
-                                </li>
+                                <li class="product-all">所有</li>
+                                <li>专利申请</li>
+                                <li class="product-space">版权保护</li>
+                                <li class="product-space">商标注册</li>
+                                <li class="product-space">代理记账</li>
+                                <li class="product-space">公司注册</li>
+                                <li class="product-space">企业社保</li>
+                                <li class="product-space">公司变更</li>
+                                <li class="product-space">税务代办</li>
+                                <li class="product-space">个人社保</li>
+                                <li class="product-space">审计报告</li>
                             </ul>
                         </div>
                     </div>
+                    <div class="all-items">
+                        <div class="all-items-top">
+                            <ul class="clear">
+                                <li class="all-items-top-all">综合排序</li>
+                                <li class="all-items-top-price">价格</li>
+                                <li class="all-items-top-num">接单数</li>
+                            </ul>
+                        </div>
+                        <div class="all-items-content">
+                            <div class="all-items-content-left clear" v-for="(liscon,index) in lispage_ajax">
+                                <div>
+                                    <p class="all-items-content-left-logo">
+                                        <img :src="'http://115.182.107.203:8088/xinda/pic'+liscon.providerImg">
+                                    </p>
+                                    <p class="all-items-content-left-gold">
+                                        <img src="../images/logos/little01.png">
+                                        <span>金牌服务商</span>
+                                    </p>
+                                </div>
+                                <div class="all-items-content-left-infor">
+                                    <ul class="clear">
+                                        <li>{{liscon.providerName}}</li>
+                                        <li>信誉&nbsp &nbsp
+                                            <img src="../images/logos/little07.png">
+                                            <img src="../images/logos/little07.png">
+                                            <img src="../images/logos/little07.png">
+                                            <img src="../images/logos/little07.png">
+                                            <img src="../images/logos/little04.png">
+                                        </li>
+                                        <li>{{liscon.regionName}}</li>
+                                        <li>累计服务客户次数：{{liscon.orderNum}} &nbsp|&nbsp &nbsp 好评率：100%</li>
+                                        <li>
+                                            <ul class="all-items-tax clear">
+                                                <li class="all-items-tax-fir" v-for="lis in lispage[index]">{{lis}}</li>
+                                                <!--<li class="all-items-tax-sec">{{liscon.productTypes.substr(5,4)}}</li>-->
+                                                <!--<li class="all-items-tax-sec">{{liscon.productTypes.substr(10,4)}}</li>-->
+                                                <!--<li class="all-items-tax-sec">{{liscon.productTypes.substr(15,4)}}</li>-->
+                                            </ul>
+                                        </li>
+                                        <li class="go-to-shop">
+                                            <a :href="'#/shopfront/' + liscon.id" @click="goshop(liscon.id)">进入店铺</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item-change clear">
+                        <div class="item-change-up">上一页</div>
+                        <div class="item-change-num">1</div>
+                        <div class="item-change-next">下一页</div>
+                    </div>
                 </div>
-            </div>
-            <div class="item-change clear">
-                <div class="item-change-up">上一页</div>
-                <div class="item-change-num">1</div>
-                <div class="item-change-next">下一页</div>
-            </div>
-        </div>
+            </Col>
+            <Col :xs="24" :sm="0">
+                <Row style="margin-top: 20px;">
+                    <Col span="16" offset="4" style="border: 1px solid #2693d4; border-radius:5px">
+                        <!--<div class="ph_title clear">
+                            <div class="ph_sort">默认排序</div>
+                            <div class="ph_sales">销量</div>
+                        </div>-->
+                        <Row>
+                            <Col span="12" style="text-align:center;"><p :class="{bccol: bccoll ==1}" @click="changenum(1)" style="padding:5px 0;">默认排序</p></Col>
+                            <Col span="12" style="text-align: center;"><p :class="{bccol: bccoll ==2}" @click="changenum(2)" style="padding:5px 0;">销量</p></Col>
+                        </Row>
+                    </Col>
+                </Row>
+                <div v-for="(liscon,index) in lispage_ajax">
+                    <a :href="'#/shopfront/' + liscon.id" @click="goshop(liscon.id)">
+                    <Row class="ph_shoplistcon" >
+                        <Col span="5" offset="1" class="ph_shoplistimg"><img :src="'http://115.182.107.203:8088/xinda/pic'+liscon.providerImg"></Col>
+                        <Col span="17" offset="1" class="ph_shoplistTitle">
+                            <Row><div class="ph_listname">{{liscon.providerName}}</div></Row>
+                            <Row><div class="ph_listplace"><span><Icon type="ios-location-outline"></Icon></span>{{liscon.regionName}}</div></Row>
+                            <Row><div class="ph_listnum">累计服务客户数量:&nbsp<span class="clored">{{liscon.orderNum}}</span> &nbsp 好评率:&nbsp<span class="clored">100%</span></div></Row>
+                        </Col>
+                    </Row>
+                    </a>
+                </div>
+            </Col>
+        </Row>
     </div>
 </template>
 
@@ -114,19 +144,22 @@ export default {
             cities: 0,
             provinces,
             blocks: 0,
-            lispage: []
+            lispage: [],
+           sort_one:1,
+           bccoll:1,
         }
 
     },
     created() {
-        let _this = this;
-        this.ajax.post('/xinda-api/provider/grid', { start: 0, limit: 6, productTypeCode: 10 }).then(function (data) {
-            _this.lispage_ajax = data.data.data
-            _this.lispage = _this.lispage_ajax.map(function (value) {
-                return value.productTypes.split(',')
-            })
-            // console.log(_this.lispage)
-        })
+       this.move();
+        // let _this = this;
+        // this.ajax.post('/xinda-api/provider/grid', { start: 0, limit: 6, productTypeCode: 10 }).then(function (data) {
+        //     _this.lispage_ajax = data.data.data
+        //     _this.lispage = _this.lispage_ajax.map(function (value) {
+        //         return value.productTypes.split(',')
+        //     })
+        //     // console.log(_this.lispage)
+        // })
         // ----------以下为省市区三级联动
         // 数据初始化,默认选中北京市,默认选中第一个;北京市数据为总数据的前18个
         let beijing = this.provinces.slice(0, 19)
@@ -152,8 +185,6 @@ export default {
                 block: this.selectedBlock
             }
         },
-    },
-    computed: {
         ...mapGetters(['getshopid']),
     },
     methods: {
@@ -161,6 +192,26 @@ export default {
         goshop(id) {
             this.setgoshop(id)
             console.log(id)
+        },
+        // changenum(){
+        //     console.log(this.sort_one)
+        //     this.sort_one = 2,
+        //     move()
+        // },
+        move(){
+            let _this = this;
+        this.ajax.post('/xinda-api/provider/grid', { sort: _this.sort_one, start: 0, limit: 6, productTypeCode: 10 }).then(function (data) {
+            _this.lispage_ajax = data.data.data
+            _this.lispage = _this.lispage_ajax.map(function (value) {
+                return value.productTypes.split(',')
+            })
+            // console.log(_this.lispage)
+        })
+    },
+    changenum(n){
+            this.sort_one = 3,
+            this.move(),
+            this.bccoll = n
         }
     },
     components: {
@@ -447,5 +498,38 @@ export default {
     border: 1px solid gray;
     text-align: center;
     margin-left: 6px;
+}
+//手机端
+.ph_shoplistcon {
+    border-bottom :1px solid gray;
+    margin-top: 40px;
+    padding-bottom: 20px;
+}
+.ph_shoplistimg {
+    border: 1px solid gray;
+    margin-bottom: 20px;
+    text-align: center;
+    img {
+        width: 100%;
+        height: 100%;
+    }
+}
+.ph_listname {
+    font-size: 16px;
+}
+.ph_listplace {
+    font-size: 12px;
+}
+.ph_listnum {
+    font-size: 8px;
+    margin-top: 30px;
+}
+.clored {
+    color: red;
+}
+.bccol {
+     background:#2693d4;
+     color:#fff;
+     
 }
 </style>

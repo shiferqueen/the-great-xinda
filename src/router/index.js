@@ -48,6 +48,7 @@ export default new Router({
                     alias: '',
                     component: Home
                 },
+
                 {
                     path: "shoplist",
                     name: "shoplist",
