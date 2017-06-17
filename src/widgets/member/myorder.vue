@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <Row style="position:inherit">
         <Col :xs="0" :sm="24" class="my_order">
         <div class="xh_0">
             <a class="trn">我的订单</a>
@@ -68,7 +68,10 @@
         <Col :xs="24" :sm="0" style="background-color:#f8f8f8;">
         <Row class="head">
             <Col :xs="3" class="icon">
-            <Icon type="ios-arrow-left"></Icon>
+            <div @click="window.history.go(-1)">   
+                <Icon type="ios-arrow-left"></Icon>
+            </div>
+            
             </Col>
             <Col :xs="21" class="wo_dan"> 我的订单
             </Col>
@@ -86,13 +89,13 @@
                     <img src="../../images/logos/未标题-1.jpg" />
                     </Col>
                     <Col :xs="18" class="logo_2">
-                    <dd class="xin_pany">{{service.providerName}}</dd>
-                    <dd class="xia_1">下单时间&nbsp;:{{order.createTime}}</dd>
-                    <dd class="money"> ￥{{service.unitPrice}}
-                        <span class="yuan">元</span>
-                        &nbsp;
-                        <span class="yi">×{{service.buyNum}}</span>
-                    </dd>
+                        <dd class="xin_pany">{{service.providerName}}</dd>
+                        <dd class="xia_1">下单时间&nbsp;:{{order.createTime}}</dd>
+                        <dd class="money"> ￥{{service.unitPrice}}
+                            <span class="yuan">元</span>
+                            &nbsp;
+                            <span class="yi">×{{service.buyNum}}</span>
+                        </dd>
                     </Col>
                 </Row>
                 <Row class="zongji" type="flex" justify="center" align="middle">
@@ -111,7 +114,7 @@
             </div>
         </div>
         </Col>
-    </div>
+    </Row>
 </template>
 
 <script>
