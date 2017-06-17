@@ -567,14 +567,14 @@ export default {
 
                 })).then(function (res) {
                         that.refCartNum();
-                        that.ajax.post("/xinda-api/cart/set", qs.stringify({
-                        id:id,
-                        num:that.goodsval
+                    //     that.ajax.post("/xinda-api/cart/set", qs.stringify({
+                    //     id:id,
+                    //     num:that.goodsval
                     
 
-                    })).then(function (res) {
+                    // })).then(function (res) {
                         that.$router.push({name: 'shopping'});
-                    })
+                    // })
                 })
 
             }

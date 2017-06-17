@@ -191,6 +191,8 @@ export default {
         ...mapActions(['setgoshop']),
         goshop(id) {
             this.setgoshop(id)
+            this.$Message.info('欢迎进入店铺');
+          
             console.log(id)
         },
         // changenum(){
@@ -501,8 +503,8 @@ export default {
 }
 //手机端
 .ph_shoplistcon {
-    border-bottom :1px solid gray;
-    margin-top: 40px;
+    border-bottom :1px solid #cfcfcf;
+    margin: 40px 2px 0 2px;
     padding-bottom: 20px;
 }
 .ph_shoplistimg {
@@ -519,10 +521,11 @@ export default {
 }
 .ph_listplace {
     font-size: 12px;
+    margin-top: 8px;
 }
 .ph_listnum {
     font-size: 8px;
-    margin-top: 30px;
+    margin-top: 15px;
 }
 .clored {
     color: red;

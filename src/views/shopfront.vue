@@ -81,11 +81,11 @@
                 </div>
             </Col>
             <Col :xs="24" :sm="0">
-                <Row type="flex" justify="center">
-                    <Col span="6"><div><img src="../images/logos/logo1.png"></div></Col>
+                <Row>
+                    <Col span="6" offset="9"><div class="images"><img src="../images/logos/logo1.png"></div></Col>
                 </Row>
-                <Row type="flex" justify="center">
-                    <Col span="10"><h3 class="ph_company">信达北京服务中心</h3></Col>
+                <Row>
+                    <Col span="8" offset="8"><h3 class="ph_company">信达北京服务中心</h3></Col>
                 </Row>
                 <Row type="flex" justify="center" class="ph_inform">
                     <Col span="22"><p>为给客户提供更加标准化的体验，信达北京服务中心采用自营模式，打造一站式企业服务平台， 帮助企业快速解决发展遇到的问题，提供工商注册，财税服务，知识产权，人事外包，证件办理等全方位解决方案， 为你的企业发展保驾护航。</p></Col>
@@ -344,8 +344,14 @@ export default {
         margin: 0 auto;
     }
 }
+.images{
+    text-align: center;
+    margin-top:10px;
+}
 .ph_company {
+    text-align: center;
     font-weight: 700;
+    margin-top:5px;
 }
 .ph_inform {
     margin-top: 20px;
@@ -365,7 +371,8 @@ export default {
 }
 .ph_line {
     padding: 10px 1px;
-    border-bottom: 1px solid gray;
+    border-bottom: 1px solid #cfcfcf;
+    margin:0 2px;
 }
 .ph_price {
     color: red;
