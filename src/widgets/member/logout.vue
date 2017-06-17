@@ -5,7 +5,8 @@
             <img src="/static/img/huiyuan.cad76df.png"/>
         </div>
         <div class="username">
-            <p>{{getuser}}</p>
+            <button class="reg">注册</button>
+            <button class="reg">登录</button>
         </div>
         <div class="myorder">
             <div class="mse">
@@ -20,9 +21,6 @@
                 <a>账户设置</a>
                 <span>＞</span>
             </div>
-        </div>
-        <div class="exit">
-            <button>退出登录</button>
         </div>
     </Col>
 </Row>
@@ -53,6 +51,14 @@ export default {
 .username{
     text-align: center;
     background: #f5f5f5;
+    margin-top: 20px;
+    .reg{
+        color: #fff;
+        width: 60px;
+        height: 22px;
+        background-color: #4eb5ba;
+        border-radius: 9%;
+    }
 }
 .myorder{
     height: 50px;
@@ -80,18 +86,6 @@ export default {
         span{
             margin-left: 57%;
         }
-    }
-}
-.exit{
-    height: 230px;
-    text-align: center;
-    button{
-        background: #169bd5;
-        width: 290px;
-        height: 35px;
-        color: #fff;
-        border-radius: 5px;
-        margin-top: 15px;
     }
 }
 </style>
