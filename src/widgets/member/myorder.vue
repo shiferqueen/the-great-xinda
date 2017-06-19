@@ -68,7 +68,10 @@
         <Col :xs="24" :sm="0" style="background-color:#f8f8f8;">
         <Row class="head">
             <Col :xs="3" class="icon">
-            <Icon type="ios-arrow-left"></Icon>
+            <div @click="window.history.go(-1)">   
+                <Icon type="ios-arrow-left"></Icon>
+            </div>
+            
             </Col>
             <Col :xs="21" class="wo_dan"> 我的订单
             </Col>

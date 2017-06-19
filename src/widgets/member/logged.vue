@@ -5,7 +5,7 @@
             <img src="/static/img/huiyuan.cad76df.png" />
         </div>
         <div class="username">
-            <p>小明明</p>
+            <p>{{getuser}}</p>
         </div>
         <div class="myorder">
             <div class="mse" @click="href(1)">
@@ -70,8 +70,6 @@ export default {
     }
 }
 </script>
-
-
 <style scoped lang="less">
 .logged {
     height: 150px;

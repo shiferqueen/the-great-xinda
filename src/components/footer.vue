@@ -70,7 +70,7 @@ export default {
 				if(this.getuser){
 					this.$router.push({path:'/member/logged'})
 				}else{
-					this.$router.push({path:'/action/login'})
+					this.$router.push({path:'/member/logout'})
 				}
 			}
 			//  if(index==4){
