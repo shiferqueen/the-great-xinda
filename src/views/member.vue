@@ -44,6 +44,11 @@ export default {
    computed:{
          ...mapGetters(['getuser'])
   },
+  created(){
+      if(!this.getuser){
+        this.$Message.warning('当前尚未登录');
+      }
+  }
 }
 </script>
 <style scoped lang="less">

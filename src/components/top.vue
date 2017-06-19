@@ -67,6 +67,7 @@
                             if (res.data.status == 1) {
                                 _this.user('');
                                 _this.refCartNum('');
+                                _this.$Message.success('退出成功');
                                 _this.$router.push({path:'/home'})
                             }
                         })

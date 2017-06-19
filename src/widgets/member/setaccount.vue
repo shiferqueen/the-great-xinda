@@ -194,7 +194,7 @@ import qs from 'qs'
 
 import provinces from '../../provinces.js'
 import Vue from 'vue'
-
+import {mapGetters} from 'vuex'
 export default {
     name: 'setaccount',
     data() {
@@ -323,9 +323,28 @@ export default {
                 _this.save = "修改",
                 _this.c = "#2494d4"
             }
+        },
+
+    },
+
+     computed: {
+        info() {
+            return {
+                province: this.selectedProvince,
+                city: this.selectedCity,
+                block: this.selectedBlock
+            }
         }
     },
+
     created() {
+        if(this.getuser){
+            console.log('hshshsh')
+            this.$Modal.warning({
+                title: '当前尚未登录',
+                content: '请先登陆后再查看'
+            });
+        }
         let _this = this;
         _this.ajax.post('/xinda-api/member/info').then(function (data) {
             console.log(data)
@@ -347,6 +366,9 @@ export default {
             }
         })
         this.selectedBlock = this.blocks[0]
+
+       
+        
     },
     watch: {
         selectedProvince(newVal, oldVal) {
@@ -394,15 +416,7 @@ export default {
             })
         }
     },
-    computed: {
-        info() {
-            return {
-                province: this.selectedProvince,
-                city: this.selectedCity,
-                block: this.selectedBlock
-            }
-        }
-    },
+   
 }
 </script>
 
