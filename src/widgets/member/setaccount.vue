@@ -84,7 +84,7 @@
         <Col :xs="24" :sm="0">
         <div class="">
             <Row class="head">
-                <Col :xs="3" class="icon">
+                <Col :xs="3" class="icon"  onclick="window.history.go(-1)">
                 <Icon type="ios-arrow-left"></Icon>
                 </Col>
                 <Col :xs="21" class="wo_dan"> 账户设置

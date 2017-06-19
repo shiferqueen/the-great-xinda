@@ -68,7 +68,7 @@
         <Col :xs="24" :sm="0" style="background-color:#f8f8f8;">
         <Row class="head">
             <Col :xs="3" class="icon">
-            <div @click="window.history.go(-1)">   
+            <div onclick="window.history.go(-1)">   
                 <Icon type="ios-arrow-left"></Icon>
             </div>
             
