@@ -1,10 +1,9 @@
 <template>
-    <div>
+    <div :style="bg">
         <Row>
             <Col :xs='0' :sm="24">
             <p>首页/购物车</p>
             </Col>
-    
         </Row>
     
         <Row class="headcol">
@@ -45,16 +44,13 @@
                         <Col :xs="0" :sm="{span:4,order:2}">￥ {{listdata.unitPrice}}</Col>
                         <Col :xs='{span:24,order:4}' :sm="{span:7,order:3}" class="inputCol">
                         <span v-if="!shows">购买数量：</span>
-                        <input type="button" @click="min(listdata.buyNum,listdata.serviceId,index)" value="-">
-                        <input @input='oninput(listdata.buyNum,listdata.serviceId)' type="number" min=1 v-model="listdata.buyNum">
-                        <input type="button" @click="add(listdata.buyNum,listdata.serviceId,index)" value="+">
+                        <input type="button" @click="min(listdata.buyNum,listdata.serviceId,index)" value="-"><input @input='oninput(listdata.buyNum,listdata.serviceId)' type="number" min=1 v-model="listdata.buyNum"><input type="button" @click="add(listdata.buyNum,listdata.serviceId,index)" value="+">
                         </Col>
                         <Col class="totalSum" :xs="{span:24,order:3}" :sm="{span:3,order:4}">￥ {{listdata.unitPrice*listdata.buyNum}}</Col>
                         <Col :xs='0' :sm="{span:2,order:5}"> &nbsp </Col>
                         <!--deleteone 删除当前-->
                         <Col :xs='{span:8,order:2}' :sm="{span:3,order:6}" class="conterrow-del">
-                        <div @click="deleteone(index,listdata.serviceId,listdata.totalPrice)">删除
-                            <span v-if="!shows">订单</span>
+                        <div @click="deleteone(index,listdata.serviceId,listdata.totalPrice)">删除<span v-if="!shows">订单</span>
                         </div>
                         </Col>
                         <Col :xs='{span:24,order:6}' :sm="{span:0,order:7}">
@@ -100,9 +96,7 @@
             </Row>
         </div>
         <div v-else class="elsecart" style="height:100%;">
-            <div v-if="!shows">
                 <img src="../../images/goods/cart.png">
-            </div>
             <p>购物车空空如也，去首页逛逛吧！</p>
             <a href="#/home">去首页</a>
         </div>
@@ -126,6 +120,17 @@ export default {
             trans: false,
             show: true,
             dizhi: {},
+            bgc: '',
+            screenWidth: document.body.clientWidth
+        }
+    },
+    mounted() {
+        const that = this;
+        window.onresize = () => {
+            return (() => {
+                window.screenWidth = document.body.clientWidth
+                that.screenWidth = window.screenWidth
+            })()
         }
     },
     computed: {
@@ -141,12 +146,25 @@ export default {
         },
         shows() {
             let that = this;
-            if (document.body.clientWidth < 768) {
+            if (that.screenWidth < 768) {
                 that.show = false
             } else {
                 that.show = true
             }
             return that.show
+        },
+        bg() {
+            if (this.screenWidth < 768) {
+                if (this.shoppingnum == 0) {
+                    // document.getElementsByClassName('elsecart')[0].style.height = window.screen.height + 'px';
+                    this.bgc = 'background:#f6f6f6;'
+                    return this.bgc
+                } else {
+                    // document.getElementsByClassName('elsecart')[0].style.height = ''
+                    this.bgc = 'background:#fff;'
+                    return this.bgc
+                }
+            }
         }
 
     },
@@ -174,7 +192,7 @@ export default {
                     var item = that.listdatas[index];
                     item.buyNum++;
                 } else {
-                    alert("添加购物车失败");
+                    that.$Message.error('添加购物车失败');
                 }
             })
         },
@@ -191,7 +209,7 @@ export default {
                     if (data.data.status == 1) {
                         that.listdatas[index].buyNum--;
                     } else {
-                        alert("添加购物车失败");
+                        that.$Message.error('添加购物车失败');
                     }
                     that.trans = false;
                 })
@@ -210,13 +228,13 @@ export default {
                     })).then(function (data) {
                         that.refCartNum();
                         that.shoppingnum--;
+                        that.$Message.success('删除成功');
                     })
                 }
             })
             setTimeout(function () {
                 if (document.body.clientWidth < 768 && that.shoppingnum == 0) {
                     document.getElementsByClassName('elsecart')[0].style.height = window.screen.height + 'px';
-                    document.body.style.background = '#f6f6f6';
                 }
             }, 0)
 
@@ -287,7 +305,7 @@ export default {
         that.ajax.post('/xinda-api/cart/list').then(function (data) {
             var data = data.data.data;
             that.listdatas = data;
-            if (document.body.clientWidth < 768) {
+            if (that.screenWidth < 768) {
                 setTimeout(function () {
                     let height = document.getElementsByClassName('conterrowimg');
                     for (let i = 0, l = height.length; i < l; i++) {
@@ -301,13 +319,11 @@ export default {
                 }, 0);
             }
             setTimeout(function () {
-                if (document.body.clientWidth < 768 && that.shoppingnum == 0) {
+                if (that.screenWidth < 768 && that.shoppingnum == 0) {
                     document.getElementsByClassName('elsecart')[0].style.height = window.screen.height + 'px';
-                } else if (that.shoppingnum == 0) {
-                    document.body.style.background = 'f6f6f6'
+                    document.getElementsByClassName('elsecart')[0].style.background = '#f6f6f6'
                 }
             }, 0);
-
             that.shoppingnum = data.length;
         });
 
@@ -516,7 +532,6 @@ div {
         padding-top: 30%;
         width: 100%;
         text-align: center;
-        background: #f6f6f6;
         div {
             width: 20%;
             margin: 0 auto;
@@ -567,6 +582,10 @@ div {
         }
     }
 }
+
+
+
+
 
 
 /*去除input 上下箭头*/

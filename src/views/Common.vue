@@ -2,7 +2,6 @@
   <div>
     <myhead></myhead>
     <router-view></router-view>
-    <myfoot></myfoot>
   </div>
 
   

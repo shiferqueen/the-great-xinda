@@ -86,9 +86,7 @@ export default {
         }
     },
     computed:{
-        
         shows(){
-            console.log(document.body.clientWidth)
             let that=this;
             if(document.body.clientWidth <= 768){
                 that.show=false

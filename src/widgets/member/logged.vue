@@ -1,42 +1,52 @@
 <template>
-    <Row>
-        <Col id="dd" style="background: #f5f5f5;" span="24">
-        <div class="logged">
-            <img src="/static/img/huiyuan.cad76df.png" />
-        </div>
-        <div class="username">
-            <p>{{getuser}}</p>
-        </div>
-        <div class="myorder">
-            <div class="mse" @click="href(1)">
-                <img src="../../images/logos/110-2.jpg" />
-                <a>我的订单</a>
-                <span>＞</span>
+    <div id="logged">
+        <Row>
+            <Col id="dd" span="24">
+            <div class="logged">
+                <img src="/static/img/huiyuan.cad76df.png" />
             </div>
-        </div>
-        <div class="myorder">
-            <div class="mse" @click="href(2)">
-                <img src="../../images/logos/1231.jpg" />
-                <a>账户设置</a>
-                <span>＞</span>
+            <div class="username">
+                <p>{{getuser}}</p>
             </div>
-        </div>
-        <div class="exit">
-            <button @click="logout">退出登录</button>
-        </div>
-        </Col>
-    </Row>
+            <div class="myorder">
+                <div class="mse" @click="href(1)">
+                    <img src="../../images/logos/110-2.jpg" />
+                    <a>我的订单</a>
+                    <span>＞</span>
+                </div>
+            </div>
+            <div class="myorder">
+                <div class="mse" @click="href(2)">
+                    <img src="../../images/logos/1231.jpg" />
+                    <a>账户设置</a>
+                    <span>＞</span>
+                </div>
+            </div>
+            <div class="exit">
+                <button @click="logout">退出登录</button>
+            </div>
+            </Col>
+        </Row>
+    </div>
 </template>
 
 <script>
 import {
-    mapActions
+    mapActions,
+    mapGetters
 } from 'vuex'
 export default {
-
-
+    data(){
+        return{
+            bgc:''
+        }
+    },
     created() {
-        document.body.style.background = '#f5f5f5';
+        setTimeout(function(){
+            document.getElementById('logged').style.height = window.screen.height + 'px';
+            document.getElementById('logged').style.background = '#f6f6f6';
+        },0)
+        
     },
     methods: {
         ...mapActions(['popups']),
@@ -55,18 +65,21 @@ export default {
                 }
             })
         },
-        href(i){
-            switch(i){
+        href(i) {
+            switch (i) {
                 case 1:
-                this.$router.push({ path: '/member/myorder' });
-                break;
-                
+                    this.$router.push({ path: '/member/myorder' });
+                    break;
+
                 case 2:
-                this.$router.push({ path: '/member/setaccount' });
-                break;
+                    this.$router.push({ path: '/member/setaccount' });
+                    break;
 
             }
         }
+    },
+    computed: {
+        ...mapGetters(['getuser'])
     }
 }
 </script>
