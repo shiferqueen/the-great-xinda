@@ -1,4 +1,5 @@
 <template>
+    <div>
     <Row style="position:inherit">
         <Col :xs="0" :sm="24">
         <div class="setaccount">
@@ -21,7 +22,6 @@
                         <input type="radio" name="radio" value="1">男</span>
                     <span class="radio-2">
                         <input type="radio" name="radio" value="2">女</span>
-                    <!--性别：<input type="radio" name="radio" value="1">-->
                 </div>
                 <div class="youxiang">
                     <span>邮箱：</span>
@@ -184,7 +184,9 @@
         </div>
         </Col>
         <!--移动端代码结束-->
+    
     </Row>
+    </div>
 </template>
 
 <script>
@@ -829,6 +831,6 @@ export default {
     color: #2693d4;
     text-align: center;
     margin-left: 130px;
-    cursor: pointer
-} // 修改密结束
+    cursor: pointer;
+}                        
 </style>

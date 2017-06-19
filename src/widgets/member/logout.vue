@@ -5,8 +5,8 @@
             <img src="/static/img/huiyuan.cad76df.png"/>
         </div>
         <div class="username">
-            <button class="reg">注册</button>
-            <button class="reg">登录</button>
+            <button class="reg" @click="href(1)">注册</button>
+            <button class="reg" @click="href(2)">登录</button>
         </div>
         <div class="myorder">
             <div class="mse">
@@ -35,6 +35,18 @@ export default {
   computed:{
          ...mapGetters(['getuser'])
   },
+  methods:{
+      href(i){
+          switch(i){
+              case 1:
+                this.$router.push({path:'/action/register'});
+                break;
+              case 2:
+                this.$router.push({path:'/action/login'});
+                break;
+          }
+      }
+  }
 }
 </script>
 <style scoped lang="less">

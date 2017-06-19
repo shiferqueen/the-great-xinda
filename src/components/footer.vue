@@ -68,9 +68,9 @@ export default {
 			this.home_index = index;
 			if(index == 4){
 				if(this.getuser){
-					this.$router.push({path:'/member'})
+					this.$router.push({path:'/member/logged'})
 				}else{
-					this.$router.push({path:'/action/login'})
+					this.$router.push({path:'/member/logout'})
 				}
 			}
 			//  if(index==4){

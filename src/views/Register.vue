@@ -346,7 +346,8 @@
 
     .activeclass {
         color: #2494d4;
-        padding: 20px 150px 0;
+        padding: 20px 0;
+        text-align: center;
     }
     
     .errorclass {
