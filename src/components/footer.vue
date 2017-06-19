@@ -60,7 +60,7 @@ export default {
 	name: 'myfoot',
 	data() {
 		return {
-			home_index: 1,
+			home_index:1,
 		}
 	},
 	methods: {
@@ -73,17 +73,6 @@ export default {
 					this.$router.push({path:'/member/logout'})
 				}
 			}
-			//  if(index==4){
-			//     if(this.getuser==''){
-			//        this.$router.push({
-			//               name: 'login'
-			//         });
-			//     }else{
-			//       this.$router.push({
-			//               name: 'member'
-			//         });
-			//     }
-			//  }
 		},
 	},
 	computed: {
