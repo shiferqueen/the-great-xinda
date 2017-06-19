@@ -1,5 +1,6 @@
 <template>
     <div>
+    <Row style="position:inherit">
         <Col :xs="0" :sm="24">
         <div class="setaccount">
             <div class="wangzhe">
@@ -18,9 +19,9 @@
                 <div class="sex">
                     <span>性别：</span>
                     <span class="radio-1">
-                        <input type="radio" name="radio" v-model="picked" value="1">男</span>
+                        <input type="radio" name="radio" value="1">男</span>
                     <span class="radio-2">
-                        <input type="radio" name="radio" v-model="picked" value="2">女</span>
+                        <input type="radio" name="radio" value="2">女</span>
                 </div>
                 <div class="youxiang">
                     <span>邮箱：</span>
@@ -183,6 +184,8 @@
         </div>
         </Col>
         <!--移动端代码结束-->
+    
+    </Row>
     </div>
 </template>
 
@@ -593,7 +596,7 @@ export default {
     .qw_31 {
         text-align: center;
         line-height: 60px;
-        font-size: 14px;
+        font-size: 12px;
     }
     .qw_32 {
         border: 1px solid #ccc;
@@ -828,7 +831,6 @@ export default {
     color: #2693d4;
     text-align: center;
     margin-left: 130px;
-    cursor: pointer
-} // 修改密结束
+    cursor: pointer;
+}                        
 </style>
-                                                                              

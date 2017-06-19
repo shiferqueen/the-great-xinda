@@ -15,16 +15,18 @@
         <span class="xh_12"><input type="radio" name="radio" checked/>差评</span>
     </li>
     <li class="score">
+            <Row style="position:inherit">
                 <i-col span="12">
                     评分：<Rate show-text v-model="valueText" style="margin-left:27px;"></Rate>
                 </i-col>
+            </Row>
     </li>
     <li class="feel">
         <span>感受：</span>
         <textarea class="ganshou"></textarea>
     </li>
     <div class="submit">
-        <a href="">提交</a>
+        <a href="javascript:(0);">提交</a>
     </div>
 </div>
 </template>
@@ -96,16 +98,17 @@
         width: 684px;
         height: 128px;
         float:left;
-        margin-top: 12%;
+        margin-top: -1%;
+
 
     }
     .feel{
         margin-top: -23%;
         margin-left: 32%;
         span{
-            margin-top: 14%;
+            margin-top: -1%;
             float: left;
-            margin-left: -45%;
+            margin-left: 0%;
         }
     }
     .submit{
@@ -120,7 +123,6 @@
             border-radius:6%;
             margin-left: 38%;
             color: #fff;
-            margin-top: 25%;
 
         }
     }

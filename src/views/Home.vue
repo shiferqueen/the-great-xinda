@@ -929,7 +929,7 @@ export default {
           }
           h4 {
             line-height: 300%;
-            font-size: 130%;
+            font-size: 15px;
             float: left;
             margin-left: 10%;
           }
