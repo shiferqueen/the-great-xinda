@@ -24,7 +24,8 @@ export default new Vuex.Store({
         //弹出框
         popups: {},
         //首页类型
-        indexnum:'',
+        indexnum: '',
+        bodywidth: document.body.clientWidth,
     },
     //突变集合---用来操作状态集合
     mutations: {
@@ -55,10 +56,13 @@ export default new Vuex.Store({
             state.popups = popup;
         },
         SETINDEXNUM(state, indexnum) {
-            state.indexnum =indexnum;
+            state.indexnum = indexnum;
         },
         CLOSEPOPUPS(state) {
             state.popups = {};
+        },
+        SETBODYWIDTH(state, width) {
+            state.bodywidth = width;
         }
     },
     //动作集合---用来操作突变集合的
@@ -117,6 +121,9 @@ export default new Vuex.Store({
         },
         closePopups({ commit }) {
             commit('CLOSEPOPUPS')
+        },
+        setbodywidth({ commit }, width) {
+            commit('SETBODYWIDTH', width)
         }
     },
     //显示集合
@@ -148,8 +155,11 @@ export default new Vuex.Store({
         getpopupstatus(state) {
             return state.popupstatus
         },
-         getindexnum(state) {
+        getindexnum(state) {
             return state.indexnum
+        },
+        getbodywidth(state) {
+            return state.bodywidth
         }
     }
 });

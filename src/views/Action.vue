@@ -1,7 +1,7 @@
 <template>
   <div>
     <router-view></router-view>
-    <myfoot v-if="show"></myfoot>
+    <myfoot v-if="show >=768"></myfoot>
   </div>
 </template>
 
@@ -12,20 +12,13 @@ export default {
   name: 'hello',
   data() {
     return {
+      show: document.body.scrollWidth
     }
   },
   components:{
     myfoot
   },
-  computed:{
-    show(){
-      if(document.body.scrollWidth<768){
-        return true;      
-      }else{
-        return false;
-      }
-    }
-  }
+
 }
 
 </script>

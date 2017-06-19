@@ -1,5 +1,5 @@
 <template>
-<Row>
+<Row id ='logged'>
     <Col id="dd" style="background: #f5f5f5;" span="24">
         <div class="logged">
             <img src="/static/img/huiyuan.cad76df.png"/>
@@ -30,7 +30,10 @@
 import {mapGetters} from 'vuex'
 export default {
   created(){
-      document.body.style.background ='#f5f5f5';
+      setTimeout(function(){
+            document.getElementById('logged').style.height = window.screen.height + 'px';
+            document.getElementById('logged').style.background = '#f6f6f6';
+    },0)
   },
   computed:{
          ...mapGetters(['getuser'])
@@ -66,10 +69,10 @@ export default {
     margin-top: 20px;
     .reg{
         color: #fff;
-        width: 60px;
-        height: 22px;
-        background-color: #4eb5ba;
-        border-radius: 9%;
+        background-color: #2d8cf0;
+        border-radius: 7px;
+        padding:4px 20px;
+        margin:0 15px 50px;
     }
 }
 .myorder{

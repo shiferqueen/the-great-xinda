@@ -1,25 +1,36 @@
 <template>
   <div id="app">
-    
     <top></top>
     <popups></popups>
     <router-view></router-view>
     <bottom></bottom>
+    <myfoot v-if="show < 768"></myfoot>
   </div>
 </template>
 
 <script>
+import myfoot from './components/footer';
 import top from './components/top'
 import bottom from './components/bottom'
 import popups from '@/components/popups'
+import { mapActions } from 'vuex'
+import vue from 'vue'
+
 export default {
   name: 'app',
   components: {
     top,
     bottom,
-    popups
+    popups,
+    myfoot
+  },
+  data(){
+    return {
+      show:document.body.scrollWidth
+    }
   }
 }
+
 </script>
 
 

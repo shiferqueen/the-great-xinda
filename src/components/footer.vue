@@ -23,25 +23,25 @@
 		<Col span="6" :xs="{ span: 24}" :sm="{ span: 0}">
 		<div class="index_choice">
 			<div class="fl in_choice">
-				<a href="#/home" @click="home(1)" :class="{blue:home_index==1}">
+				<a href="#/home" @click="home(1)" :class="{blue:home_index.num==1}">
 					<Icon type="home" class="home"></Icon>
 					<p class="choice">首页</p>
 				</a>
 			</div>
 			<div class="fl in_choice">
-				<a href="#/shoplist" @click="home(2)" :class="{blue:home_index==2}">
+				<a href="#/shoplist" @click="home(2)" :class="{blue:home_index.num==2}">
 					<Icon type="ios-home" class="home"></Icon>
 					<p class="choice">店铺</p>
 				</a>
 			</div>
 			<div class="fl in_choice">
-				<a href="#/shopping" @click="home(3)" :class="{blue:home_index==3}">
+				<a href="#/shopping" @click="home(3)" :class="{blue:home_index.num==3}">
 					<Icon type="android-cart" class="home"></Icon>
 					<p class="choice">购物车</p>
 				</a>
 			</div>
 			<div class="fl in_choice">
-				<a @click="home(4)" :class="{blue:home_index==4}">
+				<a @click="home(4)" :class="{blue:home_index.num==4}">
 					<Icon type="android-person" class="home"></Icon>
 					<p class="choice">我的</p>
 				</a>
@@ -60,12 +60,14 @@ export default {
 	name: 'myfoot',
 	data() {
 		return {
-			home_index:1,
+			home_index: {
+				num:1
+			},
 		}
 	},
 	methods: {
 		home(index) {
-			this.home_index = index;
+			this.$set(this.home_index,'num',index)
 			if(index == 4){
 				if(this.getuser){
 					this.$router.push({path:'/member/logged'})
@@ -102,9 +104,6 @@ export default {
 	float: right;
 }
 
-.blue {
-	color: #2693d4!important;
-}
 
 .tail {
 	width: 100%;
@@ -160,6 +159,9 @@ export default {
 	.in_choice {
 		width: 25%;
 		text-align: center;
+		.blue {
+			color: #2693d4;
+		}
 		a {
 			font-size: .8em;
 			padding:.2em 0;
