@@ -58,6 +58,7 @@ export default {
                 ok() {
                     _this.ajax.post("/xinda-api/sso/logout").then(function (res) { //退出登录信息
                         if (res.data.status == 1) {
+                            sessionStorage.clear();
                             _this.$Message.success('退出登录成功');
                             _this.$router.push({ path: '/home' })
                         }
