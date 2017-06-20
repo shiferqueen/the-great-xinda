@@ -68,7 +68,9 @@
                                 _this.user('');
                                 _this.refCartNum('');
                                 _this.$Message.success('退出成功');
+                                sessionStorage.clear();
                                 _this.$router.push({path:'/home'})
+                                
                             }
                         })
                     }

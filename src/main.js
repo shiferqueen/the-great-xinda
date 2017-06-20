@@ -10,7 +10,7 @@ import iView from 'iview'
 import 'iview/dist/styles/iview.css'
 
 //拼音 
-import pinyin from 'pinyin'
+
 
 Vue.config.productionTip = false
 Vue.use(iView)

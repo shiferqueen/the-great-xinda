@@ -131,12 +131,24 @@ export default {
             bn: ''
         }
     },
+    computed:{
+        ...mapGetters(['getuser'])
+    },
     created() {
-        this.myorderlist();
+        console.log(sessionStorage.getItem("login"))
+        if(sessionStorage.getItem("login")){
+            sessionStorage.setItem('url','')
+            this.myorderlist();
+        }else{
+            this.$Message.warning('当前未登录，自动跳转到登录页面');
+            sessionStorage.setItem('url','member')
+            this.$router.push({path:'/action/login'}) 
+        }
+
         // this.mypanylist();
     },
     methods: {
-        ...mapActions(['refCartNum', 'popups']),
+        ...mapActions(['refCartNum', 'popups','setmyurl']),
         myorderlist() {
             let _this = this;
             this.ajax.post('/xinda-api/business-order/grid', qs.stringify({//获取业务订单

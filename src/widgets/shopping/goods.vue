@@ -260,8 +260,6 @@ export default {
     },
 
     created() {
-        var pinyin = require("pinyin");
-        console.log(pinyin('中文'))
         let that = this;
         that.ajax.post('/xinda-api/cart/list').then(function (data) {
             var data = data.data.data;

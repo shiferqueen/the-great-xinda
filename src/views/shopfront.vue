@@ -93,22 +93,24 @@
                 <Row>
                     <Col><p class="ph_allservise">所有服务</p></Col>
                 </Row>
-                <div v-for="(liscon,index) in listpage_ajax_new">
-                    <a :href="'#/secondproduct/'+liscon.id" @click="storeid(liscon.id)">
-                    <Row class="ph_line">
-                        <Col span="5" offset="1" class="ph_providerimg"><img :src="'http://115.182.107.203:8088/xinda/pic' + liscon.providerImg"></Col>
-                        <Col span="17" offset="1">
-                            <Row class="ph_fz16">{{liscon.serviceName}}</Row>
-                            <Row>{{liscon.serviceInfo}}</Row>
-                            <!--<Row>{{liscon.regionName}} {{'&nbsp &nbsp &nbsp'}} {{liscon.marketPrice}}</Row>-->
-                            <Row class="ph_mt10">
-                                <Col span="14" class="ph_fz8">{{liscon.regionName}}</Col>
-                                <Col span="8" class="ph_price ph_fz8">￥{{liscon.price}}</Col>
-                                <Col span="2" class="ph_fz8">元</Col>
-                            </Row>                        
-                        </Col>
-                    </Row>
-                    </a>
+                <div style="margin-bottom:20%">
+                    <div v-for="(liscon,index) in listpage_ajax_new">
+                        <a :href="'#/secondproduct/'+liscon.id" @click="storeid(liscon.id)">
+                        <Row class="ph_line">
+                            <Col span="5" offset="1" class="ph_providerimg"><img :src="'http://115.182.107.203:8088/xinda/pic' + liscon.providerImg"></Col>
+                            <Col span="17" offset="1">
+                                <Row class="ph_fz16">{{liscon.serviceName}}</Row>
+                                <Row>{{liscon.serviceInfo}}</Row>
+                                <!--<Row>{{liscon.regionName}} {{'&nbsp &nbsp &nbsp'}} {{liscon.marketPrice}}</Row>-->
+                                <Row class="ph_mt10">
+                                    <Col span="14" class="ph_fz8">{{liscon.regionName}}</Col>
+                                    <Col span="8" class="ph_price ph_fz8">￥{{liscon.price}}</Col>
+                                    <Col span="2" class="ph_fz8">元</Col>
+                                </Row>                        
+                            </Col>
+                        </Row>
+                        </a>
+                    </div>
                 </div>
             </Col>
         </Row>

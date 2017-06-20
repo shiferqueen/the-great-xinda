@@ -26,6 +26,7 @@ export default new Vuex.Store({
         //首页类型
         indexnum: '',
         bodywidth: document.body.clientWidth,
+        myurl: ''
     },
     //突变集合---用来操作状态集合
     mutations: {
@@ -63,18 +64,21 @@ export default new Vuex.Store({
         },
         SETBODYWIDTH(state, width) {
             state.bodywidth = width;
+        },
+        SETMYURL(state,url) {
+            state.myurl = url;
         }
     },
     //动作集合---用来操作突变集合的
     actions: {
         refCartNum({ commit }) {
-            axios.post("/xinda-api/cart/cart-num").then(function(res) {
+            axios.post("/xinda-api/cart/cart-num").then(function (res) {
                 var num = res.data.data.cartNum;
                 commit('SETCARTNUM', num);
             })
         },
         user({ commit }, come_user) {
-            axios.post("/xinda-api/sso/login-info").then(function(res) {
+            axios.post("/xinda-api/sso/login-info").then(function (res) {
                 if (res.data.data != null) {
                     var num = res.data.data.name;
                     commit('SETUSER', num);
@@ -106,7 +110,7 @@ export default new Vuex.Store({
         popups({ commit }, popup) {
             popup.status = true;
             if (popup.ok) {
-                popup.confirm = function() {
+                popup.confirm = function () {
                     popup.ok();
                     commit('CLOSEPOPUPS');
                 }
@@ -124,6 +128,9 @@ export default new Vuex.Store({
         },
         setbodywidth({ commit }, width) {
             commit('SETBODYWIDTH', width)
+        },
+        setmyurl({ commit }, url) {
+            commit('SETMYURL', url)
         }
     },
     //显示集合
@@ -160,6 +167,9 @@ export default new Vuex.Store({
         },
         getbodywidth(state) {
             return state.bodywidth
+        },
+        getmyurl(state){
+            return state.myurl
         }
     }
 });
