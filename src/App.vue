@@ -14,7 +14,6 @@ import top from './components/top'
 import bottom from './components/bottom'
 import popups from '@/components/popups'
 import { mapActions,mapGetters} from 'vuex'
-import vue from 'vue'
 
 export default {
   name: 'app',
@@ -26,7 +25,6 @@ export default {
   },
   data() {
     return {
-      show: document.body.scrollWidth,
     }
   },
   methods:{
@@ -52,6 +50,7 @@ export default {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  min-width: 320px;
   /*text-align: center;*/
   color: #2c3e50;
   /*margin-top: 60px;*/

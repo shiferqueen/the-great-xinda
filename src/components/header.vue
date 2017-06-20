@@ -176,6 +176,7 @@
 </template>
 
 <script>
+import pinyin from 'pinyin'
     export default {
         name: 'myhead',
         data() {
@@ -207,16 +208,28 @@
         },
         computed: {
             searchData: function() {
+
                 var search = this.search;
                 let that = this;
+                
                 if (search == '') {
                     that.myData = []
                 } else {
                     return that.myData.filter(function(product) {
+                         var pin = () =>{
+                                var reg = /[A-z]/;
+                                return reg.test(search)
+                            };
                         if (that.serch_idnex == 1) {
-                            return String(product.serviceName).toLowerCase().indexOf(search) != -1
+                            var zimu = () =>{
+                                return String(pinyin(product.serviceName,{style: pinyin.STYLE_FIRST_LETTER})).split(',').join('').toLowerCase().indexOf(search) != -1
+                            }
+                            return pin()? zimu() : String(product.serviceName).toLowerCase().indexOf(search) != -1
                         } else {
-                            return String(product.providerName).toLowerCase().indexOf(search) != -1
+                            var zimua = () =>{
+                                return String(pinyin(product.providerName,{style: pinyin.STYLE_FIRST_LETTER})).split(',').join('').toLowerCase().indexOf(search) != -1
+                            }
+                            return pin()?zimua() :String(product.providerName).toLowerCase().indexOf(search) != -1
                         }
                     })
                 }

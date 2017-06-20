@@ -92,6 +92,7 @@ export default {
 }
 @media screen and (max-width:400px) {
 	.index_choice {
+		min-width: 320px;
 		font-size: 35px;
 	}
 }
@@ -103,6 +104,7 @@ export default {
 .fr {
 	float: right;
 }
+
 
 
 .tail {

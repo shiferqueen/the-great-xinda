@@ -224,7 +224,6 @@ export default {
                                 that.ajax.post('/xinda-api/pay/weixin-js-pay', qs.stringify({
                                     businessNo: data.data.data
                                 })).then(function (data) {
-                                    console.log(data)
                                     that.$Notice.warning({
                                         desc: '请在微信端打开'
                                     });
@@ -261,6 +260,8 @@ export default {
     },
 
     created() {
+        var pinyin = require("pinyin");
+        console.log(pinyin('中文'))
         let that = this;
         that.ajax.post('/xinda-api/cart/list').then(function (data) {
             var data = data.data.data;
@@ -283,7 +284,6 @@ export default {
     },
     watch:{
         getbodywidth(val){
-            console.log(val)
             if (val < 768) {
                 setTimeout(function () {
                     let height = document.getElementsByClassName('conterrowimg');
