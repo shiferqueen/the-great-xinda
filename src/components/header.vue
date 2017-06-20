@@ -222,12 +222,14 @@ import pinyin from 'pinyin'
                             };
                         if (that.serch_idnex == 1) {
                             var zimu = () =>{
-                                return String(pinyin(product.serviceName,{style: pinyin.STYLE_FIRST_LETTER})).split(',').join('').toLowerCase().indexOf(search) != -1
+                                var quanpin = String(pinyin(product.serviceName,{style: pinyin.STYLE_NORMAL})).split(',').join('').toLowerCase().indexOf(String(search).toLowerCase()) != -1
+                                return quanpin?true : String(pinyin(product.serviceName,{style: pinyin.STYLE_FIRST_LETTER})).split(',').join('').toLowerCase().indexOf(String(search).toLowerCase()) != -1
                             }
                             return pin()? zimu() : String(product.serviceName).toLowerCase().indexOf(search) != -1
                         } else {
                             var zimua = () =>{
-                                return String(pinyin(product.providerName,{style: pinyin.STYLE_FIRST_LETTER})).split(',').join('').toLowerCase().indexOf(search) != -1
+                                var quanpin = String(pinyin(product.providerName,{style: pinyin.STYLE_NORMAL})).split(',').join('').toLowerCase().indexOf(String(search).toLowerCase()) != -1
+                                return quanpin? true : String(pinyin(product.providerName,{style: pinyin.STYLE_FIRST_LETTER})).split(',').join('').toLowerCase().indexOf(String(search).toLowerCase()) != -1
                             }
                             return pin()?zimua() :String(product.providerName).toLowerCase().indexOf(search) != -1
                         }
