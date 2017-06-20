@@ -125,6 +125,7 @@
     import qs from 'qs'
     import provinces from '../provinces.js'
     import Vue from 'vue'
+   
     export default {
         name: 'register',
         data() {
@@ -267,6 +268,10 @@
             }
         },
         created() {
+            console.log()
+
+
+
             // 数据初始化,默认选中北京市,默认选中第一个;北京市数据为总数据的前18个
             let beijing = this.provinces.slice(0, 19)
             this.cities = beijing.filter(item => {

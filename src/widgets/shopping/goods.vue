@@ -1,5 +1,5 @@
 <template>
-    <div :style="bg">
+    <div>
         <Row>
             <Col :xs='0' :sm="24">
             <p>首页/购物车</p>
@@ -14,7 +14,7 @@
             <span>{{shoppingnum}}</span> 件商品
             </Col>
         </Row>
-        <Row v-if="shows" class="headrow">
+        <Row v-if="getbodywidth >=768" class="headrow">
             <Col class="agnlf" offset='1' span="2">公司</Col>
             <Col span="4">服务商品</Col>
             <Col span="4">单价</Col>
@@ -23,11 +23,11 @@
             <Col span="2">&nbsp</Col>
             <Col span="2">操作</Col>
         </Row>
-        <div v-if="shoppingnum!=0">
+        <div v-if="getCartNum!=0">
             <div v-for='(listdata,index) in listdatas'>
                 <Row class="storerow">
                     <Col class='agnlf' :xs='24' :sm="{offset:1, span:23}">
-                    <span v-if="shows">店铺：</span>{{listdata.providerName}}</Col>
+                    <span v-if="getbodywidth >= 768">店铺：</span>{{listdata.providerName}}</Col>
                 </Row>
     
                 <Row class="conterrow" type="flex" align="middle">
@@ -43,14 +43,14 @@
                         </Col>
                         <Col :xs="0" :sm="{span:4,order:2}">￥ {{listdata.unitPrice}}</Col>
                         <Col :xs='{span:24,order:4}' :sm="{span:7,order:3}" class="inputCol">
-                        <span v-if="!shows">购买数量：</span>
+                        <span v-if="getbodywidth < 768 ">购买数量：</span>
                         <input type="button" @click="min(listdata.buyNum,listdata.serviceId,index)" value="-"><input @input='oninput(listdata.buyNum,listdata.serviceId)' type="number" min=1 v-model="listdata.buyNum"><input type="button" @click="add(listdata.buyNum,listdata.serviceId,index)" value="+">
                         </Col>
                         <Col class="totalSum" :xs="{span:24,order:3}" :sm="{span:3,order:4}">￥ {{listdata.unitPrice*listdata.buyNum}}</Col>
                         <Col :xs='0' :sm="{span:2,order:5}"> &nbsp </Col>
                         <!--deleteone 删除当前-->
                         <Col :xs='{span:8,order:2}' :sm="{span:3,order:6}" class="conterrow-del">
-                        <div @click="deleteone(index,listdata.serviceId,listdata.totalPrice)">删除<span v-if="!shows">订单</span>
+                        <div @click="deleteone(index,listdata.serviceId,listdata.totalPrice)">删除<span v-if="getbodywidth < 768">订单</span>
                         </div>
                         </Col>
                         <Col :xs='{span:24,order:6}' :sm="{span:0,order:7}">
@@ -96,7 +96,7 @@
             </Row>
         </div>
         <div v-else class="elsecart" style="height:100%;">
-                <img src="../../images/goods/cart.png">
+            <img src="../../images/goods/cart.png">
             <p>购物车空空如也，去首页逛逛吧！</p>
             <a href="#/home">去首页</a>
         </div>
@@ -120,52 +120,18 @@ export default {
             trans: false,
             show: true,
             dizhi: {},
-            bgc: '',
-            screenWidth: document.body.clientWidth
-        }
-    },
-    mounted() {
-        const that = this;
-        window.onresize = () => {
-            return (() => {
-                window.screenWidth = document.body.clientWidth
-                that.screenWidth = window.screenWidth
-            })()
         }
     },
     computed: {
-        ...mapGetters(['getpopupstatus']),
+        ...mapGetters(['getpopupstatus', 'getbodywidth','getCartNum']),
         univalence() {
             var total = 0;
             for (var i = 0; i < this.listdatas.length; i++) {
                 var item = this.listdatas[i];
                 total += item.unitPrice * item.buyNum;
             }
-            // console.log('total========', total);
             return total;
         },
-        shows() {
-            let that = this;
-            if (that.screenWidth < 768) {
-                that.show = false
-            } else {
-                that.show = true
-            }
-            return that.show
-        },
-        bg() {
-            if (this.screenWidth < 768) {
-                if (this.shoppingnum == 0) {
-                    // document.getElementsByClassName('elsecart')[0].style.height = window.screen.height + 'px';
-                    this.bgc = 'background:#f6f6f6;'
-                    return this.bgc
-                } else {
-                    // document.getElementsByClassName('elsecart')[0].style.height = ''
-                    this.bgc = 'background:#fff;'
-                    return this.bgc
-                }
-            }
-        }
 
     },
     methods: {
@@ -232,11 +198,6 @@ export default {
                     })
                 }
             })
-            setTimeout(function () {
-                if (document.body.clientWidth < 768 && that.shoppingnum == 0) {
-                    document.getElementsByClassName('elsecart')[0].style.height = window.screen.height + 'px';
-                }
-            }, 0)
 
         },
 
@@ -292,11 +253,10 @@ export default {
                 id: id
             })).then(function (data) {
                 that.$set(that.dizhi, id, data.data.data.regionName)
-                // that.dizhi[id] =  data.data.data.regionName;
-                // that.listdata;
             })
             return that.dizhi[id];
         },
+
 
     },
 
@@ -305,30 +265,40 @@ export default {
         that.ajax.post('/xinda-api/cart/list').then(function (data) {
             var data = data.data.data;
             that.listdatas = data;
-            if (that.screenWidth < 768) {
+            if (that.getbodywidth < 768) {
                 setTimeout(function () {
                     let height = document.getElementsByClassName('conterrowimg');
                     for (let i = 0, l = height.length; i < l; i++) {
                         height[i].style.height = height[i].offsetWidth - 2 + 'px';
                     }
-                    var heights = document.getElementsByClassName('index_choice')[0].scrollHeight;
-                    if (document.getElementsByClassName('weixininput').length != 0) {
-                        document.getElementsByClassName('weixininput')[0].style.bottom = heights + 'px';
-                    }
-
                 }, 0);
-            }
-            setTimeout(function () {
-                if (that.screenWidth < 768 && that.shoppingnum == 0) {
-                    document.getElementsByClassName('elsecart')[0].style.height = window.screen.height + 'px';
-                    document.getElementsByClassName('elsecart')[0].style.background = '#f6f6f6'
+            }else{
+                let height = document.getElementsByClassName('conterrowimg');
+                    for (let i = 0, l = height.length; i < l; i++) {
+                        height[i].style.height = '';
                 }
-            }, 0);
+            }
             that.shoppingnum = data.length;
         });
-
-
     },
+    watch:{
+        getbodywidth(val){
+            console.log(val)
+            if (val < 768) {
+                setTimeout(function () {
+                    let height = document.getElementsByClassName('conterrowimg');
+                    for (let i = 0, l = height.length; i < l; i++) {
+                        height[i].style.height = height[i].offsetWidth - 2 + 'px';
+                    }
+                }, 0);
+            }else{
+                 let height = document.getElementsByClassName('conterrowimg');
+                    for (let i = 0, l = height.length; i < l; i++) {
+                        height[i].style.height = '';
+                }
+            }
+        },
+    }
 
 }
 
@@ -384,6 +354,7 @@ div {
         }
     }
     .inputCol {
+        margin-bottom:6px;
         input:nth-child(2),
         input:nth-child(4) {
             width: 10%;
@@ -417,8 +388,15 @@ div {
         overflow: hidden;
         text-overflow: ellipsis;
     }
+    .weixininput{
+        bottom:62.38px;
+    }
 }
-
+@media screen and (max-width:400px) {
+	.weixininput{
+        bottom:54.58px;
+    }
+}
 @media screen and (min-width: 768px) {
     .headcol {
         margin-top: 20px;
@@ -529,15 +507,11 @@ div {
 //购物车数量为0
 @media screen and (max-width: 768px) {
     .elsecart {
-        padding-top: 30%;
-        width: 100%;
+        width: 80%;
+        margin: 0 auto;
         text-align: center;
-        div {
-            width: 20%;
-            margin: 0 auto;
-            img {
-                width: 100%;
-            }
+        img {
+            width: 100%;
         }
         p {
             margin-top: 2%;
@@ -556,19 +530,10 @@ div {
 @media screen and (min-width: 768px) {
 
     .elsecart {
-        padding-top: 8%;
-        width: 100%;
+        width: 80%;
+        margin: 0 auto;
         text-align: center;
-
-        div {
-            width: 20%;
-            margin: 0 auto;
-            img {
-                width: 100%;
-            }
-        }
         p {
-            margin-top: 2%;
             color: #4eb5ba;
             margin-bottom: 2%;
             font-weight: 700;
@@ -582,6 +547,7 @@ div {
         }
     }
 }
+
 
 
 

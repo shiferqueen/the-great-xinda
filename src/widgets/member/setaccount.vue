@@ -19,9 +19,9 @@
                 <div class="sex">
                     <span>性别：</span>
                     <span class="radio-1">
-                        <input type="radio" name="radio" value="1">男</span>
+                        <input type="radio" name="radios" value="1" v-model="picked">男</span>
                     <span class="radio-2">
-                        <input type="radio" name="radio" value="2">女</span>
+                        <input type="radio" name="radios" value="2" v-model="picked">女</span>
                 </div>
                 <div class="youxiang">
                     <span>邮箱：</span>
@@ -47,7 +47,7 @@
                 </div>
                 <div class="save">
                     <p :style="{color:c}">{{one}}</p>
-                    <a href="javascript:void(0)" @cdivck="saveOne()" v-text="save1">{{save1}}</a>
+                    <a  @click="saveOne()" v-text="save1">{{save1}}</a>
     
                 </div>
             </div>
@@ -112,9 +112,9 @@
                     <Col class="qw_9" :xs="6">性&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别：</Col>
                     <Col class="qw_10" :xs="18">
                     <span class="">
-                        <input type="radio" name="radio" v-model="picked" value="1">男</span>
+                        <input type="radio" name="radiox" v-model="picked" value="1">男</span>
                     <span class="radio-2">
-                        <input type="radio" name="radio" v-model="picked" value="2" checked/>女</span>
+                        <input type="radio" name="radiox" v-model="picked" value="2" checked/>女</span>
                     </Col>
                 </Row>
                 <Row class="qw_11">
@@ -145,7 +145,7 @@
                 </Row>
                 <Row>
                     <Col :xs="24" class="qw_20">
-                    <a href="javascript:void(0)" @click="saveOne()" v-text="save1">{{save1}}</a>
+                        <a @click="saveOne()" v-text="save1">{{save1}}</a>
                     </Col>
                 </Row>
             </ul>
@@ -178,7 +178,9 @@
                     <Col :xs="24" :style="{color:c,fontSize:f}">{{msg}}</Col>
                 </Row>
                 <Row class="qw_40">
-                    <Col :xs="24" class="qw_41" @click="con()" v-text="save">{{save}}</Col>
+                    <Col span="24" class="qw_41">
+                        <div @click="con()">{{save}}</div>
+                    </Col>
                 </Row>
             </ul>
         </div>
@@ -194,7 +196,7 @@ import qs from 'qs'
 
 import provinces from '../../provinces.js'
 import Vue from 'vue'
-import {mapGetters} from 'vuex'
+import {mapGetters,mapActions} from 'vuex'
 export default {
     name: 'setaccount',
     data() {
@@ -233,6 +235,7 @@ export default {
 
     },
     methods: {
+        ...mapActions(['user']),
         set: function () {
             this.zhang = true,
                 this.password = false
@@ -260,7 +263,7 @@ export default {
             this.contains_uppercase = /[A-Z]/.test(this.newword);
 
         },
-        saveOne: function () {
+        saveOne() {
             let _this = this;
             if (_this.uesrname == '') {
                 _this.$Message.warning('请填写姓名');
@@ -275,12 +278,12 @@ export default {
                     gender: _this.picked,
                     email: _this.com,
                     regionId: '110106',
-
                 })).then(function (data) {  
                     _this.status = data.data.status;
                     if (_this.status == 1) {
                         _this.$Message.success('保存成功');
-                        _this.c = "#2494d4"
+                        _this.c = "#2494d4";
+                        _this.user(_this.uesrname)
                     } else if (_this.status == -1) {
                         _this.$Message.error('保存失败');
                     }
@@ -300,7 +303,6 @@ export default {
         },
         con: function () {
             let _this = this;
-
             if (_this.oldword == '') {
                 _this.$Message.warning('请输入旧密码');
                 
@@ -317,11 +319,13 @@ export default {
                     oldPwd: _this.md5(_this.oldword),
                     newPwd: _this.md5(_this.newword)
                 })).then(function (data) {
-                    // console.log(data)
-                    _this.msg = data.data.msg;
+                    _this.$Message.success('修改成功');
                 });
-                _this.save = "修改",
-                _this.c = "#2494d4"
+                _this.save = "修改";
+                _this.c = "#2494d4";
+                _this.oldword = '';
+                _this.newword = '';
+                _this.newtext = '';
             }
         },
 
@@ -339,7 +343,6 @@ export default {
 
     created() {
         if(this.getuser){
-            console.log('hshshsh')
             this.$Modal.warning({
                 title: '当前尚未登录',
                 content: '请先登陆后再查看'
@@ -347,7 +350,6 @@ export default {
         }
         let _this = this;
         _this.ajax.post('/xinda-api/member/info').then(function (data) {
-            console.log(data)
             _this.picked = data.data.data.gender;
             _this.uesrname = data.data.data.name;
             _this.com = data.data.data.email
@@ -630,7 +632,6 @@ export default {
     .qw_41 {
         width: 60px;
         height: 27px;
-        display: inline-block;
         border: 1px solid #2693d4;
         border-radius: 8%;
         line-height: 28px;

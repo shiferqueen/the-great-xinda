@@ -4,7 +4,7 @@
     <popups></popups>
     <router-view></router-view>
     <bottom></bottom>
-    <myfoot v-if="show < 768"></myfoot>
+    <myfoot v-if="getbodywidth < 768"></myfoot>
   </div>
 </template>
 
@@ -13,7 +13,7 @@ import myfoot from './components/footer';
 import top from './components/top'
 import bottom from './components/bottom'
 import popups from '@/components/popups'
-import { mapActions } from 'vuex'
+import { mapActions,mapGetters} from 'vuex'
 import vue from 'vue'
 
 export default {
@@ -24,9 +24,22 @@ export default {
     popups,
     myfoot
   },
-  data(){
+  data() {
     return {
-      show:document.body.scrollWidth
+      show: document.body.scrollWidth,
+    }
+  },
+  methods:{
+    ...mapActions(['setbodywidth'])
+  },
+  computed:{
+    ...mapGetters(['getbodywidth'])
+  },
+  mounted() {
+    window.onresize = () => {
+      return (() => {
+        this.setbodywidth(document.body.scrollWidth);
+      })()
     }
   }
 }

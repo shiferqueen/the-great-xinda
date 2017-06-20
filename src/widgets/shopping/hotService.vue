@@ -1,5 +1,5 @@
 <template>
-    <div v-if="shows">
+    <div v-if="getbodywidth >=768">
         <Row class="headcol">
             <Col span='23' offset="1">热门服务</Col>
         </Row>
@@ -78,23 +78,11 @@
     </div>
 </template>
 <script>
+import {mapGetters} from 'vuex'
 export default {
     name: 'hotService',
-    data(){
-        return{
-            show:true
-        }
-    },
     computed:{
-        shows(){
-            let that=this;
-            if(document.body.clientWidth <= 768){
-                that.show=false
-            }else{
-                 that.show=true
-            }
-            return that.show
-        }
+        ...mapGetters(['getbodywidth'])
     }
 }
 </script>
