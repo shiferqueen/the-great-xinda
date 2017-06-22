@@ -578,7 +578,6 @@ export default {
                 })
 
             }
-             
 
         },
     }

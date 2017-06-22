@@ -9,6 +9,9 @@ import md5 from 'md5'
 import iView from 'iview'
 import 'iview/dist/styles/iview.css'
 
+//拼音 
+
+
 Vue.config.productionTip = false
 Vue.use(iView)
 
@@ -27,7 +30,12 @@ new Vue({
     components: { App }
 })
 
-
+// var pinyin = require("node-pinyin");
+ 
+// console.log(pinyin("重心"));    // [ [ 'zhòng' ], [ 'xīn' ] ] 
+// console.log(pinyin("重心", {
+//   heteronym: true               // 启用多音字模式 
+// }));              
 
 //时间格式
 Date.prototype.format = function(fmt) {

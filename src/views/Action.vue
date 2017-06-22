@@ -1,12 +1,13 @@
 <template>
   <div>
     <router-view></router-view>
-    <myfoot v-if="show"></myfoot>
+    <myfoot v-if="getbodywidth >=768"></myfoot>
   </div>
 </template>
 
 <script>
   import myfoot from '../components/footer';
+  import {mapGetters} from 'vuex'
 
 export default {
   name: 'hello',
@@ -18,13 +19,7 @@ export default {
     myfoot
   },
   computed:{
-    show(){
-      if(document.body.scrollWidth<768){
-        return true;      
-      }else{
-        return false;
-      }
-    }
+    ...mapGetters(['getbodywidth'])
   }
 }
 

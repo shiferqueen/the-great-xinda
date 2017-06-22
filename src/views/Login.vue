@@ -67,10 +67,12 @@
                 c:'#f00'
             }
         },
-
+        computed:{
+             ...mapGetters(['getCartNum','getmyurl']),
+        },
         methods: {
             ...mapActions(["user", "refCartNum"]),
-            ...mapGetters(['getCartNum']),
+           
 
             location() {
                 this.$router.push({
@@ -88,7 +90,6 @@
             },
             //焦点
             jiaodian(i) {
-
                 let _this = this;
                 switch (i) {
                     case 1:
@@ -114,9 +115,18 @@
                                     _this.refCartNum();
                                     _this.c = "#2494d4";
                                     _this.$Message.success('登录成功');
-                                    setTimeout(function () {
-                                        _this.$router.push({ path: '/home' });
-                                    }, 500);
+                                    sessionStorage.setItem('login','true')
+                                    if(sessionStorage.getItem('url')){
+                                        _this.$Message.success('自动跳转到上次页面');
+                                        setTimeout(function () {
+                                            _this.$router.push({ path: '/'+ sessionStorage.getItem('url')});                                            
+                                        }, 500);
+                                    }else{
+                                        setTimeout(function () {
+                                            _this.$router.push({ path: '/home' });
+                                        }, 500);
+                                    }
+                                   
                                 } else {
                                     _this.getsrc()
                                 }

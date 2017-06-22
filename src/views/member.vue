@@ -44,6 +44,7 @@ export default {
    computed:{
          ...mapGetters(['getuser'])
   },
+
 }
 </script>
 <style scoped lang="less">

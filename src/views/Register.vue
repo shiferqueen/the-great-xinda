@@ -125,6 +125,7 @@
     import qs from 'qs'
     import provinces from '../provinces.js'
     import Vue from 'vue'
+   
     export default {
         name: 'register',
         data() {
@@ -220,7 +221,7 @@
                                 password: _this.md5(_this.password),
                                 regionId: 110010, //所属地区编码
                             })).then(function(data) {
-                                console.log(data.data);
+                                // console.log(data.data);
                                 _this.status = data.data.status;
                                 _this.msg = data.data.msg;
                                 if (_this.status == 1) {
@@ -267,6 +268,10 @@
             }
         },
         created() {
+            // console.log()
+
+
+
             // 数据初始化,默认选中北京市,默认选中第一个;北京市数据为总数据的前18个
             let beijing = this.provinces.slice(0, 19)
             this.cities = beijing.filter(item => {
@@ -346,7 +351,8 @@
 
     .activeclass {
         color: #2494d4;
-        padding: 20px 150px 0;
+        padding: 20px 0;
+        text-align: center;
     }
     
     .errorclass {

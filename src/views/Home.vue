@@ -282,7 +282,7 @@
           </div>
         </swiper>
       </div>
-      <div class="phone_coin">
+      <div class="phone_coin clear">
         <ul class="phone_con">
           <li class="ph_coin">
             <a href="javascript:void(0)" class="icon_link" @click="chuan(3)">
@@ -385,8 +385,7 @@ import {
   swiper,
   swiperSlide
 } from 'vue-awesome-swiper'
-import { mapActions } from "vuex"
-import { mapGetters } from "vuex"
+import { mapActions,mapGetters } from "vuex"
 
 export default {
   name: 'home',
@@ -413,7 +412,7 @@ export default {
     let height = document.getElementsByClassName('wenzi');
     // console.log(height)
     for (let i = 0, l = height.length; i < l; i++) {
-      height[i].style.height = height[i].offsetWidth + 'px';
+      height[i].style.lineHeight = height[i].offsetWidth + 'px';
       // console.log(height[i].offsetWidth)
     }
 
@@ -430,9 +429,11 @@ export default {
     _this.user();
     //  console.log(this.getuser())
   },
+  computed:{
+    ...mapGetters(["getuser","getindexnum",'getbodywidth']),
+  },
   methods: {
     ...mapActions(["user","setindexnum"]),
-    ...mapGetters(["getuser","getindexnum"]),
     chuan:function(index){
             let _this = this;
             _this.setindexnum(index);
@@ -443,6 +444,16 @@ export default {
     chicked:function(){
       let _this = this;
        _this.$router.push({ path: 'pagelist' });
+    }
+  },
+  watch:{
+    getbodywidth(val){
+      if(val<768){
+        let height = document.getElementsByClassName('wenzi');
+        for (let i = 0, l = height.length; i < l; i++) {
+          height[i].style.lineHeight = height[i].offsetWidth + 'px';
+        }
+      }
     }
   }
 }
@@ -825,7 +836,6 @@ export default {
 //手机小图标
 .phone_coin {
   width: 100%;
-  height: 220px;
   display: block;
   .bg1 {
     background-color: #79c4fd;
@@ -929,7 +939,7 @@ export default {
           }
           h4 {
             line-height: 300%;
-            font-size: 130%;
+            font-size: 15px;
             float: left;
             margin-left: 10%;
           }

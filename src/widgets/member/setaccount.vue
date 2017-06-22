@@ -1,190 +1,194 @@
 <template>
-    <Row style="position:inherit">
-        <Col :xs="0" :sm="24">
-        <div class="setaccount">
-            <div class="wangzhe">
-                <a :class="{active:zhang}" v-on:click="set()">账户设置</a>
-                <a :class="{active:password}" v-on:click="alter()">修改密码</a>
-            </div>
-            <div v-show="zhang">
-                <li class="now-img">
-                    <span>当前头像：</span>
-                    <img src="/static/img/huiyuan.cad76df.png" />
-                </li>
-                <div class="username">
-                    <span>姓名：</span>
-                    <input class="c-t" v-model="uesrname" placeholder="请输入姓名" />
+    <div>
+        <Row style="position:inherit">
+            <Col :xs="0" :sm="24">
+            <div class="setaccount">
+                <div class="wangzhe">
+                    <a :class="{active:zhang}" v-on:click="set()">账户设置</a>
+                    <a :class="{active:password}" v-on:click="alter()">修改密码</a>
                 </div>
-                <div class="sex">
-                    <span>性别：</span>
-                    <span class="radio-1">
-                        <input type="radio" name="radio" value="1">男</span>
-                    <span class="radio-2">
-                        <input type="radio" name="radio" value="2">女</span>
-                    <!--性别：<input type="radio" name="radio" value="1">-->
-                </div>
-                <div class="youxiang">
-                    <span>邮箱：</span>
-                    <input class="c-t" placeholder="请输入邮箱" v-model="com" />
-                </div>
-                <div class="bj-hz">
-                    <span>所在地区：</span>
-                    <select name="province" v-model="selectedProvince">
-                        <option v-for="(item, index) in provinces" v-if="item.level === 1" :value="item">
-                            {{ item.name }}
-                        </option>
-                    </select>
-                    <select name="city" v-model="selectedCity">
-                        <option v-for="(item, index) in cities" :value="item">
-                            {{ item.name }}
-                        </option>
-                    </select>
-                    <select name="block" v-model="selectedBlock">
-                        <option v-for="(item, index) in blocks" :value="item">
-                            {{ item.name }}
-                        </option>
-                    </select>
-                </div>
-                <div class="save">
-                    <p :style="{color:c}">{{one}}</p>
-                    <a href="javascript:void(0)" @cdivck="saveOne()" v-text="save1">{{save1}}</a>
-    
-                </div>
-            </div>
-            <ul class="passw" v-show="password">
-                <li>
-                    <span>旧密码：</span>
-                    <input class="ct1" type="password" v-model="oldword" placeholder="请输入旧密码" />
-                </li>
-                <li>
-                    <span>新密码：</span>
-                    <input class="ct1" type="password" v-model="newword" placeholder="请输入新密码" @click="prompt()" @input="p_len" />
-                    <span v-bind:class="{ valid_password_length: valid_password_length , show_password_length: typed}" class="password_length">{{password_length}}</span>
-                    <p class="prompt">{{pro}}</p>
-                    <div class="lnu_container">
-                        <p v-bind:class="{ lovercase_valid: contains_lovercase }">小写字母</p>
-                        <p v-bind:class="{ number_valid: contains_number }">数字</p>
-                        <p v-bind:class="{ uppercase_valid: contains_uppercase }">大写字母</p>
+                <div v-show="zhang">
+                    <li class="now-img">
+                        <span>当前头像：</span>
+                        <img src="/static/img/huiyuan.cad76df.png" />
+                    </li>
+                    <div class="username">
+                        <span>姓名：</span>
+                        <input class="c-t" v-model="uesrname" placeholder="请输入姓名" />
                     </div>
-                </li>
-                <li>
-                    <span>再次输入新密码：</span>
-                    <input type="password" v-model="newtext" placeholder="请确认新密码" />
-                </li>
-                <li class="msgli" style="height:50px;">
-                    <p :style="{color:c,fontSize:f}">{{msg}}</p>
-                </li>
-                <li class="baocun">
-                    <a @click="con()" v-text="save">{{save}}</a>
-                </li>
-            </ul>
-        </div>
-        </Col>
-        <!--移动端代码-->
-        <Col :xs="24" :sm="0">
-        <div class="">
-            <Row class="head">
-                <Col :xs="3" class="icon">
-                <Icon type="ios-arrow-left"></Icon>
-                </Col>
-                <Col :xs="21" class="wo_dan"> 账户设置
-                </Col>
-            </Row>
-            <Row :xs="24" class="qw_1">
-                <a>账户设置</a>
-            </Row>
-            <ul>
-                <Row class="qw_2">
-                    <Col :xs="6">
-                    <span class="qw_3">当前头像：</span>
+                    <div class="sex">
+                        <span>性别：</span>
+                        <span class="radio-1">
+                            <input type="radio" name="radios" value="1" v-model="picked">男</span>
+                        <span class="radio-2">
+                            <input type="radio" name="radios" value="2" v-model="picked">女</span>
+                    </div>
+                    <div class="youxiang">
+                        <span>邮箱：</span>
+                        <input class="c-t" placeholder="请输入邮箱" v-model="com" />
+                    </div>
+                    <div class="bj-hz">
+                        <span>所在地区：</span>
+                        <select name="province" v-model="selectedProvince">
+                            <option v-for="(item, index) in provinces" v-if="item.level === 1" :value="item">
+                                {{ item.name }}
+                            </option>
+                        </select>
+                        <select name="city" v-model="selectedCity">
+                            <option v-for="(item, index) in cities" :value="item">
+                                {{ item.name }}
+                            </option>
+                        </select>
+                        <select name="block" v-model="selectedBlock">
+                            <option v-for="(item, index) in blocks" :value="item">
+                                {{ item.name }}
+                            </option>
+                        </select>
+                    </div>
+                    <div class="save">
+                        <p :style="{color:c}">{{one}}</p>
+                        <a @click="saveOne()" v-text="save1">{{save1}}</a>
+    
+                    </div>
+                </div>
+                <ul class="passw" v-show="password">
+                    <li>
+                        <span>旧密码：</span>
+                        <input class="ct1" type="password" v-model="oldword" placeholder="请输入旧密码" />
+                    </li>
+                    <li>
+                        <span>新密码：</span>
+                        <input class="ct1" type="password" v-model="newword" placeholder="请输入新密码" @click="prompt()" @input="p_len" />
+                        <span v-bind:class="{ valid_password_length: valid_password_length , show_password_length: typed}" class="password_length">{{password_length}}</span>
+                        <p class="prompt">{{pro}}</p>
+                        <div class="lnu_container">
+                            <p v-bind:class="{ lovercase_valid: contains_lovercase }">小写字母</p>
+                            <p v-bind:class="{ number_valid: contains_number }">数字</p>
+                            <p v-bind:class="{ uppercase_valid: contains_uppercase }">大写字母</p>
+                        </div>
+                    </li>
+                    <li>
+                        <span>再次输入新密码：</span>
+                        <input type="password" v-model="newtext" placeholder="请确认新密码" />
+                    </li>
+                    <li class="msgli" style="height:50px;">
+                        <p :style="{color:c,fontSize:f}">{{msg}}</p>
+                    </li>
+                    <li class="baocun">
+                        <a @click="con()" v-text="save">{{save}}</a>
+                    </li>
+                </ul>
+            </div>
+            </Col>
+            <!--移动端代码-->
+            <Col :xs="24" :sm="0">
+            <div class="">
+                <Row class="head">
+                    <Col :xs="3" class="icon" onclick="window.history.go(-1)">
+                    <Icon type="ios-arrow-left"></Icon>
                     </Col>
-                    <Col :xs="18">
-                    <img class="qw_4" src="/static/img/huiyuan.cad76df.png" />
-                    </Col>
-                </Row>
-                <Row class="qw_5">
-                    <Col class="qw_6" :xs="6">姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名：</Col>
-                    <Col :xs="18">
-                    <input class="qw_7" v-model="uesrname" placeholder="请输入姓名" />
-                    </Col>
-                </Row>
-                <Row class="qw_8">
-                    <Col class="qw_9" :xs="6">性&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别：</Col>
-                    <Col class="qw_10" :xs="18">
-                    <span class="">
-                        <input type="radio" name="radio" v-model="picked" value="1">男</span>
-                    <span class="radio-2">
-                        <input type="radio" name="radio" v-model="picked" value="2" checked/>女</span>
-                    </Col>
-                </Row>
-                <Row class="qw_11">
-                    <Col :xs="6" class="qw_12">邮&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;箱：</Col>
-                    <Col :xs="18">
-                    <input class="qw_13" placeholder="请输入邮箱" v-model="com" />
-                    </Col>
-                </Row>
-                <Row class="qw_14">
-                    <Col :xs="6" class="qw_15">所在地区：</Col>
-                    <Col :xs="18" class="qw_16">
-                    <select name="province" v-model="selectedProvince">
-                        <option v-for="(item, index) in provinces" v-if="item.level === 1" :value="item">
-                            {{ item.name }}
-                        </option>
-                    </select>
-                    <select name="city" v-model="selectedCity">
-                        <option v-for="(item, index) in cities" :value="item">
-                            {{ item.name }}
-                        </option>
-                    </select>
-                    <select name="block" v-model="selectedBlock">
-                        <option v-for="(item, index) in blocks" :value="item">
-                            {{ item.name }}
-                        </option>
-                    </select>
+                    <Col :xs="21" class="wo_dan"> 账户设置
                     </Col>
                 </Row>
+                <Row :xs="24" class="qw_1">
+                    <a>账户设置</a>
+                </Row>
+                <ul>
+                    <Row class="qw_2">
+                        <Col :xs="6">
+                        <span class="qw_3">当前头像：</span>
+                        </Col>
+                        <Col :xs="18">
+                        <img class="qw_4" src="/static/img/huiyuan.cad76df.png" />
+                        </Col>
+                    </Row>
+                    <Row class="qw_5">
+                        <Col class="qw_6" :xs="6">姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名：</Col>
+                        <Col :xs="18">
+                        <input class="qw_7" v-model="uesrname" placeholder="请输入姓名" />
+                        </Col>
+                    </Row>
+                    <Row class="qw_8">
+                        <Col class="qw_9" :xs="6">性&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别：</Col>
+                        <Col class="qw_10" :xs="18">
+                        <span class="">
+                            <input type="radio" name="radiox" v-model="picked" value="1">男</span>
+                        <span class="radio-2">
+                            <input type="radio" name="radiox" v-model="picked" value="2" checked/>女</span>
+                        </Col>
+                    </Row>
+                    <Row class="qw_11">
+                        <Col :xs="6" class="qw_12">邮&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;箱：</Col>
+                        <Col :xs="18">
+                        <input class="qw_13" placeholder="请输入邮箱" v-model="com" />
+                        </Col>
+                    </Row>
+                    <Row class="qw_14">
+                        <Col :xs="6" class="qw_15">所在地区：</Col>
+                        <Col :xs="18" class="qw_16">
+                        <select name="province" v-model="selectedProvince">
+                            <option v-for="(item, index) in provinces" v-if="item.level === 1" :value="item">
+                                {{ item.name }}
+                            </option>
+                        </select>
+                        <select name="city" v-model="selectedCity">
+                            <option v-for="(item, index) in cities" :value="item">
+                                {{ item.name }}
+                            </option>
+                        </select>
+                        <select name="block" v-model="selectedBlock">
+                            <option v-for="(item, index) in blocks" :value="item">
+                                {{ item.name }}
+                            </option>
+                        </select>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col :xs="24" class="qw_20">
+                        <a @click="saveOne()" v-text="save1">{{save1}}</a>
+                        </Col>
+                    </Row>
+                </ul>
+                <!--2-->
                 <Row>
-                    <Col :xs="24" class="qw_20">
-                    <a href="javascript:void(0)" @click="saveOne()" v-text="save1">{{save1}}</a>
+                    <Col :xs="24" class="qw_21">
+                    <p>修改密码</p>
                     </Col>
                 </Row>
-            </ul>
-            <!--2-->
-            <Row>
-                <Col :xs="24" class="qw_21">
-                <p>修改密码</p>
-                </Col>
-            </Row>
-            <ul class="">
-                <Row class="qw_22">
-                    <Col :xs="6" class="qw_25">旧密码：</Col>
-                    <Col :xs="18">
-                    <input class="qw_26" type="password" v-model="oldword" placeholder="请输入旧密码" />
-                    </Col>
-                </Row>
-                <Row class="qw_27">
-                    <Col :xs="6" class="qw_28">新密码：</Col>
-                    <Col :xs="18">
-                    <input class="qw_29" type="password" v-model="newword" placeholder="请输入新密码" @click="prompt()" @input="p_len" />
-                    </Col>
-                </Row>
-                <Row class="qw_30">
-                    <Col :xs="8" class="qw_31">再次输入新密码：</Col>
-                    <Col :xs="16">
-                    <input class="qw_32" type="password" v-model="newtext" placeholder="请确认新密码" />
-                    </Col>
-                </Row>
-                <Row class="msgli">
-                    <Col :xs="24" :style="{color:c,fontSize:f}">{{msg}}</Col>
-                </Row>
-                <Row class="qw_40">
-                    <Col :xs="24" class="qw_41" @click="con()" v-text="save">{{save}}</Col>
-                </Row>
-            </ul>
-        </div>
-        </Col>
-        <!--移动端代码结束-->
-    </Row>
+                <ul class="">
+                    <Row class="qw_22">
+                        <Col :xs="6" class="qw_25">旧密码：</Col>
+                        <Col :xs="18">
+                        <input class="qw_26" type="password" v-model="oldword" placeholder="请输入旧密码" />
+                        </Col>
+                    </Row>
+                    <Row class="qw_27">
+                        <Col :xs="6" class="qw_28">新密码：</Col>
+                        <Col :xs="18">
+                        <input class="qw_29" type="password" v-model="newword" placeholder="请输入新密码" @click="prompt()" @input="p_len" />
+                        </Col>
+                    </Row>
+                    <Row class="qw_30">
+                        <Col :xs="8" class="qw_31">再次输入新密码：</Col>
+                        <Col :xs="16">
+                        <input class="qw_32" type="password" v-model="newtext" placeholder="请确认新密码" />
+                        </Col>
+                    </Row>
+                    <Row class="msgli">
+                        <Col :xs="24" :style="{color:c,fontSize:f}">{{msg}}</Col>
+                    </Row>
+                    <Row class="qw_40">
+                        <Col span="24" class="qw_41">
+                        <div @click="con()">{{save}}</div>
+                        </Col>
+                    </Row>
+                </ul>
+            </div>
+            </Col>
+            <!--移动端代码结束-->
+    
+        </Row>
+    </div>
 </template>
 
 <script>
@@ -192,7 +196,7 @@ import qs from 'qs'
 
 import provinces from '../../provinces.js'
 import Vue from 'vue'
-
+import { mapGetters, mapActions } from 'vuex'
 export default {
     name: 'setaccount',
     data() {
@@ -231,6 +235,7 @@ export default {
 
     },
     methods: {
+        ...mapActions(['user','setmyurl']),
         set: function () {
             this.zhang = true,
                 this.password = false
@@ -258,14 +263,14 @@ export default {
             this.contains_uppercase = /[A-Z]/.test(this.newword);
 
         },
-        saveOne: function () {
+        saveOne() {
             let _this = this;
             if (_this.uesrname == '') {
                 _this.$Message.warning('请填写姓名');
             } else if (_this.com == '') {
-                 _this.$Message.warning('请填写邮箱');
+                _this.$Message.warning('请填写邮箱');
             } else if (_this.textcom.test(_this.com) == false) {
-                 _this.$Message.warning('邮箱格式不正确');
+                _this.$Message.warning('邮箱格式不正确');
             } else {
                 _this.ajax.post('/xinda-api/member/update-info', qs.stringify({
                     headImg: '/2016/10/28/152843b6d9a04abe83a396d2ba03675f',
@@ -273,12 +278,12 @@ export default {
                     gender: _this.picked,
                     email: _this.com,
                     regionId: '110106',
-
-                })).then(function (data) {  
+                })).then(function (data) {
                     _this.status = data.data.status;
                     if (_this.status == 1) {
                         _this.$Message.success('保存成功');
-                        _this.c = "#2494d4"
+                        _this.c = "#2494d4";
+                        _this.user(_this.uesrname)
                     } else if (_this.status == -1) {
                         _this.$Message.error('保存失败');
                     }
@@ -291,17 +296,16 @@ export default {
         },
         prompt: function () {
             this.$Message.info({
-                    content: '密码必须6-16位,包含大写字母、小写字母、数字',
-                    duration: 5,
-                    closable: true
+                content: '密码必须6-16位,包含大写字母、小写字母、数字',
+                duration: 5,
+                closable: true
             });
         },
         con: function () {
             let _this = this;
-
             if (_this.oldword == '') {
                 _this.$Message.warning('请输入旧密码');
-                
+
             } else if (_this.newword == '') {
                 _this.$Message.warning('请输入新密码');
             } else if (_this.testpassword.test(_this.newword) == false) {
@@ -315,36 +319,58 @@ export default {
                     oldPwd: _this.md5(_this.oldword),
                     newPwd: _this.md5(_this.newword)
                 })).then(function (data) {
-                    // console.log(data)
-                    _this.msg = data.data.msg;
+                    _this.$Message.success('修改成功');
                 });
-                _this.save = "修改",
-                _this.c = "#2494d4"
+                _this.save = "修改";
+                _this.c = "#2494d4";
+                _this.oldword = '';
+                _this.newword = '';
+                _this.newtext = '';
+            }
+        },
+
+    },
+
+    computed: {
+        ...mapGetters(['getmyurl','getuser']),
+        info() {
+            return {
+                province: this.selectedProvince,
+                city: this.selectedCity,
+                block: this.selectedBlock
             }
         }
     },
+
     created() {
-        let _this = this;
-        _this.ajax.post('/xinda-api/member/info').then(function (data) {
-            console.log(data)
-            _this.picked = data.data.data.gender;
-            _this.uesrname = data.data.data.name;
-            _this.com = data.data.data.email
-        })
-        // 数据初始化,默认选中北京市,默认选中第一个;北京市数据为总数据的前18个
-        let beijing = this.provinces.slice(0, 19)
-        this.cities = beijing.filter(item => {
-            if (item.level === 2) {
-                return true
-            }
-        })
-        this.selectedCity = this.cities[0]
-        this.blocks = beijing.filter(item => {
-            if (item.level === 3) {
-                return true
-            }
-        })
-        this.selectedBlock = this.blocks[0]
+        if (sessionStorage.getItem("login")) {
+           sessionStorage.setItem('url','')
+            let _this = this;
+            _this.ajax.post('/xinda-api/member/info').then(function (data) {
+                _this.picked = data.data.data.gender;
+                _this.uesrname = data.data.data.name;
+                _this.com = data.data.data.email
+            })
+            // 数据初始化,默认选中北京市,默认选中第一个;北京市数据为总数据的前18个
+            let beijing = this.provinces.slice(0, 19)
+            this.cities = beijing.filter(item => {
+                if (item.level === 2) {
+                    return true
+                }
+            })
+            this.selectedCity = this.cities[0]
+            this.blocks = beijing.filter(item => {
+                if (item.level === 3) {
+                    return true
+                }
+            })
+            this.selectedBlock = this.blocks[0]
+        } else {
+            this.$Message.warning('当前未登录，自动跳转到登录页面');
+            sessionStorage.setItem('url','member/setaccount')
+            this.$router.push({ path: '/action/login' })
+        }
+
     },
     watch: {
         selectedProvince(newVal, oldVal) {
@@ -392,15 +418,7 @@ export default {
             })
         }
     },
-    computed: {
-        info() {
-            return {
-                province: this.selectedProvince,
-                city: this.selectedCity,
-                block: this.selectedBlock
-            }
-        }
-    },
+
 }
 </script>
 
@@ -614,7 +632,6 @@ export default {
     .qw_41 {
         width: 60px;
         height: 27px;
-        display: inline-block;
         border: 1px solid #2693d4;
         border-radius: 8%;
         line-height: 28px;
@@ -829,6 +846,6 @@ export default {
     color: #2693d4;
     text-align: center;
     margin-left: 130px;
-    cursor: pointer
-} // 修改密结束
+    cursor: pointer;
+}
 </style>
