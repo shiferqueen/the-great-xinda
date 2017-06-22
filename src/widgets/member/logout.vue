@@ -18,7 +18,6 @@
         <div class="myorder">
             <div class="mse">
                 <img src="../../images/logos/1231.jpg"/>
-                <a>账户设置</a>
                 <span>＞</span>
             </div>
         </div>
